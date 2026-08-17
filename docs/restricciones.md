@@ -1,43 +1,80 @@
 # Restricciones - CampusMarket
 
-Las siguientes restricciones delimitan el desarrollo de CampusMarket y condicionan las decisiones que se tomen durante el proyecto. Cada restricción se encuentra justificada de acuerdo con el contexto académico y el alcance definido para el prototipo.
+Las siguientes restricciones delimitan el desarrollo de CampusMarket y condicionan las decisiones arquitectónicas que puede tomar el equipo. Se identifican a partir del contexto académico, las condiciones del proyecto y el alcance definido para el prototipo.
 
 ## R-01. Tiempo de desarrollo
 
-CampusMarket debe ser desarrollado dentro del semestre académico.
+**Tipo:** Organizativa  
+**Origen:** Asignatura / calendario académico
 
-**Justificación:** El proyecto debe alcanzar un prototipo funcional dentro del tiempo establecido por la asignatura. Por esta razón, el alcance y las funcionalidades deben mantenerse en un nivel que pueda ser implementado y probado durante el semestre.
+CampusMarket debe alcanzar un prototipo funcional dentro del semestre académico.
+
+**Justificación:** El proyecto se desarrolla de manera incremental durante el curso y debe producir un sistema funcional y verificable dentro del periodo establecido. Esta condición limita el alcance y la complejidad que puede asumir el equipo, por lo que las funcionalidades seleccionadas deben poder implementarse, probarse y documentarse durante el semestre.
+
 
 ## R-02. Tamaño del equipo
 
-El proyecto será desarrollado por un equipo de tres integrantes.
+**Tipo:** Organizativa  
+**Origen:** Conformación del equipo
 
-**Justificación:** Las decisiones de diseño y el número de funcionalidades deben ser compatibles con la capacidad de trabajo de un equipo pequeño. Esto limita la cantidad de componentes y funciones que pueden implementarse durante el semestre.
+CampusMarket será desarrollado por un equipo de tres integrantes.
 
-## R-03. Uso de GitHub
+**Justificación:** La capacidad de desarrollo disponible está limitada al trabajo de tres integrantes durante el semestre. Por esta razón, las decisiones arquitectónicas, el número de funcionalidades y la complejidad de la solución deben ser compatibles con los recursos humanos disponibles.
 
-El código fuente y la documentación del proyecto deben mantenerse en GitHub.
 
-**Justificación:** GitHub es la herramienta establecida para el control de versiones y el trabajo colaborativo del proyecto. Además, permite conservar el historial de cambios realizados por el equipo.
+## R-03. Repositorio y control de versiones
 
-## R-04. Uso de SonarCloud
+**Tipo:** Técnica / organizativa  
+**Origen:** Metodología de trabajo del curso
 
-El repositorio deberá ser integrado con SonarCloud durante el desarrollo del proyecto.
+El código fuente, la documentación arquitectónica y las evidencias incrementales de CampusMarket deberán mantenerse versionados en el repositorio del proyecto.
 
-**Justificación:** SonarCloud será utilizado para apoyar la evaluación de la calidad del código y detectar problemas relacionados con mantenibilidad, errores y otras características del software.
+**Justificación:** El repositorio constituye el punto de referencia para verificar la evolución del sistema y la correspondencia entre documentación, implementación y evidencias. Además, permite mantener trazabilidad sobre los cambios realizados por el equipo durante el semestre.
+
+
+## R-04. Análisis de calidad del código
+
+**Tipo:** Técnica  
+**Origen:** Herramientas de calidad utilizadas en el proyecto
+
+El repositorio de CampusMarket deberá integrarse con SonarCloud durante el desarrollo.
+
+**Justificación:** La integración permitirá analizar de manera continua características relacionadas con la calidad del código y obtener evidencia verificable sobre problemas detectados durante el desarrollo. Esta condición debe considerarse al organizar el repositorio y el flujo de trabajo del proyecto.
+
 
 ## R-05. Alcance funcional del prototipo
 
-La primera versión de CampusMarket no incluirá pagos en línea, procesamiento bancario, servicios de envío ni logística de entrega.
+**Tipo:** Organizativa / alcance  
+**Origen:** Alcance definido por el equipo
 
-**Justificación:** Estas funcionalidades requieren integraciones externas y aumentan considerablemente la complejidad del sistema. No son necesarias para demostrar el funcionamiento principal del marketplace durante el semestre.
+La versión inicial de CampusMarket no incluirá pagos en línea, procesamiento bancario, servicios de envío ni logística de entrega.
 
-## R-06. Aplicación web
+**Justificación:** Estas funcionalidades requieren integraciones con servicios externos y aumentan considerablemente la complejidad técnica y operativa del sistema. Excluirlas permite concentrar el esfuerzo del equipo en las capacidades principales del marketplace: gestión de usuarios, publicación de productos, búsqueda, filtrado y gestión de publicaciones.
 
-CampusMarket será desarrollado inicialmente como una aplicación web accesible mediante un navegador.
 
-**Justificación:** Una aplicación web permite que los estudiantes accedan al sistema sin necesidad de instalar software adicional y evita aumentar el alcance inicial con el desarrollo de aplicaciones independientes para diferentes plataformas.
+## R-06. Plataforma de ejecución
+
+**Tipo:** Técnica  
+**Origen:** Alcance tecnológico inicial del proyecto
+
+CampusMarket se desarrollará inicialmente como una aplicación web accesible mediante un navegador.
+
+**Justificación:** Limitar el prototipo a una aplicación web reduce la cantidad de plataformas que el equipo debe implementar y mantener durante el semestre. De esta manera, se evita ampliar el alcance con aplicaciones independientes para dispositivos móviles o de escritorio.
+
+
+## Restricciones legales
+
+En esta etapa del proyecto no se ha identificado una restricción legal específica impuesta formalmente al prototipo. Si el alcance de CampusMarket evoluciona e incorpora tratamiento adicional de datos personales, pagos electrónicos u otros servicios externos, las restricciones legales aplicables deberán identificarse y documentarse antes de tomar las decisiones arquitectónicas correspondientes.
 
 ## Resumen
 
-Estas restricciones permiten mantener CampusMarket dentro de un alcance viable para el semestre y sirven como límites para las decisiones arquitectónicas que se tomarán posteriormente.
+| ID | Restricción | Tipo | Origen |
+|---|---|---|---|
+| R-01 | Tiempo de desarrollo | Organizativa | Asignatura / calendario académico |
+| R-02 | Equipo de tres integrantes | Organizativa | Conformación del equipo |
+| R-03 | Repositorio y control de versiones | Técnica / organizativa | Metodología de trabajo del curso |
+| R-04 | Integración con SonarCloud | Técnica | Herramientas de calidad del proyecto |
+| R-05 | Alcance funcional limitado | Organizativa / alcance | Definición del equipo |
+| R-06 | Aplicación web | Técnica | Alcance tecnológico inicial |
+
+Estas restricciones establecen límites concretos para CampusMarket y permiten distinguir las condiciones que restringen el espacio de solución de los requisitos funcionales y de los escenarios de calidad que posteriormente deberán verificarse mediante evidencia.
