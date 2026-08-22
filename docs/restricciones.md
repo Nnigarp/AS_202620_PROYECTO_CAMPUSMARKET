@@ -82,5 +82,5 @@ En esta etapa del proyecto no se ha identificado una restricción legal específ
 | R-05 | Alcance funcional limitado | Organizativa / alcance | Definición del equipo |
 | R-06 | Aplicación web | Técnica | Alcance tecnológico inicial |
 
-Estas restricciones establecen límites concretos para CampusMarket y permiten distinguir las condiciones que restringen el espacio de solución de los requisitos funcionales y de los escenarios de calidad que posteriormente deberán verificarse mediante evidencia.
+Estas restricciones establecen límites concretos para CampusMarket y permiten distinguir las condiciones que restringen el espacio de solución de los requisitos funcionales y de los escenarios de calidad que posteriormente deberán verificarse mediante evidencia
 
