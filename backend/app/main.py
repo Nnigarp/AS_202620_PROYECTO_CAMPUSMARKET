@@ -1,7 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
+from backend.app.publicaciones.repository import database_is_available
 from backend.app.publicaciones.router import router as publicaciones_router
 
 
@@ -46,6 +48,15 @@ app.include_router(publicaciones_router)
     summary="Consultar la salud del backend",
 )
 def health_check():
+    if not database_is_available():
+        return JSONResponse(
+            status_code=503,
+            content={
+                "status": "degraded",
+                "service": "campusmarket-api",
+            },
+        )
+
     return {
         "status": "ok",
         "service": "campusmarket-api",

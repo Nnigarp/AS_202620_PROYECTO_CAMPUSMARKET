@@ -168,3 +168,21 @@ def list_publications() -> list[dict]:
     finally:
         if connection:
             connection.close()
+
+
+def database_is_available() -> bool:
+    connection = None
+
+    try:
+        connection = _connect()
+
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT 1")
+            return cursor.fetchone() is not None
+
+    except (PersistenceUnavailableError, pymysql.MySQLError):
+        return False
+
+    finally:
+        if connection:
+            connection.close()
