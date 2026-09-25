@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
+from backend.app.observability import log_http_request
 from backend.app.publicaciones.repository import database_is_available
 from backend.app.publicaciones.router import router as publicaciones_router
 
@@ -26,6 +27,8 @@ app = FastAPI(
         }
     ],
 )
+
+app.middleware("http")(log_http_request)
 
 app.add_middleware(
     CORSMiddleware,
