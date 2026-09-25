@@ -3,7 +3,6 @@ from pathlib import Path
 
 from backend.app.main import app
 
-
 CONTRACT_PATH = (
     Path(__file__).resolve().parents[2]
     / "contracts"

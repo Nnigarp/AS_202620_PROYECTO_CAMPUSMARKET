@@ -9,7 +9,6 @@ from uuid import uuid4
 
 from fastapi import Request
 
-
 logger = logging.getLogger("campusmarket.http")
 
 if not logger.handlers:

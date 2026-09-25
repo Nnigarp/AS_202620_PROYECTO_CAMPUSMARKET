@@ -5,7 +5,6 @@ from fastapi.testclient import TestClient
 from backend.app import main as main_module
 from backend.app import observability as observability_module
 
-
 client = TestClient(main_module.app)
 
 

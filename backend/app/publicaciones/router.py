@@ -9,7 +9,6 @@ from .service import (
     listar_publicaciones,
 )
 
-
 router = APIRouter(prefix="/publicaciones", tags=["publicaciones"])
 
 

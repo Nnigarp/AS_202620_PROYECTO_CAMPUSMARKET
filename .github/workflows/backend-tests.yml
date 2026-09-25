@@ -59,6 +59,12 @@ jobs:
       - name: Instalar dependencias
         run: python -m pip install -r backend/requirements.txt
 
+      - name: Instalar Ruff
+        run: python -m pip install ruff==0.16.9
+
+      - name: Ejecutar análisis estático con Ruff
+        run: python -m ruff check backend/app backend/tests
+
       - name: Verificar conexión con MySQL
         run: |
           python - <<'PY'
@@ -91,3 +97,4 @@ jobs:
 
       - name: Ejecutar prueba de contrato OpenAPI
         run: python -m pytest backend/tests/test_contrato_openapi.py -q
+

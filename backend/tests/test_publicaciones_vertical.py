@@ -1,4 +1,3 @@
-import pymysql
 from fastapi.testclient import TestClient
 
 from backend.app.main import app
@@ -6,7 +5,6 @@ from backend.app.publicaciones.repository import (
     _connect,
     initialize_database,
 )
-
 
 client = TestClient(app)
 
