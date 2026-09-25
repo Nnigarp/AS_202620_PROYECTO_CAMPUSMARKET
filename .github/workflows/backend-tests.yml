@@ -97,4 +97,3 @@ jobs:
 
       - name: Ejecutar prueba de contrato OpenAPI
         run: python -m pytest backend/tests/test_contrato_openapi.py -q
-
