@@ -9,6 +9,7 @@ on:
       - S7-interfaces-contratos
       - S7-ajustes-finales-contrato
       - S7-api-mysql-c4
+      - S8-despliegue-operacion
 
   pull_request:
     branches:
