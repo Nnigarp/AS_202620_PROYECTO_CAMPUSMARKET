@@ -3,7 +3,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
-from backend.app.observability import log_http_request
+from backend.app.observability import (
+    get_ec01_metric,
+    log_http_request,
+)
 from backend.app.publicaciones.repository import database_is_available
 from backend.app.publicaciones.router import router as publicaciones_router
 
@@ -42,6 +45,14 @@ app.add_middleware(
 )
 
 app.include_router(publicaciones_router)
+
+
+@app.get(
+    "/ops/metrics/ec01",
+    include_in_schema=False,
+)
+def ec01_metric():
+    return get_ec01_metric()
 
 
 @app.get(
