@@ -40128,8 +40128,8 @@ M(a){var s,r,q=this,p=null,o=A.ap9(q.e,B.Ev,p,1,new A.aip()),n=A.ap9(q.f,B.Ex,p,
 l=A.ase(B.Ew,q.y,B.FZ,new A.ait(q),l)
 s=q.z
 r=s?p:q.ga56()
-o=A.anZ(A.d([B.SV,B.Nw,B.SR,B.yh,o,B.hG,n,B.hG,m,B.hG,k,B.hG,l,B.yh,new A.HR(r,p,p,p,p,B.I,p,!1,p,!0,p,A.hg(s?"Guardando...":"Crear publicaci\xf3n",p,p,p,p,p,p),p)],t.F),B.e6,B.cb,B.h6)
-return new A.zd(new A.v8(B.SS,new A.R6(p,p,1/0,56),p),A.n6(new A.eW(B.zV,new A.Ln(B.DW,new A.wU(o,B.f7,q.d),p),p),p,p),p)}}
+o=A.anZ(A.d([B.SV,B.Nw,B.SS,B.yh,o,B.hG,n,B.hG,m,B.hG,k,B.hG,l,B.yh,new A.HR(r,p,p,p,p,B.I,p,!1,p,!0,p,A.hg(s?"Guardando...":"Crear publicaci\xf3n",p,p,p,p,p,p),p)],t.F),B.e6,B.cb,B.h6)
+return new A.zd(new A.v8(B.SR,new A.R6(p,p,1/0,56),p),A.n6(new A.eW(B.zV,new A.Ln(B.DW,new A.wU(o,B.f7,q.d),p),p),p,p),p)}}
 A.ail.prototype={
 $0(){return this.a.z=!0},
 $S:0}
@@ -87102,8 +87102,8 @@ B.Rn=new A.m(!0,B.L,null,".AppleSystemUIFont",null,null,null,null,null,null,null
 B.RI=new A.m(!0,B.l,null,".AppleSystemUIFont",null,null,null,null,null,null,null,null,null,null,null,null,null,B.e,null,null,null,"blackRedwoodCity labelMedium",null,null,null,null)
 B.OT=new A.m(!0,B.l,null,".AppleSystemUIFont",null,null,null,null,null,null,null,null,null,null,null,null,null,B.e,null,null,null,"blackRedwoodCity labelSmall",null,null,null,null)
 B.SN=new A.dl(B.QD,B.PA,B.QE,B.R4,B.Ph,B.Pp,B.PU,B.R_,B.Q5,B.Rq,B.OM,B.P3,B.Rn,B.RI,B.OT)
-B.SR=new A.fc("Corte vertical S4: Flutter \u2192 FastAPI \u2192 SQLite.",null,null,null,null,null,null,null,null)
-B.SS=new A.fc("CampusMarket \xb7 Nueva publicaci\xf3n",null,null,null,null,null,null,null,null)
+B.SR=new A.fc("CampusMarket \xb7 Nueva publicaci\xf3n",null,null,null,null,null,null,null,null)
+B.SS=new A.fc("CampusMarket S8: Flutter Web \u2192 FastAPI \u2192 MySQL en Azure.",null,null,null,null,null,null,null,null)
 B.PJ=new A.m(!0,null,null,null,null,null,28,B.db,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
 B.SV=new A.fc("Publicar un producto",null,B.PJ,null,null,null,null,null,null)
 B.W8=new A.acu(0,"system")
