@@ -1,0 +1,6 @@
+# Añadir al FINAL de los archivos efectivos del operador, conservando sus rutas,
+# labels y redes. Nunca combinar lab + prod: Compose conservaría api.build.
+services:
+  api:
+    build: !reset null
+    image: ghcr.io/nnigarp/campusmarket-web-candidate@sha256:65d34f2de8d035d5a9672be2e6a81bab759089da2fbe91bdca23a17f2f0463fd
