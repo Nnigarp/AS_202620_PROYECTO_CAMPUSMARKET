@@ -14,7 +14,11 @@ El [run 41094945507](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/
 fuente `a9b6709a67f8036346acb64b9c2b9849ee355cf2`, pasó compilación, 15 pruebas backend,
 7 pruebas Flutter y 10/10 criterios con Chrome, MySQL real y datos sintéticos.
 Dos contenedores, límites de 256 MiB y 0,5 CPU cada uno; picos CI de 186,73 y 176,66 MiB.
-La imagen probada se exportó como artefacto; **no se publicó en GHCR ni se desplegó en Dokploy**.
+La misma imagen se publicó sin reconstrucción en [GHCR](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41102641771), con digest `65d34f2d…`. **No se desplegó en Dokploy**.
+El [mecanismo de promoción y rollback de API](docs/operacion/despliegue-ghcr.md) pasó el
+[ensayo aislado 41133683253](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41133683253):
+Compose sin build, respaldo/restauración sintéticos y sustitución exclusiva de API en ambos sentidos.
+La recuperación productiva, sus montajes y la imagen anterior siguen sin acreditarse: **publicación bloqueada**.
 
 Véanse [ADR-0025](docs/adr/0025-servir-flutter-precompilado-desde-fastapi.md),
 [implementación y workflow](.github/workflows/web-institucional.yml) y

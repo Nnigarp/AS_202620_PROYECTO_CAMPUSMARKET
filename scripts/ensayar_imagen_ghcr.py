@@ -15,9 +15,10 @@ import subprocess
 import time
 from pathlib import Path
 
+from scripts.preparar_despliegue_web import IMAGE
+from scripts.preparar_despliegue_web import SOURCE as SOURCE_SHA
+
 REPOSITORY = "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET"
-SOURCE_SHA = "2154e7880e5111537256206a29f4f4c29a8c86c4"
-IMAGE = "ghcr.io/iscoutb/campusmarket-api@sha256:f9eaabdb166274225e9ad490c44999f71f6b1f7c9c5902dc68ab98b07115ce8b"
 ROOT = Path(__file__).resolve().parents[1]
 COMPOSE_FILE = ROOT / "deploy/compose.prod.yaml"
 VOLUMES = {"api": ("publication_images", "/app/backend/uploads"), "db": ("mysql_data", "/var/lib/mysql")}
@@ -154,7 +155,7 @@ def classify_pull_error(stderr):
 
 def project_from_environment(env):
     require(env.get("GITHUB_ACTIONS") == "true" and env.get("RUNNER_ENVIRONMENT") == "github-hosted", "Requiere runner efimero alojado por GitHub")
-    require(env.get("GITHUB_REPOSITORY") == REPOSITORY, "Requiere el contexto del repositorio oficial")
+    require(env.get("GITHUB_REPOSITORY") in {REPOSITORY, "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET"}, "Repositorio de ensayo inesperado")
     require(env.get("GITHUB_SERVER_URL") == "https://github.com", "Servidor GitHub inesperado")
     require(not env.get("DOCKER_HOST") and env.get("DOCKER_CONTEXT", "default") in {"", "default"}, "No se admiten conexiones Docker remotas")
     require(re.fullmatch(r"[0-9]+", env.get("GITHUB_RUN_ID", "")) and re.fullmatch(r"[0-9]+", env.get("GITHUB_RUN_ATTEMPT", "")), "Identidad de run invalida")
@@ -195,9 +196,9 @@ class Trial:
         self.env_file = self.private / "compose.env"
         self.state_file = self.private / "state.json"
         self.state = json.loads(self.state_file.read_text()) if self.state_file.exists() else {
-            "repository": REPOSITORY, "workflow_commit": os.environ["GITHUB_SHA"], "source_commit": SOURCE_SHA,
+            "repository": os.environ["GITHUB_REPOSITORY"], "workflow_commit": os.environ["GITHUB_SHA"], "source_commit": SOURCE_SHA,
             "image": IMAGE, "project": self.project, "run_attempt": os.environ["GITHUB_RUN_ATTEMPT"],
-            "run": "https://github.com/" + REPOSITORY + "/actions/runs/" + os.environ["GITHUB_RUN_ID"], "checks": {},
+            "run": "https://github.com/" + os.environ["GITHUB_REPOSITORY"] + "/actions/runs/" + os.environ["GITHUB_RUN_ID"], "checks": {},
         }
         require(self.state["project"] == self.project and self.state["workflow_commit"] == os.environ["GITHUB_SHA"], "Estado de otro ensayo")
         self.compose = ["docker", "compose", "--project-name", self.project, "--env-file", str(self.env_file), "-f", str(COMPOSE_FILE)]

@@ -1,0 +1,57 @@
+name: Mecanismo de despliegue Web seguro
+
+on:
+  push:
+    branches: [ops/despliegue-web-digest-20261030]
+    paths:
+      - deploy/compose.*.yaml
+      - scripts/preparar_despliegue_web.py
+      - scripts/ensayar_despliegue_web.py
+      - scripts/ensayar_imagen_ghcr.py
+      - scripts/test_preparar_despliegue_web.py
+      - .github/workflows/despliegue-web-seguro.yml
+  pull_request:
+    branches: [master]
+    paths:
+      - deploy/compose.*.yaml
+      - scripts/preparar_despliegue_web.py
+      - scripts/ensayar_despliegue_web.py
+      - scripts/ensayar_imagen_ghcr.py
+      - scripts/test_preparar_despliegue_web.py
+      - .github/workflows/despliegue-web-seguro.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  mecanismo:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - name: Validar negativas del preflight y diagnóstico privado
+        run: python3 -m unittest scripts.test_preparar_despliegue_web scripts.test_ensayar_imagen_ghcr -v
+      - name: Preparar Compose y credenciales exclusivamente sintéticas
+        id: prepare
+        run: |
+          printf 'DOCKER_CONFIG=%s/campusmarket-ghcr-docker-%s-%s\n' \
+            "$RUNNER_TEMP" "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT" >> "$GITHUB_ENV"
+          python3 -m scripts.ensayar_despliegue_web prepare
+      - name: Ensayar comandos reales de promoción y rollback sin build ni push
+        run: python3 -m scripts.ensayar_despliegue_web run
+      - name: Limpiar solamente recursos y credenciales del run
+        if: ${{ always() && steps.prepare.outcome == 'success' }}
+        run: python3 -m scripts.ensayar_despliegue_web cleanup
+      - name: Generar resultado sin Environment ni respaldos
+        if: ${{ always() && steps.prepare.outcome == 'success' }}
+        run: python3 -m scripts.ensayar_despliegue_web report
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: ${{ always() && steps.prepare.outcome == 'success' }}
+        with:
+          name: despliegue-web-seguro-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/despliegue-web-seguro/resultado.json
+          if-no-files-found: error
+          retention-days: 90
