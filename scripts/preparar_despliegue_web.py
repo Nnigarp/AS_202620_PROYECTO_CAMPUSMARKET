@@ -30,7 +30,7 @@ UP_API = ["up", "-d", "--no-deps", "--no-build", "--pull", "never", "--wait", "-
 DESTINATIONS = {"api": "/app/backend/uploads", "db": "/var/lib/mysql"}
 # Selectores cerrados: no se solicita Config.Env, Source ni contenido del disco.
 CONTAINER_FORMAT = '''{"container_id":{{json .Id}},"project":{{json (index .Config.Labels "com.docker.compose.project")}},"service":{{json (index .Config.Labels "com.docker.compose.service")}},"image_id":{{json .Image}},"configured_image":{{json .Config.Image}},"state":{{json .State.Status}},"started_at":{{json .State.StartedAt}},"restarts":{{.RestartCount}},"oom":{{.State.OOMKilled}},"memory_bytes":{{.HostConfig.Memory}},"nano_cpus":{{.HostConfig.NanoCpus}},"mounts":[{{range $i,$m := .Mounts}}{{if $i}},{{end}}{"type":{{json $m.Type}},"name":{{json $m.Name}},"target":{{json $m.Destination}},"rw":{{$m.RW}}}{{end}}]}'''
-IMAGE_FORMAT = '''{"image_id":{{json .Id}},"repo_digests":{{json .RepoDigests}},"os":{{json .Os}},"architecture":{{json .Architecture}},"oci_revision":{{json (index .Config.Labels "org.opencontainers.image.revision")}}}'''
+IMAGE_FORMAT = '''{"image_id":{{json .Id}},"repo_digests":{{json .RepoDigests}},"os":{{json .Os}},"architecture":{{json .Architecture}},"oci_revision":{{if .Config.Labels}}{{json (index .Config.Labels "org.opencontainers.image.revision")}}{{else}}null{{end}}}'''
 
 
 class Blocked(RuntimeError):
