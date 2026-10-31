@@ -84,10 +84,14 @@ class QuietHandler(http.server.SimpleHTTPRequestHandler):
 
 def preflight(record, private):
     checks = []
+    record["public_read_checks"] = checks
     for path in ("/health", "/docs", "/openapi.json", "/catalogo"):
         status, raw, headers = fetch("GET", path)
-        require(status == 200 and headers.get("Access-Control-Allow-Origin") == ORIGIN, "GET/CORS público no válido: " + path)
-        checks.append({"method": "GET", "path": path, "status": status, "allow_origin": ORIGIN})
+        allowed = headers.get("Access-Control-Allow-Origin")
+        checks.append({"method": "GET", "path": path, "status": status, "allow_origin": allowed,
+                       "server": headers.get("Server"), "content_type": headers.get("Content-Type")})
+        require(status == 200, "HTTP público no válido: " + path + "; status=" + str(status))
+        require(allowed == ORIGIN, "CORS público no válido: " + path + "; allow_origin=" + str(allowed))
         if path == "/health":
             require(json.loads(raw).get("status") == "ok", "API no saludable")
         if path == "/catalogo":
