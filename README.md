@@ -14,13 +14,27 @@ El [run 41094945507](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/
 fuente `a9b6709a67f8036346acb64b9c2b9849ee355cf2`, pasó compilación, 15 pruebas backend,
 7 pruebas Flutter y 10/10 criterios con Chrome, MySQL real y datos sintéticos.
 Dos contenedores, límites de 256 MiB y 0,5 CPU cada uno; picos CI de 186,73 y 176,66 MiB.
-La imagen probada se exportó como artefacto; **no se publicó en GHCR ni se desplegó en Dokploy**.
+La imagen probada ya se publicó sin reconstrucción en GHCR, digest `65d34f2d…` ([run 41102641771](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41102641771)); **no se desplegó en Dokploy**.
 
 Véanse [ADR-0025](docs/adr/0025-servir-flutter-precompilado-desde-fastapi.md),
 [implementación y workflow](.github/workflows/web-institucional.yml) y
 [evidencia, limitaciones y pasos pendientes](docs/evidencias/despliegue-publico-mvp-2026-10-04.md#fase-2--frontend-institucional-candidato-probado-en-ci--2026-10-30).
 Un checkout Git sin el build mantiene la API sola; fusionar este cambio no publica Flutter.
 El autodeploy de `master` sigue activo: coordinar su control antes de cualquier merge.
+
+## Alternativa Pages preparada, sin publicar — 2026-10-31
+
+La [guía del laboratorio §1](https://github.com/ISCOUTB/iscoutb.dev/blob/main/README.md#1-qué-recibes-y-qué-necesitas)
+y sus políticas admiten Flutter Web en Pages con la API pública institucional.
+El [workflow de ensayo](.github/workflows/ensayo-pages.yml) tiene únicamente `contents: read` y genera
+un paquete candidato; no modifica Pages, `gh-pages`, GHCR ni Dokploy.
+[Run 41253225664 aprobado](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41253225664):
+fuente `fd7a3cc…`, base `/AS_202620_PROYECTO_CAMPUSMARKET/`, API `https://campusmarket.iscoutb.dev`,
+Chrome/CORS, catálogo/detalle/imágenes/recarga y scanner sin hallazgos. Se verificaron los 42 archivos del ZIP.
+La [adenda de ADR-0006](docs/adr/0006-publicar-frontend-flutter-web-en-github-pages.md#ensayo-independiente-pages-y-api-institucional--2026-10-31)
+identifica el paquete y sus límites. La Pages vigente conserva su build anterior; este candidato no está publicado.
+La modalidad satisface frontend público admitido por la guía; el feedback específico de CampusMarket
+sigue considerando parcial el dominio institucional de toda la solución. `/app/` continúa pendiente.
 
 ## Integrantes
 

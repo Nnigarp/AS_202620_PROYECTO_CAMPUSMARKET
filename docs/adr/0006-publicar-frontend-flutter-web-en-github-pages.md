@@ -317,3 +317,52 @@ ADR-0005 queda refinado por este ADR para la decisión específica del frontend.
 - `docs/arc42/02-restricciones.md`
 - `docs/evidencias/evidencia-s8-2026-09-27.md`
 - rama `gh-pages`
+
+
+## Ensayo independiente Pages y API institucional — 2026-10-31
+
+Se conserva la decisión aceptada y el historial S8 anterior. La guía oficial del laboratorio,
+README §1 y políticas de uso (blobs `b1b220cc58d5a51118700864b8e06b59b6513350` y
+`9d671f7ef1e6b64b4c9d99a8b025099605b83239`), indica Flutter Web en GitHub Pages y operación estudiantil
+sin terminal del servidor. §§3.5–3.6 permiten control manual del autodeploy y ramas protegidas;
+este ensayo no modifica esas configuraciones.
+
+El frontend Pages puede actualizarse independientemente, manteniendo la API pública actual.
+El [feedback específico vigente](https://github.com/ISCOUTB/AS_202620_feedback/blob/master/revisiones/2026-2/AS_202620_PROYECTO_CAMPUSMARKET/feedback.md)
+(blob `1fb6cfdd352e6899caf71c30c2dc86c03bb276a2`) sigue pidiendo frontend bajo `iscoutb.dev`.
+Por tanto, Pages cumple la modalidad de frontend público admitida por la guía; no cierra el criterio
+particular del dominio de toda la solución, ni equivale a publicar `/app/`. No se declara aceptación global.
+
+La imagen GHCR de fuente `a9b6709…` conserva `/app/` y API del mismo origen: ese bundle no se traslada
+cambiando solo el HTML. El build Pages vigente, commit `4626e11beb259faea25e64647ec89dd1b54a9246`,
+corresponde a la fuente antigua `c38e0cf…`; no se atribuye al cliente actual. Se reutilizó la **fuente aprobada**
+`fd7a3cc3903c773330cfa6ba9345872932f9000b` y se compiló únicamente otro destino Web:
+
+```text
+--release --base-href /AS_202620_PROYECTO_CAMPUSMARKET/
+--dart-define=CAMPUSMARKET_API_BASE_URL=https://campusmarket.iscoutb.dev
+--pwa-strategy none --no-web-resources-cdn
+```
+
+[Workflow](../../.github/workflows/ensayo-pages.yml), fuente del ensayo
+`21842586551f470929ce8c19100f1cc7ea5eff34`, [run 41253225664](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41253225664):
+tres pruebas de restricciones, compilación release, Chrome real, CORS desde `https://nnigarp.github.io`,
+preflight real GET con cabeceras adicionales, salud/docs/OpenAPI, catálogo/detalle/imágenes, atrás y recarga.
+El candidato se sirvió bajo la ruta Pages en `127.0.0.1:8080` y recibió 24 assets sin fallos.
+Los endpoints de escritura se bloquearon en Chrome; no hubo registros, login ni cambios de publicaciones.
+Gitleaks 8.30.1 terminó con exit 0; no se publican cuerpos de respuestas ni credenciales.
+
+Artefacto **13062186958**, `pages-candidate-41253225664-1`, 14273299 bytes,
+SHA-256 ZIP `982ee6df36ad821ab6ae6410e3eefee0b516d06a7cac934a1da730cb14095fad`.
+Manifiesto del bundle `f401ea11654cc26185959c69bffa6db783a8698a1d77c87ddf5cdd03a42e2ebd`:
+42 archivos, todos contrastados tras descargar, incluido `.nojekyll`. Retención hasta 29/01/2027.
+El ZIP contiene únicamente `site/`, resultado y manifiesto; `published: false`.
+El paquete previo del run `41252979224` omitió archivos ocultos pese a pasar navegador; no se usa para promover.
+La corrección incluyó los archivos verificados y se repitió la comprobación integral del nuevo paquete.
+Los sondeos HTTP Python de los runs `41252499636`/`41252655497` recibieron 403 de Cloudflare;
+la prueba posterior con Chrome acreditó acceso y CORS desde el origen real de Pages, con seguridad activa.
+
+El workflow carece de permisos de publicación y de pasos de deploy/push. No se modificaron `gh-pages`,
+configuración Pages, PR #76/#1, imagen GHCR, API, MySQL ni dominios. La siguiente promoción requiere
+autorización expresa para publicar **este paquete exacto**, sin reconstruir, y aceptación pública posterior
+con navegador nuevo y con caché previa. Hasta entonces, la nueva interfaz Pages sigue siendo candidata.
