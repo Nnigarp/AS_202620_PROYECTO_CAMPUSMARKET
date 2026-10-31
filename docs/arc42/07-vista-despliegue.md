@@ -539,7 +539,10 @@ La imagen incorpora estáticos inmutables en `/app/backend/web`; las fotos conse
 `publication_images:/app/backend/uploads` y SQL `mysql_data:/var/lib/mysql`.
 API y Web comparten origen: no se trasladan contratos a `/api`, no cambia el dominio ni se requiere otro contenedor.
 La compilación y Docker build se realizan en el runner, nunca se incorpora el SDK Flutter al servidor.
-Un checkout sin bundle conserva API sola; `compose.prod.yaml` todavía apunta a la imagen GHCR anterior sin esta Web.
+Un checkout sin bundle conserva API sola. `compose.prod.yaml` fija ahora el digest Flutter publicado
+`65d34f2d…`; `compose.lab.yaml` conserva su build y no se modificó. El override `compose.web.yaml`
+permite retirar exclusivamente `api.build` y fijar esa imagen sobre los archivos efectivos del operador,
+preservando sus labels y redes. El preflight bloquea diferencias adicionales o montajes no coincidentes.
 
 [Run final 41094945507](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41094945507):
 dos contenedores con límites efectivos de 256 MiB y 0,5 CPU cada uno, picos CI 186,73/176,66 MiB,
@@ -548,3 +551,8 @@ No se midió carga productiva ni se probó el nuevo bundle detrás del TLS/Traef
 La [evidencia canónica](../evidencias/despliegue-publico-mvp-2026-10-04.md#fase-2--frontend-institucional-candidato-probado-en-ci--2026-10-30)
 identifica el artefacto, su expiración y el procedimiento de promoción/rollback solo de API.
 Respaldo recuperable, montajes efectivos, acceso GHCR desde servidor e imagen anterior siguen bloqueando producción.
+
+El [ensayo operativo 41133683253](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41133683253),
+commit `61a9171a6fff1ebfd53b869fc1b37aeb7d405461`, verificó siete criterios del mecanismo
+sin build ni push. Reemplazó solo API en promoción/rollback y restauró SQL/PNG sintéticos en otro proyecto
+del runner; no acredita recuperación productiva. [Preflight, límites y procedimiento](../operacion/despliegue-ghcr.md).

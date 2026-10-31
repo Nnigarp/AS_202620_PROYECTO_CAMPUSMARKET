@@ -50,7 +50,9 @@ El proxy institucional y su comportamiento bajo carga siguen requiriendo verific
 - Picos cgroup CI: API+Web **195796992 bytes (186,73 MiB)**; MySQL **185237504 bytes (176,66 MiB)**;
   límites efectivos **268435456 bytes** y **500000000 NanoCpus** por contenedor, sin OOM ni reinicios.
   Es una carga pequeña y sintética: no acredita holgura productiva ni el escenario EC-01 completo.
-- La imagen exportada conserva API y frontend del mismo SHA. No tiene digest GHCR publicado.
+- La imagen exportada conserva API y frontend del mismo SHA. Se publicó sin reconstruir en el
+  [run 41102641771](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41102641771):
+  digest `sha256:65d34f2de8d035d5a9672be2e6a81bab759089da2fbe91bdca23a17f2f0463fd`.
   El [informe canónico](../evidencias/despliegue-publico-mvp-2026-10-04.md#fase-2--frontend-institucional-candidato-probado-en-ci--2026-10-30)
   conserva identidad, hashes, fallos corregidos, artefacto y procedimiento.
 - Se acoplan los releases Web/API; rollback de imagen revierte ambos. No se cambian esquema SQL ni archivos persistentes.
@@ -65,3 +67,9 @@ Antes de publicar en Dokploy: respaldo recuperable de SQL/fotos, montajes efecti
 acceso al registro desde servidor, memoria de producción observada y actualización exclusiva de API dentro de cuota.
 Publicar el artefacto probado sin reconstruir, fijar su nuevo digest y verificar HTTPS/navegación pública.
 El ensayo GHCR anterior de fuente `2154e788...` no contiene esta capacidad ni acredita su despliegue.
+
+El [plan operativo canónico](../operacion/despliegue-ghcr.md) incorpora ahora Compose por digest y un
+preflight de solo lectura. El [run 41133683253](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41133683253)
+probó los comandos de promoción/rollback exclusivos de API y restauración sintética. El control de rollback
+usa el mismo Image ID: no demuestra compatibilidad con la imagen productiva desconocida.
+La decisión sigue propuesta y la publicación bloqueada por sus precondiciones productivas.

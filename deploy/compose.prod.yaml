@@ -1,6 +1,6 @@
 services:
   api:
-    image: ghcr.io/iscoutb/campusmarket-api@sha256:f9eaabdb166274225e9ad490c44999f71f6b1f7c9c5902dc68ab98b07115ce8b
+    image: ghcr.io/nnigarp/campusmarket-web-candidate@sha256:65d34f2de8d035d5a9672be2e6a81bab759089da2fbe91bdca23a17f2f0463fd
     restart: unless-stopped
     environment:
       CAMPUSMARKET_DB_HOST: db

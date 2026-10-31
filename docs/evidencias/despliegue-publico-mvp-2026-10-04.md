@@ -649,3 +649,45 @@ Si falta imagen anterior, backup recuperable o mecanismo exclusivo de API, **no 
 No se ejecutó migración, rollback, publicación GHCR, cambios DNS, cambios de variables ni operaciones sobre producción.
 El [registro IA canónico](../ia.md#fase-2--frontend-institucional-preparado-y-probado-en-ci--2026-10-30)
 identifica las propuestas aceptadas para implementación, errores corregidos y alternativas rechazadas.
+
+
+### Actualización verificada: imagen publicada y mecanismo aislado — 2026-10-30
+
+Esta actualización sustituye los pendientes de publicación GHCR y preparación técnica del procedimiento
+anterior; mantiene **BLOQUEADA** la publicación institucional. No se repitieron los seis workflows del PR #76,
+que permanece Draft en `fd7a3cc3903c773330cfa6ba9345872932f9000b`.
+
+La imagen del run `41094945507` / artefacto `12996575905` fue publicada sin reconstruir por el
+[run 41102641771](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41102641771):
+`ghcr.io/nnigarp/campusmarket-web-candidate@sha256:65d34f2de8d035d5a9672be2e6a81bab759089da2fbe91bdca23a17f2f0463fd`.
+Conserva el Image ID `sha256:15a6fee324bc315d27ab85674781dfd1bded727243cb6ff752370e70b5d6fd19`
+y la fuente `a9b6709a67f8036346acb64b9c2b9849ee355cf2`. La copia íntegra del ZIP original quedó conservada
+fuera de la retención temporal de Actions. El digest GHCR anterior `f9eaabdb…` identifica otra imagen;
+no constituye por sí solo una referencia de rollback de la API actualmente desplegada.
+
+El [run nuevo 41133683253](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41133683253),
+commit de mecanismo `61a9171a6fff1ebfd53b869fc1b37aeb7d405461`, terminó **success**.
+Se contrastaron logs y el ZIP del artefacto `13013499875`, SHA-256
+`546d3e791d713e307433599a42da310deec566f1e423926cdd43dd682588efc0`: `passed: true`, siete criterios CUMPLE.
+Docker 28.0.4 y Compose 2.38.2; 14 pruebas unitarias/Compose reales en el job.
+Se verificaron equivalencia de configuración, pull del digest e Image ID, dump/TAR sintéticos restaurados
+en otro proyecto, preflight, promoción/rollback solo de API y cleanup del proyecto principal sin recursos.
+MySQL mantuvo ID y StartedAt durante ambos reemplazos de API; SQL e imagen conservaron su identidad.
+No se recompiló Flutter, no se construyó ni se republicó la imagen.
+
+El control de rollback utiliza el **mismo Image ID**, primero por ID y luego por digest; acredita los
+comandos y la preservación, no compatibilidad entre versiones distintas. El resultado conserva
+`production_recovery_verified: false` y `production_deployment_blocked: true`.
+Solo se sube el JSON de resultados: no Environment, dump, TAR de datos ni copias de credenciales.
+Ruff, Actionlint, Gitleaks y 21 regresiones locales (incluido el publicador afectado por imports) pasaron.
+
+Los nombres de volúmenes escritos en el procedimiento previo son nombres **esperados por Compose**,
+no montajes físicos acreditados. Los mensajes `Detected: 0 mounts` y la ausencia de montajes en la UI
+no resuelven esa incertidumbre. El log de `up -d --build --remove-orphans` confirma riesgo de reconstrucción
+por autodeploy; su REVISION antigua y cacheada no identifica suficientemente el código desplegado.
+Los datos de Dokploy de esta revisión fueron aportados por el usuario; no se accedió al panel en esta tarea.
+
+No hay respaldo/restauración productivos ni imagen anterior recuperable acreditados. Tampoco se ha
+probado el pull desde el servidor, ni se controló autodeploy. Se conserva todo ello como precondición,
+sin contacto docente ni operaciones productivas. El procedimiento vigente es únicamente el
+[plan operativo canónico](../operacion/despliegue-ghcr.md); esta sección registra evidencia y sus límites.

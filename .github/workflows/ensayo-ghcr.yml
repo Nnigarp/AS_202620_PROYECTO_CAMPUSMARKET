@@ -23,7 +23,7 @@ jobs:
         run: |
           printf 'DOCKER_CONFIG=%s/campusmarket-ghcr-docker-%s-%s\n' \
             "$RUNNER_TEMP" "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT" >> "$GITHUB_ENV"
-          python3 scripts/ensayar_imagen_ghcr.py prepare
+          python3 -m scripts.ensayar_imagen_ghcr prepare
 
       - name: Autenticar lectura de GHCR
         env:
@@ -35,15 +35,15 @@ jobs:
             --username "$GHCR_USER" --password-stdin > /dev/null
 
       - name: Ejecutar imagen publicada con MySQL y verificar persistencia
-        run: python3 scripts/ensayar_imagen_ghcr.py run
+        run: python3 -m scripts.ensayar_imagen_ghcr run
 
       - name: Limpiar exclusivamente los recursos del ensayo
         if: ${{ always() && steps.checkout.outcome == 'success' }}
-        run: python3 scripts/ensayar_imagen_ghcr.py cleanup
+        run: python3 -m scripts.ensayar_imagen_ghcr cleanup
 
       - name: Generar evidencia sin secretos
         if: ${{ always() && steps.checkout.outcome == 'success' }}
-        run: python3 scripts/ensayar_imagen_ghcr.py report
+        run: python3 -m scripts.ensayar_imagen_ghcr report
 
       - name: Conservar resultado y matriz del run
         if: ${{ always() && steps.checkout.outcome == 'success' }}
