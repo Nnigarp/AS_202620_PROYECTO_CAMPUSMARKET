@@ -20,6 +20,17 @@ jobs:
           persist-credentials: false
       - name: Probar límites de lectura y artefacto
         run: python3 -m unittest scripts.test_ensayar_pages -v
+      - name: Preparar ChromeDriver y scanner con identidad comprobada
+        run: |
+          python3 -m pip install Pillow==12.3.0
+          python3 scripts/preparar_e2e_ci.py --chrome
+          cm_pages_scanner=$(mktemp -d "$RUNNER_TEMP/campusmarket-pages-scanner.XXXXXX")
+          curl --fail --location --retry 3 --output "$cm_pages_scanner/gitleaks.tar.gz" https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz
+          printf '%s  %s\n' '551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb' "$cm_pages_scanner/gitleaks.tar.gz" | sha256sum --check -
+          tar --extract --gzip --file "$cm_pages_scanner/gitleaks.tar.gz" --directory "$cm_pages_scanner" gitleaks
+          printf 'PAGES_GITLEAKS=%s/gitleaks\n' "$cm_pages_scanner" >> "$GITHUB_ENV"
+      - name: Iniciar ChromeDriver local
+        run: chromedriver --port=4444 --allowed-ips=127.0.0.1 > "$RUNNER_TEMP/pages-chromedriver.log" 2>&1 &
       - name: Verificar API pública y CORS de Pages sin escribir datos
         run: python3 -m scripts.ensayar_pages preflight
       - name: Obtener exactamente la fuente ya aprobada
@@ -38,19 +49,8 @@ jobs:
         run: |
           flutter pub get
           flutter build web --release --base-href /AS_202620_PROYECTO_CAMPUSMARKET/ --dart-define=CAMPUSMARKET_API_BASE_URL=https://campusmarket.iscoutb.dev --pwa-strategy none --no-web-resources-cdn
-      - name: Preparar ChromeDriver y scanner con identidad comprobada
-        run: |
-          python3 -m pip install Pillow==12.3.0
-          python3 scripts/preparar_e2e_ci.py --chrome
-          cm_pages_scanner=$(mktemp -d "$RUNNER_TEMP/campusmarket-pages-scanner.XXXXXX")
-          curl --fail --location --retry 3 --output "$cm_pages_scanner/gitleaks.tar.gz" https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz
-          printf '%s  %s\n' '551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb' "$cm_pages_scanner/gitleaks.tar.gz" | sha256sum --check -
-          tar --extract --gzip --file "$cm_pages_scanner/gitleaks.tar.gz" --directory "$cm_pages_scanner" gitleaks
-          printf 'PAGES_GITLEAKS=%s/gitleaks\n' "$cm_pages_scanner" >> "$GITHUB_ENV"
       - name: Navegar el bundle Pages con API real y analizar secretos
-        run: |
-          chromedriver --port=4444 --allowed-ips=127.0.0.1 > "$RUNNER_TEMP/pages-chromedriver.log" 2>&1 &
-          python3 -m scripts.ensayar_pages verify
+        run: python3 -m scripts.ensayar_pages verify
       - name: Conservar candidato comprobado y hashes, sin publicar
         if: success()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02

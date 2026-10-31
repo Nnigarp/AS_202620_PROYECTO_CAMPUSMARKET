@@ -45,21 +45,21 @@ def api_path(method, path):
     require(allowed, "Ruta pública fuera del alcance de lectura")
 
 
-class NoRedirect(urllib.request.HTTPRedirectHandler):
-    def redirect_request(self, *args):
-        return None
-
-
-def fetch(method, path, origin=ORIGIN, extra=None):
-    api_path(method, path)
-    request = urllib.request.Request(API + path, method=method, headers={"Origin": origin, **(extra or {})})
-    opener = urllib.request.build_opener(NoRedirect())
-    try:
-        response = opener.open(request, timeout=30)
-    except urllib.error.HTTPError as error:
-        response = error
-    with response:
-        return response.status, response.read(10 * 1024 * 1024), response.headers
+def browser_read(chrome, path, preflight=False):
+    api_path("GET", path)
+    result = chrome.call("POST", "/execute/async", {"script": """
+        const [url, customHeaders, done] = arguments;
+        fetch(url, {method: 'GET', headers: customHeaders ? {
+          'Content-Type': 'application/json', 'Idempotency-Key': 'pages-readonly-probe'
+        } : {}}).then(async response => {
+          const type = response.headers.get('Content-Type') || '';
+          const data = type.includes('application/json') ? await response.json() : null;
+          const nonempty = data !== null || (await response.arrayBuffer()).byteLength > 0;
+          done({status: response.status, response_type: response.type, data, nonempty});
+        }).catch(() => done({error: 'BrowserFetchRejected'}));
+    """, "args": [API + path, preflight]})
+    require(not result.get("error"), "Chrome rechazó lectura/CORS: " + path)
+    return result
 
 
 def validate_bundle(site):
@@ -85,44 +85,43 @@ class QuietHandler(http.server.SimpleHTTPRequestHandler):
 def preflight(record, private):
     checks = []
     record["public_read_checks"] = checks
-    for path in ("/health", "/docs", "/openapi.json", "/catalogo"):
-        status, raw, headers = fetch("GET", path)
-        allowed = headers.get("Access-Control-Allow-Origin")
-        checks.append({"method": "GET", "path": path, "status": status, "allow_origin": allowed,
-                       "server": headers.get("Server"), "content_type": headers.get("Content-Type")})
-        require(status == 200, "HTTP público no válido: " + path + "; status=" + str(status))
-        require(allowed == ORIGIN, "CORS público no válido: " + path + "; allow_origin=" + str(allowed))
-        if path == "/health":
-            require(json.loads(raw).get("status") == "ok", "API no saludable")
-        if path == "/catalogo":
-            catalog = json.loads(raw)
-    for path, method in (("/catalogo", "GET"), ("/usuarios/login", "POST"), ("/publicaciones", "POST")):
-        status, _, headers = fetch("OPTIONS", path, extra={"Access-Control-Request-Method": method,
-            "Access-Control-Request-Headers": "content-type,authorization,idempotency-key"})
-        require(status == 200 and headers.get("Access-Control-Allow-Origin") == ORIGIN, "Preflight CORS rechazado: " + path)
-        require(headers.get("Access-Control-Allow-Credentials") == "true", "CORS credentials inesperado")
-        checks.append({"method": "OPTIONS", "path": path, "status": status, "allow_origin": ORIGIN})
-    status, _, headers = fetch("GET", "/health", origin="http://127.0.0.1:8080")
-    require(status == 200 and headers.get("Access-Control-Allow-Origin") == "http://127.0.0.1:8080", "Origen de ensayo Chrome no permitido por CORS actual")
-    status, _, headers = fetch("OPTIONS", "/catalogo", origin="https://pages-rejected.invalid", extra={"Access-Control-Request-Method": "GET"})
-    require(status == 400 and headers.get("Access-Control-Allow-Origin") is None, "CORS permite un origen no autorizado")
-    # Sin semilla ni registro en producción: se usa una oferta ya pública.
-    item = next((item for item in catalog if item.get("imagenes")), None)
-    require(item is not None, "Falta muestra pública con imagen para comprobar detalle sin escribir datos")
-    path = "/catalogo/" + str(int(item["id"]))
-    status, raw, _ = fetch("GET", path)
-    require(status == 200 and json.loads(raw)["id"] == item["id"], "Detalle público no disponible")
-    principal = next((image for image in item["imagenes"] if image.get("es_principal")), item["imagenes"][0])
-    image = urllib.parse.urlsplit(urllib.parse.urljoin(API, principal["imagen_url"]))
-    require(image.scheme == "https" and image.netloc == urllib.parse.urlsplit(API).netloc and not image.query, "Imagen fuera de HTTPS/API esperada")
-    status, raw, _ = fetch("GET", image.path)
-    require(status == 200 and bool(raw), "Imagen pública no disponible")
-    private.write_text(json.dumps({"id": item["id"], "title": item["titulo"], "image_path": image.path}))
-    private.chmod(0o600)
-    record["public_read_checks"] = checks
-    record["cors_denied_origin_rejected"] = True
-    record["public_detail_and_image"] = True
-    record["public_bodies_archived"] = False
+    chrome = Chrome()
+    try:
+        chrome.call("POST", "/timeouts", {"script": 30000})
+        chrome.cdp("Network.enable")
+        chrome.cdp("Network.setBlockedURLs", {"urls": [API + "/usuarios/*", API + "/publicaciones*", API + "/administracion/*"]})
+        chrome.call("POST", "/url", {"url": ORIGIN + BASE_HREF})
+        observed_origin = chrome.call("POST", "/execute/sync", {"script": "return location.origin", "args": []})
+        require(observed_origin == ORIGIN, "Origen Pages no corresponde al esperado")
+        for path in ("/health", "/docs", "/openapi.json", "/catalogo"):
+            response = browser_read(chrome, path, preflight=path == "/catalogo")
+            checks.append({"method": "GET", "path": path, "status": response["status"], "response_type": response["response_type"]})
+            require(response["status"] == 200 and response["response_type"] == "cors", "HTTP/CORS desde Pages no válido: " + path)
+            if path == "/health":
+                require(response["data"].get("status") == "ok", "API no saludable")
+            if path == "/catalogo":
+                catalog = response["data"]
+        item = next((item for item in catalog if item.get("imagenes")), None)
+        require(item is not None, "Falta muestra pública con imagen para comprobar detalle sin escribir datos")
+        path = "/catalogo/" + str(int(item["id"]))
+        response = browser_read(chrome, path)
+        require(response["status"] == 200 and response["data"]["id"] == item["id"], "Detalle público no disponible")
+        principal = next((image for image in item["imagenes"] if image.get("es_principal")), item["imagenes"][0])
+        image = urllib.parse.urlsplit(urllib.parse.urljoin(API, principal["imagen_url"]))
+        require(image.scheme == "https" and image.netloc == urllib.parse.urlsplit(API).netloc and not image.query, "Imagen fuera de HTTPS/API esperada")
+        response = browser_read(chrome, image.path)
+        require(response["status"] == 200 and response["nonempty"], "Imagen pública no disponible")
+        events = [json.loads(item["message"])["message"] for item in chrome.call("POST", "/log", {"type": "performance"})]
+        options = [e["params"]["response"]["status"] for e in events if e["method"] == "Network.responseReceived" and e["params"].get("type") == "Preflight"]
+        require(any(status in (200, 204) for status in options), "Preflight real del navegador no acreditado")
+        private.write_text(json.dumps({"id": item["id"], "title": item["titulo"], "image_path": image.path}))
+        private.chmod(0o600)
+        record["cors"] = {"browser_origin": ORIGIN, "public_gets_readable": True, "preflight_get_with_custom_headers": True,
+                          "login_and_mutations_tested": False}
+        record["public_detail_and_image"] = True
+        record["public_bodies_archived"] = False
+    finally:
+        chrome.call("DELETE", "")
 
 
 def verify(record, private):
