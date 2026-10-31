@@ -60,6 +60,39 @@ El operador autorizado debe acreditar lo siguiente **sin entregar secretos ni co
 Sin respaldo restaurable, montajes acreditados e imagen anterior recuperable, **NO PUBLICAR**.
 El valor antiguo/cacheado de REVISION no demuestra el código desplegado ni la ausencia de volúmenes.
 
+## Recoger la primera evidencia sin desplegar — 2026-10-31
+
+La consulta nueva no depende de haber resuelto respaldos, rollback ni GHCR. Un operador que **ya tenga**
+lectura de metadatos Docker en el servidor del servicio puede ejecutar la versión de esta rama:
+
+```bash
+python3 -m scripts.preparar_despliegue_web inventory \
+  --project campusmarket-sistema-2zvsxj
+```
+
+No requiere `.env`, Compose efectivo ni credenciales SQL. Consulta únicamente los dos contenedores del
+proyecto mediante labels y selectores cerrados: Image ID activo, referencia configurada, Type/Name/target/RW
+de montajes y cuotas/estado. La inspección de imagen añade RepoDigests, plataforma y revisión OCI si existe;
+una imagen sin etiquetas conserva su identidad. Su salida excluye Environment, Source del montaje y contenido
+de MySQL/uploads. No descarga, guarda ni inicia imágenes/contenedores. La salida JSON puede ser revisada
+antes de compartirla; un error de lectura sale con código 1 y omite stderr privado.
+
+**Identificar imagen o verla en caché no demuestra recuperabilidad ni un pull desde el servidor.**
+El inventario mantiene `production_deployment_blocked: true` y las comprobaciones de backup, rollback,
+pull y autodeploy en falso. Un fallo de inspección no se atribuye automáticamente a permisos o a GHCR.
+
+La revisión de acceso de esta tarea se limitó a perfil/menús y Overview filtrado por CampusMarket.
+La sesión disponible no expuso administración/consola de servidor; Overview ofreció Deploy y Stop,
+que no se ejecutaron y no proporcionan estos metadatos. No se acreditó acceso al daemon desde esa cuenta.
+No se revisitaron Backups, Volume Backups, View Mounts, View Config ni Docker Terminal ya fallidos.
+No se deduce el rol exacto de la ausencia de botones, ni se propone montar el socket o ampliar privilegios.
+
+Si no existe una vía autorizada de lectura, el bloqueo mínimo es **obtener esa salida selectiva del servidor**
+por un operador con acceso existente. No se necesitan contraseñas, datos de usuarios ni otorgar acceso
+administrativo al proyecto. No hay un botón acreditado en la cuenta actual que sustituya esa evidencia.
+Después de ese único paso se podrá decidir cómo conservar la imagen activa y respaldar sus volúmenes;
+no se autorizan esas operaciones por haber recogido el inventario.
+
 ## Preflight implementado, sin desplegar
 
 [preparar_despliegue_web.py](../../scripts/preparar_despliegue_web.py) solo ejecuta lecturas `config`,
@@ -105,6 +138,19 @@ Repetir `--file` por cada override efectivo, en su orden original. No inventar r
 a Git. El directorio nuevo usa modo 0700; `plan.json` y `rollback.compose.json`, 0600. No subirlos como
 artefactos públicos. El script no sobrescribe planes existentes y marca `executed: false`.
 Se debe regenerar el plan si cambia el estado observado o transcurren 30 minutos.
+Antes de ejecutar el vector de promoción autorizado, comprobar otra vez sin modificar servicios:
+
+```bash
+python3 -m scripts.preparar_despliegue_web verify \
+  --plan /ruta/privada/plan-web/plan.json --mode ready
+```
+
+Este modo exige evidencia reciente, el mismo estado de contenedores y la configuración original.
+Los modos posteriores comparan también hashes de configuración normalizada, sin almacenar Environment
+en claro en el plan: cambios de variables, routing u otros campos desde el preflight se rechazan.
+El verificador solo acepta prefijos Docker Compose y vectores API con opciones cerradas; no ejecuta
+comandos arbitrarios introducidos en un plan editado. Los hashes detectan cambios; no constituyen firma
+ni sustituyen la revisión y autorización humanas. Los planes anteriores deben regenerarse.
 
 ## Publicación y verificación, pendientes de autorización
 
@@ -163,3 +209,17 @@ El control usa el mismo Image ID por ID/digest: demuestra el mecanismo, **no com
 versión anterior distinta**. La recuperación productiva continúa pendiente. Los respaldos y credenciales
 sintéticos se eliminan; solo se publica JSON sin Environment ni datos de usuarios. No se repitieron los
 seis workflows ya aprobados ni se reconstruyó/republicó el candidato.
+
+
+Actualización de preflight/inventario, fuente `b92d0aae6c6b8bf4723e6fab0eafda01636f56b7`:
+[run 41248754966](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41248754966),
+**22 pruebas aprobadas** en el job `preflight`, incluidos selectores Docker reales con dos contenedores
+creados pero nunca arrancados, volúmenes vacíos e imagen de fixture importada sin descargar GHCR.
+Se comprobó exclusión de Environment sintético, lectura de montajes e imagen sin etiquetas OCI,
+rechazo de planes/comandos alterados, deriva de configuración, ausencia conjunta de montajes y referencias
+`null` que no sirven como evidencia. Cleanup elimina exclusivamente los fixtures del runner.
+Los runs `41248522797` y `41248591027` fallaron respectivamente por omitir `-` en el import del fixture
+y por el selector OCI ante etiquetas nulas; commits `a36da68` y `b92d0aa` los corrigieron.
+El job `mecanismo` se omitió intencionadamente: Compose y operaciones del ensayo siguen idénticos a
+`61a9171…`, por lo que se conserva la evidencia válida `41133683253`. Cambios futuros en esos archivos,
+o solicitud manual explícita `full_trial`, activan el ensayo completo. No se repiten los seis workflows previos.
