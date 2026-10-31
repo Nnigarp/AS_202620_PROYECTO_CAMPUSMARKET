@@ -22,6 +22,8 @@ from scripts.preparar_despliegue_web import (
     UP_API,
     Blocked,
     command,
+    config_digest,
+    inventory,
     prepare,
     snapshot,
     validate_attestations,
@@ -79,6 +81,19 @@ class PreflightTests(unittest.TestCase):
             }
         return result
 
+    def plan(self):
+        prefix = ["docker", "compose", "--project-name", PROJECT, "--env-file", "/private/synthetic.env",
+                  "-f", str(ROOT / "deploy/compose.lab.yaml"), "-f", str(ROOT / "deploy/compose.web.yaml")]
+        baseline = snapshot(self.lab, self.inspections().__getitem__)
+        previous = baseline["api"]["image_id"]
+        rollback = copy.deepcopy(self.prod)
+        rollback["services"]["api"]["image"] = previous
+        return {"project": PROJECT, "candidate": IMAGE, "candidate_image_id": IMAGE_ID, "source_sha": SOURCE,
+                "compose_prefix": prefix, "promote": prefix + UP_API,
+                "rollback": prefix + ["-f", "/private/rollback.compose.json"] + UP_API,
+                "rollback_image_id": previous, "baseline": baseline, "external_evidence": self.evidence(),
+                "config_digests": {"ready": config_digest(self.lab), "promoted": config_digest(self.prod), "rollback": config_digest(rollback)}}
+
     def test_real_compose_has_only_the_image_build_change(self):
         validate_delta(self.lab, self.prod)
         validate_delta(self.lab, self.overlay)
@@ -107,6 +122,13 @@ class PreflightTests(unittest.TestCase):
             data = self.evidence()
             del data["gates"][gate]
             with self.subTest(gate=gate), self.assertRaisesRegex(Blocked, gate):
+                validate_attestations(data, PROJECT)
+
+    def test_null_number_and_empty_references_are_not_evidence(self):
+        for reference in (None, 123, True, [], {}, " "):
+            data = self.evidence()
+            data["gates"]["consistent_backup_restored"]["evidence"] = reference
+            with self.subTest(reference=reference), self.assertRaises(Blocked):
                 validate_attestations(data, PROJECT)
 
     def test_old_undated_cross_project_or_fake_ci_evidence_is_rejected(self):
@@ -161,7 +183,7 @@ class PreflightTests(unittest.TestCase):
         replies = [json.dumps(self.lab), json.dumps(self.prod), json.dumps([self.image()]), json.dumps([{"Id": previous}]), json.dumps(rollback)]
         with tempfile.TemporaryDirectory() as temp, patch("scripts.preparar_despliegue_web.command", side_effect=replies) as execute, patch("scripts.preparar_despliegue_web.inspect_services", return_value=snapshot(self.lab, inspections.__getitem__)):
             out = Path(temp) / "plan"
-            plan = prepare(["docker", "compose", "--project-name", PROJECT], self.evidence(), out)
+            plan = prepare(self.plan()["compose_prefix"][:-2], self.evidence(), out)
             for key in ("promote", "rollback"):
                 self.assertEqual(plan[key][-len(UP_API):], UP_API)
                 self.assertNotIn("--build", plan[key])
@@ -178,9 +200,78 @@ class PreflightTests(unittest.TestCase):
         baseline = snapshot(self.lab, self.inspections().__getitem__)
         current = copy.deepcopy(baseline)
         current["db"]["started_at"] = "changed"
-        plan = {"compose_prefix": ["docker", "compose"], "baseline": baseline}
+        plan = self.plan()
         with patch("scripts.preparar_despliegue_web.command", return_value=json.dumps(self.prod)), patch("scripts.preparar_despliegue_web.inspect_services", return_value=current), self.assertRaisesRegex(Blocked, "MySQL"):
             verify(plan, "promoted")
+
+    def test_consistently_missing_mounts_do_not_pass_as_persistence(self):
+        config = copy.deepcopy(self.lab)
+        inspections = self.inspections()
+        config["services"]["db"]["volumes"] = []
+        inspections["db"]["Mounts"] = []
+        with self.assertRaisesRegex(Blocked, "volumen persistente"):
+            snapshot(config, inspections.__getitem__)
+
+    def test_altered_plan_never_executes_a_command(self):
+        mutations = [
+            lambda p: p.update(compose_prefix=["sh", "-c", "PRIVATE_SENTINEL"]),
+            lambda p: p["compose_prefix"].extend(["run", "api"]),
+            lambda p: p["promote"].append("db"),
+            lambda p: p["rollback"].append("--build"),
+            lambda p: p.update(candidate_image_id="sha256:" + "f" * 64),
+        ]
+        for mutate in mutations:
+            plan = self.plan()
+            mutate(plan)
+            with patch("scripts.preparar_despliegue_web.command") as execute, self.assertRaises(Blocked):
+                verify(plan, "promoted")
+            execute.assert_not_called()
+
+    def test_configuration_drift_is_rejected_before_inspecting_containers(self):
+        changed = copy.deepcopy(self.prod)
+        changed["services"]["api"]["environment"]["CAMPUSMARKET_CORS_ORIGINS"] = "https://synthetic.test"
+        with patch("scripts.preparar_despliegue_web.command", return_value=json.dumps(changed)), patch("scripts.preparar_despliegue_web.inspect_services") as inspect, self.assertRaisesRegex(Blocked, "Configuración cambió"):
+            verify(self.plan(), "promoted")
+        inspect.assert_not_called()
+
+    def test_ready_requires_fresh_evidence_and_unchanged_containers(self):
+        plan = self.plan()
+        with patch("scripts.preparar_despliegue_web.command", return_value=json.dumps(self.lab)), patch("scripts.preparar_despliegue_web.inspect_services", return_value=plan["baseline"]):
+            verify(plan, "ready")
+        plan["external_evidence"]["checked_at"] = (datetime.now(timezone.utc) - timedelta(hours=1)).isoformat()
+        with patch("scripts.preparar_despliegue_web.command") as execute, self.assertRaises(Blocked):
+            verify(plan, "ready")
+        execute.assert_not_called()
+
+    def test_inventory_queries_only_this_project_and_remains_blocked(self):
+        data = self.inspections()
+        selected = []
+        for service in ("api", "db"):
+            raw = data[service]
+            selected.append({"project": PROJECT, "service": service, "image_id": raw["Image"],
+                             "mounts": [{"type": m["Type"], "name": m["Name"], "target": m["Destination"], "rw": m["RW"]} for m in raw["Mounts"]]})
+        replies = ["a" * 64, json.dumps(selected[0]), "b" * 64, json.dumps(selected[1]), json.dumps({"image_id": data["api"]["Image"]}), Blocked("PRIVATE_STDERR")]
+        with patch("scripts.preparar_despliegue_web.command", side_effect=replies) as execute:
+            report = inventory(PROJECT)
+        self.assertTrue(report["mounts_observed"])
+        self.assertTrue(report["production_deployment_blocked"])
+        self.assertFalse(report["rollback_recovery_verified"])
+        self.assertFalse(report["backup_restore_verified"])
+        self.assertFalse(report["ghcr_server_pull_verified"])
+        self.assertFalse(report["candidate_cache"]["metadata_read"])
+        self.assertNotIn("PRIVATE_STDERR", json.dumps(report))
+        for call in execute.call_args_list:
+            self.assertNotIn(".Env", " ".join(call.args[0]))
+            self.assertNotIn(".Source", " ".join(call.args[0]))
+            self.assertNotIn("pull", call.args[0])
+            self.assertNotIn("exec", call.args[0])
+            if call.args[0][1] == "ps":
+                self.assertIn("label=com.docker.compose.project=" + PROJECT, call.args[0])
+
+    def test_inventory_rejects_other_projects_before_querying_docker(self):
+        with patch("scripts.preparar_despliegue_web.command") as execute, self.assertRaises(Blocked):
+            inventory("other-team-project")
+        execute.assert_not_called()
 
     def test_command_errors_never_expose_environment_or_stderr(self):
         result = subprocess.CompletedProcess([], 1, stdout="SYNTHETIC_PRIVATE_SENTINEL", stderr="PRIVATE_ERROR")
@@ -188,6 +279,44 @@ class PreflightTests(unittest.TestCase):
             command(["docker", "inspect", "synthetic"])
         self.assertNotIn("SYNTHETIC_PRIVATE_SENTINEL", str(error.exception))
         self.assertNotIn("PRIVATE_ERROR", str(error.exception))
+
+
+@unittest.skipUnless(os.environ.get("GITHUB_ACTIONS") == "true", "Solo daemon efímero del runner: no usar Docker local/productivo")
+class DockerInventoryTests(unittest.TestCase):
+    def test_real_selectors_exclude_environment_and_volume_contents(self):
+        from scripts.ensayar_imagen_ghcr import project_from_environment
+
+        project = project_from_environment(os.environ)
+        endpoint = command(["docker", "context", "inspect", "default", "--format", "{{.Endpoints.docker.Host}}"])
+        self.assertEqual(endpoint.strip(), "unix:///var/run/docker.sock")
+        created = {"containers": [], "volumes": []}
+        image_id = None
+        try:
+            # TAR vacío importado: no build, pull ni contenedor en ejecución.
+            image_id = subprocess.run(["docker", "import", "--change", "ENV SYNTHETIC_SECRET=PRIVATE_SENTINEL"], input=b"\0" * 10240, capture_output=True, check=True).stdout.decode().strip()
+            for service, destination in (("api", "/app/backend/uploads"), ("db", "/var/lib/mysql")):
+                name = project + "-inventory-" + service
+                self.assertEqual(command(["docker", "volume", "ls", "-q", "--filter", "name=^" + name + "$"]).strip(), "")
+                command(["docker", "volume", "create", "--label", "com.docker.compose.project=" + project, name])
+                created["volumes"].append(name)
+                cid = command(["docker", "create", "--label", "com.docker.compose.project=" + project,
+                               "--label", "com.docker.compose.service=" + service, "--memory", "256m", "--cpus", "0.5",
+                               "--mount", "type=volume,source=" + name + ",target=" + destination, image_id, "/bin/true"]).strip()
+                created["containers"].append(cid)
+            report = inventory(project)
+            self.assertTrue(report["mounts_observed"])
+            self.assertEqual(report["active_api_image"]["image_id"], image_id)
+            self.assertEqual({item["state"] for item in report["containers"].values()}, {"created"})
+            self.assertNotIn("PRIVATE_SENTINEL", json.dumps(report))
+            self.assertNotIn("SYNTHETIC_SECRET", json.dumps(report))
+            self.assertTrue(report["production_deployment_blocked"])
+        finally:
+            for cid in created["containers"]:
+                command(["docker", "rm", cid])
+            for name in created["volumes"]:
+                command(["docker", "volume", "rm", name])
+            if image_id:
+                command(["docker", "image", "rm", image_id])
 
 
 if __name__ == "__main__":

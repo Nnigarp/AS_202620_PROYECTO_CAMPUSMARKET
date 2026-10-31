@@ -20,20 +20,57 @@ on:
       - scripts/test_preparar_despliegue_web.py
       - .github/workflows/despliegue-web-seguro.yml
   workflow_dispatch:
+    inputs:
+      full_trial:
+        description: "Repetir explícitamente el ensayo completo ya acreditado"
+        type: boolean
+        default: false
 
 permissions:
   contents: read
 
 jobs:
+  preflight:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    outputs:
+      runtime_changed: ${{ steps.scope.outputs.runtime_changed }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Determinar si cambiaron las operaciones del ensayo acreditado
+        id: scope
+        env:
+          FULL_TRIAL: ${{ inputs.full_trial == true }}
+        run: |
+          python3 - <<'PY'
+          import os
+          import subprocess
+          baseline = "61a9171a6fff1ebfd53b869fc1b37aeb7d405461"
+          paths = ["deploy", "scripts/ensayar_despliegue_web.py", "scripts/ensayar_imagen_ghcr.py"]
+          result = subprocess.run(["git", "diff", "--exit-code", "--quiet", baseline, "HEAD", "--", *paths], check=False)
+          assert result.returncode in (0, 1), "No se pudo contrastar la evidencia previa"
+          changed = result.returncode == 1 or os.environ["FULL_TRIAL"] == "true"
+          with open(os.environ["GITHUB_OUTPUT"], "a") as stream:
+              stream.write("runtime_changed=" + str(changed).lower() + "\n")
+          if not changed:
+              with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as stream:
+                  stream.write("Operaciones Compose/ensayo sin cambios. Se conserva [run 41133683253](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41133683253); no se repite ni se descarga GHCR.\n")
+          PY
+      - name: Probar inventario selectivo y rechazo de planes alterados
+        run: python3 -m unittest scripts.test_preparar_despliegue_web scripts.test_ensayar_imagen_ghcr -v
+
   mecanismo:
+    needs: preflight
+    if: needs.preflight.outputs.runtime_changed == 'true'
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
           persist-credentials: false
-      - name: Validar negativas del preflight y diagnóstico privado
-        run: python3 -m unittest scripts.test_preparar_despliegue_web scripts.test_ensayar_imagen_ghcr -v
       - name: Preparar Compose y credenciales exclusivamente sintéticas
         id: prepare
         run: |

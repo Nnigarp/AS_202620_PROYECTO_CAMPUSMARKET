@@ -7,6 +7,7 @@ Nunca se archivan config/inspect completos ni Environment.
 
 import argparse
 import copy
+import hashlib
 import json
 import os
 import re
@@ -26,6 +27,10 @@ GATES = (
     "schema_compatible", "ghcr_pull_from_server",
 )
 UP_API = ["up", "-d", "--no-deps", "--no-build", "--pull", "never", "--wait", "--wait-timeout", "180", "api"]
+DESTINATIONS = {"api": "/app/backend/uploads", "db": "/var/lib/mysql"}
+# Selectores cerrados: no se solicita Config.Env, Source ni contenido del disco.
+CONTAINER_FORMAT = '''{"container_id":{{json .Id}},"project":{{json (index .Config.Labels "com.docker.compose.project")}},"service":{{json (index .Config.Labels "com.docker.compose.service")}},"image_id":{{json .Image}},"configured_image":{{json .Config.Image}},"state":{{json .State.Status}},"started_at":{{json .State.StartedAt}},"restarts":{{.RestartCount}},"oom":{{.State.OOMKilled}},"memory_bytes":{{.HostConfig.Memory}},"nano_cpus":{{.HostConfig.NanoCpus}},"mounts":[{{range $i,$m := .Mounts}}{{if $i}},{{end}}{"type":{{json $m.Type}},"name":{{json $m.Name}},"target":{{json $m.Destination}},"rw":{{$m.RW}}}{{end}}]}'''
+IMAGE_FORMAT = '''{"image_id":{{json .Id}},"repo_digests":{{json .RepoDigests}},"os":{{json .Os}},"architecture":{{json .Architecture}},"oci_revision":{{json (index .Config.Labels "org.opencontainers.image.revision")}}}'''
 
 
 class Blocked(RuntimeError):
@@ -44,6 +49,58 @@ def command(parts):
         raise Blocked("Comando de lectura no disponible; salida privada omitida") from None
     require(result.returncode == 0, "Falló una lectura Docker/Compose; salida privada omitida")
     return result.stdout
+
+
+def validate_project(project):
+    if project == PROJECT:
+        return
+    expected = "campusmarket-ghcr-" + os.environ.get("GITHUB_RUN_ID", "") + "-" + os.environ.get("GITHUB_RUN_ATTEMPT", "")
+    require(os.environ.get("GITHUB_ACTIONS") == "true" and os.environ.get("RUNNER_ENVIRONMENT") == "github-hosted" and project == expected, "Proyecto de consulta no autorizado")
+
+
+def inventory(project):
+    """Observación parcial antes de backups/pull; nunca equivale a autorización."""
+    validate_project(project)
+    result = {"project": project, "checked_at": datetime.now(timezone.utc).isoformat(), "containers": {},
+              "production_deployment_blocked": True, "rollback_recovery_verified": False,
+              "backup_restore_verified": False, "ghcr_server_pull_verified": False,
+              "autodeploy_control_verified": False}
+    for service in DESTINATIONS:
+        ids = command(["docker", "ps", "-aq", "--filter", "label=com.docker.compose.project=" + project,
+                       "--filter", "label=com.docker.compose.service=" + service]).split()
+        require(len(ids) == 1 and re.fullmatch(r"[0-9a-f]{12,64}", ids[0]), "No hay un contenedor único para " + service)
+        data = json.loads(command(["docker", "inspect", "--format", CONTAINER_FORMAT, ids[0]]))
+        require(data["project"] == project and data["service"] == service, "Inspección de otro proyecto/servicio")
+        require(re.fullmatch(r"sha256:[0-9a-f]{64}", data["image_id"]), "Image ID activo inválido")
+        result["containers"][service] = data
+    active = result["containers"]["api"]["image_id"]
+    for key, reference in (("active_api_image", active), ("candidate_cache", IMAGE)):
+        try:
+            metadata = json.loads(command(["docker", "image", "inspect", "--format", IMAGE_FORMAT, reference]))
+            result[key] = {"metadata_read": True, **metadata}
+        except Blocked:
+            # Imagen ausente y permiso insuficiente no se confunden con fallo GHCR.
+            result[key] = {"metadata_read": False, "reason": "No disponible o sin permiso de inspección; causa no acreditada"}
+    result["mounts_observed"] = all(any(m["type"] == "volume" and m.get("name") and m["rw"] and m["target"] == target
+                                           for m in result["containers"][service]["mounts"])
+                                      for service, target in DESTINATIONS.items())
+    return result
+
+
+def validate_prefix(prefix, project):
+    """Impide que un plan editado convierta verify en ejecución arbitraria."""
+    require(isinstance(prefix, list) and prefix[:2] == ["docker", "compose"] and len(prefix) % 2 == 0, "Prefijo Compose inválido")
+    values = {"--project-name": [], "--env-file": [], "-f": []}
+    for key, value in zip(prefix[2::2], prefix[3::2]):
+        require(key in values and isinstance(value, str) and bool(value) and "\0" not in value, "Argumento Compose no permitido")
+        values[key].append(value)
+    require(values["--project-name"] == [project] and len(values["--env-file"]) == 1 and bool(values["-f"]), "Proyecto/envfile/archivos incompletos")
+    require(all(Path(value).is_absolute() for key in ("--env-file", "-f") for value in values[key]), "El plan requiere rutas absolutas")
+    validate_project(project)
+
+
+def config_digest(config):
+    return hashlib.sha256(json.dumps(config, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
 
 
 def validate_delta(before, after):
@@ -74,7 +131,9 @@ def validate_attestations(data, project, now=None):
     require(data.get("project") == project, "Evidencia de otro proyecto")
     for gate in GATES:
         item = data.get("gates", {}).get(gate, {})
-        require(item.get("verified") is True and bool(str(item.get("evidence", "")).strip()), "BLOQUEADO: " + gate)
+        require(isinstance(item, dict), "BLOQUEADO: " + gate)
+        reference = item.get("evidence")
+        require(item.get("verified") is True and isinstance(reference, str) and bool(reference.strip()), "BLOQUEADO: " + gate)
     rollback = data.get("rollback", {})
     require(re.fullmatch(r"sha256:[0-9a-f]{64}", rollback.get("image_id", "")), "Falta Image ID anterior")
     require(re.fullmatch(r"[0-9a-f]{64}", rollback.get("archive_sha256", "")), "Falta checksum del respaldo de imagen anterior")
@@ -104,7 +163,9 @@ def snapshot(config, inspect_service):
         # Si Dokploy inyectó labels que no figuran en los archivos aportados, bloquear.
         require(all(k in cfg.get("labels", {}) for k in labels if k.startswith("traefik.")), "Falta el Compose efectivo con routing de Dokploy")
         expected_mounts = []
-        for mount in cfg.get("volumes", []):
+        mounts = cfg.get("volumes", [])
+        require(len(mounts) == 1 and mounts[0].get("target") == DESTINATIONS[service] and not mounts[0].get("read_only"), "Falta el volumen persistente esperado: " + service)
+        for mount in mounts:
             require(mount["type"] == "volume", "Solo volúmenes con nombre")
             volume = config["volumes"][mount["source"]]["name"]
             expected_mounts.append({"type": "volume", "name": volume, "target": mount["target"], "rw": not mount.get("read_only", False)})
@@ -133,6 +194,7 @@ def private_json(path, value):
 
 
 def prepare(prefix, evidence, out):
+    validate_prefix(prefix, evidence["project"])
     before = json.loads(command(prefix + ["config", "--format", "json"]))
     candidate = prefix + ["-f", str(OVERLAY)]
     after = json.loads(command(candidate + ["config", "--format", "json"]))
@@ -156,18 +218,33 @@ def prepare(prefix, evidence, out):
             "candidate": IMAGE, "candidate_image_id": IMAGE_ID, "source_sha": SOURCE,
             "baseline": baseline, "rollback_image_id": previous, "compose_prefix": candidate,
             "promote": candidate + UP_API, "rollback": rollback + UP_API,
+            "config_digests": {"ready": config_digest(before), "promoted": config_digest(after), "rollback": config_digest(rollback_config)},
             "external_evidence": evidence, "executed": False}
     private_json(out / "plan.json", plan)
     return plan
 
 
 def verify(plan, mode):
+    require(mode in {"ready", "promoted", "rollback"}, "Modo inválido")
+    require(plan["candidate"] == IMAGE and plan["candidate_image_id"] == IMAGE_ID and plan["source_sha"] == SOURCE, "Identidad del plan alterada")
     prefix = plan["compose_prefix"]
+    validate_prefix(prefix, plan["project"])
+    require(prefix[-2:] == ["-f", str(OVERLAY)] and plan["promote"] == prefix + UP_API, "Comando de promoción alterado")
+    rollback_prefix = plan["rollback"][:-len(UP_API)]
+    validate_prefix(rollback_prefix, plan["project"])
+    require(rollback_prefix[:-2] == prefix and rollback_prefix[-2] == "-f" and plan["rollback"] == rollback_prefix + UP_API, "Comando de rollback alterado")
+    require(plan["rollback_image_id"] == plan["baseline"]["api"]["image_id"], "Image ID de rollback alterado")
+    if mode == "ready":
+        validate_attestations(plan["external_evidence"], plan["project"])
+        prefix = prefix[:-2]
     if mode == "rollback":
-        # El prefijo del comando termina antes de la suborden up.
-        prefix = plan["rollback"][:-len(UP_API)]
+        prefix = rollback_prefix
     config = json.loads(command(prefix + ["config", "--format", "json"]))
+    require(config_digest(config) == plan["config_digests"][mode], "Configuración cambió desde el preflight; detener y revisar")
     current = inspect_services(prefix, config)
+    if mode == "ready":
+        require(current == plan["baseline"], "Estado cambió antes de la promoción; regenerar preflight")
+        return current
     require(current["db"] == plan["baseline"]["db"], "MySQL cambió: detener la publicación")
     for key in ("mounts", "networks"):
         require(current["api"][key] == plan["baseline"]["api"][key], "Cambió la persistencia/red de API")
@@ -179,6 +256,8 @@ def verify(plan, mode):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="operation", required=True)
+    observe = sub.add_parser("inventory", help="Consultar metadatos sin exigir backups ni descargar imágenes")
+    observe.add_argument("--project", default=PROJECT)
     create = sub.add_parser("prepare")
     create.add_argument("--project", required=True)
     create.add_argument("--env-file", type=Path, required=True)
@@ -187,10 +266,12 @@ def main():
     create.add_argument("--out", type=Path, required=True)
     check = sub.add_parser("verify")
     check.add_argument("--plan", type=Path, required=True)
-    check.add_argument("--mode", choices=("promoted", "rollback"), required=True)
+    check.add_argument("--mode", choices=("ready", "promoted", "rollback"), required=True)
     args = parser.parse_args()
     try:
-        if args.operation == "prepare":
+        if args.operation == "inventory":
+            print(json.dumps(inventory(args.project), ensure_ascii=False, indent=2))
+        elif args.operation == "prepare":
             prefix = ["docker", "compose", "--project-name", args.project, "--env-file", str(args.env_file.resolve())]
             for file in args.file:
                 prefix += ["-f", str(file.resolve())]
