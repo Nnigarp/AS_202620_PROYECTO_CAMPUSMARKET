@@ -57,6 +57,7 @@ jobs:
         with:
           name: pages-candidate-${{ github.run_id }}-${{ github.run_attempt }}
           path: artifacts/pages-candidate/
+          include-hidden-files: true
           if-no-files-found: error
           retention-days: 90
       - name: Conservar únicamente diagnóstico seguro si falla
