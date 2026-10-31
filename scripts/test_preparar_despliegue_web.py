@@ -293,7 +293,9 @@ class DockerInventoryTests(unittest.TestCase):
         image_id = None
         try:
             # TAR vacío importado: no build, pull ni contenedor en ejecución.
-            image_id = subprocess.run(["docker", "import", "--change", "ENV SYNTHETIC_SECRET=PRIVATE_SENTINEL"], input=b"\0" * 10240, capture_output=True, check=True).stdout.decode().strip()
+            imported = subprocess.run(["docker", "import", "--change", "ENV SYNTHETIC_SECRET=PRIVATE_SENTINEL", "-"], input=b"\0" * 10240, capture_output=True, check=False)
+            self.assertEqual(imported.returncode, 0, "No se pudo crear la imagen vacía de prueba; salida privada omitida")
+            image_id = imported.stdout.decode().strip()
             for service, destination in (("api", "/app/backend/uploads"), ("db", "/var/lib/mysql")):
                 name = project + "-inventory-" + service
                 self.assertEqual(command(["docker", "volume", "ls", "-q", "--filter", "name=^" + name + "$"]).strip(), "")
