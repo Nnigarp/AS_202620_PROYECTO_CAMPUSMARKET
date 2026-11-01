@@ -366,3 +366,78 @@ El workflow carece de permisos de publicación y de pasos de deploy/push. No se 
 configuración Pages, PR #76/#1, imagen GHCR, API, MySQL ni dominios. La siguiente promoción requiere
 autorización expresa para publicar **este paquete exacto**, sin reconstruir, y aceptación pública posterior
 con navegador nuevo y con caché previa. Hasta entonces, la nueva interfaz Pages sigue siendo candidata.
+
+
+## Preparación de promoción sin publicar — 2026-10-31
+
+Se recuperó nuevamente el artefacto original `13062186958` directamente del run `41253225664`;
+ZIP `982ee6df36ad821ab6ae6410e3eefee0b516d06a7cac934a1da730cb14095fad`, 14273299 bytes.
+Se verificaron procedencia, aprobación, manifiesto y los 42 archivos, sin compilar ni repetir Chrome/Flutter.
+La copia que conserva el usuario en su computador no se solicitó ni modificó.
+
+La consulta autenticada y de solo lectura a Pages confirmó `build_type: legacy`, rama `gh-pages`,
+carpeta `/`, HTTPS activo, URL del proyecto y `cname: null`. No se cambió ningún ajuste.
+La rama anterior contiene 41 archivos generados por Flutter; no tiene CNAME, README, 404 personalizado,
+robots.txt ni contenido independiente. El candidato conserva 35 archivos idénticos, añade
+`assets/fonts/fallback/Roboto-Regular.ttf` y actualiza `.last_build_id`, `assets/FontManifest.json`,
+`flutter_bootstrap.js`, `flutter_service_worker.js`, `main.dart.js` y `source-revision.txt`.
+**No elimina ningún archivo previo.** `.nojekyll`, iconos y demás assets conservan sus bytes aprobados.
+Las fotografías del catálogo siguen en la API; no forman parte de esta sustitución estática.
+
+El [preparador](../../scripts/preparar_promocion_pages.py) solo admite escrituras Git a las tres ramas
+auxiliares siguientes. No ofrece operación de publicación y rechaza `gh-pages` como destino de push.
+El [workflow](../../.github/workflows/preparar-promocion-pages.yml) usa permisos `contents: write` para esas
+ramas, `actions: read` para el ZIP y `pages: read` para observar la configuración; no usa Pages write,
+SDK Flutter, Docker ni otros servicios. La fuente del preparador es `8f42f326085360bacfacfbb1f4f622f6db24c7cc`.
+
+| Función | Rama auxiliar | Commit | Árbol Git |
+|---|---|---|---|
+| Copia anterior conservada | `backup/pages-4626e11beb25-20261031` | `4626e11beb259faea25e64647ec89dd1b54a9246` | `cc4186f6b5b997336e9b98b1beef2927bd829e4a` |
+| Candidato exacto del ZIP | `staging/pages-41253225664` | `2982fc289f70e1561598827cea6791d6347a2677` | `91d84faafe2673bd42017e7dce07864417d8eb85` |
+| Rollback preparado | `staging/pages-rollback-41253225664` | `7bf72e9653cd16c1d9f6e174f59aa6dbdb95149d` | `cc4186f6b5b997336e9b98b1beef2927bd829e4a` |
+
+[Run de preparación 41254808559](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41254808559):
+**success**, diez pruebas nuevas de integridad, permisos de ramas, concurrencia y recuperación Git.
+Se contrastaron los 42 archivos de la rama candidata con el ZIP y el rollback con todos los bytes anteriores.
+La preparación también exportó y recuperó las tres referencias en un repositorio Git aislado.
+Artefacto `13062483818`, `preparacion-pages-41254808559-1`, ZIP
+`d6b996bf918d481a2432b8e50e75ff83cc399bbc9fbf75d0a2e1128d9a37ef22`, incluye `plan.json`, ambos manifiestos
+y `pages-preparacion.bundle` (SHA-256 `25c953682e74e4f905752516896cb13daa2ffb86c962dbc16b6590583eed4289`).
+Los commits de respaldo/candidato/rollback permanecen alcanzables en el fork, independientemente de
+la retención temporal de Actions. El resultado es `passed: true`, `published: false`, `gh_pages_modified: false`.
+
+### Procedimiento pendiente de autorización
+
+1. Obtener autorización expresa para sustituir la Pages pública por el commit candidato indicado.
+   Revalidar que `gh-pages` sigue en `4626e11beb259faea25e64647ec89dd1b54a9246`, que Pages sigue usando
+   `gh-pages` + `/` con HTTPS y sin CNAME y que no hay un despliegue concurrente.
+   Verificar que el árbol candidato sigue coincidiendo con el manifiesto aprobado. Ante diferencias, detenerse.
+2. Con una cuenta autorizada, avanzar **solo** `gh-pages` al commit
+   `2982fc289f70e1561598827cea6791d6347a2677`, exigiendo el SHA anterior esperado y avance rápido,
+   sin force, merge, rebase, reconstrucción ni cambios en Settings. El conector GitHub permite
+   `update_ref` con `expected_sha` anterior y `force: false`; no se ejecutó esa operación en esta preparación.
+   No usar el workflow de compilación ni copiar archivos de una carpeta editada en el computador.
+3. Comprobar que aparece y termina correctamente el despliegue Pages correspondiente al commit candidato.
+   Los pushes de Actions con `GITHUB_TOKEN` [no disparan una compilación Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#troubleshooting-publishing-from-a-branch):
+   la futura promoción debe realizarse con la cuenta autorizada y no darse por publicada por mover una ref.
+   Si no aparece el despliegue o no corresponde al commit, detener la aceptación; no cambiar Settings para suplirlo.
+4. Abrir `https://nnigarp.github.io/AS_202620_PROYECTO_CAMPUSMARKET/` en sesión limpia y en una sesión
+   que hubiera abierto la versión anterior. Comprobar HTTPS, Inicio → Catálogo → detalle → atrás/recarga,
+   fotografías, consola sin errores y assets sin 4xx/5xx ni contenido mixto.
+   `source-revision.txt` debe contener `fd7a3cc3903c773330cfa6ba9345872932f9000b`, la fuente Flutter,
+   no el SHA del workflow `2184258…` ni el SHA del commit de publicación.
+   La identidad se comprueba además con el SHA-256 del cuerpo descomprimido de `main.dart.js`:
+   `1d1dbcb6f7403e29c464be8166fc53482c041887332f6a743259159cb575162d`, y con el manifiesto completo.
+   Verificar llamadas reales a `https://campusmarket.iscoutb.dev`, CORS y `/health` 200/ok; no crear usuarios
+   ni publicaciones para esta aceptación. Cualquier fallo de identidad, navegación, API, CORS o assets detiene el cierre.
+
+### Rollback del contenido, preparado sin ejecutarlo en público
+
+El commit `7bf72e9653cd16c1d9f6e174f59aa6dbdb95149d` tiene como padre al candidato y restaura exactamente
+el árbol anterior: se puede aplicar como avance rápido, sin reset ni reescribir el historial.
+Si se autorizó la publicación y falla su aceptación, comprobar que `gh-pages` sigue exactamente en el
+candidato y avanzar únicamente esa rama al commit de rollback, con `expected_sha` candidato y `force: false`.
+Si alguien avanzó la rama entre tanto, detenerse y revisar; no forzar la referencia.
+Esperar el despliegue del rollback y verificar el retorno de `source-revision.txt` a `c38e0cf…`, los hashes
+anteriores y la navegación/API. El ensayo aislado acredita recuperación del contenido Git, **no** un rollback
+público ya realizado. No se toca MySQL, uploads, API, GHCR, dominios ni los PR #76/#1.

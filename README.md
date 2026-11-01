@@ -36,6 +36,13 @@ identifica el paquete y sus límites. La Pages vigente conserva su build anterio
 La modalidad satisface frontend público admitido por la guía; el feedback específico de CampusMarket
 sigue considerando parcial el dominio institucional de toda la solución. `/app/` continúa pendiente.
 
+La [preparación de promoción y rollback](docs/adr/0006-publicar-frontend-flutter-web-en-github-pages.md#preparación-de-promoción-sin-publicar--2026-10-31)
+recuperó el ZIP original y conserva tres ramas auxiliares, sin modificar `gh-pages` ni Settings.
+[Run 41254808559 aprobado](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41254808559):
+diez pruebas nuevas, árbol candidato idéntico al paquete y restauración aislada del bundle Git.
+La sustitución pública sigue pendiente de autorización expresa.
+
+
 ## Integrantes
 
 - Joshua Tenorio Alvarez
