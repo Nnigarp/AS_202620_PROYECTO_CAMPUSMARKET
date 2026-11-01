@@ -719,8 +719,8 @@ El consumidor aplica espera real por defecto con `time.sleep` entre los intentos
 
 > **Actualización posterior a los hitos S8–S12:** las referencias anteriores de preparación GHCR, GitHub Pages y Azure describen etapas históricas; no identifican por sí mismas el despliegue actual.
 
-**Interfaz pública:** https://campusmarket.iscoutb.dev/app/  
-**API saludable:** https://campusmarket.iscoutb.dev/health  
+- **Interfaz pública:** https://campusmarket.iscoutb.dev/app/
+- **API saludable:** https://campusmarket.iscoutb.dev/health
 **Servicio:** `campusmarket → production → sistema` (Dokploy), **dos contenedores**: `api` (FastAPI + Flutter Web) y `db` (MySQL 8.4).
 
 El 1 de noviembre se promovió a producción el candidato de [`deploy/compose.prod.yaml`](deploy/compose.prod.yaml) por digest GHCR, mediante actualización dirigida únicamente a `api`; la ejecución terminó `Docker Compose Deployed: ✅`. En comprobaciones posteriores `/health` respondió `ok`, `/app/` cargó catálogo y fotos, y los dos contenedores estaban healthy sin recreación de MySQL. Se verificaron sesión, edición y eliminación de publicaciones. No se ejecutó una restauración SQL/fotos ni rollback productivo.
