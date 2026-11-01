@@ -1,6 +1,6 @@
 # Evidencia S13 — STRIDE, cadena de suministro y privacidad · CampusMarket
 
-**Fecha de preparación:** 2026-11-01 (Colombia). **Base de inspección:** `ISCOUTB/master` `ad9c784eb14f848a912788a7b9b12bf43eaeefb9`. **Estado:** evidencia en preparación, pendiente de ejecutar y revisar el análisis de dependencias en CI. No equivale a entrega calificada.
+**Fecha de preparación:** 2026-11-01 (Colombia). **Base de inspección:** `ISCOUTB/master` `ad9c784eb14f848a912788a7b9b12bf43eaeefb9`. **Estado:** análisis S13 ejecutado inicialmente en PR #79; hallazgos detectados y corrección candidata pendiente de CI y evaluación. No equivale a entrega calificada.
 
 ## 1. Alcance, C4 y fronteras de confianza
 
@@ -27,12 +27,14 @@ Modelo anclado en [C4 L2](../c4/02-contenedores.puml) y [C4 L3](../c4/03-compone
 
 ## 3. Análisis de dependencias y cadena de suministro
 
-- **Inventario observado:** `fastapi==0.141.1`, `pydantic==2.13.5`, `uvicorn==0.53.0`, `PyMySQL==1.2.0`, `python-multipart==0.0.20`, `Pillow==12.3.0`; [backend/requirements.txt](../../backend/requirements.txt). Flutter y dependencias Dart en [pubspec.yaml](../../frontend/campusmarket/pubspec.yaml).
+- **Inventario de la primera auditoría:** `fastapi==0.141.1`, `pydantic==2.13.5`, `uvicorn==0.53.0`, `PyMySQL==1.2.0`, `python-multipart==0.0.20`, `Pillow==12.3.0` (versiones originales; la rama candidata propone 0.0.33 y 13.0.0 respectivamente); [backend/requirements.txt](../../backend/requirements.txt). Flutter y dependencias Dart en [pubspec.yaml](../../frontend/campusmarket/pubspec.yaml).
 - **Automatización propuesta:** [`s13-dependencias.yml`](../../.github/workflows/s13-dependencias.yml) ejecutará `pip-audit`, conservará salida JSON y resumirá hallazgos; no se afirma análisis ejecutado hasta tener URL de run, SHA, cantidad, identificadores y decisiones documentadas.
 - **Hallazgo bajo investigación:** la versión `python-multipart==0.0.20` ya estaba señalada en feedback. **No afirmar vulnerabilidad confirmada ni seguridad de la versión** hasta revisar salida del scanner/avisos aplicables. Tampoco actualizar a ciegas por posible ruptura de compatibilidad.
 - **Dart / imágenes:** no cubiertos por `pip-audit`; documentar la brecha y planear `flutter pub outdated`, revisión de advisories y escaneo de imagen o SBOM por separado.
 - **Protocolo de revisión:** identificar CVE/advisory, paquete y versión vulnerable, alcance real en CampusMarket, decisión (corregir, mitigar, aceptar temporalmente con motivo), responsable, PR, prueba de regresión y run de cierre.
-- **Evidencia por completar tras CI:** Run URL: **PENDIENTE**; commit: **PENDIENTE**; hallazgos reales: **NO OBSERVADOS**; clasificación de hallazgos: **PENDIENTE**.
+- **Primera ejecución real (PR #79):** [run 41360317202](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41360317202), fallo controlado tras auditar **16 paquetes / 51 entradas de advisory**; incluye repeticiones y no representa 51 defectos distintos. Paquetes señalados: `python-multipart==0.0.20` y `Pillow==12.3.0`, identificadores como `PYSEC-2026-1852` y `CVE-2026-112895`. [Artefacto JSON](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41360317202/artifacts/13105165204). **Decisión:** actualizar ambas dependencias en rama de trabajo y evaluar avisos con pruebas de compatibilidad y nuevo escaneo. **Riesgo residual:** todavía no está acreditada la resolución de todos los hallazgos ni el estado de imagen productiva. 
+- **Correción propuesta:** [commit a2b8af5](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/a2b8af5b985b6f614649b88aa1aae8becd2a0484) cambia `python-multipart` a 0.0.33 y Pillow a 13.0.0. Son versiones publicadas; no afirmar compatibilidad ni deployment hasta run verde.
+- **Incidencia independiente del PR:** [Flutter frontend run 41360317362](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41360317362) falló por `java.net.UnknownHostException: services.gradle.org`, durante descarga Gradle; `flutter analyze` había pasado. Clasificación: acceso externo del runner, sujeto a reintento, no defecto funcional demostrado.
 
 ## 4. Privacidad y base de tratamiento
 
@@ -53,7 +55,7 @@ Modelo anclado en [C4 L2](../c4/02-contenedores.puml) y [C4 L3](../c4/03-compone
 
 ## 6. Decisiones arquitectónicas
 
-Este documento **no cambia** estructura ni código de producto: propone observación, controles de pipeline y validaciones sobre mecanismos existentes. No requiere un ADR nuevo para declarar la ejecución de auditoría de dependencias. Cualquier modificación estructural (nuevo proxy, almacén de secretos, contenedor, autenticación distinta o herramienta generativa) requerirá **ADR nuevo**, pruebas y cambio C4 antes de implementarla.
+La primera etapa era documental/CI; la corrección candidata posterior **sí modifica versiones de dependencias de producto**, sin cambiar topología ni ejecutar despliegue. No requiere un ADR nuevo para declarar la ejecución de auditoría de dependencias. Cualquier modificación estructural (nuevo proxy, almacén de secretos, contenedor, autenticación distinta o herramienta generativa) requerirá **ADR nuevo**, pruebas y cambio C4 antes de implementarla.
 
 ## 7. Matriz S13, estado honesto antes de CI
 
@@ -63,8 +65,8 @@ Este documento **no cambia** estructura ni código de producto: propone observac
 | P e I, prioridad | Documentado | §2, fórmula y orden |
 | Mitigación, dueño y estado | Documentado | §2 |
 | Plan ataca prioridad alta | **Preparado, ejecución parcial** | §2–3, faltan escaneo y pruebas |
-| Scanner en CI y URL de run | **Pendiente** | workflow nuevo; ejecución por confirmar |
-| Hallazgos revisados | **Pendiente** | requiere JSON real |
+| Scanner en CI y URL de run | **Cumple ejecución, encontró vulnerabilidades** | run 41360317202 y artifact JSON; nueva auditoría pendiente |
+| Hallazgos revisados | **Parcial** | 16 paquetes y 51 entradas; 2 paquetes priorizados para actualización, falta validación y decisiones por advisory |
 | Privacidad y base | **Parcial** | §4; base jurídica precisa por validar |
 | LLM, si existe | **No aplica por ADR-0010** | §5 |
 | arc42 §8 | **Pendiente de anexo** | §4 y [arc42](../arc42/08-conceptos-transversales.md) |
