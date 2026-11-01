@@ -1,0 +1,47 @@
+name: Compose development Web aislado
+
+on:
+  push:
+    branches: [ops/development-web-aislado-20261031]
+    paths:
+      - deploy/compose.development.yaml
+      - scripts/ensayar_development.py
+      - scripts/test_ensayar_development.py
+      - .github/workflows/development-web.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  development:
+    if: github.repository == 'Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - name: Validar que la configuracion rechaza recursos ajenos
+        run: python3 -m unittest scripts.test_ensayar_development -v
+      - name: Preparar dos proyectos exclusivamente sinteticos
+        id: prepare
+        run: |
+          printf 'DOCKER_CONFIG=%s/campusmarket-ghcr-docker-%s-%s\n' \
+            "$RUNNER_TEMP" "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT" >> "$GITHUB_ENV"
+          python3 -m scripts.ensayar_development prepare
+      - name: Probar solo la nueva topologia development, persistencia y rollback
+        run: python3 -m scripts.ensayar_development run
+      - name: Limpiar exclusivamente recursos sinteticos del run
+        if: ${{ always() && steps.prepare.outcome != 'skipped' }}
+        run: python3 -m scripts.ensayar_development cleanup
+      - name: Emitir resultado sin Environment ni datos de usuarios
+        if: ${{ always() && steps.prepare.outcome != 'skipped' }}
+        run: python3 -m scripts.ensayar_development report
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: ${{ always() && steps.prepare.outcome != 'skipped' }}
+        with:
+          name: development-web-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/development-web/resultado.json
+          if-no-files-found: error
+          retention-days: 90
