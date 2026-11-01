@@ -73,3 +73,14 @@ preflight de solo lectura. El [run 41133683253](https://github.com/Nnigarp/AS_20
 probó los comandos de promoción/rollback exclusivos de API y restauración sintética. El control de rollback
 usa el mismo Image ID: no demuestra compatibilidad con la imagen productiva desconocida.
 La decisión sigue propuesta y la publicación bloqueada por sus precondiciones productivas.
+
+### Ensayo independiente preparado — 2026-10-31
+
+La misma imagen puede ensayarse en `development` con una base y volúmenes nuevos, bajo
+`dev-campusmarket.iscoutb.dev/app/`, sin usar datos, Environment o recuperación de production.
+El [Compose específico](../../deploy/compose.development.yaml) y el
+[run 41258568018](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41258568018)
+acreditan esa topología en CI y vuelta desde una configuración API fallida a la misma imagen aprobada.
+No acreditan compatibilidad con otra versión ni operación en Dokploy. La convivencia exige una cuota efectiva
+conjunta de al menos 1 GiB/cuatro contenedores; la contradicción entre anuncio y guía escrita sigue sin resolver.
+[Autorización, aislamiento, dominio y rollback desde el panel](../operacion/despliegue-ghcr.md#ensayo-independiente-en-development--2026-10-31).

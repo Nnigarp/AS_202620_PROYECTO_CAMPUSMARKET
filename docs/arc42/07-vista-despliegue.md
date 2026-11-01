@@ -556,3 +556,21 @@ El [ensayo operativo 41133683253](https://github.com/Nnigarp/AS_202620_PROYECTO_
 commit `61a9171a6fff1ebfd53b869fc1b37aeb7d405461`, verificó siete criterios del mecanismo
 sin build ni push. Reemplazó solo API en promoción/rollback y restauró SQL/PNG sintéticos en otro proyecto
 del runner; no acredita recuperación productiva. [Preflight, límites y procedimiento](../operacion/despliegue-ghcr.md).
+
+## 7.14 Ensayo development independiente preparado — 2026-10-31
+
+La lectura del panel confirmó `campusmarket/development` vacío y `Create Service` disponible; no se creó nada.
+[Compose development](../../deploy/compose.development.yaml) reutiliza la imagen Web `65d34f2d…`, sin build,
+y fija también MySQL 8.4 por digest. Un nuevo proyecto Compose tendrá `api`/`db`, claves `DEV_MYSQL_*`,
+volúmenes `dev_mysql_data`/`dev_publication_images` y redes propias; MySQL solo declara la red interna `dev_data`.
+Isolated Deployment debe permanecer activado: Dokploy añade su red de aplicación para el proxy, sin reutilizar
+la red de `production/sistema`. El origen del bundle será el nuevo host, con UI `/app/` y API en sus rutas actuales.
+
+[Run 41258568018](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41258568018),
+fuente `0e670cc8678624c3d507cd87f27c476ba758f24c`: 10 pruebas/nueve criterios. Dos proyectos CI probaron
+SQL/fotos separados, TCP entre redes bloqueado, persistencia, degradación 503 y recuperación, límites efectivos
+y rollback equivalente al `up` global del panel conservando MySQL. No se reconstruyó ni publicó ninguna imagen.
+Los límites nuevos suman 512 MiB; junto a los 512 MiB declarados en production requieren **1024 MiB/cuatro contenedores**.
+Cuota vigente/asignación y capacidad institucional sin acreditar; HTTPS/dominio nuevos pendientes.
+El [procedimiento canónico](../operacion/despliegue-ghcr.md#ensayo-independiente-en-development--2026-10-31)
+separa autorización del ensayo y recuperación productiva, que sigue pendiente.

@@ -223,3 +223,125 @@ y por el selector OCI ante etiquetas nulas; commits `a36da68` y `b92d0aa` los co
 El job `mecanismo` se omitió intencionadamente: Compose y operaciones del ensayo siguen idénticos a
 `61a9171…`, por lo que se conserva la evidencia válida `41133683253`. Cambios futuros en esos archivos,
 o solicitud manual explícita `full_trial`, activan el ensayo completo. No se repiten los seis workflows previos.
+
+## Ensayo independiente en development — 2026-10-31
+
+**Preparado y probado en CI; no creado ni desplegado en Dokploy.** Esta alternativa usa datos nuevos
+exclusivamente sintéticos. La ausencia de recuperación productiva acreditada no impide preparar este
+ensayo separado, ni queda resuelta por él. Los procedimientos productivos anteriores mantienen todos sus gates.
+
+### Configuración y evidencia nueva
+
+- Rama del fork: `ops/development-web-aislado-20261031`, desde `f63bfcf…`, sin modificar PR #1 ni PR #76.
+- [Compose](../../deploy/compose.development.yaml), [ensayo](../../scripts/ensayar_development.py),
+  [rechazos](../../scripts/test_ensayar_development.py) y [workflow](../../.github/workflows/development-web.yml).
+- Imagen API/Web: el digest `65d34f2d…` y el Image ID indicados al inicio; fuente de imagen `a9b6709…`.
+  No se reconstruyó Flutter ni se publicó ninguna imagen.
+- MySQL independiente: `mysql:8.4@sha256:a0225d1ea6631c8bc2385dc4c2faba17bbf1834ecf369e1659a9a382bd8d5dd7`.
+  Ese digest ya figuraba en el ensayo `41051624793`; el nuevo ensayo lo descarga y ejecuta por esa identidad.
+- Base fija `campusmarket_development_test`, usuario `campusmarket_dev`; solo se interpolan
+  `DEV_MYSQL_PASSWORD` y `DEV_MYSQL_ROOT_PASSWORD`, nuevas y diferentes. No hereda las variables `MYSQL_*` de production.
+- Volúmenes lógicos `dev_mysql_data` y `dev_publication_images`, redes propias `default` y `dev_data` interna;
+  sin `external`, `name` global, bind mounts, puertos publicados ni contextos build. La única exposición es `api:8000`.
+- [Run final 41258568018](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41258568018),
+  commit de código `0e670cc8678624c3d507cd87f27c476ba758f24c`: **10 pruebas y nueve criterios CUMPLE**.
+  Artefacto `development-web-41258568018-1`, ID `13064196858`, ZIP SHA-256
+  `02f8f154aba107e1f386e584daff3b5c99ce9950f31d1bc12e358dcd6c4a3eea`, descargado y contrastado.
+  SHA-256 del Compose `74f7c65c16cf3ffbebe72f6597a34c35c22fd6024230db1ce540bc90d29764a8`.
+
+Dos proyectos efímeros CI usaron claves distintas y marcadores SQL/uploads diferentes; TCP desde API a la
+base del otro proyecto quedó bloqueado. SQL y PNG sobrevivieron a recrear ambos contenedores propios.
+Detener únicamente la base sintética produjo HTTP 503 y API unhealthy; arrancarla recuperó ambos healthchecks.
+El bundle conservó `/app/` y CORS aceptó el nuevo origen. No se repitió el build ni la aceptación Flutter previa.
+
+El ensayo final sustituyó la API por una configuración que termina con código 1 y restauró la configuración
+aprobada usando `up -d --build --remove-orphans`, equivalente al log real del panel. No había `build` en ninguno
+de los servicios: no construyó imágenes. MySQL conservó contenedor, Image ID, StartedAt, reinicios y montajes;
+la API recuperó el mismo digest y SQL/fotos. El proyecto testigo quedó intacto. Esto prueba rollback de
+**configuración a la misma imagen**, no una reversión entre versiones con esquemas diferentes.
+
+Límites efectivos CI: 268435456 bytes y 500000000 NanoCpus por contenedor. Picos observados en las muestras:
+API/Web 195538944 bytes (186,48 MiB), MySQL 185278464 bytes (176,70 MiB), sin OOM/reinicios automáticos.
+Cleanup terminó sin contenedores, redes o volúmenes propios; se retiraron las claves efímeras. Solo se conserva
+el resultado selectivo, sin Environment, SQL, fotos o sesiones. El primer ensayo `41258330172`, fuente `e2799b0…`,
+pasó nueve pruebas/nueve criterios; el final añade MySQL por digest y acredita el camino de rollback del panel.
+
+### Preflight anterior a autorizar el nuevo servicio
+
+1. **Cuota conjunta:** la [guía vigente](https://github.com/ISCOUTB/iscoutb.dev/blob/main/README.md)
+   y [políticas](https://github.com/ISCOUTB/iscoutb.dev/blob/main/docs/politicas-uso.md) todavía indican
+   512 MB/cuatro contenedores. El anuncio aportado de 1 GB/seis no acredita la asignación efectiva del proyecto.
+   La lectura del panel confirmó development vacío, pero no expuso una cuota efectiva que resolviera la diferencia.
+   Se necesita evidencia oficial vigente de al menos **1073741824 bytes (1 GiB) y cuatro contenedores sumando
+   ambos entornos**, y confirmar que no hay otros servicios del equipo consumiendo esa asignación.
+   No interpretar 1 GB decimal como 1 GiB ni comprobar el límite agotando memoria. Sin esa evidencia, no crear/desplegar.
+
+   | Entorno | Contenedores | Suma de límites de memoria |
+   |---|---:|---:|
+   | production actual, según Compose | 2 | 512 MiB |
+   | development propuesto | 2 | 512 MiB |
+   | Total propuesto | 4 | 1024 MiB |
+
+2. **Permisos y separación:** usar únicamente `campusmarket → development`, actualmente vacío.
+   `Create Service` visible no demuestra que el servidor aceptará el alta; si la deniega, detenerse.
+   Debe ser un Compose nuevo, con identificador/appName/proyecto nuevo, distinto de
+   `campusmarket-sistema-2zvsxj`. No clonar `production/sistema` ni trasladar sus variables o montajes.
+3. **Fuente:** comprobar que la rama elegida contiene el Compose con el hash anterior y el código probado
+   `0e670cc…`. El fork es público: el proveedor Git por HTTPS no requiere SSH ni ampliar permisos de GitHub App
+   ([documentación de proveedores](https://docs.dokploy.com/docs/core/providers#git)). Si no está disponible,
+   detenerse; no cambiar permisos, proveedor o credenciales de production.
+4. **Routing/registro:** `dev-campusmarket.iscoutb.dev` debe estar libre dentro del espacio del equipo;
+   no sustituir ningún dominio existente. El pull de este digest se acreditó en CI, no en Dokploy.
+   La futura autorización del primer ensayo debe incluir su descarga en el nuevo servicio; un fallo de pull
+   detiene el ensayo y no autoriza cambiar visibilidad, credenciales ni usar otra imagen.
+5. **Autorización expresa:** crear/configurar/desplegar este servicio y, si falla, detener o revertir únicamente
+   el nuevo ensayo. No incluye merge, Pages, cambios al autodeploy de production ni operaciones sobre sus datos.
+
+### Configuración posterior desde el panel, solo con autorización
+
+1. `campusmarket → development → Create Service → Compose`; nombre `web-ensayo`.
+   Antes de conectar el repositorio, dejar **Autodeploy OFF en este servicio nuevo**, sin pulsar Deploy/Rebuild.
+   En **Advanced**, activar **Enable Isolated Deployment**, aunque aparezca Deprecated. No tocar el de production.
+2. **General → Provider → Git**: HTTPS URL `https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET.git`,
+   Branch `ops/development-web-aislado-20261031`, Compose Path `./deploy/compose.development.yaml`; Save.
+   Verificar que la rama sigue correspondiendo al Compose probado; no escribir un SHA en Branch suponiendo
+   que el proveedor admite detached checkout. Los commits documentales posteriores no cambian ese Compose.
+3. **Environment**: introducir únicamente `DEV_MYSQL_PASSWORD` y `DEV_MYSQL_ROOT_PASSWORD`, generadas localmente,
+   diferentes entre sí y de todas las claves productivas. No copiarlas a Git, al chat ni a capturas. Guardar.
+   Dokploy genera su propio `deploy/.env` en el checkout del nuevo servicio.
+4. **Domains → Add Domain**: Host `dev-campusmarket.iscoutb.dev`; Service Name `api`; Path `/`;
+   Container Port `8000`; Strip Path **no**; HTTPS **sí**, Certificate Provider **Let's Encrypt**.
+   La UI se abrirá en `/app/`: no limitar el routing a `/app/`, porque `/health`, `/catalogo` y `/uploads` usan la raíz.
+5. Antes del primer **General → Deploy**, comprobar entorno/nombre nuevos, Isolated Deployment, digest API/MySQL,
+   ausencia de build/ports/binds y que ningún recurso externo señala a production. Dokploy añade una red propia
+   para Traefik mediante Isolated Deployment; no declarar `dokploy-network` ni redes productivas en el repositorio.
+   Si su vista generada no permite acreditar la configuración, detenerse antes de desplegar y obtener esa evidencia.
+6. El primer Deploy crea solamente los dos contenedores nuevos. Conservar el log: su `-p` debe ser el proyecto
+   nuevo y el fichero debe ser `compose.development.yaml`. El flag global `--build` no implica compilar si el
+   Compose efectivo carece de `build`; cualquier contexto build o volumen productivo invalida este ensayo.
+   Un fallo de permisos, pull o recursos no autoriza un cambio en production.
+
+### Aceptación pública y rollback del ensayo
+
+Verificar HTTPS válido en `https://dev-campusmarket.iscoutb.dev/app/`, `/app` → `/app/`, recursos sin errores,
+Inicio → Catálogo → detalle → atrás → recarga; `/health` 200/ok, `/docs` y `/openapi.json` 200.
+El catálogo debe comenzar vacío. Crear únicamente un usuario ficticio `demo-dev@example.test`, una publicación
+DEMO y una imagen sin datos personales desde la propia UI; nunca importar SQL/fotos productivos.
+Las peticiones deben ir al host **dev-campusmarket**, no a la API principal ni a Pages.
+Contrastar en el nuevo despliegue el digest/Image ID con fuente OCI y `X-CampusMarket-Revision` `a9b6709…`;
+la cabecera por sí sola no prueba identidad. Revisar salud y Monitoring sin interpretar ceros como memoria libre.
+
+Referencia conservada para volver al baseline probado: rama del fork **`backup/development-web-0e670cc8`**,
+que apunta a `0e670cc8678624c3d507cd87f27c476ba758f24c`. Después de un primer despliegue aceptado,
+una configuración posterior defectuosa puede revertirse desde **web-ensayo → General → Provider → Branch**
+seleccionando esa referencia y haciendo Save, seguido de **Deploy manual**. Mantener exactamente appName,
+Compose Path, las dos claves de development, Isolated Deployment y dominio; no cambiar MySQL ni volúmenes.
+La prueba CI acredita ese `up` global con imágenes fijadas y configuración DB idéntica; comprobar el log y
+metadatos reales del nuevo servicio antes de atribuirle el mismo resultado. No invocar el rollback registral
+de Applications suponiendo que es equivalente al servicio Compose ni volver a publicar GHCR.
+
+Si falla el primer intento, aún no existe una versión institucional anterior de este ensayo: detener únicamente
+`development/web-ensayo` dentro de la autorización recibida y conservar sus volúmenes para diagnóstico.
+Nunca usar Fresh Volumes ni `down -v` en el panel. Detener aceptación ante discrepancia de cuota, identidad,
+proyecto, montajes, salud, navegación, recursos o cambio inesperado de MySQL. Esta alternativa todavía no
+publica `/app/` en el dominio principal y no acredita recuperación productiva.

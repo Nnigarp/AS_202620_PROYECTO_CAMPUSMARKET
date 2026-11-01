@@ -26,6 +26,14 @@ Véanse [ADR-0025](docs/adr/0025-servir-flutter-precompilado-desde-fastapi.md),
 Un checkout Git sin el build mantiene la API sola; fusionar este cambio no publica Flutter.
 El autodeploy de `master` sigue activo: coordinar su control antes de cualquier merge.
 
+El [ensayo independiente de development](docs/operacion/despliegue-ghcr.md#ensayo-independiente-en-development--2026-10-31)
+ya tiene [Compose por digest](deploy/compose.development.yaml) y
+[CI 41258568018](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41258568018):
+10 pruebas y nueve criterios aprobados, sin recompilar Flutter. Prepara
+`https://dev-campusmarket.iscoutb.dev/app/` con MySQL/uploads sintéticos propios; **no está desplegado**.
+La convivencia con production requiere acreditar una cuota conjunta de al menos **1 GiB y cuatro contenedores**;
+guía/políticas siguen indicando 512 MB/cuatro y el anuncio de 1 GB/seis no acredita todavía su asignación efectiva.
+
 ## Integrantes
 
 - Joshua Tenorio Alvarez
