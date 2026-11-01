@@ -39,7 +39,7 @@ jobs:
         run: >-
           python scripts/experimento_s10_contrato.py
           --output artifacts/s10/${{ github.run_id }}
-          --expected-revision 7856416795bb4accdf9d05e01adb470654875e56
+          --expected-revision a9b6709a67f8036346acb64b9c2b9849ee355cf2
           --reference-contract /tmp/s10-reference.json
       - name: Conservar todas las muestras, incluidas las fallidas
         if: always()
