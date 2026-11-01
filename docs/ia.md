@@ -690,3 +690,10 @@ y la publicación en la [evidencia de cierre](operacion/evidencia-ghcr-cierre.md
 | 01/11/2026 | ChatGPT | Revisión del CONTRATO.md, patrón documental histórico, ADR, arc42, C4, aspectos y matriz de cierre; redacción de documentación incremental | El equipo debe revisar la propuesta en el PR y confirmar que las URLs, decisiones y límites corresponden a las pruebas realizadas | Se descartó reescribir ADR aceptados, eliminar evidencia S8–S12 o atribuir pruebas sintéticas a producción, porque rompería trazabilidad histórica y verificabilidad |
 
 Evidencia técnica: [cierre institucional](evidencias/cierre-web-institucional-2026-11-01.md) y [ADR-0025](adr/0025-servir-flutter-web-con-fastapi-en-servicio-existente.md). No se incluyen credenciales ni conversaciones privadas.
+
+
+## Registro S13 — modelado de amenazas (2026-11-01)
+
+| Fecha | Uso de IA / herramienta | Propuesta aceptada y comprobación | Propuesta rechazada o corregida y motivo técnico | Resultado verificable |
+|---|---|---|---|---|
+| 2026-11-01 | ChatGPT — apoyo al análisis STRIDE y construcción documental S13 | Inventariar fronteras C4, mapear rutas reales de seguridad y proponer tabla con P/I, responsables y estados; revisar contra routers de Usuarios/Administración, `image_storage.py`, Compose y ADR-0010 | Rechazar declarar pentest o análisis de vulnerabilidades ejecutado a partir de lectura estática; no atribuir seguridad total por version pinning; no afirmar base jurídica específica sin validación; no atribuir a producción un LLM ausente | [Evidencia S13](evidencias/evidencia-s13-amenazas-2026-11-01.md), [workflow de auditoría](../.github/workflows/s13-dependencias.yml), [arc42 §8](arc42/08-conceptos-transversales.md), [arc42 §11](arc42/11-riesgos-y-deuda-tecnica.md). La salida real de CI queda pendiente. |
