@@ -1,0 +1,41 @@
+name: Configuracion de promocion Web sin reconstruccion
+
+on:
+  push:
+    branches: [ops/produccion-web-digest-20261031]
+    paths:
+      - deploy/compose.prod.yaml
+      - scripts/verificar_promocion_web.py
+      - scripts/ensayar_imagen_ghcr.py
+      - .github/workflows/promocion-web-config.yml
+  pull_request:
+    branches: [master]
+    paths:
+      - deploy/compose.prod.yaml
+      - scripts/verificar_promocion_web.py
+      - scripts/ensayar_imagen_ghcr.py
+      - .github/workflows/promocion-web-config.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  configuration:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Recuperar solo el codigo fuente de la imagen aprobada para comparar persistencia
+        run: git fetch --no-tags --depth=1 https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET.git a9b6709a67f8036346acb64b9c2b9849ee355cf2
+      - name: Validar delta exacto e integridad del manifiesto y configuracion OCI
+        run: python3 -m scripts.verificar_promocion_web --registry --output artifacts/promocion-web/configuracion.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: promocion-web-config-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/promocion-web/configuracion.json
+          if-no-files-found: error
+          retention-days: 90

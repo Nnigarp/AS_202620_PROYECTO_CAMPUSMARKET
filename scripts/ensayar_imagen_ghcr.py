@@ -16,8 +16,8 @@ import time
 from pathlib import Path
 
 REPOSITORY = "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET"
-SOURCE_SHA = "2154e7880e5111537256206a29f4f4c29a8c86c4"
-IMAGE = "ghcr.io/iscoutb/campusmarket-api@sha256:f9eaabdb166274225e9ad490c44999f71f6b1f7c9c5902dc68ab98b07115ce8b"
+SOURCE_SHA = "a9b6709a67f8036346acb64b9c2b9849ee355cf2"
+IMAGE = "ghcr.io/nnigarp/campusmarket-web-candidate@sha256:65d34f2de8d035d5a9672be2e6a81bab759089da2fbe91bdca23a17f2f0463fd"
 ROOT = Path(__file__).resolve().parents[1]
 COMPOSE_FILE = ROOT / "deploy/compose.prod.yaml"
 VOLUMES = {"api": ("publication_images", "/app/backend/uploads"), "db": ("mysql_data", "/var/lib/mysql")}
