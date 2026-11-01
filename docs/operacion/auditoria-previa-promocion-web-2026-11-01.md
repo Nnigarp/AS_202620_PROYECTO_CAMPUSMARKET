@@ -55,3 +55,14 @@ Registro documental de observaciones; **no acredita despliegue de Flutter ni aut
 5. En el PR #77, el último commit documental registrado antes de esta actualización era `1cd648d` y GitHub mostró los checks completados con éxito; el PR seguía Draft. Cualquier commit posterior exige comprobar de nuevo los checks pertinentes.
 
 **Control de cambios:** no volver a pulsar Deploy con el Run Command predeterminado para inspecciones. No ejecutar ningún comando de borrado de volúmenes, ni un despliegue de Flutter, hasta acordar la promoción y la recuperación.
+
+## Imagen de rollback verificada por GitHub Actions (2026-11-01)
+
+- Rama de implementación y prueba: `ops/rollback-api-78564167-20261101` en el fork `Nnigarp`.
+- Commit del workflow corregido: `2af811617997bccc356373e09d33bfdfe44dee85`.
+- Run exitoso: https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41341824838
+- Revisión de código comprobada: `7856416795bb4accdf9d05e01adb470654875e56`.
+- Imagen publicada **por digest**, extraído del log del paso `Publicar imagen validada por digest`:
+  `ghcr.io/nnigarp/campusmarket-api-rollback@sha256:f1114c208ed47d762fee76306cbd4d5b27134f2c18638475297f7fe8f677696b`.
+- La compilación `linux/amd64` y el test integrado de `/health` con MySQL sintético finalizaron exitosos. El run previo `41341503369` falló por verificar `/health` sin MySQL; se corrigió y se ejecutó de nuevo.
+- **Límite de esta evidencia:** es reconstrucción verificada del código anterior, no copia exacta del contenedor actual ni copia de SQL/fotos. Para usarla en rollback hay que comprobar permisos de lectura GHCR en Dokploy y sustituir solo `api.image`; no hacerlo en producción sin el plan aprobado y comprobación del Compose efectivo.
