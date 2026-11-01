@@ -734,3 +734,6 @@ El 1 de noviembre se promovió a producción el candidato de [`deploy/compose.pr
 - [CI de auditoría de dependencias Python con reporte JSON](.github/workflows/s13-dependencias.yml). **El run y la revisión de hallazgos están pendientes**; no declarar S13 completada por la mera presencia del workflow.
 - [arc42 §8 seguridad](docs/arc42/08-conceptos-transversales.md#811-arquitectura-de-seguridad-y-privacidad--s13-2026-11-01) · [arc42 §11 riesgos residuales](docs/arc42/11-riesgos-y-deuda-tecnica.md).
 - El análisis de dependencias Python no sustituye auditoría Flutter/Dart, imágenes OCI, secretos del historial ni validación de privacidad.
+
+
+**Actualización S13 de seguridad (PR #79):** [auditoría inicial](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41360317202) detectó avisos en `python-multipart 0.0.20` y `Pillow 12.3.0`; [la rama propone actualizar ambas](backend/requirements.txt). Se mantienen **pendientes** nuevo escaneo, regresiones y evaluación de advisories; producción conserva su digest anterior hasta autorización explícita. [Matriz y decisiones](docs/evidencias/evidencia-s13-amenazas-2026-11-01.md).
