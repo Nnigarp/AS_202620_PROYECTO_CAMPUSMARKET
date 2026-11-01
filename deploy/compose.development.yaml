@@ -1,5 +1,9 @@
-# Solo un NUEVO servicio Compose en campusmarket/development, Isolated Deployment.
-# Nunca superponer sobre production: no hay recursos external ni nombres globales.
+
+# CampusMarket — ensayo aislado en development.
+# No utilizar en production.
+# API y MySQL comparten una única red interna de desarrollo.
+# Dokploy debe incorporar su red para el acceso HTTP mediante Traefik.
+
 services:
   api:
     image: ghcr.io/nnigarp/campusmarket-web-candidate@sha256:65d34f2de8d035d5a9672be2e6a81bab759089da2fbe91bdca23a17f2f0463fd
@@ -17,15 +21,21 @@ services:
       CAMPUSMARKET_UPLOAD_DIR: /app/backend/uploads
       CAMPUSMARKET_ADMIN_USER_IDS: ""
       CAMPUSMARKET_CORS_ORIGINS: https://dev-campusmarket.iscoutb.dev
-    expose: ["8000"]
-    networks: [default, dev_data]
+    expose:
+      - "8000"
+    networks:
+      - dev_data
     volumes:
       - dev_publication_images:/app/backend/uploads
     depends_on:
       db:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3)"]
+      test:
+        - CMD
+        - python
+        - -c
+        - import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3)
       interval: 15s
       timeout: 5s
       retries: 5
@@ -52,14 +62,23 @@ services:
       MYSQL_DATABASE: campusmarket_development_test
       MYSQL_USER: campusmarket_dev
       MYSQL_PASSWORD: ${DEV_MYSQL_PASSWORD:?Introduce una clave NUEVA de development}
-    command: ["--performance-schema=OFF", "--innodb-buffer-pool-size=48M",
-      "--innodb-log-buffer-size=4M", "--max-connections=30", "--table-open-cache=256",
-      "--tmp-table-size=8M", "--max-heap-table-size=8M", "--skip-name-resolve"]
-    networks: [dev_data]
+    command:
+      - --performance-schema=OFF
+      - --innodb-buffer-pool-size=48M
+      - --innodb-log-buffer-size=4M
+      - --max-connections=30
+      - --table-open-cache=256
+      - --tmp-table-size=8M
+      - --max-heap-table-size=8M
+      - --skip-name-resolve
+    networks:
+      - dev_data
     volumes:
       - dev_mysql_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD-SHELL", "MYSQL_PWD=\"$${MYSQL_PASSWORD}\" mysql -h 127.0.0.1 -u \"$${MYSQL_USER}\" \"$${MYSQL_DATABASE}\" --batch --skip-column-names -e 'SELECT 1'"]
+      test:
+        - CMD-SHELL
+        - MYSQL_PWD="$${MYSQL_PASSWORD}" mysql -h 127.0.0.1 -u "$${MYSQL_USER}" "$${MYSQL_DATABASE}" --batch --skip-column-names -e 'SELECT 1'
       interval: 10s
       timeout: 5s
       retries: 15
@@ -76,9 +95,6 @@ services:
           memory: 256M
 
 networks:
-  default:
-    labels:
-      campusmarket.environment: development
   dev_data:
     internal: true
     labels:
