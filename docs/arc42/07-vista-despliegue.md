@@ -516,3 +516,26 @@ Durante S8 se verificó:
 - validación satisfactoria de la plantilla Bicep.
 
 La vista de despliegue describe el entorno efectivamente ejecutado durante S8 y reemplaza la descripción anterior en la que el proveedor cloud todavía se encontraba pendiente.
+
+
+## 7. Nueva topología institucional vigente — 2026-11-01 (adenda)
+
+Esta sección **actualiza el estado vigente sin borrar la evidencia histórica S8/Pages/Azure** de las secciones anteriores. Desde el despliegue controlado del 1 de noviembre, la interfaz de referencia es [Flutter Web en el dominio ISCOUTB](https://campusmarket.iscoutb.dev/app/), servida por la misma imagen `api` de FastAPI; la API pública permanece en `/health` y sus rutas HTTP. El servicio Compose existente `campusmarket → production → sistema` ejecuta **dos** contenedores: `api` (FastAPI + archivos estáticos compilados Flutter) y `db` (MySQL 8.4). No se añadió un tercer contenedor, broker ni nueva red.
+
+```mermaid
+flowchart TD
+  U["Navegador / estudiante"] -->|"HTTPS /app/ y API HTTP/JSON"| T["Traefik · campusmarket.iscoutb.dev"]
+  T --> A["api · FastAPI + Flutter Web · 256 MB"]
+  A -->|"SQL interno db:3306"| D["db · MySQL 8.4 · 256 MB"]
+  A --> I[("publication_images · /app/backend/uploads")]
+  D --> M[("mysql_data · /var/lib/mysql")]
+```
+
+- **Red existente:** `campusmarket-sistema-2zvsxj`, `external: true` en el Compose efectivo de Dokploy; ambos servicios permanecen en la misma red previa.
+- **Imagen inmutable:** `ghcr.io/nnigarp/campusmarket-web-candidate@sha256:65d34f2de8d035d5a9672be2e6a81bab759089da2fbe91bdca23a17f2f0463fd`.
+- **Configuración versionada:** [`deploy/compose.prod.yaml`](../../deploy/compose.prod.yaml); `api.image` sustituye a `api.build` respecto al histórico `compose.lab.yaml`; MySQL y volúmenes mantienen sus declaraciones.
+- **Promoción:** `docker compose -p campusmarket-sistema-2zvsxj --env-file deploy/.env -f ./deploy/compose.prod.yaml up -d --no-deps --no-build api`; no aplica `down` ni `Fresh Volumes`.
+- **Observaciones:** `/health` OK, `/app/` renderizó catálogo e imágenes; `api` ID `899e114bcdeb` y `db` ID `baedd6d65e17` en estado healthy. La identidad de `db` no cambió.
+- **Límite:** no existe respaldo independiente de SQL/fotos verificado ni rollback ejecutado en Dokploy.
+
+Decisión de topología: [ADR-0025](../adr/0025-servir-flutter-web-con-fastapi-en-servicio-existente.md). Registro de fechas, CI, digest, pruebas y limitaciones: [cierre institucional 2026-11-01](../evidencias/cierre-web-institucional-2026-11-01.md).

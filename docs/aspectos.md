@@ -539,3 +539,14 @@ Las filas S12-DAT-01 y S12-DAT-02 anteriores permanecen como trazabilidad origin
 | S12-MSG-02 | Reintentos con espera progresiva y fallidos a DLQ | [`BrokerSimulator.consume`](../scripts/taller_mensajes_s12.py) invoca `sleep_fn(2)` y `sleep_fn(4)`; por defecto `time.sleep` | [Test fallo recuperable y DLQ](../backend/tests/test_taller_mensajes_s12.py): sleeper inyectado y verificación de `[2]` y `[2,4]` | [Adenda de backoff y límites](evidencias/taller-mensajes-s12-2026-10-25.md#adenda-posterior--backoff-temporal-verificable) | [ADR-0023](adr/0023-probar-mensajes-aislados-sin-introducir-broker-productivo.md), sin modificación histórica |
 
 El test con sleeper falso demuestra que la ruta de reintento **invoca las demoras correctas**; no mide el tiempo real del scheduler. La demostración ejecutada sin inyección sí aplica esperas temporales. El CI de la corrección deberá comprobarse con el SHA posterior al PR correctivo, sin reutilizar el verde de PR #64 como si fuese validación de este cambio.
+
+
+## Adenda de trazabilidad — publicación Flutter Web institucional (2026-11-01)
+
+Se conserva la matriz histórica de ocho columnas y se añade un aspecto operativo verificable. Esta adenda no inventa un requisito funcional: concreta los objetivos ya existentes de **EC-04 (recuperación)** y despliegue reproducible.
+
+| ID | Aspecto | Requisito | C4 | ADR | Código | Pruebas | Evidencia |
+|---|---|---|---|---|---|---|---|
+| ASP-WEB-01 | Publicar Flutter Web bajo el dominio institucional manteniendo datos de CampusMarket | [EC-04 / recuperación](./arc42/10-escenarios-de-calidad.md), [restricciones](./arc42/02-restricciones.md) | [C4 L2 / adenda](./c4/02-contenedores.md#adenda-c4-l2--despliegue-institucional-vigente-2026-11-01) | [ADR-0018](./adr/0018-ejecutar-el-monolito-en-dokploy-con-volumenes.md), [ADR-0024](./adr/0024-publicar-imagen-verificada-y-condicionar-promocion.md), [ADR-0025](./adr/0025-servir-flutter-web-con-fastapi-en-servicio-existente.md) | [Compose productivo](../deploy/compose.prod.yaml), [FastAPI](../backend/app/main.py), [Flutter](../frontend/campusmarket/) | [run rollback con MySQL sintético](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41341824838), [CI del PR #77](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/77/checks), comprobación pública de `/health` y `/app/` documentada | [cierre del 1/11](./evidencias/cierre-web-institucional-2026-11-01.md), [arc42 §7](./arc42/07-vista-despliegue.md) |
+
+**Límite:** la conservación observada de `db-1` y publicaciones no demuestra un backup recuperable ni un rollback productivo ensayado.

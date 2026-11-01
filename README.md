@@ -713,3 +713,16 @@ python scripts/taller_mensajes_s12.py
 ### Taller S12 — Cierre correctivo de backoff (sin alterar ADR históricos)
 
 El consumidor aplica espera real por defecto con `time.sleep` entre los intentos (2 s y 4 s). Las pruebas inyectan un sleeper de prueba que registra las esperas requeridas, manteniendo CI rápido sin eliminar la política temporal del código real. Véanse [pruebas del backoff](backend/tests/test_taller_mensajes_s12.py), [simulador](scripts/taller_mensajes_s12.py), [evidencia y adenda](docs/evidencias/taller-mensajes-s12-2026-10-25.md), [trazabilidad](docs/aspectos.md) y [registro de IA](docs/ia.md). La corrección no altera la arquitectura productiva ni reescribe el ADR-0023. El resultado definitivo depende de pruebas del nuevo commit y del `master` fusionado.
+
+
+## Estado vigente — Flutter Web institucional (2026-11-01)
+
+> **Actualización posterior a los hitos S8–S12:** las referencias anteriores de preparación GHCR, GitHub Pages y Azure describen etapas históricas; no identifican por sí mismas el despliegue actual.
+
+- **Interfaz pública:** https://campusmarket.iscoutb.dev/app/
+- **API saludable:** https://campusmarket.iscoutb.dev/health
+**Servicio:** `campusmarket → production → sistema` (Dokploy), **dos contenedores**: `api` (FastAPI + Flutter Web) y `db` (MySQL 8.4).
+
+El 1 de noviembre se promovió a producción el candidato de [`deploy/compose.prod.yaml`](deploy/compose.prod.yaml) por digest GHCR, mediante actualización dirigida únicamente a `api`; la ejecución terminó `Docker Compose Deployed: ✅`. En comprobaciones posteriores `/health` respondió `ok`, `/app/` cargó catálogo y fotos, y los dos contenedores estaban healthy sin recreación de MySQL. Se verificaron sesión, edición y eliminación de publicaciones. No se ejecutó una restauración SQL/fotos ni rollback productivo.
+
+**Ruta de auditoría posterior a S12:** [cierre institucional](docs/evidencias/cierre-web-institucional-2026-11-01.md) → [ADR-0025](docs/adr/0025-servir-flutter-web-con-fastapi-en-servicio-existente.md) → [arc42 §7](docs/arc42/07-vista-despliegue.md) → [C4 L2](docs/c4/02-contenedores.md) → [aspectos](docs/aspectos.md) → [registro IA](docs/ia.md). Integración de código: [PR #77](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/77), commit `5ef0d6b139138d1260435b1b884240f093904749`. **No volver a ejecutar Deploy sin revisar Run Command, respaldo y alcance**.

@@ -33,3 +33,16 @@ La evidencia específica se encuentra en [`docs/evidencias/evidencia-s11-2026-10
 | Extraer Catálogo prematuramente | Más fronteras de red, costo y sincronización | ADR-0021 decide no extraer ahora; reevaluar con pruebas de capacidad y requisitos medidos |
 
 **Estado de validación:** inspección estática del `master` base, no pruebas S11 ejecutadas ni verificación del entorno remoto. La ficha S11 admite mitigaciones diseñadas y claramente pendientes con plan; las pruebas de fallos siguen como deuda para el proyecto final. Conservar los riesgos S10 anteriores, sin sobrescribirlos.
+
+
+## Riesgos residuales del despliegue Web institucional — 2026-11-01
+
+| Riesgo | Estado verificable | Mitigación / siguiente control |
+|---|---|---|
+| Ausencia de respaldo externo de MySQL y fotos | **Abierto:** volúmenes montados y datos visibles, pero no hay restauración desde backup acreditada | Configurar almacenamiento y backup externo; ensayar recuperación sin comprometer producción |
+| Rollback de aplicación no ejecutado en Dokploy | **Abierto:** imagen antigua reconstruida, probada con MySQL sintético y publicada por digest; sin reversión real del servidor | Realizar simulacro controlado en entorno equivalente con permisos y datos de prueba; verificar compatibilidad de esquema |
+| Uso futuro del comando predeterminado de Dokploy | **Abierto:** `--build --remove-orphans` no equivale a promoción dirigida de `api` | Documentar y revisar Run Command y Compose Path antes de cualquier Deploy; mantener Autodeploy desactivado hasta adoptar política |
+| Brecha entre infraestructura académica histórica y vigente | **Mitigado documentalmente al integrarse esta adenda:** S8/Pages/Azure son históricos | Mantener sección de topología 2026-11-01 y enlaces a ADR/evidencia sin borrar la historia |
+| Frontend y API compartiendo ciclo de vida | **Costo aceptado:** un cambio de frontend obliga a promover el artefacto `api` | Probar imagen única, fijar digest y validar `/health`, `/app/` y funcionalidades después de cada actualización |
+
+Referencia: [ADR-0025](../adr/0025-servir-flutter-web-con-fastapi-en-servicio-existente.md), [evidencia institucional](../evidencias/cierre-web-institucional-2026-11-01.md). Ninguna de estas verificaciones prueba continuidad 24/7 ni recuperación tras pérdida del host.

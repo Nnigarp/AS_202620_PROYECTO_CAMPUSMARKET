@@ -136,3 +136,8 @@ ese límite se conserva y no se atribuye el ensayo de CI a la producción.
 
 Estas observaciones amplían el estado de operación; no convierten el despliegue
 en la porción académica S9 ni acreditan el scanner Sonar pendiente.
+
+
+## Adenda de decisiones posterior a S12 — 2026-11-01
+
+- **[ADR-0025 — Servir Flutter Web con FastAPI desde el servicio Compose existente](../adr/0025-servir-flutter-web-con-fastapi-en-servicio-existente.md)** — *Propuesto para aceptación del equipo*. Complementa ADR-0018 (Dokploy/volúmenes) y ADR-0024 (imagen verificada por digest). A diferencia del ADR-0024 histórico, incorpora la decisión de hospedar `/app/` en el contenedor `api` existente, sin tercer contenedor ni red nueva. El despliegue y la observación pública del 1 de noviembre se registran en [cierre Web institucional](../evidencias/cierre-web-institucional-2026-11-01.md). No se reescribe un ADR aceptado.
