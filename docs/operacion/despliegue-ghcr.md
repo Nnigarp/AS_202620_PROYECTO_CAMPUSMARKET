@@ -271,3 +271,14 @@ no una reversión idéntica a la anterior. No sustituirlo por `f9eaabdb…` ni d
 No se puede completar ahora un fichero de rollback con Image ID/digest anterior sin inventarlo. La publicación
 sigue bloqueada por esa identidad/recuperabilidad, montajes y respaldo/restauración; la primera solicitud de
 aprobación es únicamente la inspección limitada anterior. No reactivar Autodeploy sin una decisión explícita.
+
+
+## 12. Resultado posterior de promoción Flutter — 2026-11-01 (adenda de ejecución)
+
+**La restricción histórica de las secciones 1–11 describe el estado de planificación anterior; no debe confundirse con el resultado posterior.** Tras PR #77 (merge `5ef0d6b139138d1260435b1b884240f093904749`), Dokploy usó `./deploy/compose.prod.yaml` y un comando personalizado dirigido a `api`: `docker compose -p campusmarket-sistema-2zvsxj --env-file deploy/.env -f ./deploy/compose.prod.yaml up -d --no-deps --no-build api`.
+
+El log registró `api-1 Recreated` y `Docker Compose Deployed: ✅`. La comprobación posterior acreditó `/health` OK y Flutter en `/app/`; `api-1` healthy y `db-1` healthy con ID `baedd6d65e17` idéntico al anterior. Ambos paquetes GHCR (`campusmarket-web-candidate` y `campusmarket-api-rollback`) eran públicos según GitHub; la primera imagen se consumió en la promoción.
+
+**Advertencia persistente:** los montajes se confirmaron, pero no se acreditó backup recuperable ni se ejecutó rollback en el host. El rollback con MySQL sintético en Actions no sustituye la restauración real. Conservar Autodeploy desactivado y revisar antes de cualquier despliegue el Run Command personalizado, ya que el valor predeterminado incorpora `--build --remove-orphans`.
+
+Véanse la [evidencia de cierre](../evidencias/cierre-web-institucional-2026-11-01.md), el [ADR-0025](../adr/0025-servir-flutter-web-con-fastapi-en-servicio-existente.md) y [arc42 §7](../arc42/07-vista-despliegue.md).
