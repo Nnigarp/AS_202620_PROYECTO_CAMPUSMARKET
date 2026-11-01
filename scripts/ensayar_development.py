@@ -26,9 +26,10 @@ from scripts.preparar_despliegue_web import (
 FORK = "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET"
 COMPOSE = ROOT / "deploy/compose.development.yaml"
 DATABASE = "campusmarket_development_test"
+MYSQL_IMAGE = "mysql:8.4@sha256:a0225d1ea6631c8bc2385dc4c2faba17bbf1834ecf369e1659a9a382bd8d5dd7"
 MEMORY = 256 * 1024 * 1024
 VOLUMES = {"api": ("dev_publication_images", "/app/backend/uploads"), "db": ("dev_mysql_data", "/var/lib/mysql")}
-CHECKS = ("compose", "identity", "isolation", "web_origin", "persistence", "dependency", "rollback_api_only", "memory", "cleanup")
+CHECKS = ("compose", "identity", "isolation", "web_origin", "persistence", "dependency", "rollback_panel", "memory", "cleanup")
 MARKER = r'''
 import hashlib,json,sys
 from pathlib import Path
@@ -92,7 +93,7 @@ def validate_config(config, project):
         limits = cfg.get("deploy", {}).get("resources", {}).get("limits", {})
         require(limits.get("cpus") in ("0.5", 0.5) and str(limits.get("memory")) == str(MEMORY), "Limites inesperados")
     api, db = (config["services"][s] for s in ("api", "db"))
-    require(api.get("image") == IMAGE and db.get("image") == "mysql:8.4", "Imagen incorrecta")
+    require(api.get("image") == IMAGE and db.get("image") == MYSQL_IMAGE, "Imagen incorrecta")
     a, d = api["environment"], db["environment"]
     require(a["CAMPUSMARKET_DB_HOST"] == "db" and a["CAMPUSMARKET_DB_NAME"] == d["MYSQL_DATABASE"] == DATABASE, "Base no sintetica")
     require(a["CAMPUSMARKET_DB_USER"] == d["MYSQL_USER"] == "campusmarket_dev", "Usuario no exclusivo")
@@ -155,6 +156,8 @@ class DevelopmentTrial(Trial):
             require(networks == {self.project + "_" + n for n in ({"default", "dev_data"} if service == "api" else {"dev_data"})}, "Red efectiva incorrecta")
             if service == "api":
                 require(data["Image"] == IMAGE_ID and data["Config"]["Image"] == IMAGE, "Imagen de API distinta")
+            else:
+                require(data["Config"]["Image"] == MYSQL_IMAGE, "MySQL no esta fijado por digest")
             peak = int(self.command(self.compose + ["exec", "-T", service, "cat", "/sys/fs/cgroup/memory.peak"], "pico de memoria").strip())
             require(0 < peak <= MEMORY, "Pico fuera del limite")
             result[service] = {"container_id": data["Id"], "started_at": data["State"]["StartedAt"], "restart_count": data["RestartCount"],
@@ -172,8 +175,8 @@ class DevelopmentTrial(Trial):
         require({v["name"] for v in a["volumes"].values()}.isdisjoint(v["name"] for v in b["volumes"].values()), "Volumenes compartidos")
         self.command(["docker", "pull", IMAGE], "descargar la imagen aprobada", timeout=240, diagnose_pull=True)
         validate_image(json.loads(self.command(["docker", "image", "inspect", IMAGE], "identidad GHCR"))[0])
-        self.command(["docker", "pull", "mysql:8.4"], "MySQL 8.4", timeout=240)
-        self.state["mysql_repo_digests"] = json.loads(self.command(["docker", "image", "inspect", "mysql:8.4"], "identidad MySQL"))[0].get("RepoDigests", [])
+        self.command(["docker", "pull", MYSQL_IMAGE], "MySQL 8.4 por digest ya acreditado", timeout=240)
+        self.state["mysql_repo_digests"] = json.loads(self.command(["docker", "image", "inspect", MYSQL_IMAGE], "identidad MySQL"))[0].get("RepoDigests", [])
         self.checked("identity", {"rebuilt": False, "republished": False, "image_id": IMAGE_ID})
         up = ["up", "-d", "--no-build", "--pull", "never", "--wait", "--wait-timeout", "180"]
         for trial in (self, control):
@@ -207,13 +210,16 @@ class DevelopmentTrial(Trial):
         self.checked("dependency", "Sin MySQL: HTTP 503 y API unhealthy; recuperacion a healthy")
         fault = self.private / "fault.compose.json"
         fault.write_text(json.dumps({"services": {"api": {"command": ["python", "-c", "raise SystemExit(1)"], "restart": "no"}}}))
-        self.command(self.compose + ["-f", str(fault)] + ["up", "-d", "--no-deps", "--no-build", "--pull", "never", "api"], "fallo controlado de API sintetica", timeout=120)
+        # Mismo up global observado en Dokploy. --build no construye nada:
+        # ambos servicios tienen solo image por digest y ningun contexto build.
+        panel_up = ["up", "-d", "--build", "--remove-orphans"]
+        self.command(self.compose + ["-f", str(fault)] + panel_up, "fallo controlado con up equivalente al panel", timeout=120)
         deadline = time.monotonic() + 30
         while self.inspect("api")["State"]["Running"] and time.monotonic() < deadline:
             time.sleep(1)
         failed = self.inspect("api")
         require(not failed["State"]["Running"] and failed["State"]["ExitCode"] == 1, "No se acredito el fallo de API")
-        self.command(self.compose + up + ["--no-deps", "api"], "rollback de configuracion solo API", timeout=240)
+        self.command(self.compose + panel_up + ["--wait", "--wait-timeout", "180"], "rollback equivalente al panel", timeout=240)
         recovered = self.snapshot("rollback")
         db_identity = ("container_id", "started_at", "restart_count", "image_id", "memory_limit_bytes", "mounts", "networks")
         require(all(recovered["db"][k] == stable["db"][k] for k in db_identity), "Rollback altero MySQL")
@@ -224,8 +230,9 @@ class DevelopmentTrial(Trial):
         control.marker()
         final_control = control.snapshot("after_trial")
         require(all(final_control[s]["container_id"] == witness[s]["container_id"] and final_control[s]["started_at"] == witness[s]["started_at"] and final_control[s]["mounts"] == witness[s]["mounts"] for s in VOLUMES), "Se altero el proyecto testigo")
-        self.checked("rollback_api_only", {"same_approved_image": True, "failed_configuration_reverted": True, "db_unchanged": True,
-                                           "control_project_unchanged": True, "different_image_compatibility_verified": False})
+        self.checked("rollback_panel", {"same_approved_image": True, "failed_configuration_reverted": True, "db_unchanged": True,
+                                        "panel_equivalent_argv": panel_up, "no_build_contexts": True,
+                                        "control_project_unchanged": True, "different_image_compatibility_verified": False})
         self.checked("memory", {"development_limit_bytes": 2 * MEMORY, "production_declared_limit_bytes": 2 * MEMORY,
                                 "required_team_memory_bytes": 4 * MEMORY, "required_team_containers": 4,
                                 "institutional_quota_verified": False, "capacity_on_institutional_server_verified": False})

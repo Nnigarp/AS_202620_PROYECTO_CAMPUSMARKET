@@ -74,6 +74,9 @@ class DevelopmentConfigurationTests(unittest.TestCase):
             with self.subTest(field=field):
                 self.rejected(lambda c, field=field, value=value: c["services"]["api"].update({field: value}))
 
+    def test_rejects_mutable_mysql_reference_for_panel_rollback(self):
+        self.rejected(lambda c: c["services"]["db"].update(image="mysql:8.4"))
+
     def test_rejects_changed_limits_or_missing_healthcheck(self):
         self.rejected(lambda c: c["services"]["api"]["deploy"]["resources"]["limits"].update(memory="0"))
         self.rejected(lambda c: c["services"]["db"].pop("healthcheck"))
