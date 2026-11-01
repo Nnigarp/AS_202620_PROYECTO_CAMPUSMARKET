@@ -2,6 +2,12 @@
 
 Marketplace universitario para publicar, consultar, vender y alquilar productos dentro de la comunidad universitaria.
 
+Preparación del frontend institucional (31/oct): [plan de promoción por digest](docs/operacion/despliegue-ghcr.md#11-candidato-flutter-para-el-servicio-existente--2026-10-31)
+para el servicio `production/sistema`, sin cambiar el Compose activo ni publicar todavía `/app/`.
+[CI de configuración e identidad 41270390431](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41270390431)
+aprobada; identidad de la API anterior y recuperación productiva pendientes. La imagen Flutter ya probada se reutiliza sin reconstruirla.
+El PR de preparación requiere además que sus checks obligatorios se ejecuten sobre el commit vigente; el resultado de la CI específica no los sustituye.
+
 ## Integrantes
 
 - Joshua Tenorio Alvarez
