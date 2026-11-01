@@ -45,3 +45,13 @@ Registro documental de observaciones; **no acredita despliegue de Flutter ni aut
 5. Tras aprobación explícita, verificar dominio, `/health`, `/app/`, flujos de catálogo y estado de MySQL; registrar los hashes y resultados reales.
 
 **Situación al cierre de este registro:** Flutter Web disponible solo en pruebas locales; publicación institucional pendiente.
+
+## Actualización posterior: diagnóstico y recreación de API (2026-11-01)
+
+1. Desde Dokploy **Advanced → Run Command** se ejecutó mediante Deploy la consulta `docker compose -p campusmarket-sistema-2zvsxj --env-file deploy/.env -f ./deploy/compose.lab.yaml images -q api`. Resultado: `b4db758f7769c12e5850e43605d4d9486725e6f0ef4dab0650cac9c480f5d9ff`. Esta referencia es **anterior** a la recreación que sigue.
+2. Tras restaurar el comando predeterminado, se efectuó un Deploy adicional. El registro muestra `up -d --build --remove-orphans`, reconstrucción de `campusmarket-sistema-2zvsxj-api:latest`, `exporting config sha256:6b42c15f7f28aa634e529ed7fc1cd3f122658856f6928c1d48ce098a27ac702a`, recreación de `api-1`, `db-1 Running/Healthy`, y resultado final exitoso. **No equivale a la promoción Web**.
+3. Capturas posteriores: `/health` devolvió `ok`; `api-1` healthy con un nuevo Container ID, `db-1` continuó healthy con su ID anterior `baedd6d65e17`; Autodeploy OFF y Run Command otra vez vacío.
+4. El ID anterior `b4db…` **no debe utilizarse como si fuera el ID actual**; la config `6b42…` es evidencia del build, no prueba de rollback utilizable. Sigue faltando conservar una referencia de retorno y comprobar su ejecución.
+5. En el PR #77, el último commit documental registrado antes de esta actualización era `1cd648d` y GitHub mostró los checks completados con éxito; el PR seguía Draft. Cualquier commit posterior exige comprobar de nuevo los checks pertinentes.
+
+**Control de cambios:** no volver a pulsar Deploy con el Run Command predeterminado para inspecciones. No ejecutar ningún comando de borrado de volúmenes, ni un despliegue de Flutter, hasta acordar la promoción y la recuperación.
