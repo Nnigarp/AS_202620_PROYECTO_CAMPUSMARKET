@@ -1,0 +1,48 @@
+name: Preparar promocion Pages sin publicar
+
+on:
+  push:
+    branches: [ops/ensayo-pages-api-publica-20261031]
+    paths: [.github/workflows/preparar-promocion-pages.yml, scripts/preparar_promocion_pages.py, scripts/test_preparar_promocion_pages.py]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+  pages: read
+
+concurrency:
+  group: campusmarket-preparar-pages
+  cancel-in-progress: false
+
+jobs:
+  preparar:
+    if: github.repository == 'Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET' && github.ref == 'refs/heads/ops/ensayo-pages-api-publica-20261031'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          fetch-depth: 0
+      - name: Probar integridad, límites de ramas y rollback sin publicar
+        run: python3 -m unittest scripts.test_preparar_promocion_pages -v
+      - name: Recuperar el ZIP aprobado y preparar únicamente ramas auxiliares
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 -m scripts.preparar_promocion_pages
+      - name: Conservar plan, manifiestos y bundle recuperable
+        if: success()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: preparacion-pages-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/preparacion-pages/
+          if-no-files-found: error
+          retention-days: 90
+      - name: Conservar solo diagnóstico si falla
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: preparacion-pages-fallo-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/preparacion-pages/plan.json
+          if-no-files-found: warn
+          retention-days: 14
