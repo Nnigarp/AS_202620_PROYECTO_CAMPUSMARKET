@@ -1,0 +1,71 @@
+name: S13 - auditoria de dependencias Python
+
+on:
+  push:
+    branches: [master]
+    paths: [backend/requirements.txt, .github/workflows/s13-dependencias.yml]
+  pull_request:
+    branches: [master]
+    paths: [backend/requirements.txt, .github/workflows/s13-dependencias.yml, docs/evidencias/evidencia-s13-amenazas-2026-11-01.md]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  auditar-dependencias:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Obtener fuentes
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Preparar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Instalar auditor independiente
+        run: python -m pip install "pip-audit==2.10.0"
+      - name: Auditar dependencias y conservar resultado JSON
+        id: audit
+        shell: bash
+        run: |
+          mkdir -p artifacts/s13
+          set +e
+          python -m pip_audit -r backend/requirements.txt --format json --output artifacts/s13/pip-audit.json
+          code=$?
+          set -e
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          echo "pip-audit exit=$code" >> "$GITHUB_STEP_SUMMARY"
+          exit 0
+      - name: Resumir resultados y clasificar estado de auditoria
+        env:
+          AUDIT_EXIT: ${{ steps.audit.outputs.exit_code }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          p=Path('artifacts/s13/pip-audit.json')
+          if not p.exists():
+              raise SystemExit('No se genero reporte pip-audit')
+          data=json.loads(p.read_text())
+          deps=data.get('dependencies', [])
+          findings=[(d.get('name'),d.get('version'),v.get('id')) for d in deps for v in d.get('vulns',[])]
+          summary=f"Paquetes auditados: {len(deps)}. Hallazgos: {len(findings)}. Exit pip-audit: {os.environ['AUDIT_EXIT']}.\n"
+          summary+='\n'.join(f"- {name} {version}: {id}" for name,version,id in findings)
+          Path('artifacts/s13/resumen.txt').write_text(summary+'\n')
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f: f.write(summary+'\n')
+          print(summary)
+          PY
+      - name: Publicar evidencia aun si hubo hallazgos
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: s13-pip-audit-${{ github.sha }}
+          path: artifacts/s13/
+          if-no-files-found: warn
+      - name: Marcar vulnerabilidades o errores como hallazgo, no como aprobacion
+        env:
+          AUDIT_EXIT: ${{ steps.audit.outputs.exit_code }}
+        run: |
+          test "$AUDIT_EXIT" = "0" || { echo "::error::pip-audit detecto vulnerabilidades o un error; revisar el artifact JSON antes de decidir mitigacion"; exit 1; }
