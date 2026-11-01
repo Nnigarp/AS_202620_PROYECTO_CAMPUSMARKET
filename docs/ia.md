@@ -671,3 +671,10 @@ activos separados. El objetivo, la configuración y el resultado operativo
 permanecen en el [informe del ensayo](operacion/ensayo-ghcr.md); la cadena
 arquitectónica permanece en la [matriz existente](evidencias/trazabilidad-ghcr-2026-10-30.md)
 y la publicación en la [evidencia de cierre](operacion/evidencia-ghcr-cierre.md).
+
+
+## Preparación de promoción del servicio existente — 2026-10-31
+
+| Fecha | Herramienta | Uso realizado | Verificación del equipo | Qué se rechazó y por qué |
+|---|---|---|---|---|
+| 31/10/2026 | Codex, GitHub, Compose y Dokploy solo lectura | Rama nueva desde master `40be256…`; una referencia de imagen en Compose alternativo, sincronización del ensayo manual y verificador de delta/registro. | Fuente `65e4d468490bfb1a00cfa56ab48d049b66ad5dc9`, [run 41270390431](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41270390431): delta solo API, variables/DB/redes/volúmenes idénticos, SHA-256 de manifiesto y configuración OCI correctos; persistencia/dependencias/contrato iguales a la fuente aprobada. ZIP anterior de master recuperado y contrastado, sin atribuirlo al contenedor activo. Ruff, Actionlint y Gitleaks. Documentación posterior a CI. | No recompilar Flutter/republicar GHCR, repetir ensayos locales, operar producción, tocar los PR existentes o considerar aprobado el nuevo PR por checks anteriores. El borrador lleva commit documental con [skip ci] para evitar las recompilaciones automáticas prohibidas; checks oficiales nuevos sin reejecutar. Image ID activo, montajes y respaldo/restauración siguen pendientes; Run Command solo se usaría después de autorización expresa. |
