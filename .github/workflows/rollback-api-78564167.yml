@@ -1,0 +1,85 @@
+name: Rollback API inmutable — revision productiva 78564167
+on:
+  push:
+    branches:
+      - ops/rollback-api-78564167-20261101
+    paths:
+      - .github/workflows/rollback-api-78564167.yml
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: rollback-api-78564167
+  cancel-in-progress: false
+
+jobs:
+  build-test-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      SOURCE_SHA: 7856416795bb4accdf9d05e01adb470654875e56
+      IMAGE: ghcr.io/nnigarp/campusmarket-api-rollback
+    steps:
+      - name: Checkout exacto de la revision de produccion
+        uses: actions/checkout@v4
+        with:
+          repository: ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET
+          ref: 7856416795bb4accdf9d05e01adb470654875e56
+          persist-credentials: false
+      - name: Acreditar SHA y contexto
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          test -f backend/Dockerfile
+          test -f backend/requirements.txt
+          test -f backend/app/main.py
+          grep -q 'CAMPUSMARKET_REVISION' backend/Dockerfile
+          echo "Fuente exacta: $SOURCE_SHA"
+      - name: Configurar Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Compilar imagen amd64 sin publicarla
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: backend/Dockerfile
+          platforms: linux/amd64
+          build-args: |
+            CAMPUSMARKET_REVISION=7856416795bb4accdf9d05e01adb470654875e56
+          load: true
+          push: false
+          tags: campusmarket-api-rollback:validation
+          provenance: false
+      - name: Verificar etiqueta, revision y healthcheck real
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(docker run --rm --entrypoint cat campusmarket-api-rollback:validation /app/REVISION)" = "$SOURCE_SHA"
+          test "$(docker image inspect campusmarket-api-rollback:validation --format '{{index .Config.Labels "org.opencontainers.image.revision"}}')" = "$SOURCE_SHA"
+          docker run -d --name rollback-api-validation --network bridge --memory 256m campusmarket-api-rollback:validation
+          trap 'docker rm -f rollback-api-validation >/dev/null 2>&1 || true' EXIT
+          for i in $(seq 1 30); do
+            if docker exec rollback-api-validation python -c "import urllib.request; import json; d=json.load(urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3)); assert d['status']=='ok'"; then
+              echo "API de retorno saludable"; exit 0
+            fi
+            sleep 2
+          done
+          docker logs rollback-api-validation
+          exit 1
+      - name: Autenticar GHCR de la cuenta del fork
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publicar imagen validada por digest
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker tag campusmarket-api-rollback:validation "$IMAGE:7856416795bb-20261101"
+          docker push "$IMAGE:7856416795bb-20261101"
+          docker buildx imagetools inspect "$IMAGE:7856416795bb-20261101"
+          echo "AVISO: esta imagen es una reconstruccion del codigo de la revision productiva, no un respaldo byte a byte de la imagen actualmente en ejecucion."
+          echo "No se ha actualizado Dokploy, su base de datos ni sus volumenes."
