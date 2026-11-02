@@ -726,3 +726,14 @@ El consumidor aplica espera real por defecto con `time.sleep` entre los intentos
 El 1 de noviembre se promovió a producción el candidato de [`deploy/compose.prod.yaml`](deploy/compose.prod.yaml) por digest GHCR, mediante actualización dirigida únicamente a `api`; la ejecución terminó `Docker Compose Deployed: ✅`. En comprobaciones posteriores `/health` respondió `ok`, `/app/` cargó catálogo y fotos, y los dos contenedores estaban healthy sin recreación de MySQL. Se verificaron sesión, edición y eliminación de publicaciones. No se ejecutó una restauración SQL/fotos ni rollback productivo.
 
 **Ruta de auditoría posterior a S12:** [cierre institucional](docs/evidencias/cierre-web-institucional-2026-11-01.md) → [ADR-0025](docs/adr/0025-servir-flutter-web-con-fastapi-en-servicio-existente.md) → [arc42 §7](docs/arc42/07-vista-despliegue.md) → [C4 L2](docs/c4/02-contenedores.md) → [aspectos](docs/aspectos.md) → [registro IA](docs/ia.md). Integración de código: [PR #77](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/77), commit `5ef0d6b139138d1260435b1b884240f093904749`. **No volver a ejecutar Deploy sin revisar Run Command, respaldo y alcance**.
+
+
+### S13 — Seguridad y riesgos (trabajo en preparación, 2026-11-01)
+
+- [Amenazas STRIDE priorizadas sobre C4, controles, responsables y privacidad](docs/evidencias/evidencia-s13-amenazas-2026-11-01.md).
+- [CI de auditoría de dependencias Python con reporte JSON](.github/workflows/s13-dependencias.yml). **El run y la revisión de hallazgos están pendientes**; no declarar S13 completada por la mera presencia del workflow.
+- [arc42 §8 seguridad](docs/arc42/08-conceptos-transversales.md#811-arquitectura-de-seguridad-y-privacidad--s13-2026-11-01) · [arc42 §11 riesgos residuales](docs/arc42/11-riesgos-y-deuda-tecnica.md).
+- El análisis de dependencias Python no sustituye auditoría Flutter/Dart, imágenes OCI, secretos del historial ni validación de privacidad.
+
+
+**Actualización S13 de seguridad (PR #79):** [auditoría inicial](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41360317202) detectó avisos en `python-multipart 0.0.20` y `Pillow 12.3.0`; [la rama propone actualizar ambas](backend/requirements.txt). Se mantienen **pendientes** nuevo escaneo, regresiones y evaluación de advisories; producción conserva su digest anterior hasta autorización explícita. [Matriz y decisiones](docs/evidencias/evidencia-s13-amenazas-2026-11-01.md).

@@ -2,5 +2,5 @@ fastapi==0.141.1
 pydantic==2.13.5
 uvicorn==0.53.0
 PyMySQL==1.2.0
-python-multipart==0.0.20
-Pillow==12.3.0
+python-multipart==0.0.33
+Pillow==13.0.0

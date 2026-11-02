@@ -46,3 +46,18 @@ La evidencia específica se encuentra en [`docs/evidencias/evidencia-s11-2026-10
 | Frontend y API compartiendo ciclo de vida | **Costo aceptado:** un cambio de frontend obliga a promover el artefacto `api` | Probar imagen única, fijar digest y validar `/health`, `/app/` y funcionalidades después de cada actualización |
 
 Referencia: [ADR-0025](../adr/0025-servir-flutter-web-con-fastapi-en-servicio-existente.md), [evidencia institucional](../evidencias/cierre-web-institucional-2026-11-01.md). Ninguna de estas verificaciones prueba continuidad 24/7 ni recuperación tras pérdida del host.
+
+
+## Amenazas residuales S13 — priorización provisional (2026-11-01)
+
+[Modelo STRIDE y plan completo](../evidencias/evidencia-s13-amenazas-2026-11-01.md). Son riesgos **aceptados provisionalmente para documentación y ensayo aislado**, no una autorización institucional definitiva.
+
+| Riesgo aceptado/provisional | Severidad inicial | Motivo y condición de aceptación | Responsable propuesto y próxima acción |
+|---|---|---|---|
+| T13-07 — inconsistencia MySQL/archivos tras crash | 4 media | Monolito sin transacción distribuida SQL+filesystem; compensaciones, pero falta reconciliación/backup verificables | Backend/operación: diseñar reconciliación y restauración aislada |
+| T13-10 — recuperación productiva incompleta | 6 alta | Imágenes por digest y rollback sintético disponibles, pero no existe ensayo de restauración de respaldos de producción; **no considerar resuelto** | Operación: backup externo, prueba aislada y protocolo de reversión |
+| T13-03 — dependencias/imágenes vulnerables | 6 alta | Versiones fijadas no equivalen a seguridad; el primer run reportó 51 entradas; [corrección Python en CI](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41362904998) dejó 0 avisos en 16 paquetes; todavía falta escaneo de Dart/OCI y nueva imagen productiva | DevOps: mantener auditoría Python y evaluar dependencias Dart/imagen en siguientes cambios |
+| T13-04 — exposición de datos/secretos | 6 alta | No hay hallazgo confirmado; barrido HEAD + historial y revisión de logs aún pendientes | Backend/DevOps: ejecutar barrido sin revelar valores |
+| T13-08 — base jurídica y minimización | 4 media | Datos personales presentes; no se acredita aviso, retención ni base legal precisa | Equipo y responsable institucional: validar el tratamiento y adoptar aviso |
+
+No ejecutar pruebas destructivas ni restauraciones sobre los volúmenes productivos. Aceptar/documentar un riesgo no equivale a afirmar que está mitigado.
