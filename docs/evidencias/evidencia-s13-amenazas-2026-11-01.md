@@ -1,6 +1,6 @@
 # Evidencia S13 — STRIDE, cadena de suministro y privacidad · CampusMarket
 
-**Fecha de preparación:** 2026-11-01 (Colombia). **Base de inspección:** `ISCOUTB/master` `ad9c784eb14f848a912788a7b9b12bf43eaeefb9`. **Estado:** análisis S13 ejecutado inicialmente en PR #79; hallazgos detectados y corrección candidata pendiente de CI y evaluación. No equivale a entrega calificada.
+**Fecha de preparación:** 2026-11-01 (Colombia). **Base de inspección:** `ISCOUTB/master` `ad9c784eb14f848a912788a7b9b12bf43eaeefb9`. **Estado:** análisis S13 ejecutado inicialmente en PR #79; hallazgos iniciales tratados mediante actualización de dependencias; CI del PR aprobado, con límites de privacidad y cadena de suministro todavía explícitos. No equivale a entrega calificada.
 
 ## 1. Alcance, C4 y fronteras de confianza
 
@@ -14,7 +14,7 @@ Modelo anclado en [C4 L2](../c4/02-contenedores.puml) y [C4 L3](../c4/03-compone
 |---|---|---|---|---:|---:|---:|---|---|---|
 | T13-01 | Suplantación / Elevación | Flutter → API; sesión/propietario | Cliente altera propietario o reutiliza token robado para editar publicación ajena | 3 | 3 | **9 alto** | Identidad exclusiva desde Bearer, tokens opacos y revocables, pruebas de autorización y respuesta antigua de sesión; [dependencias](../../backend/app/usuarios/dependencies.py), [router](../../backend/app/usuarios/router.py), [tests](../../backend/tests/test_ec02_autorizacion.py) | Backend + QA | **Mitigación existente; revisar pruebas S13** |
 | T13-02 | Manipulación / Denegación | Flutter → API → volumen de imágenes | Imagen maliciosa, descompresión excesiva o metadatos personales | 3 | 3 | **9 alto** | 5 MiB, 20 MP, formatos comprobados por contenido, reescritura de imagen sin EXIF; [image_storage.py](../../backend/app/publicaciones/image_storage.py); comprobar pruebas y carga sostenida | Backend + QA | **Mitigación existente; prueba de carga pendiente** |
-| T13-03 | Divulgación / Manipulación | GitHub Actions → GHCR → API | Dependencia vulnerable o imagen sustituta compromete datos | 2 | 3 | **6 alto** | Versiones fijadas en [requirements](../../backend/requirements.txt), imagen GHCR por digest en [Compose](../../deploy/compose.prod.yaml), escaneo automatizado `pip-audit` propuesto en workflow; revisar reporte y corregir vulnerabilidades confirmadas | DevOps | **Parcial: falta resultado del escaneo** |
+| T13-03 | Divulgación / Manipulación | GitHub Actions → GHCR → API | Dependencia vulnerable o imagen sustituta compromete datos | 2 | 3 | **6 alto** | Versiones fijadas en [requirements](../../backend/requirements.txt), imagen GHCR por digest en [Compose](../../deploy/compose.prod.yaml), escaneo automatizado `pip-audit` ejecutado en workflow; revisar reporte y corregir vulnerabilidades confirmadas | DevOps | **Auditoría Python corregida y verificada en PR #79; quedan imágenes y Dart** |
 | T13-04 | Divulgación | API → MySQL / logs | Contraseña, correo o token expuestos en configuración o registros | 2 | 3 | **6 alto** | Secretos por variables `MYSQL_PASSWORD`; no registrar token/password; [security.py](../../backend/app/usuarios/security.py); revisar logs y hacer barrido HEAD e historial, no publicar valores | DevOps + Backend | **Parcial: barrido completo pendiente** |
 | T13-05 | Repudio / Divulgación | API → MySQL; informes | Acceso de no moderador a reportes con identidad y motivos | 2 | 3 | **6 alto** | `ModeradorActual` en lectura/resolución, `UsuarioActual` para reportar; [router](../../backend/app/administracion/router.py); validar con pruebas negativas | Backend + QA | **Control existente; prueba negativa a confirmar** |
 | T13-06 | Denegación | API ↔ MySQL; producción 512 MiB | Intentos masivos de login/scrypt saturan cuota y degradan catálogo | 2 | 3 | **6 alto** | Límite de intentos 429, `HEAVY_WORK_SLOT`, cuotas Compose y métricas; ensayar ráfaga sin afectar producción | Backend + Operación | **Parcial; ensayo de carga pendiente** |
@@ -28,13 +28,15 @@ Modelo anclado en [C4 L2](../c4/02-contenedores.puml) y [C4 L3](../c4/03-compone
 ## 3. Análisis de dependencias y cadena de suministro
 
 - **Inventario de la primera auditoría:** `fastapi==0.141.1`, `pydantic==2.13.5`, `uvicorn==0.53.0`, `PyMySQL==1.2.0`, `python-multipart==0.0.20`, `Pillow==12.3.0` (versiones originales; la rama candidata propone 0.0.33 y 13.0.0 respectivamente); [backend/requirements.txt](../../backend/requirements.txt). Flutter y dependencias Dart en [pubspec.yaml](../../frontend/campusmarket/pubspec.yaml).
-- **Automatización propuesta:** [`s13-dependencias.yml`](../../.github/workflows/s13-dependencias.yml) ejecutará `pip-audit`, conservará salida JSON y resumirá hallazgos; no se afirma análisis ejecutado hasta tener URL de run, SHA, cantidad, identificadores y decisiones documentadas.
-- **Hallazgo bajo investigación:** la versión `python-multipart==0.0.20` ya estaba señalada en feedback. **No afirmar vulnerabilidad confirmada ni seguridad de la versión** hasta revisar salida del scanner/avisos aplicables. Tampoco actualizar a ciegas por posible ruptura de compatibilidad.
+- **Automatización ejecutada:** [`s13-dependencias.yml`](../../.github/workflows/s13-dependencias.yml) ejecuta `pip-audit`, conserva salida JSON y resume hallazgos. El run final y las decisiones se detallan más abajo.
+- **Decisión sobre hallazgos iniciales:** `python-multipart==0.0.20` y `Pillow==12.3.0` estaban señalados por advisories del primer run. Se eligió actualizar a 0.0.33 y 13.0.0, con regresiones y nuevo escaneo aprobados. La auditoría no certifica ausencia universal de vulnerabilidades.
 - **Dart / imágenes:** no cubiertos por `pip-audit`; documentar la brecha y planear `flutter pub outdated`, revisión de advisories y escaneo de imagen o SBOM por separado.
 - **Protocolo de revisión:** identificar CVE/advisory, paquete y versión vulnerable, alcance real en CampusMarket, decisión (corregir, mitigar, aceptar temporalmente con motivo), responsable, PR, prueba de regresión y run de cierre.
 - **Primera ejecución real (PR #79):** [run 41360317202](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41360317202), fallo controlado tras auditar **16 paquetes / 51 entradas de advisory**; incluye repeticiones y no representa 51 defectos distintos. Paquetes señalados: `python-multipart==0.0.20` y `Pillow==12.3.0`, identificadores como `PYSEC-2026-1852` y `CVE-2026-112895`. [Artefacto JSON](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41360317202/artifacts/13105165204). **Decisión:** actualizar ambas dependencias en rama de trabajo y evaluar avisos con pruebas de compatibilidad y nuevo escaneo. **Riesgo residual:** todavía no está acreditada la resolución de todos los hallazgos ni el estado de imagen productiva.
-- **Correción propuesta:** [commit a2b8af5](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/a2b8af5b985b6f614649b88aa1aae8becd2a0484) cambia `python-multipart` a 0.0.33 y Pillow a 13.0.0. Son versiones publicadas; no afirmar compatibilidad ni deployment hasta run verde.
+- **Corrección integrada en rama S13:** [commit a2b8af5](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/a2b8af5b985b6f614649b88aa1aae8becd2a0484) cambia `python-multipart` a 0.0.33 y Pillow a 13.0.0. Versiones evaluadas en CI del PR #79; no se afirma despliegue productivo de la imagen nueva.
 - **Incidencia independiente del PR:** [Flutter frontend run 41360317362](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41360317362) falló por `java.net.UnknownHostException: services.gradle.org`, durante descarga Gradle; `flutter analyze` había pasado. Clasificación: acceso externo del runner, sujeto a reintento, no defecto funcional demostrado.
+
+- **Verificación final:** [run 41362904998](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41362904998) sobre `1504bafcae2eafb50a65d486686e7f79e673d297`: **16 paquetes auditados, 0 avisos reportados, exit 0**, junto con 10/10 checks exitosos del PR #79. La salida cero solo cubre dependencias Python detectadas por `pip-audit`; no valida paquetes Dart, imagen OCI, nuevas vulnerabilidades futuras ni ausencia de fallos lógicos. La decisión de los hallazgos iniciales es **remediación por actualización**, no aceptación silenciosa. [Evidencia inicial de 51 entradas y reporte JSON](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41360317202). Responsable propuesto: DevOps; estado: corregido en rama y validado por CI, pendiente de integración y futura promoción controlada de imagen.
 
 ## 4. Privacidad y base de tratamiento
 
@@ -57,20 +59,20 @@ Modelo anclado en [C4 L2](../c4/02-contenedores.puml) y [C4 L3](../c4/03-compone
 
 La primera etapa era documental/CI; la corrección candidata posterior **sí modifica versiones de dependencias de producto**, sin cambiar topología ni ejecutar despliegue. No requiere un ADR nuevo para declarar la ejecución de auditoría de dependencias. Cualquier modificación estructural (nuevo proxy, almacén de secretos, contenedor, autenticación distinta o herramienta generativa) requerirá **ADR nuevo**, pruebas y cambio C4 antes de implementarla.
 
-## 7. Matriz S13, estado honesto antes de CI
+## 7. Matriz S13 — estado verificado del PR #79
 
 | Criterio de ficha | Estado | Evidencia |
 |---|---|---|
 | Amenazas vinculadas a C4 | Documentado | §1–2 |
 | P e I, prioridad | Documentado | §2, fórmula y orden |
 | Mitigación, dueño y estado | Documentado | §2 |
-| Plan ataca prioridad alta | **Preparado, ejecución parcial** | §2–3, faltan escaneo y pruebas |
-| Scanner en CI y URL de run | **Cumple ejecución, encontró vulnerabilidades** | run 41360317202 y artifact JSON; nueva auditoría pendiente |
-| Hallazgos revisados | **Parcial** | 16 paquetes y 51 entradas; 2 paquetes priorizados para actualización, falta validación y decisiones por advisory |
+| Plan ataca prioridad alta | **Parcialmente ejecutado** | T13-03 corregido en rama, probado por CI; T13-04 y otros riesgos continúan abiertos |
+| Scanner en CI y URL de run | **Verificado** | [run final](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41362904998): 16 paquetes, 0 avisos, exit 0; [run inicial](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41360317202): 51 entradas |
+| Hallazgos revisados | **Remediación Python comprobada** | `python-multipart` y `Pillow` actualizados, escaneo final 0 avisos; auditoría Dart e imagen fuera del alcance |
 | Privacidad y base | **Parcial** | §4; base jurídica precisa por validar |
 | LLM, si existe | **No aplica por ADR-0010** | §5 |
-| arc42 §8 | **Pendiente de anexo** | §4 y [arc42](../arc42/08-conceptos-transversales.md) |
-| arc42 §11 | **Pendiente de anexo** | §2 y [riesgos](../arc42/11-riesgos-y-deuda-tecnica.md) |
+| arc42 §8 | **Documentado** | §4 y [arc42](../arc42/08-conceptos-transversales.md) |
+| arc42 §11 | **Documentado** | §2 y [riesgos](../arc42/11-riesgos-y-deuda-tecnica.md) |
 | ADR estructural | **No aplica al cambio documental/CI actual** | §6 |
 
-**No reclamar 11/11 hasta completar la ejecución del pipeline, revisión del informe y validación documental.**
+**Límite de cierre:** no atribuir calificación docente ni base jurídica validada; privacidad, escaneo Dart/OCI y riesgos residuales son trabajos abiertos. El resultado 10/10 corresponde al CI de la rama, no a un merge en master.
