@@ -1,3 +1,5 @@
+> **Estado vigente al 2026-11-01 (S13):** CampusMarket se sirve mediante FastAPI + Flutter Web en `/app/` bajo `https://campusmarket.iscoutb.dev`, con API y MySQL en **dos contenedores** del servicio Dokploy `campusmarket → production → sistema`; imágenes y base de datos conservan volúmenes distintos. Véase la [sección de despliegue institucional vigente](#despliegue-web-institucional-vigente--2026-11-01) al final. La auditoría de dependencias S13 actualizó código en Git, **no** el digest del contenedor en ejecución. Las secciones de 2026-09 y 2026-10 son históricas y no instrucciones vigentes de promoción.
+
 # 7. Vista de despliegue - CampusMarket
 
 ## 7.0 Despliegue público MVP — 2026-10-04
