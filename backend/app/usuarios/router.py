@@ -68,12 +68,12 @@ def _peer(request: Request) -> str:
 def registro(payload: Registro, request: Request):
     try:
         return registrar(payload.nombre, payload.correo, payload.password, _peer(request), payload.universidad_id)
-    except ValueError as error:
-        raise HTTPException(422, str(error)) from error
     except DuplicateEmailError as error:
         raise HTTPException(409, str(error)) from error
     except AuthRateLimitError as error:
         raise HTTPException(429, str(error), headers={"Retry-After": "300"}) from error
+    except ValueError as error:
+        raise HTTPException(422, str(error)) from error
 
 
 @router.post("/login", response_model=Sesion, operation_id="iniciarSesion")
