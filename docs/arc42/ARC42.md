@@ -1,5 +1,31 @@
 # CampusMarket - Documentación arc42
 
+> **Lectura vigente hasta S13 · 2026-11-01:** este archivo resume fundamentos y conserva texto histórico de la evolución. Las secciones independientes `02`–`12` son la **fuente canónica** por tema; no se reescriben ADR ni se atribuyen resultados actuales a escenarios históricos. El estado de entrega y despliegue más reciente está en [README](../../README.md).
+
+## Índice consolidado de arquitectura
+
+| Tema arc42 | Fuente canónica y estado vigente |
+|---|---|
+| 1. Objetivos | Este archivo §1, [README](../../README.md) y [aspectos](../aspectos.md) |
+| 2. Restricciones | [02-restricciones](02-restricciones.md): cuota del servicio y topología existente |
+| 3. Contexto | [03-contexto](03-contexto.md) · [C4 L1](../c4/01-contexto.md) |
+| 4. Estrategia | [04-estrategia](04-estrategia-de-solucion.md): monolito modular, [ADR-0001](../adr/0001-usar-monolito-modular.md) |
+| 5. Bloques | [05-bloques](05-bloques-de-construccion.md) · [C4 L2](../c4/02-contenedores.md) · [C4 L3](../c4/03-componentes-backend.md) |
+| 6. Ejecución | [06-vista-ejecucion](06-vista-ejecucion.md): autenticación, publicaciones y persistencia |
+| 7. Despliegue | [07-vista-despliegue](07-vista-despliegue.md): Dokploy, `api` + `db`, Flutter en `/app/`, persistencia en volúmenes, digest GHCR, rollback productivo no acreditado |
+| 8. Conceptos transversales | [08-conceptos](08-conceptos-transversales.md): consistencia S12, seguridad/privacidad S13 y [auditoría CI](../../.github/workflows/s13-dependencias.yml) |
+| 9. Decisiones | [09-decisiones](09-decisiones.md), ADR-0001…0025 y [ADR-0026 propuesto](../adr/0026-incorporar-auditoria-de-dependencias-python-en-ci.md) |
+| 10. Calidad | [10-escenarios](10-escenarios-de-calidad.md) · [árbol](10-arbol-de-utilidad.md); no equiparar medidas HTTP aisladas con navegador público |
+| 11. Riesgos | [11-riesgos](11-riesgos-y-deuda-tecnica.md): riesgos STRIDE aceptados provisionalmente, backup y privacidad pendiente |
+| 12. Glosario | [12-glosario](12-glosario.md) |
+
+**Evidencia S13:** [tabla STRIDE, mitigaciones, responsables, privacidad y revisión de hallazgos](../evidencias/evidencia-s13-amenazas-2026-11-01.md). Integración [PR #79](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/79) y [commit comprobado](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/049dc30ceac1386b648bef5f6713c050762e2dbf). No hay LLM de producto ([ADR-0010](../adr/0010-no-incorporar-componente-generativo-en-campusmarket.md)).
+
+**Precisión de alcance:** frontend institucional y API están publicados; los cambios de paquetes Python S13 en Git no certifican nueva imagen productiva. Sigue sin acreditarse una restauración real desde respaldo externo, y la base legal de tratamiento requiere confirmación institucional.
+
+---
+
+
 ## 1. Introducción y objetivos
 
 ### 1.1 Descripción del sistema
