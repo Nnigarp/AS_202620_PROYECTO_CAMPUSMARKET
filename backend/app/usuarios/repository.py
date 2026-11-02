@@ -1,12 +1,15 @@
 import pymysql
 
 from backend.app.db import transaction
+from backend.app.universidades.repository import initialize_database as init_universidades
 
 from .errors import DuplicateEmailError
 
 
 def initialize_database() -> None:
+    init_universidades()
     with transaction() as cursor:
+
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS usuarios (
                 id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -16,6 +19,17 @@ def initialize_database() -> None:
                 creado_en DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
         """)
+        cursor.execute("""
+            SELECT 1 FROM information_schema.COLUMNS
+            WHERE TABLE_SCHEMA = DATABASE()
+                AND TABLE_NAME = 'usuarios' AND COLUMN_NAME = 'universidad_id'
+        """)
+        if cursor.fetchone() is None:
+            cursor.execute("""
+                ALTER TABLE usuarios ADD COLUMN universidad_id BIGINT UNSIGNED NULL,
+                ADD CONSTRAINT fk_usuarios_universidad FOREIGN KEY (universidad_id)
+                    REFERENCES universidades(id)
+            """)
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS sesiones_usuario (
                 token_hash CHAR(64) NOT NULL PRIMARY KEY,
@@ -34,26 +48,26 @@ def initialize_database() -> None:
         """)
 
 
-def create_user(nombre: str, correo: str, password_hash: str) -> dict:
+def create_user(nombre: str, correo: str, password_hash: str, universidad_id: int | None = None) -> dict:
     initialize_database()
     with transaction() as cursor:
         try:
             cursor.execute(
-                "INSERT INTO usuarios (nombre, correo, password_hash) VALUES (%s, %s, %s)",
-                (nombre, correo, password_hash),
+                "INSERT INTO usuarios (nombre, correo, password_hash, universidad_id) VALUES (%s, %s, %s, %s)",
+                (nombre, correo, password_hash, universidad_id),
             )
         except pymysql.IntegrityError as error:
             if error.args[0] == 1062:
                 raise DuplicateEmailError("El correo ya está registrado.") from error
             raise
         user_id = cursor.lastrowid
-    return {"id": user_id, "nombre": nombre, "correo": correo}
+    return {"id": user_id, "nombre": nombre, "correo": correo, "universidad_id": universidad_id}
 
 
 def find_user(correo: str) -> dict | None:
     initialize_database()
     with transaction() as cursor:
-        cursor.execute("SELECT id, nombre, correo, password_hash FROM usuarios WHERE correo = %s", (correo,))
+        cursor.execute("SELECT id, nombre, correo, password_hash, universidad_id FROM usuarios WHERE correo = %s", (correo,))
         return cursor.fetchone()
 
 
@@ -70,7 +84,7 @@ def session_user(token_hash: str) -> dict | None:
     initialize_database()
     with transaction() as cursor:
         cursor.execute("""
-            SELECT u.id, u.nombre, u.correo
+            SELECT u.id, u.nombre, u.correo, u.universidad_id
             FROM sesiones_usuario s JOIN usuarios u ON u.id = s.usuario_id
             WHERE s.token_hash = %s AND s.expira_en > UTC_TIMESTAMP()
         """, (token_hash,))
@@ -82,10 +96,10 @@ def revoke_session(token_hash: str) -> None:
         cursor.execute("DELETE FROM sesiones_usuario WHERE token_hash = %s", (token_hash,))
 
 
-def update_profile(user_id: int, nombre: str) -> dict:
+def update_profile(user_id: int, nombre: str, universidad_id: int | None = None) -> dict:
     with transaction() as cursor:
-        cursor.execute("UPDATE usuarios SET nombre = %s WHERE id = %s", (nombre, user_id))
-        cursor.execute("SELECT id, nombre, correo FROM usuarios WHERE id = %s", (user_id,))
+        cursor.execute("UPDATE usuarios SET nombre = %s, universidad_id = %s WHERE id = %s", (nombre, universidad_id, user_id))
+        cursor.execute("SELECT id, nombre, correo, universidad_id FROM usuarios WHERE id = %s", (user_id,))
         return cursor.fetchone()
 
 
