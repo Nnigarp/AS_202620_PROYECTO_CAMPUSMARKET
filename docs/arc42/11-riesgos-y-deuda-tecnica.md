@@ -61,3 +61,6 @@ Referencia: [ADR-0025](../adr/0025-servir-flutter-web-con-fastapi-en-servicio-ex
 | T13-08 — base jurídica y minimización | 4 media | Datos personales presentes; no se acredita aviso, retención ni base legal precisa | Equipo y responsable institucional: validar el tratamiento y adoptar aviso |
 
 No ejecutar pruebas destructivas ni restauraciones sobre los volúmenes productivos. Aceptar/documentar un riesgo no equivale a afirmar que está mitigado.
+
+
+**Vinculación S13:** el [ADR-0026 propuesto](../adr/0026-incorporar-auditoria-de-dependencias-python-en-ci.md) trata el riesgo T13-03 en Python. Conservamos abiertos el análisis de Dart e imagen OCI, la revisión de secretos de todo el historial y la aprobación formal de bases de tratamiento de datos. Los riesgos históricos no se borran al actualizar la estrategia.

@@ -57,7 +57,7 @@ Modelo anclado en [C4 L2](../c4/02-contenedores.puml) y [C4 L3](../c4/03-compone
 
 ## 6. Decisiones arquitectónicas
 
-La primera etapa era documental/CI; la corrección candidata posterior **sí modifica versiones de dependencias de producto**, sin cambiar topología ni ejecutar despliegue. No requiere un ADR nuevo para declarar la ejecución de auditoría de dependencias. Cualquier modificación estructural (nuevo proxy, almacén de secretos, contenedor, autenticación distinta o herramienta generativa) requerirá **ADR nuevo**, pruebas y cambio C4 antes de implementarla.
+La primera etapa era documental/CI; la corrección candidata posterior **sí modifica versiones de dependencias de producto**, sin cambiar topología ni ejecutar despliegue. [ADR-0026 — Auditoría de dependencias Python en CI](../adr/0026-incorporar-auditoria-de-dependencias-python-en-ci.md) se propone como registro explícito de las alternativas y la decisión de exigir el control automatizado con fallo en CI; pendiente de aceptación formal por el equipo. Cualquier modificación estructural (nuevo proxy, almacén de secretos, contenedor, autenticación distinta o herramienta generativa) requerirá **ADR nuevo**, pruebas y cambio C4 antes de implementarla.
 
 ## 7. Matriz S13 — estado verificado del PR #79
 
