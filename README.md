@@ -2,11 +2,16 @@
 
 Marketplace universitario para publicar, consultar, vender y alquilar productos dentro de la comunidad universitaria.
 
-Preparación del frontend institucional (31/oct): [plan de promoción por digest](docs/operacion/despliegue-ghcr.md#11-candidato-flutter-para-el-servicio-existente--2026-10-31)
-para el servicio `production/sistema`, sin cambiar el Compose activo ni publicar todavía `/app/`.
-[CI de configuración e identidad 41270390431](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41270390431)
-aprobada; identidad de la API anterior y recuperación productiva pendientes. La imagen Flutter ya probada se reutiliza sin reconstruirla.
-El PR de preparación requiere además que sus checks obligatorios se ejecuten sobre el commit vigente; el resultado de la CI específica no los sustituye.
+## Estado vigente · 1 de noviembre de 2026 (hasta S13)
+
+**CampusMarket está publicado en el dominio institucional.** Flutter Web se sirve en [`/app/`](https://campusmarket.iscoutb.dev/app/) desde FastAPI en el contenedor `api` existente, junto a MySQL `db` del servicio Dokploy `campusmarket → production → sistema`. **No existe tercer contenedor**. Las fotografías y la base de datos mantienen volúmenes persistentes separados. [Salud](https://campusmarket.iscoutb.dev/health) · [API](https://campusmarket.iscoutb.dev/docs).
+
+- **Topología y promoción:** [arc42 §7](docs/arc42/07-vista-despliegue.md) · [Compose productivo](deploy/compose.prod.yaml) · [ADR-0025](docs/adr/0025-servir-flutter-web-con-fastapi-en-servicio-existente.md) · [evidencia Web](docs/evidencias/cierre-web-institucional-2026-11-01.md). Publicación mediante [PR #77](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/77) y cierre documental [PR #78](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/78).
+- **S13 integrado en `master`:** [PR #79](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/79), commit [`049dc30c`](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/049dc30ceac1386b648bef5f6713c050762e2dbf), con CI aprobado. [Modelo STRIDE, privacidad y mitigaciones](docs/evidencias/evidencia-s13-amenazas-2026-11-01.md) · [workflow `pip-audit`](.github/workflows/s13-dependencias.yml) · [ADR-0026 propuesto](docs/adr/0026-incorporar-auditoria-de-dependencias-python-en-ci.md).
+- **Límite operativo:** el cambio de dependencias Python en S13 **no** se ha atribuido a la imagen de producción fijada por digest. No hay restauración productiva desde backup independiente ni rollback productivo ejecutado acreditados. No realizar despliegues por el solo hecho de actualizar documentos.
+- **Privacidad:** se documentaron datos y finalidades, pero base jurídica definitiva, aviso y retención requieren validación institucional. El escáner Python no cubre Flutter/Dart ni imágenes OCI.
+
+> Las secciones fechadas anteriormente preservan evidencia histórica (Azure/GitHub Pages, versiones de arquitectura y hashes de su momento). No deben confundirse con la topología y el estado vigentes arriba.
 
 ## Integrantes
 
@@ -22,19 +27,20 @@ El README funciona como **puerta de entrada al estado vigente**. La evolución s
 
 | Semana | Evolución principal | Evidencia / punto de entrada |
 |---|---|---|
-| **S1** | Problema, interesados, objetivos y trazabilidad inicial | [`docs/aspectos.md`](docs/aspectos.md), [`docs/ia.md`](docs/ia.md) |
-| **S2** | Restricciones, escenarios de calidad, árbol de utilidad y C4 nivel 1 | [`docs/arc42/02-restricciones.md`](docs/arc42/02-restricciones.md), [`docs/arc42/10-escenarios-de-calidad.md`](docs/arc42/10-escenarios-de-calidad.md), [`docs/arc42/10-arbol-de-utilidad.md`](docs/arc42/10-arbol-de-utilidad.md), [`docs/c4/01-contexto.md`](docs/c4/01-contexto.md) |
-| **S3** | Decisión del monolito modular y estrategia de solución | [`docs/adr/0001-usar-monolito-modular.md`](docs/adr/0001-usar-monolito-modular.md), [`docs/arc42/04-estrategia-de-solucion.md`](docs/arc42/04-estrategia-de-solucion.md) |
-| **S4** | Corte vertical ejecutable Flutter → FastAPI → persistencia y CI | [`frontend/campusmarket/`](frontend/campusmarket/), [`backend/`](backend/), [`.github/workflows/backend-tests.yml`](.github/workflows/backend-tests.yml) |
-| **S5** | Primera evaluación arquitectónica y evolución de persistencia hacia MySQL | [`docs/adr/0004-migrar-persistencia-a-mysql.md`](docs/adr/0004-migrar-persistencia-a-mysql.md), [`docs/arc42/09-decisiones.md`](docs/arc42/09-decisiones.md) |
-| **S6** | Modularidad explícita, propiedad de datos y C4 nivel 3 | [`docs/evidencias/auditoria-modularidad-s6-2026-09-12.md`](docs/evidencias/auditoria-modularidad-s6-2026-09-12.md), [`docs/c4/03-componentes-backend.md`](docs/c4/03-componentes-backend.md), [`backend/tests/test_modularidad_s6.py`](backend/tests/test_modularidad_s6.py) |
-| **S7** | Interfaces y contratos OpenAPI ejecutables | [`docs/evidencias/evidencia-s7-2026-09-15.md`](docs/evidencias/evidencia-s7-2026-09-15.md), [`contracts/openapi-v1.json`](contracts/openapi-v1.json), [`backend/tests/test_contrato_openapi.py`](backend/tests/test_contrato_openapi.py) |
-| **S8** | Despliegue, operación, health check e infraestructura como código | [`docs/evidencias/evidencia-s8-2026-09-27.md`](docs/evidencias/evidencia-s8-2026-09-27.md), [`docs/arc42/07-vista-despliegue.md`](docs/arc42/07-vista-despliegue.md), [`infra/main.bicep`](infra/main.bicep) |
-| **S9** | Catálogo materializado, verificación con IA, medición EC-01 y auditoría de erosión/dependencias | [`docs/evidencias/evidencia-s9-2026-10-01.md`](docs/evidencias/evidencia-s9-2026-10-01.md), [`docs/evidencias/evidencia-ec01-catalogo-s9-2026-10-01.md`](docs/evidencias/evidencia-ec01-catalogo-s9-2026-10-01.md), [`docs/evidencias/auditoria-s9-dependencias-secretos-2026-10-01.md`](docs/evidencias/auditoria-s9-dependencias-secretos-2026-10-01.md) |
-| **S10** | Contrato cliente-servidor, estímulo `sale` incompatible, adaptación del consumidor y ADR-0020 | [`docs/evidencias/evidencia-s10-corte2-2026-10-11.md`](docs/evidencias/evidencia-s10-corte2-2026-10-11.md), [`docs/adr/0020-preservar-contrato-v2-y-adaptar-consumidor-incompatible.md`](docs/adr/0020-preservar-contrato-v2-y-adaptar-consumidor-incompatible.md), [`docs/ia-s10.md`](docs/ia-s10.md) |
-| **S11** | Fallos parciales Flutter → FastAPI; diseño de idempotencia, decisión de no extraer Catálogo, riesgos y trazabilidad | [`docs/evidencias/evidencia-s11-2026-10-18.md`](docs/evidencias/evidencia-s11-2026-10-18.md), [`docs/adr/0021-mantener-catalogo-en-el-monolito-modular.md`](docs/adr/0021-mantener-catalogo-en-el-monolito-modular.md), [`docs/arc42/11-riesgos-y-deuda-tecnica.md`](docs/arc42/11-riesgos-y-deuda-tecnica.md), [`docs/aspectos.md`](docs/aspectos.md), [`docs/ia.md`](docs/ia.md) |
-| **Evolución posterior a S9** | Marketplace responsive, gestión de publicaciones propias e imágenes | [`docs/adr/0011-gestionar-imagenes-de-publicaciones.md`](docs/adr/0011-gestionar-imagenes-de-publicaciones.md), [`docs/aspectos.md`](docs/aspectos.md), [`backend/tests/test_gestion_publicaciones.py`](backend/tests/test_gestion_publicaciones.py) |
-
+| **S1** | Problema, equipo, interesados y registro inicial | [Aspectos](docs/aspectos.md) · [IA](docs/ia.md) |
+| **S2** | Restricciones, escenarios de calidad, utilidad y contexto C4 | [arc42 §2](docs/arc42/02-restricciones.md) · [escenarios](docs/arc42/10-escenarios-de-calidad.md) · [C4 L1](docs/c4/01-contexto.md) |
+| **S3** | Estrategia de monolito modular | [ADR-0001](docs/adr/0001-usar-monolito-modular.md) · [arc42 §4](docs/arc42/04-estrategia-de-solucion.md) |
+| **S4** | Corte vertical de publicaciones con prueba CI | [Frontend](frontend/campusmarket/) · [Backend](backend/) · [CI](.github/workflows/backend-tests.yml) |
+| **S5 — Corte 1** | Bloqueo SQLite y evolución posterior de persistencia | [ADR-0002](docs/adr/0002-manejo-bloqueo-sqlite.md) · [ADR-0004](docs/adr/0004-migrar-persistencia-a-mysql.md) · [decisiones](docs/arc42/09-decisiones.md) |
+| **S6** | Fronteras modulares y propiedad de datos | [Auditoría modular](docs/evidencias/auditoria-modularidad-s6-2026-09-12.md) · [C4 L3](docs/c4/03-componentes-backend.md) |
+| **S7** | API-first, OpenAPI y compatibilidad | [Evidencia](docs/evidencias/evidencia-s7-2026-09-15.md) · [OpenAPI](contracts/openapi-v1.json) |
+| **S8** | Primer despliegue reproducible e infraestructura histórica | [Evidencia](docs/evidencias/evidencia-s8-2026-09-27.md) · [Bicep](infra/main.bicep) · [arc42 §7](docs/arc42/07-vista-despliegue.md) |
+| **S9** | Catálogo, auditoría de erosión y mediciones | [Evidencia](docs/evidencias/evidencia-s9-2026-10-01.md) · [EC-01](docs/evidencias/evidencia-ec01-catalogo-s9-2026-10-01.md) |
+| **S10 — Corte 2** | Contrato incompatible y recuperación del consumidor | [Evidencia](docs/evidencias/evidencia-s10-corte2-2026-10-11.md) · [ADR-0020](docs/adr/0020-preservar-contrato-v2-y-adaptar-consumidor-incompatible.md) |
+| **S11** | Fallos parciales, idempotencia diseñada y extracción evaluada | [Evidencia](docs/evidencias/evidencia-s11-2026-10-18.md) · [ADR-0021](docs/adr/0021-mantener-catalogo-en-el-monolito-modular.md) |
+| **S12** | Consistencia MySQL, caché y mensajería aislada | [Evidencia](docs/evidencias/evidencia-s12-2026-10-25.md) · [cierre S12](docs/evidencias/cierre-s12-2026-10-25.md) · [ADR-0022](docs/adr/0022-mantener-mysql-como-fuente-de-verdad-y-evitar-proyecciones-asincronas.md) · [taller](docs/evidencias/taller-mensajes-s12-2026-10-25.md) |
+| **S13** | STRIDE, riesgos, privacidad y auditoría Python con remediación | [Evidencia S13](docs/evidencias/evidencia-s13-amenazas-2026-11-01.md) · [arc42 §8](docs/arc42/08-conceptos-transversales.md) / [§11](docs/arc42/11-riesgos-y-deuda-tecnica.md) · [CI](.github/workflows/s13-dependencias.yml) · [ADR-0026 propuesto](docs/adr/0026-incorporar-auditoria-de-dependencias-python-en-ci.md) |
+| **Evolución transversal (posterior a S12)** | GHCR por digest, despliegue Flutter Web institucional y trazabilidad | [evidencia GHCR](docs/operacion/despliegue-ghcr.md) · [Web institucional](docs/evidencias/cierre-web-institucional-2026-11-01.md) |
 Para una revisión automática o manual, la ruta recomendada es:
 
 ```text
@@ -728,12 +734,12 @@ El 1 de noviembre se promovió a producción el candidato de [`deploy/compose.pr
 **Ruta de auditoría posterior a S12:** [cierre institucional](docs/evidencias/cierre-web-institucional-2026-11-01.md) → [ADR-0025](docs/adr/0025-servir-flutter-web-con-fastapi-en-servicio-existente.md) → [arc42 §7](docs/arc42/07-vista-despliegue.md) → [C4 L2](docs/c4/02-contenedores.md) → [aspectos](docs/aspectos.md) → [registro IA](docs/ia.md). Integración de código: [PR #77](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/77), commit `5ef0d6b139138d1260435b1b884240f093904749`. **No volver a ejecutar Deploy sin revisar Run Command, respaldo y alcance**.
 
 
-### S13 — Seguridad y riesgos (trabajo en preparación, 2026-11-01)
+### Registro histórico de preparación S13 — anterior a integración PR #79
 
 - [Amenazas STRIDE priorizadas sobre C4, controles, responsables y privacidad](docs/evidencias/evidencia-s13-amenazas-2026-11-01.md).
-- [CI de auditoría de dependencias Python con reporte JSON](.github/workflows/s13-dependencias.yml). **El run y la revisión de hallazgos están pendientes**; no declarar S13 completada por la mera presencia del workflow.
+- [CI de auditoría de dependencias Python con reporte JSON](.github/workflows/s13-dependencias.yml). **Estado superado:** el escaneo y sus remediaciones se completaron en el PR #79 y fueron verificados en CI; véase el estado vigente al principio.
 - [arc42 §8 seguridad](docs/arc42/08-conceptos-transversales.md#811-arquitectura-de-seguridad-y-privacidad--s13-2026-11-01) · [arc42 §11 riesgos residuales](docs/arc42/11-riesgos-y-deuda-tecnica.md).
 - El análisis de dependencias Python no sustituye auditoría Flutter/Dart, imágenes OCI, secretos del historial ni validación de privacidad.
 
 
-**Actualización S13 de seguridad (PR #79):** [auditoría inicial](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41360317202) detectó avisos en `python-multipart 0.0.20` y `Pillow 12.3.0`; [la rama propone actualizar ambas](backend/requirements.txt). Se mantienen **pendientes** nuevo escaneo, regresiones y evaluación de advisories; producción conserva su digest anterior hasta autorización explícita. [Matriz y decisiones](docs/evidencias/evidencia-s13-amenazas-2026-11-01.md).
+**Actualización S13 de seguridad (PR #79):** [auditoría inicial](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41360317202) detectó avisos en `python-multipart 0.0.20` y `Pillow 12.3.0`; [la rama propone actualizar ambas](backend/requirements.txt). **Estado posterior:** escaneo y regresiones del PR #79 aprobados, 16 paquetes y 0 avisos reportados; producción conserva el digest anterior hasta promoción autorizada. [Matriz y decisiones](docs/evidencias/evidencia-s13-amenazas-2026-11-01.md).
