@@ -120,3 +120,8 @@ Datos personales: correo, nombre, credenciales derivadas, sesiones e intentos; c
 
 
 **Seguimiento del escáner S13:** [primer run](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41360317202) auditó 16 dependencias Python y reportó 51 entradas de advisory; las versiones de `python-multipart` y `Pillow` fueron actualizadas en la rama S13 del fork, con [run final exitoso](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41362904998). La imagen de Dokploy no cambia y la auditoría no cubre todos los riesgos de suministro. [Detalle y artefacto](../evidencias/evidencia-s13-amenazas-2026-11-01.md).
+
+
+### 8.11.1 Decisión del control de suministro
+
+[ADR-0026 (propuesto)](../adr/0026-incorporar-auditoria-de-dependencias-python-en-ci.md) explica las alternativas manual, informativa y bloqueante para el control Python. En S13 se integró el workflow de `pip-audit` y se revisaron hallazgos hasta obtener 0 avisos reportados en 16 paquetes. No corresponde afirmar que todas las dependencias o la imagen desplegada sean seguras.
