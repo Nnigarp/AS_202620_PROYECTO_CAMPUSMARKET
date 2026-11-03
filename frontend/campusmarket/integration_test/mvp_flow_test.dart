@@ -153,6 +153,7 @@ void main() {
     }
     await enterAccount('Estudiante A', emailA, passwordA, register: true);
     final ownerA = session.usuario!.id;
+    await session.editarPerfil('Estudiante A', universidadId: 1);
     checks.add('Registro, login y usuario actual A');
 
     await click(find.byKey(const Key('nav-catalogo')));
@@ -243,6 +244,7 @@ void main() {
     await click(find.byKey(const Key('nav-catalogo')));
     await catalogResult(title, 'Producto visible en catálogo');
     await screenshot('catalogo');
+    expect(find.text('UTB'), findsWidgets, reason: 'Universidad declarada visible en tarjeta');
     await fill('catalogo-busqueda', 'inexistente-$nonce');
     await click(find.byTooltip('Buscar'));
     await catalogResult('No encontramos publicaciones', 'Búsqueda real sin resultados');
@@ -266,6 +268,9 @@ void main() {
     checks.add('Búsqueda, precios, error de rango, estado vacío y limpieza de filtros reales');
     await click(find.text(title));
     await until(() => find.text('Descripción').evaluate().isNotEmpty, 'Detalle actual consultado');
+    expect(find.text('Universidad Tecnológica de Bolívar'), findsOneWidget,
+      reason: 'Detalle identifica institución declarada al publicar');
+    checks.add('Universidad declarada visible en tarjeta y detalle sin consultas por tarjeta');
     expect(find.byKey(const Key('reportar-publicacion')), findsNothing);
     await screenshot('detalle-A');
     await click(find.byKey(Key('favorito-$id')));

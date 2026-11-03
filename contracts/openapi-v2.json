@@ -2540,6 +2540,16 @@
             ],
             "title": "Universidad Id"
           },
+          "universidad": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Universidad"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "estado_publicacion": {
             "type": "string",
             "enum": [

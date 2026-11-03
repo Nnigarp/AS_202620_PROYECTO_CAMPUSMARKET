@@ -1,3 +1,5 @@
+import '../usuarios/universidades_api.dart' show Universidad;
+
 class ImagenCatalogo {
   const ImagenCatalogo({
     required this.id,
@@ -47,6 +49,7 @@ class PublicacionCatalogo {
     required this.imagenes,
     this.propietarioId,
     this.universidadId,
+    this.universidad,
     this.estadoPublicacion = 'disponible',
   });
 
@@ -59,7 +62,12 @@ class PublicacionCatalogo {
   final List<ImagenCatalogo> imagenes;
   final int? propietarioId;
   final int? universidadId;
+  final Universidad? universidad;
   final String estadoPublicacion;
+
+  String get universidadEtiqueta => universidad?.sigla ??
+      (universidadId == null ? 'Universidad no declarada' : 'Universidad no disponible');
+  String get universidadDetalle => universidad?.nombre ?? universidadEtiqueta;
 
   ImagenCatalogo? get imagenPrincipal {
     if (imagenes.isEmpty) {
@@ -101,6 +109,7 @@ class PublicacionCatalogo {
       imagenes: imagenes,
       propietarioId: json['propietario_id'] as int?,
       universidadId: json['universidad_id'] as int?,
+      universidad: json['universidad'] == null ? null : Universidad.fromJson(json['universidad'] as Map<String, dynamic>),
       estadoPublicacion: json['estado_publicacion'] as String? ?? 'disponible',
     );
   }

@@ -31,3 +31,11 @@ El commit de implementación inicia los workflows del fork; SHA y resultados se 
 Implementación/documentación: [`3b23980`](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/3b239804b215338f2ab2b6e9dfd85f96a0b22176). [Backend 41584776751](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41584776751) aprobado en MySQL 8.4. [S10 41584776642](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41584776642) aprobado. Analyze/tests Flutter aprobados; compilación y recorrido pendientes al registrar este apartado.
 
 [Recorrido 41584776511](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41584776511): Chrome escritorio/móvil enviaron y mostraron el mensaje del comprador, pero fallaron al segundo pageBack: con solo 200 ms entre dos pops, la transición todavía exponía dos tooltips Back. Se corrige únicamente el ensayo para esperar pumpAndSettle tras volver de chat; se mantienen ambos retornos, controles de identidad y todas las aserciones. No se cambia la navegación ni la lógica productiva.
+
+### Resultados comprobados después de corregir navegación
+
+- Backend [41584776751](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41584776751): **121 pruebas + 4 de contrato**, mutaciones y checkout limpio sobre `3b23980`.
+- Flutter [41584776574](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41584776574): **27 tests**, analyze, dos mutaciones y builds Web/APK aprobados.
+- Corrección del ensayo [`871865d`](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/871865de804ae00a86d11993946d9c26108f115c). [Recorrido 41585402540](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41585402540): Chrome escritorio/móvil aprobaron **11 criterios**, incluido contacto, bandejas A/B, envío/respuesta, persistencia tras logout y todas las comprobaciones previas de Favoritos/EC-02/galería/moderación. Android aún en ejecución al registrar este apartado; no se lo presenta como aprobado. [Backend de corrección 41585402733](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41585402733) aprobado.
+
+Contrato de Mensajería aditivo: se conservaron todas las rutas y esquemas previos de Favoritos/MVP. Solo resta registrar el recorrido Android y la validación conjunta del siguiente corte.

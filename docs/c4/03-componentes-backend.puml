@@ -49,6 +49,11 @@ package "Backend API · FastAPI · monolito modular" {
     mr --> ms
     ms --> md
   }
+  package "Universidades" {
+    rectangle "API/capacidades públicas\nrouter.py / service.py\nCatálogo y lectura por IDs" as vs
+    rectangle "Repositorio\nrepository.py\nCatálogo institucional" as vd
+    vs --> vd
+  }
 }
 database "MySQL 8.4\nTablas con único escritor por contexto" as db
 folder "Imágenes\nCAMPUSMARKET_UPLOAD_DIR\nVolumen nombrado en Compose" as files
@@ -59,6 +64,11 @@ main --> cr : registra
 main --> ar : registra
 main --> fr : registra
 main --> mr : registra
+main --> vs : registra
+cs --> vs : instituciones por IDs en lote
+us --> vs : validar declaración
+ud --> vs : inicializar antes de FK
+vd --> db : solo universidades
 mr --> ur : identidad de sesión
 ms --> cs : contexto público en lote
 md --> db : solo conversaciones/mensajes
@@ -84,11 +94,14 @@ Usuarios: usuarios, sesiones_usuario, intentos_autenticacion.
 Publicaciones: publicaciones, publicacion_imagenes.
 Administración: reportes_publicacion.
 Favoritos: favoritos (clave usuario/publicación).
+Mensajería: conversaciones y mensajes.
+Universidades: universidades.
 db.py comparte infraestructura, sin entidades de dominio.
 end note
 note bottom of files
 Máximo 3 imágenes de 5 MiB y 20 MP.
 Orientación y reducción a 2048 px; sin EXIF.
-Compose verifica persistencia. Despliegue público pendiente.
+Compose conserva dos contenedores y volúmenes.
+Incremento 2 candidato: todavía sin promoción productiva.
 end note
 @enduml

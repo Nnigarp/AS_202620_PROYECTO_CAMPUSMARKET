@@ -137,6 +137,13 @@ class _DetalleContenido extends StatelessWidget {
                                 fontWeight: FontWeight.w900,
                               ),
                             ),
+                            const SizedBox(height: 18),
+                            Text('Universidad declarada al publicar', style: theme.textTheme.labelLarge),
+                            const SizedBox(height: 4),
+                            Text(publicacion.universidadDetalle, key: const Key('detalle-universidad'),
+                              style: theme.textTheme.titleMedium),
+                            if (publicacion.universidad != null)
+                              Text('Declaración del autor; no acredita matrícula.', style: theme.textTheme.bodySmall),
                             const SizedBox(height: 28),
                             Divider(color: colors.outlineVariant),
                             const SizedBox(height: 22),

@@ -42,3 +42,18 @@ def existe_activa(universidad_id: int) -> bool:
             (universidad_id,),
         )
         return cursor.fetchone() is not None
+
+
+def listar_por_ids(ids: list[int]) -> list[dict]:
+    """Institución declarada al publicar, incluso si posteriormente se inactiva."""
+    unique_ids = tuple(dict.fromkeys(ids))
+    if not unique_ids:
+        return []
+    initialize_database()
+    with transaction() as cursor:
+        placeholders = ", ".join(["%s"] * len(unique_ids))
+        cursor.execute(
+            f"SELECT id, nombre, sigla, ciudad FROM universidades WHERE id IN ({placeholders})",
+            unique_ids,
+        )
+        return cursor.fetchall()

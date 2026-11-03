@@ -6,8 +6,31 @@ import 'package:http/testing.dart';
 import 'package:campusmarket/usuarios/session_controller.dart';
 import 'package:campusmarket/usuarios/universidades_api.dart';
 import 'package:campusmarket/catalogo/publicacion_catalogo.dart';
+import 'package:campusmarket/catalogo/widgets/catalogo_card.dart';
+import 'package:flutter/material.dart';
 
 void main() {
+  for (final width in [250.0, 285.0, 350.0, 500.0]) {
+    testWidgets('Tarjeta muestra universidad declarada sin desbordar a ancho $width', (tester) async {
+      final product = PublicacionCatalogo.fromJson({
+        'id': 17, 'titulo': 'Libro de arquitectura para el próximo semestre',
+        'descripcion': 'Material completo de ensayo para verificar la tarjeta de la comunidad.',
+        'precio': 65000, 'modalidad': 'venta', 'estado': 'usado', 'imagenes': [],
+        'universidad_id': 1,
+        'universidad': {'id': 1, 'nombre': 'Universidad Tecnológica de Bolívar', 'sigla': 'UTB', 'ciudad': 'Cartagena'},
+      }, baseUrl: 'http://localhost');
+      await tester.pumpWidget(MaterialApp(home: Scaffold(body: Center(child: SizedBox(
+        width: width, height: width / 0.72,
+        child: CatalogoCard(publicacion: product, onTap: () {}),
+      )))));
+      await tester.pumpAndSettle();
+      expect(find.text('UTB'), findsOneWidget);
+      expect(find.byTooltip('Universidad declarada al publicar: Universidad Tecnológica de Bolívar'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+      await tester.pumpWidget(const SizedBox.shrink());
+    });
+  }
+
   test('Universidad decodifica el contrato público', () {
     final universidad = Universidad.fromJson({
       'id': 1,
@@ -60,6 +83,21 @@ void main() {
     );
     expect(payload?['universidad_id'], 1);
     expect(payload?['correo'], 'persona@gmail.com');
+  });
+
+  test('Catálogo presenta metadata declarada sin inferir universidad heredada', () {
+    final base = <String, dynamic>{
+      'id': 3, 'titulo': 'Libro', 'descripcion': 'Ensayo', 'precio': 10,
+      'modalidad': 'venta', 'estado': 'usado', 'imagenes': [],
+    };
+    final publicada = PublicacionCatalogo.fromJson({...base, 'universidad_id': 1,
+      'universidad': {'id': 1, 'nombre': 'Universidad Tecnológica de Bolívar', 'sigla': 'UTB', 'ciudad': 'Cartagena'},
+    }, baseUrl: 'http://localhost');
+    expect(publicada.universidadEtiqueta, 'UTB');
+    expect(publicada.universidadDetalle, 'Universidad Tecnológica de Bolívar');
+    final heredada = PublicacionCatalogo.fromJson(base, baseUrl: 'http://localhost');
+    expect(heredada.universidad, isNull);
+    expect(heredada.universidadEtiqueta, 'Universidad no declarada');
   });
 
   test('Perfil envía universidad actualizada y conserva sesión', () async {

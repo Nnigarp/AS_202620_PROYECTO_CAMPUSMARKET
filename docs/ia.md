@@ -722,3 +722,9 @@ Se descartaron preferencias solo locales (no persisten por cuenta), identificado
 ChatGPT/Codex extendió el monolito con conversación única por contexto, mensajes/transacción propia y clave de reintento. Se aceptó actualización manual HTTP/JSON con páginas acotadas y sin otra infraestructura. Se descartaron remitentes/vendedores elegidos por cliente, consultas sin participante y WebSockets/brokers; no son necesarios para este corte. Favoritos ya cuenta con evidencia real Web/Android/MySQL; Mensajería pasó nueve pruebas locales de frontera y avanza a CI MySQL/Flutter, sin dar por aprobada su integración antes del resultado. Se verificó Ruff y el contrato generado. [Evidencia](evidencias/incremento-2-mensajeria-2026-11-03.md).
 
 Límites: pruebas sintéticas automatizadas; no se afirma revisión humana, auditoría de intrusión ni publicación. Privacidad/retención y despliegue mantienen sus aprobaciones separadas.
+
+## 2026-11-03 — Incremento 2, universidad visible
+
+ChatGPT/Codex aceptó composición de metadata por IDs únicos desde la institución fijada al publicar, con DTO nullable y etiquetas de declaración. Descartó consultar el perfil actual por publicación (N+1 y atribución retroactiva falsa), inferir universidad a NULL o presentar matrícula verificada. La capa pública de Universidades elimina imports de repositorio ajeno en sus consumidores; propiedad de datos se amplía al contexto.
+
+Verificación: 13 pruebas locales de contrato/lotes/propiedad/erosión y Ruff aprobados; el diff OpenAPI solo añade metadata opcional/nullable. Tarjetas compactas reservan espacio para la etiqueta manteniendo imagen, descripción y acciones. CI aislado validará MySQL, 5 tests Flutter añadidos y recorrido real; no se afirman esos resultados antes de ejecutarlos. [Evidencia](evidencias/incremento-2-universidad-visible-2026-11-03.md). Sin revisión humana afirmada, publicación ni datos personales reales.

@@ -38,7 +38,7 @@ class CatalogoCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AspectRatio(
-                  aspectRatio: compacta ? 4 / 3 : 16 / 10,
+                  aspectRatio: 16 / 10,
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
@@ -134,6 +134,17 @@ class CatalogoCard extends StatelessWidget {
                                 color: colors.primary,
                                 fontWeight: FontWeight.w900,
                               ),
+                        ),
+                        const SizedBox(height: 7),
+                        Tooltip(
+                          message: publicacion.universidad == null ? publicacion.universidadEtiqueta
+                            : 'Universidad declarada al publicar: ${publicacion.universidadDetalle}',
+                          child: Row(children: [
+                            Icon(Icons.school_outlined, size: 15, color: colors.onSurfaceVariant),
+                            const SizedBox(width: 5),
+                            Expanded(child: Text(publicacion.universidadEtiqueta, maxLines: 1, overflow: TextOverflow.ellipsis,
+                              style: theme.textTheme.labelSmall?.copyWith(color: colors.onSurfaceVariant))),
+                          ]),
                         ),
                         const SizedBox(height: 7),
                         Text(

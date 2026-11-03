@@ -73,3 +73,9 @@ Flutter comparte `FavoritosController` entre corazones y «Mis favoritos»; MySQ
 `mensajeria/router → service → repository` posee `conversaciones` y `mensajes`; las únicas escrituras son propias. La clave de contexto `(publicacion_id, comprador_id, vendedor_id)` impide duplicados. El servicio determina al vendedor leyendo la publicación pública; comprador/remitente proceden de `UsuarioActual`. Cada consulta/escritura exige ser participante; los DTOs de entrada rechazan identidades adicionales. Bandeja con preview se resuelve en una consulta propia y compone publicaciones/imágenes en lote, sin correos ni nuevos servicios.
 
 Flutter incorpora contacto en detalle, bandeja y chat, actualización manual y cursor de mensajes; el contenido privado se vacía al cambiar la sesión. Se conserva el monolito/API y MySQL existentes. [Código y pruebas](../evidencias/incremento-2-mensajeria-2026-11-03.md).
+
+## 5.9 Incremento 2 — Universidad visible sin atribuciones nuevas
+
+Catálogo añade `universidad` opcional/nullable al DTO de lectura; conserva `universidad_id` fijado al publicar. Universidades expone una capacidad pública por IDs y su repositorio resuelve las instituciones en lote, incluyendo instituciones posteriormente inactivas para conservar contexto histórico. No consulta el perfil actual para atribuir universidad a un anuncio viejo. Catálogo, detalle, Favoritos y contexto de Mensajería reciben esa misma composición.
+
+La capa pública de Universidades centraliza las lecturas y el hook de inicialización previo a la FK de Usuarios; los consumidores dejan de importar su repositorio. La prueba de único escritor/no repositorios ajenos incluye ahora Universidades además de Favoritos/Mensajería. Flutter presenta sigla en tarjeta, nombre en detalle y aclaración de declaración al publicar; legacy muestra «Universidad no declarada». [Pruebas/evidencia](../evidencias/incremento-2-universidad-visible-2026-11-03.md).

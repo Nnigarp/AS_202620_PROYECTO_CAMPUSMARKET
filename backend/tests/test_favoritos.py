@@ -90,7 +90,8 @@ def test_imagenes_y_lecturas_se_componen_en_lote(monkeypatch):
     monkeypatch.setattr(catalogo, "listar_publicaciones_por_ids", publicaciones)
     monkeypatch.setattr(catalogo, "listar_imagenes_publicaciones", imagenes)
     assert catalogo.obtener_publicaciones_por_ids([1, 2, 3]) == [
-        {"id": 1, "imagenes": [{"id": 10}]}, {"id": 3, "imagenes": []},
+        {"id": 1, "imagenes": [{"id": 10}], "universidad": None},
+        {"id": 3, "imagenes": [], "universidad": None},
     ]
     assert calls == [("publicaciones", [1, 2, 3]), ("imagenes", [3, 1])]
 
