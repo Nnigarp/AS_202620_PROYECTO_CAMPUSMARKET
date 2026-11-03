@@ -1,5 +1,7 @@
 # Incremento 2 — Universidad declarada visible (2026-11-03)
 
+> **Actualización de estado posterior al despliegue (2026-11-03):** esta ficha recoge los ensayos y decisiones **previos** a la integración; expresiones como «no desplegado» o «PR no abierto» describen el momento original, no el estado actual. [PR #85–#90](cierre-productivo-incremento2-2026-11-03.md) ya están integrados, el digest `11d92aa9…` se desplegó según el log de Dokploy y [S10 9/9](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41616502184) validó la revisión `46ede525…`. Las pruebas manuales acreditan compatibilidad de publicaciones heredadas; **falta** un anuncio con universidad declarada no nula documentado en producción. No existe respaldo/restauración productivos acreditados.
+
 > **Estado de cierre:** código y pruebas del fork **VERIFICADOS** en `058f63f0882d388e40c85c347e406bb9777cb343`. 126 pruebas backend + 4 de contrato, 33 Flutter y 12 criterios en cada recorrido Chrome escritorio/móvil y Android. **Incremento 2 no desplegado.** Los apartados intermedios conservan resultados fallidos/pendientes de su momento; el cierre al final los actualiza. Checks oficiales todavía no ejecutados: PR no abierto.
 
 
