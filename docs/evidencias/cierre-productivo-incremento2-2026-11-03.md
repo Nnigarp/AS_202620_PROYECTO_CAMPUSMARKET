@@ -15,7 +15,9 @@
 | Imagen anterior identificada para reversión | `ghcr.io/nnigarp/campusmarket-web-universidades@sha256:384cbd0c08242d4a6d0343f26fab8521fd027908b639f638b2b9653f0f53dde1` |
 | Ensayo de integración/rollback sintético | [Run 41595618179](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41595618179), [artefacto registrado](datos/imagen-incremento2-41595618179.json) |
 | Verificador de promoción | [Run 41597711177](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41597711177) |
-| CI final del master | [Commit `cfb9330`](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/cfb93309ea159ee82ddc8faf54fb1561d25b6d57): backend, Flutter, recorridos Android/Web, Compose, SonarCloud y S10 en verde **antes del despliegue** |
+| CI del master antes del despliegue | [Commit `cfb9330`](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/cfb93309ea159ee82ddc8faf54fb1561d25b6d57): ocho checks aprobados; evidencia de preparación, no de ejecución productiva |
+| Referencia productiva y cierre documental | [PR #90](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/90), [PR #89](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/89), [master `494c433`](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/494c4336920d3a9515e60e06d7e16a880a9868ed): 8/8 checks aprobados |
+| S10 tras el despliegue | [Run 41616502184](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41616502184): 9/9 criterios, revisión `46ede525602161826b75273fbb12528e739908cc`, 58 solicitudes, nueve comprobaciones de salud; hash de catálogo idéntico antes/después |
 
 ## 2. Despliegue observado en Dokploy
 
@@ -41,10 +43,10 @@ La mensajería usa **HTTP/JSON y actualización manual**; no se afirma entrega i
 ## 4. Pendientes explícitos y decisión de cierre
 
 - **Pendiente:** comprobar después de la promoción `/health`, estado `healthy` e ID de `db-1`, montajes efectivos e Image ID/configuración del nuevo `api-1`; no se atribuyen estas verificaciones a las capturas previas.
-- **Pendiente:** ejecutar S10 posdespliegue en modo instalado contra revisión de imagen `46ede525602161826b75273fbb12528e739908cc`; el éxito de S10 en CI predeploy no sustituye esta ejecución.
+- **Aprobado:** S10 posdespliegue en modo `instalado` ([run 41613284005](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41613284005)) y, tras [PR #90](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/90), S10 de producción en el `master` final ([run 41616502184](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41616502184)): nueve criterios aprobados; contrato público versionado y revisión coincidentes.
 - **Pendiente:** respaldo externo y restauración de MySQL/fotografías **no acreditados**; el rollback probado fue **sintético**, no rollback productivo. Evitar una prueba destructiva sin autorización y recuperación verificable.
 - **Pendiente:** capturar una publicación nueva con universidad declarada visible y, si se requiere para la evaluación, un nuevo inicio de sesión que demuestre persistencia de Favoritos en la UI.
 
-**Conclusión limitada:** el despliegue de la nueva imagen se completó según los logs; Favoritos, publicaciones y mensajería bidireccional tienen aceptación visual/manual en el dominio institucional. La identidad exacta de los contenedores instalados, las verificaciones operativas pendientes y la recuperación productiva no se declaran cerradas. No se requiere otro despliegue para este cambio documental.
+**Conclusión limitada:** el despliegue de la nueva imagen se completó según los logs; Favoritos, publicaciones y mensajería bidireccional tienen aceptación visual/manual en el dominio institucional, y S10 pasó 9/9 sobre la revisión de producción. La identidad exacta de los contenedores instalados, las verificaciones operativas pendientes y la recuperación productiva no se declaran cerradas. No se requiere otro despliegue para este cambio documental.
 
 **Navegación:** [arc42 §7](../arc42/07-vista-despliegue.md) · [aspectos](../aspectos.md) · [registro IA](../ia.md) · [operación GHCR](../operacion/despliegue-ghcr.md).
