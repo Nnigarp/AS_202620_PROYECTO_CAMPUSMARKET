@@ -118,3 +118,19 @@ def test_no_sobrescribe_evidencia_previa(histories, tmp_path):
     with pytest.raises(FileExistsError):
         prepare(candidate, output, upstream=str(official))
     assert (output / "references.json").read_bytes() == original
+
+
+def test_imagen_del_fork_no_necesita_existir_en_historia_oficial(histories, tmp_path):
+    official, candidate, _, baseline_sha, orchestrator, _, proposed = histories
+    image_source = repository(tmp_path / "image-source")
+    (image_source / "contracts").mkdir()
+    (image_source / CONTRACT).write_text(json.dumps(proposed))
+    installed = commit(image_source, "empaquetado desde master en fork")
+    result = prepare(candidate, tmp_path / "references", upstream=str(official),
+                     image_upstream=str(image_source), mode="instalado", expected_revision=installed)
+    assert result["official_master_sha"] == baseline_sha
+    assert result["orchestration_sha"] == orchestrator
+    assert result["candidate_sha"] == result["expected_runtime_revision"] == installed
+    assert result["image_source_remote"] == str(image_source)
+    with pytest.raises(subprocess.CalledProcessError):
+        git(official, "cat-file", "-e", installed)

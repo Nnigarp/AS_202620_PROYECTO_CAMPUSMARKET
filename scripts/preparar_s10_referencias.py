@@ -12,6 +12,7 @@ import subprocess
 from pathlib import Path
 
 OFFICIAL_REMOTE = "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET.git"
+IMAGE_REMOTE = "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET.git"
 CONTRACT = "contracts/openapi-v2.json"
 
 
@@ -33,7 +34,7 @@ def contract_at(root: Path, revision: str) -> dict:
 
 
 def prepare(root: Path, output: Path, *, upstream: str = OFFICIAL_REMOTE,
-            mode: str = "produccion", expected_revision: str = "") -> dict:
+            mode: str = "produccion", expected_revision: str = "", image_upstream: str | None = None) -> dict:
     root = root.resolve()
     output.mkdir(parents=True, exist_ok=False)
     orchestration_sha = sha(git(root, "rev-parse", "HEAD"))
@@ -49,13 +50,19 @@ def prepare(root: Path, output: Path, *, upstream: str = OFFICIAL_REMOTE,
     runtime_revision = sha(config["runtime_revision"])
     # Referencia inmutable del contrato observado en producción, independiente
     # del master futuro y del identificador usado por el build de la imagen.
-    git(root, "fetch", "--no-tags", upstream, production_sha)
+    production_upstream = upstream
+    source_repository = config.get("contract_repository", "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET")
+    if source_repository == "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET":
+        production_upstream = image_upstream or upstream
+    elif source_repository != "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET":
+        raise ValueError("Repositorio de contrato productivo no autorizado.")
+    git(root, "fetch", "--no-tags", production_upstream, production_sha)
     production = contract_at(root, production_sha)
     if mode == "instalado":
         # La imagen puede preceder al fix del propio workflow. Mantener el
         # orquestador corregido y leer el contrato de la fuente exacta instalada.
         candidate_sha = sha(expected_revision)
-        git(root, "fetch", "--no-tags", upstream, candidate_sha)
+        git(root, "fetch", "--no-tags", image_upstream or upstream, candidate_sha)
         candidate = contract_at(root, candidate_sha)
         reference, runtime_revision, reference_sha = candidate, candidate_sha, candidate_sha
     elif mode == "produccion":
@@ -72,6 +79,8 @@ def prepare(root: Path, output: Path, *, upstream: str = OFFICIAL_REMOTE,
     evidence = {
         "mode": mode, "official_remote": upstream, "official_master_sha": base_sha,
         "orchestration_sha": orchestration_sha, "candidate_sha": candidate_sha,
+        "image_source_remote": image_upstream or upstream,
+        "production_contract_remote": production_upstream,
         "production_contract_sha": production_sha,
         "reference_contract_sha": reference_sha, "expected_runtime_revision": runtime_revision,
         "previous_image": config["image"], "contract_sha256": hashes,
@@ -87,7 +96,8 @@ def main():
     parser.add_argument("--expected-revision", default="")
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
-    result = prepare(root, args.output, mode=args.mode, expected_revision=args.expected_revision)
+    result = prepare(root, args.output, mode=args.mode, expected_revision=args.expected_revision,
+                     image_upstream=IMAGE_REMOTE)
     print(json.dumps(result, indent=2))
     with (args.output / "outputs.txt").open("w", encoding="utf-8") as stream:
         stream.write(f"expected_revision={result['expected_runtime_revision']}\n")
