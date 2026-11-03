@@ -18,6 +18,7 @@ class CatalogoApi {
     String? estado,
     double? precioMin,
     double? precioMax,
+    int? universidadId,
   }) async {
     final query = <String, String>{};
 
@@ -40,6 +41,8 @@ class CatalogoApi {
     if (precioMax != null) {
       query['precio_max'] = precioMax.toString();
     }
+
+    if (universidadId != null) query['universidad_id'] = universidadId.toString();
 
     final uri = Uri.parse(
       '$baseUrl/catalogo',

@@ -17,6 +17,7 @@ from backend.app.observability import (
 )
 from backend.app.publicaciones.router import router as publicaciones_router
 from backend.app.resource_limits import RequestBodyLimitMiddleware
+from backend.app.universidades.router import router as universidades_router
 from backend.app.usuarios.router import router as usuarios_router
 
 
@@ -95,6 +96,7 @@ app.mount(
 app.include_router(publicaciones_router)
 app.include_router(catalogo_router)
 app.include_router(usuarios_router)
+app.include_router(universidades_router)
 app.include_router(administracion_router)
 
 

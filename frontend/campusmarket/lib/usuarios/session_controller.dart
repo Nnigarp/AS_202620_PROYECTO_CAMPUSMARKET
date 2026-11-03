@@ -13,17 +13,20 @@ class Usuario {
     required this.nombre,
     required this.correo,
     required this.esAdmin,
+    this.universidadId,
   });
   final int id;
   final String nombre;
   final String correo;
   final bool esAdmin;
+  final int? universidadId;
 
   factory Usuario.fromJson(Map<String, dynamic> json) => Usuario(
     id: json['id'] as int,
     nombre: json['nombre'] as String,
     correo: json['correo'] as String,
     esAdmin: json['es_admin'] as bool,
+    universidadId: json['universidad_id'] as int?,
   );
 }
 
@@ -59,11 +62,12 @@ class SessionController extends ChangeNotifier {
     required String nombre,
     required String correo,
     required String password,
+    int? universidadId,
   }) async {
     final response = await _client.post(
       Uri.parse('$baseUrl/usuarios/registro'),
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'nombre': nombre, 'correo': correo, 'password': password}),
+      body: jsonEncode({'nombre': nombre, 'correo': correo, 'password': password, 'universidad_id': ?universidadId}),
     ).timeout(const Duration(seconds: 20));
     _check(response, 201);
   }
@@ -100,12 +104,12 @@ class SessionController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> editarPerfil(String nombre) async {
+  Future<void> editarPerfil(String nombre, {int? universidadId}) async {
     final headers = authorizedHeaders;
     final response = await _client.patch(
       Uri.parse('$baseUrl/usuarios/me'),
       headers: headers,
-      body: jsonEncode({'nombre': nombre}),
+      body: jsonEncode({'nombre': nombre, 'universidad_id': ?universidadId}),
     ).timeout(const Duration(seconds: 20));
     _check(response, 200, authorization: headers['Authorization']);
     if (headers['Authorization'] != 'Bearer $_token') return;

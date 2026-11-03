@@ -84,6 +84,9 @@ def initialize_database() -> None:
                 cursor.execute("UPDATE publicaciones SET propietario_id = NULL")
                 connection.commit()
                 cursor.execute("ALTER TABLE publicaciones MODIFY propietario_id BIGINT UNSIGNED NULL")
+            if not _column_exists(cursor, "publicaciones", "universidad_id"):
+                # NULL conserva publicaciones anteriores sin inferir universidad.
+                cursor.execute("ALTER TABLE publicaciones ADD COLUMN universidad_id BIGINT UNSIGNED NULL")
             if not _column_exists(cursor, "publicaciones", "visible"):
                 cursor.execute("ALTER TABLE publicaciones ADD COLUMN visible BOOLEAN NOT NULL DEFAULT TRUE")
 
@@ -162,6 +165,7 @@ def _select_publication_fields() -> str:
         modalidad,
         estado,
         propietario_id,
+        universidad_id,
         estado_publicacion,
         visible
     """
@@ -215,6 +219,10 @@ def create_publication(data: dict, idempotency_key: str | None = None) -> dict:
                         raise IdempotencyConflictError("La publicación original ya no está disponible.")
                     return existing
 
+            # Universidad declarada por el autor al crear; no se acepta desde el cliente.
+            cursor.execute("SELECT universidad_id FROM usuarios WHERE id = %s", (data["propietario_id"],))
+            autor = cursor.fetchone()
+            universidad_id = autor["universidad_id"] if autor else None
             cursor.execute(
                 """
                 INSERT INTO publicaciones (
@@ -224,9 +232,10 @@ def create_publication(data: dict, idempotency_key: str | None = None) -> dict:
                     modalidad,
                     estado,
                     propietario_id,
+                    universidad_id,
                     estado_publicacion
                 )
-                VALUES (%s, %s, %s, %s, %s, %s, %s)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
                 """,
                 (
                     data["titulo"],
@@ -235,6 +244,7 @@ def create_publication(data: dict, idempotency_key: str | None = None) -> dict:
                     data["modalidad"],
                     data["estado"],
                     data["propietario_id"],
+                    universidad_id,
                     data["estado_publicacion"],
                 ),
             )

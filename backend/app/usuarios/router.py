@@ -25,6 +25,7 @@ class Credenciales(BaseModel):
 class PerfilUpdate(BaseModel):
     model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
     nombre: str = Field(min_length=2, max_length=80)
+    universidad_id: int | None = Field(default=None, ge=1)
 
     @field_validator("nombre")
     @classmethod
@@ -36,6 +37,7 @@ class PerfilUpdate(BaseModel):
 
 class Registro(Credenciales):
     nombre: str = Field(min_length=2, max_length=80)
+    universidad_id: int | None = Field(default=None, ge=1)
 
     @field_validator("nombre", mode="before")
     @classmethod
@@ -48,6 +50,7 @@ class Usuario(BaseModel):
     nombre: str
     correo: str
     es_admin: bool
+    universidad_id: int | None = None
 
 
 class Sesion(BaseModel):
@@ -64,11 +67,13 @@ def _peer(request: Request) -> str:
 @router.post("/registro", response_model=Usuario, status_code=201, operation_id="registrarUsuario")
 def registro(payload: Registro, request: Request):
     try:
-        return registrar(payload.nombre, payload.correo, payload.password, _peer(request))
+        return registrar(payload.nombre, payload.correo, payload.password, _peer(request), payload.universidad_id)
     except DuplicateEmailError as error:
         raise HTTPException(409, str(error)) from error
     except AuthRateLimitError as error:
         raise HTTPException(429, str(error), headers={"Retry-After": "300"}) from error
+    except ValueError as error:
+        raise HTTPException(422, str(error)) from error
 
 
 @router.post("/login", response_model=Sesion, operation_id="iniciarSesion")
@@ -89,7 +94,11 @@ def me(user: UsuarioActual):
 
 @router.patch("/me", response_model=Usuario, operation_id="editarPerfil")
 def perfil(payload: PerfilUpdate, user: UsuarioActual):
-    return editar_perfil(user["id"], payload.nombre)
+    try:
+        universidad = user.get("universidad_id") if payload.universidad_id is None else payload.universidad_id
+        return editar_perfil(user["id"], payload.nombre, universidad)
+    except ValueError as error:
+        raise HTTPException(422, str(error)) from error
 
 
 @router.post("/logout", status_code=204, operation_id="cerrarSesion")

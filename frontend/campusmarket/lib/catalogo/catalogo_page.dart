@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../shared/api_error.dart';
+import '../usuarios/session_controller.dart';
 import 'catalogo_api.dart';
 import 'catalogo_detalle_page.dart';
 import 'publicacion_catalogo.dart';
@@ -24,6 +25,7 @@ class _CatalogoPageState extends State<CatalogoPage> {
 
   String? _modalidad;
   String? _estado;
+  bool _miUniversidad = false;
   bool _cargando = true;
   int _requestRevision = 0;
   String? _error;
@@ -31,11 +33,26 @@ class _CatalogoPageState extends State<CatalogoPage> {
   @override
   void initState() {
     super.initState();
+    SessionController.instance.addListener(_onSessionChanged);
     _cargar();
+  }
+
+  void _onSessionChanged() {
+    if (!mounted) return;
+    if (_miUniversidad) {
+      if (!SessionController.instance.authenticated ||
+          SessionController.instance.usuario?.universidadId == null) {
+        setState(() => _miUniversidad = false);
+      }
+      _cargar();
+    } else {
+      setState(() {});
+    }
   }
 
   @override
   void dispose() {
+    SessionController.instance.removeListener(_onSessionChanged);
     _busquedaController.dispose();
     _precioMinController.dispose();
     _precioMaxController.dispose();
@@ -70,6 +87,7 @@ class _CatalogoPageState extends State<CatalogoPage> {
         estado: _estado,
         precioMin: minimum,
         precioMax: maximum,
+        universidadId: _miUniversidad ? SessionController.instance.usuario?.universidadId : null,
       );
 
       if (!mounted || revision != _requestRevision) return;
@@ -100,6 +118,7 @@ class _CatalogoPageState extends State<CatalogoPage> {
     setState(() {
       _modalidad = null;
       _estado = null;
+      _miUniversidad = false;
     });
 
     _cargar();
@@ -147,6 +166,12 @@ class _CatalogoPageState extends State<CatalogoPage> {
                           final desktop = constraints.maxWidth >= 950;
 
                           final filtros = _PanelFiltros(
+                            miUniversidad: _miUniversidad,
+                            universidadDisponible: SessionController.instance.authenticated && SessionController.instance.usuario?.universidadId != null,
+                            onMiUniversidadChanged: (value) {
+                              setState(() => _miUniversidad = value);
+                              _cargar();
+                            },
                             modalidad: _modalidad,
                             estado: _estado,
                             precioMinController: _precioMinController,
@@ -442,6 +467,9 @@ class _Beneficio extends StatelessWidget {
 
 class _PanelFiltros extends StatelessWidget {
   const _PanelFiltros({
+    required this.miUniversidad,
+    required this.universidadDisponible,
+    required this.onMiUniversidadChanged,
     required this.modalidad,
     required this.estado,
     required this.precioMinController,
@@ -452,6 +480,9 @@ class _PanelFiltros extends StatelessWidget {
     required this.onLimpiar,
   });
 
+  final bool miUniversidad;
+  final bool universidadDisponible;
+  final ValueChanged<bool> onMiUniversidadChanged;
   final String? modalidad;
   final String? estado;
   final TextEditingController precioMinController;
@@ -487,6 +518,43 @@ class _PanelFiltros extends StatelessWidget {
                 TextButton(onPressed: onLimpiar, child: const Text('Limpiar')),
               ],
             ),
+            const SizedBox(height: 20),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                for (final soloUniversidad in [false, true])
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: OutlinedButton.icon(
+                      key: Key(soloUniversidad
+                          ? 'catalogo-mi-universidad'
+                          : 'catalogo-toda-cartagena'),
+                      onPressed: soloUniversidad && !universidadDisponible
+                          ? null
+                          : () => onMiUniversidadChanged(soloUniversidad),
+                      style: OutlinedButton.styleFrom(
+                        alignment: Alignment.centerLeft,
+                        backgroundColor: miUniversidad == soloUniversidad
+                            ? colors.primaryContainer
+                            : null,
+                        foregroundColor: miUniversidad == soloUniversidad
+                            ? colors.onPrimaryContainer
+                            : colors.onSurface,
+                      ),
+                      icon: Icon(miUniversidad == soloUniversidad
+                          ? Icons.check_circle_outline
+                          : Icons.circle_outlined),
+                      label: Text(soloUniversidad
+                          ? 'Mi universidad'
+                          : 'Toda Cartagena'),
+                    ),
+                  ),
+              ],
+            ),
+            if (!universidadDisponible) ...[
+              const SizedBox(height: 8),
+              Text('Inicia sesión y selecciona tu universidad en tu perfil para activar este filtro.', style: theme.textTheme.bodySmall),
+            ],
             const SizedBox(height: 20),
             Text(
               'Modalidad',

@@ -2,6 +2,8 @@ import os
 import secrets
 from datetime import datetime, timedelta, timezone
 
+from backend.app.universidades.repository import existe_activa
+
 from .errors import AuthRateLimitError, InvalidCredentialsError
 from .repository import (
     consume_auth_budget,
@@ -21,6 +23,7 @@ def public_user(user: dict) -> dict:
     return {
         "id": user["id"], "nombre": user["nombre"], "correo": user["correo"],
         "es_admin": str(user["id"]) in admin_ids,
+        "universidad_id": user.get("universidad_id"),
     }
 
 
@@ -32,10 +35,12 @@ def _check_budget(action: str, correo: str, peer: str) -> None:
             raise AuthRateLimitError("Demasiados intentos. Intenta nuevamente en cinco minutos.")
 
 
-def registrar(nombre: str, correo: str, password: str, peer: str) -> dict:
+def registrar(nombre: str, correo: str, password: str, peer: str, universidad_id: int | None = None) -> dict:
     correo = correo.strip().lower()
     _check_budget("registro", correo, peer)
-    return public_user(create_user(nombre.strip(), correo, hash_password(password)))
+    if universidad_id is not None and not existe_activa(universidad_id):
+        raise ValueError("Selecciona una universidad válida de Cartagena.")
+    return public_user(create_user(nombre.strip(), correo, hash_password(password), universidad_id))
 
 
 def login(correo: str, password: str, peer: str) -> dict:
@@ -64,5 +69,7 @@ def logout(token: str) -> None:
     revoke_session(token_digest(token))
 
 
-def editar_perfil(user_id: int, nombre: str) -> dict:
-    return public_user(update_profile(user_id, nombre.strip()))
+def editar_perfil(user_id: int, nombre: str, universidad_id: int | None = None) -> dict:
+    if universidad_id is not None and not existe_activa(universidad_id):
+        raise ValueError("Selecciona una universidad válida de Cartagena.")
+    return public_user(update_profile(user_id, nombre.strip(), universidad_id))
