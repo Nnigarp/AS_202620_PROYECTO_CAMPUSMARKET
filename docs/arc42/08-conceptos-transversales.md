@@ -125,3 +125,16 @@ Datos personales: correo, nombre, credenciales derivadas, sesiones e intentos; c
 ### 8.11.1 Decisión del control de suministro
 
 [ADR-0026 (propuesto)](../adr/0026-incorporar-auditoria-de-dependencias-python-en-ci.md) explica las alternativas manual, informativa y bloqueante para el control Python. En S13 se integró el workflow de `pip-audit` y se revisaron hallazgos hasta obtener 0 avisos reportados en 16 paquetes. No corresponde afirmar que todas las dependencias o la imagen desplegada sean seguras.
+
+
+## 8.12 Concepto transversal posterior a S13 — identidad universitaria declarada
+
+| Concepto | Regla vigente | Consecuencia |
+|---|---|---|
+| Universidad | Institución de Cartagena seleccionada de catálogo API; **declarada por el usuario**, no verificada por correo ni matrícula | La interfaz y la documentación no deben atribuir validación institucional |
+| `usuarios.universidad_id` | Opcional para mantener cuentas existentes | Registro y perfil aceptan institución válida o ausencia heredada |
+| `publicaciones.universidad_id` | Asignada por backend desde el propietario **en la creación** | No depende de un ID arbitrario enviado por cliente; no se reasigna al editar perfil |
+| Toda Cartagena | Incluye publicaciones históricas con institución `NULL` | Compatibilidad de lectura |
+| Mi universidad | Disponible tras iniciar sesión y declarar institución | Filtro de catálogo combinable con criterios previos |
+
+La evolución conserva fronteras del monolito modular (ADR-0001/0009/0012/0021) y el único contrato OpenAPI v2. No se crea un nuevo servicio ni broker. Véanse [arc42 §5](05-bloques-de-construccion.md), [matriz de aspectos](../aspectos.md) y [evidencia posterior a S13](../evidencias/cierre-universidades-cartagena-2026-11-02.md).
