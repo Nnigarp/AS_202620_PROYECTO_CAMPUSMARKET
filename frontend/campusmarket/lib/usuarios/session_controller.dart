@@ -67,7 +67,7 @@ class SessionController extends ChangeNotifier {
     final response = await _client.post(
       Uri.parse('$baseUrl/usuarios/registro'),
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'nombre': nombre, 'correo': correo, 'password': password, if (universidadId != null) 'universidad_id': universidadId}),
+      body: jsonEncode({'nombre': nombre, 'correo': correo, 'password': password, 'universidad_id': ?universidadId}),
     ).timeout(const Duration(seconds: 20));
     _check(response, 201);
   }
@@ -109,7 +109,7 @@ class SessionController extends ChangeNotifier {
     final response = await _client.patch(
       Uri.parse('$baseUrl/usuarios/me'),
       headers: headers,
-      body: jsonEncode({'nombre': nombre, if (universidadId != null) 'universidad_id': universidadId}),
+      body: jsonEncode({'nombre': nombre, 'universidad_id': ?universidadId}),
     ).timeout(const Duration(seconds: 20));
     _check(response, 200, authorization: headers['Authorization']);
     if (headers['Authorization'] != 'Bearer $_token') return;
