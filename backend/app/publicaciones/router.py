@@ -74,6 +74,7 @@ class EstadoPublicacionUpdate(BaseModel):
 class Publicacion(PublicacionCreate):
     id: int
     propietario_id: int
+    universidad_id: int | None = None
     visible: bool = True
 
 
