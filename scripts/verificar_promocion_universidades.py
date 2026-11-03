@@ -5,7 +5,6 @@ credenciales sinteticas y que el unico delta es la referencia inmutable de API.
 """
 import copy
 import json
-import os
 import secrets
 import subprocess
 import tempfile
