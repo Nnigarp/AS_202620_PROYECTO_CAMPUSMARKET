@@ -130,9 +130,9 @@ void main() {
           request.method == 'GET' ? '[]' : '', request.method == 'GET' ? 200 : 204,
         )),
       ));
-      addTearDown(() { controller.dispose(); session.dispose(); });
-      await controller.ensureLoaded();
-      await tester.pumpWidget(MaterialApp(home: Scaffold(body: Column(children: [
+      try {
+        await controller.ensureLoaded();
+        await tester.pumpWidget(MaterialApp(home: Scaffold(body: Column(children: [
         FavoritoButton(publicacion: product, controller: controller),
         Expanded(child: FavoritosPage(controller: controller)),
       ]))));
@@ -142,7 +142,12 @@ void main() {
       await tester.pumpAndSettle();
       expect(controller.contiene(17), isTrue);
       expect(find.byIcon(Icons.favorite), findsWidgets);
-      expect(tester.takeException(), isNull);
+        expect(tester.takeException(), isNull);
+      } finally {
+        await tester.pumpWidget(const SizedBox.shrink());
+        controller.dispose();
+        session.dispose();
+      }
     });
   }
 }

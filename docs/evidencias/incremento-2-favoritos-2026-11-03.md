@@ -26,3 +26,7 @@ Implementación: `backend/app/favoritos/{repository,service,router}.py`; lectura
 ## CI, commits y límites
 
 El primer commit de este corte inicia CI. Sus SHA/runs y correcciones se registrarán aquí tras la ejecución. **Integración MySQL y Flutter: PENDIENTE hasta disponer del resultado.** No hay revisión humana o aprobación institucional afirmada. Favoritos no se declara desplegado. Mensajería comienza tras completar este corte; promoción productiva requiere proceso y autorización separados.
+
+### Primera ejecución y corrección de fixtures
+
+Commit de implementación/documentación: [`62b9844`](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/62b984418c2d1be3f097564eef4f571bf5da1600). [Flutter run 41583438336](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41583438336): analyze aprobado; 15 tests aprobados y cuatro de layout fallaron por temporizador de sesión pendiente al verificar invariantes del test. Corrección limitada al fixture: desmontar widgets y disponer sesión/controlador en finally antes de terminar el test, conservando todas las aserciones y la expiración real de sesión. Se repite Flutter sobre el commit de corrección.
