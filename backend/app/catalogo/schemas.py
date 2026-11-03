@@ -22,5 +22,3 @@ class PublicacionCatalogo(BaseModel):
     universidad_id: int | None = None
     estado_publicacion: Literal["disponible", "reservado", "vendido"] = "disponible"
     imagenes: list[ImagenCatalogo] = Field(default_factory=list)
-
-

@@ -2,7 +2,7 @@ name: S10 contrato del cliente en despliegue publico
 
 on:
   push:
-    branches: [master, S10-contrato-cliente]
+    branches: [master, S10-contrato-cliente, feat/incremento-2-20261103]
   pull_request:
     branches: [master]
   workflow_dispatch:
