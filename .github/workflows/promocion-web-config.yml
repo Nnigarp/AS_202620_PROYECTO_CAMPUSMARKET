@@ -7,6 +7,7 @@ on:
       - deploy/compose.prod.yaml
       - scripts/verificar_promocion_web.py
       - scripts/ensayar_imagen_ghcr.py
+      - scripts/verificar_promocion_universidades.py
       - .github/workflows/promocion-web-config.yml
   pull_request:
     branches: [master]
@@ -32,7 +33,7 @@ jobs:
       - name: Recuperar solo el codigo fuente de la imagen aprobada para comparar persistencia
         run: git fetch --no-tags --depth=1 https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET.git a9b6709a67f8036346acb64b9c2b9849ee355cf2
       - name: Validar delta exacto e integridad del manifiesto y configuracion OCI
-        run: python3 -m scripts.verificar_promocion_web --registry --output artifacts/promocion-web/configuracion.json
+        run: python3 scripts/verificar_promocion_universidades.py --output artifacts/promocion-web/configuracion.json
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: promocion-web-config-${{ github.run_id }}-${{ github.run_attempt }}
