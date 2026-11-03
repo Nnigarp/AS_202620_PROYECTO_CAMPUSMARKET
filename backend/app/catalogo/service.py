@@ -20,6 +20,7 @@ def buscar_publicaciones(
     estado: str | None = None,
     precio_min: float | None = None,
     precio_max: float | None = None,
+    universidad_id: int | None = None,
 ) -> list[dict]:
     publicaciones = listar_publicaciones()
 
@@ -28,6 +29,9 @@ def buscar_publicaciones(
     resultado = []
 
     for publicacion in publicaciones:
+        if universidad_id is not None and publicacion.get("universidad_id") != universidad_id:
+            continue
+
         if texto_normalizado:
             titulo = str(publicacion.get("titulo", "")).lower()
             descripcion = str(publicacion.get("descripcion", "")).lower()
