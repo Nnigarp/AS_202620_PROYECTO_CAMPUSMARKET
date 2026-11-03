@@ -543,3 +543,7 @@ flowchart TD
 - **Límite:** no existe respaldo independiente de SQL/fotos verificado ni rollback ejecutado en Dokploy.
 
 Decisión de topología: [ADR-0025](../adr/0025-servir-flutter-web-con-fastapi-en-servicio-existente.md). Registro de fechas, CI, digest, pruebas y limitaciones: [cierre institucional 2026-11-01](../evidencias/cierre-web-institucional-2026-11-01.md).
+
+## Incremento 2 — Preparación separada del despliegue
+
+PR #85 fue fusionado por el usuario en master `1c07c2c`, incorporando código/contrato sin cambiar el digest productivo. La referencia S10 se corrige en una rama independiente. Una promoción independiente solo actualizará `api.image` después de validar el PR y ensayar la imagen; Deploy requiere autorización posterior. Se conserva el servicio sistema, compose.prod.yaml, Run Command API-only existente, dos contenedores, MySQL/volúmenes/red y Autodeploy desactivado. S10 distingue base oficial, baseline productiva y contrato de la imagen instalada; conserva nueve criterios. [Procedimiento exacto](../operacion/despliegue-ghcr.md#incremento-2--preparación-del-pr-85-sin-desplegar) · [evidencia PR85](../evidencias/incremento-2-universidad-visible-2026-11-03.md#pr-85--corrección-de-s10-y-preparación-de-promoción). No se declara publicada una imagen nueva ni ejecutado un despliegue.

@@ -738,3 +738,11 @@ La prueba de tarjeta de 250 px detectó un desbordamiento real; se ajustó la pr
 Fuente `058f63f0882d388e40c85c347e406bb9777cb343` aprobada en el fork: Ruff/Gitleaks, 126 pytest + 4 contrato, 33 tests Flutter, dos mutaciones del cliente y recorridos reales Chrome escritorio/móvil y Android con 12 criterios por plataforma. S10 verifica candidato y producción con referencias distintas. Se corrigieron fixtures con timers pendientes, esperas de transición, desbordamiento real a 250 px, revalidación de Favoritos y conservación de Venta/Alquiler. No se eliminaron aserciones para aparentar resultados. [Runs, SHA y propuesta de PR](evidencias/incremento-2-universidad-visible-2026-11-03.md#validación-conjunta-final--fuente-058f63f).
 
 Este cierre solo documenta resultados observados por automatización; no declara revisión humana, matrícula verificada, imagen productiva nueva ni despliegue. La apertura del PR oficial requiere autorización conforme a la instrucción del usuario; no se hizo merge.
+
+## 2026-11-03 — PR #85, corregir origen del contrato S10
+
+ChatGPT/Codex verificó el fallo oficial [41590254139](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41590254139): ocho pruebas de frontera aprobadas, pero `git show 50d9352:contracts/openapi-v2.json` falló antes de ejecutar HTTP. Se corrige la propuesta anterior que confundió la revisión del build con una referencia válida de contrato en Git; el éxito previo del fork no acreditaba el check oficial.
+
+Propuesta aceptada: resolver master institucional explícitamente, conservar baseline productiva independiente y exigir contrato/revisión del SHA de imagen, con orquestador registrado independientemente en comprobación posdespliegue. Se rechazaron HEAD^1, obtener baseline del propio servidor bajo prueba, desactivar S10 o eliminar sus nueve criterios. Verificación local: 16 tests (incluidas ocho historias Git sintéticas), Ruff y Actionlint aprobados. CI oficial se comprobará sobre el nuevo commit, sin afirmar éxito anticipado. No hay revisión humana afirmada ni operaciones Dokploy.
+
+El usuario notificó posteriormente el merge manual de PR #85 (`1c07c2c`). Se detuvo toda escritura en la rama anterior; la corrección ya ensayada se reutiliza en una rama nueva basada en ese master. No se repite el desarrollo funcional ni se modifica producción.
