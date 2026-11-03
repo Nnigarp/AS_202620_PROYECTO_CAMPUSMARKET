@@ -10,6 +10,7 @@ from .repository import (
     list_publication_images,
     list_publication_images_batch,
     list_publications,
+    list_publications_by_ids,
     list_publications_by_owner,
     publication_exists,
     remove_publication_image,
@@ -68,6 +69,13 @@ def listar_publicaciones() -> list[dict]:
         raise PublicationPersistenceUnavailableError(
             "No es posible consultar las publicaciones temporalmente."
         ) from error
+
+
+def listar_publicaciones_por_ids(publicacion_ids: list[int]) -> list[dict]:
+    try:
+        return list_publications_by_ids(publicacion_ids)
+    except PersistenceUnavailableError as error:
+        raise PublicationPersistenceUnavailableError("No es posible consultar publicaciones temporalmente.") from error
 
 
 def listar_publicaciones_propietario(

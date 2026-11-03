@@ -11,7 +11,9 @@ from backend.app.administracion.repository import (
     initialize_database as init_administracion,
 )
 from backend.app.db import transaction
+from backend.app.favoritos.repository import initialize_database as init_favoritos
 from backend.app.main import app
+from backend.app.mensajeria.repository import initialize_database as init_mensajeria
 from backend.app.publicaciones.repository import (
     initialize_database as init_publicaciones,
 )
@@ -25,7 +27,12 @@ def db_limpia():
     init_usuarios()
     init_publicaciones()
     init_administracion()
+    init_favoritos()
+    init_mensajeria()
     with transaction() as cursor:
+        cursor.execute("DELETE FROM mensajes")
+        cursor.execute("DELETE FROM conversaciones")
+        cursor.execute("DELETE FROM favoritos")
         cursor.execute("DELETE FROM reportes_publicacion")
         cursor.execute("DELETE FROM publicaciones")
         cursor.execute("DELETE FROM sesiones_usuario")

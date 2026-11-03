@@ -1434,6 +1434,617 @@
         }
       }
     },
+    "/favoritos": {
+      "get": {
+        "tags": [
+          "favoritos"
+        ],
+        "summary": "Consultar mis favoritos privados",
+        "operationId": "consultarMisFavoritos",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/PublicacionCatalogo"
+                  },
+                  "type": "array",
+                  "title": "Response Consultarmisfavoritos"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "La solicitud supera el límite permitido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "detail": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "required": [
+                    "detail"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/favoritos/{publicacion_id}": {
+      "put": {
+        "tags": [
+          "favoritos"
+        ],
+        "summary": "Agregar a mis favoritos, sin duplicados",
+        "operationId": "agregarMiFavorito",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "publicacion_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "maximum": 9223372036854775807,
+              "exclusiveMinimum": 0,
+              "title": "Publicacion Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "413": {
+            "description": "La solicitud supera el límite permitido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "detail": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "detail"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "favoritos"
+        ],
+        "summary": "Quitar de mis favoritos",
+        "operationId": "quitarMiFavorito",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "publicacion_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "maximum": 9223372036854775807,
+              "exclusiveMinimum": 0,
+              "title": "Publicacion Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "413": {
+            "description": "La solicitud supera el límite permitido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "detail": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "detail"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/conversaciones": {
+      "post": {
+        "tags": [
+          "mensajeria"
+        ],
+        "summary": "Contactar al vendedor o recuperar la conversación",
+        "operationId": "iniciarConversacion",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConversacionCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Conversacion"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "La solicitud supera el límite permitido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "detail": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "detail"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "mensajeria"
+        ],
+        "summary": "Consultar mis conversaciones",
+        "operationId": "consultarMiBandeja",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "limite",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 50,
+              "minimum": 1,
+              "default": 30,
+              "title": "Limite"
+            }
+          },
+          {
+            "name": "desplazamiento",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100000,
+              "minimum": 0,
+              "default": 0,
+              "title": "Desplazamiento"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Conversacion"
+                  },
+                  "title": "Response Consultarmibandeja"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "La solicitud supera el límite permitido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "detail": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "detail"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/conversaciones/{conversacion_id}": {
+      "get": {
+        "tags": [
+          "mensajeria"
+        ],
+        "summary": "Consultar una conversación propia",
+        "operationId": "consultarConversacion",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "conversacion_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "maximum": 9223372036854775807,
+              "exclusiveMinimum": 0,
+              "title": "Conversacion Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Conversacion"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "La solicitud supera el límite permitido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "detail": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "detail"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/conversaciones/{conversacion_id}/mensajes": {
+      "get": {
+        "tags": [
+          "mensajeria"
+        ],
+        "summary": "Consultar mensajes propios en orden con cursor",
+        "operationId": "consultarMensajes",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "conversacion_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "maximum": 9223372036854775807,
+              "exclusiveMinimum": 0,
+              "title": "Conversacion Id"
+            }
+          },
+          {
+            "name": "despues_de",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 9223372036854775807,
+              "minimum": 0,
+              "default": 0,
+              "title": "Despues De"
+            }
+          },
+          {
+            "name": "limite",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limite"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginaMensajes"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "La solicitud supera el límite permitido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "detail": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "detail"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "mensajeria"
+        ],
+        "summary": "Enviar como usuario autenticado, con clave de reintento",
+        "operationId": "enviarMensaje",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "conversacion_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "maximum": 9223372036854775807,
+              "exclusiveMinimum": 0,
+              "title": "Conversacion Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MensajeCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mensaje"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "La solicitud supera el límite permitido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "detail": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "detail"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/health": {
       "get": {
         "summary": "Consultar la salud del backend",
@@ -1486,6 +2097,82 @@
           "archivo"
         ],
         "title": "Body_subirImagenPublicacion"
+      },
+      "Conversacion": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "publicacion_id": {
+            "type": "integer",
+            "title": "Publicacion Id"
+          },
+          "comprador_id": {
+            "type": "integer",
+            "title": "Comprador Id"
+          },
+          "vendedor_id": {
+            "type": "integer",
+            "title": "Vendedor Id"
+          },
+          "creado_en": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Creado En"
+          },
+          "actualizado_en": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Actualizado En"
+          },
+          "publicacion": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PublicacionCatalogo"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "ultimo_mensaje": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Mensaje"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "publicacion_id",
+          "comprador_id",
+          "vendedor_id",
+          "creado_en",
+          "actualizado_en"
+        ],
+        "title": "Conversacion"
+      },
+      "ConversacionCreate": {
+        "properties": {
+          "publicacion_id": {
+            "type": "integer",
+            "maximum": 9.223372036854776e+18,
+            "exclusiveMinimum": 0.0,
+            "title": "Publicacion Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "publicacion_id"
+        ],
+        "title": "ConversacionCreate"
       },
       "Credenciales": {
         "properties": {
@@ -1605,6 +2292,83 @@
           "es_principal"
         ],
         "title": "ImagenCatalogo"
+      },
+      "Mensaje": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "conversacion_id": {
+            "type": "integer",
+            "title": "Conversacion Id"
+          },
+          "remitente_id": {
+            "type": "integer",
+            "title": "Remitente Id"
+          },
+          "texto": {
+            "type": "string",
+            "title": "Texto"
+          },
+          "creado_en": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Creado En"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "conversacion_id",
+          "remitente_id",
+          "texto",
+          "creado_en"
+        ],
+        "title": "Mensaje"
+      },
+      "MensajeCreate": {
+        "properties": {
+          "texto": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Texto"
+          },
+          "clave": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{32}$",
+            "title": "Clave"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "texto",
+          "clave"
+        ],
+        "title": "MensajeCreate"
+      },
+      "PaginaMensajes": {
+        "properties": {
+          "mensajes": {
+            "items": {
+              "$ref": "#/components/schemas/Mensaje"
+            },
+            "type": "array",
+            "title": "Mensajes"
+          },
+          "hay_mas": {
+            "type": "boolean",
+            "title": "Hay Mas"
+          }
+        },
+        "type": "object",
+        "required": [
+          "mensajes",
+          "hay_mas"
+        ],
+        "title": "PaginaMensajes"
       },
       "PerfilUpdate": {
         "properties": {
@@ -1775,6 +2539,16 @@
               }
             ],
             "title": "Universidad Id"
+          },
+          "universidad": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Universidad"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "estado_publicacion": {
             "type": "string",

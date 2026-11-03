@@ -138,3 +138,21 @@ Datos personales: correo, nombre, credenciales derivadas, sesiones e intentos; c
 | Mi universidad | Disponible tras iniciar sesión y declarar institución | Filtro de catálogo combinable con criterios previos |
 
 La evolución conserva fronteras del monolito modular (ADR-0001/0009/0012/0021) y el único contrato OpenAPI v2. No se crea un nuevo servicio ni broker. Véanse [arc42 §5](05-bloques-de-construccion.md), [matriz de aspectos](../aspectos.md) y [evidencia posterior a S13](../evidencias/cierre-universidades-cartagena-2026-11-02.md).
+
+## Incremento 2 — Privacidad de favoritos y contrato candidato
+
+Los favoritos son información privada de una cuenta, no una preferencia global del dispositivo. Sus rutas exigen Bearer; ninguna acepta una identidad de entrada. La clave compuesta impide duplicados bajo concurrencia; las referencias se conservan desacopladas de la eliminación de otros contextos y se filtran por visibilidad al leer. No se crea almacenamiento ni infraestructura adicional. Sesiones opacas, MySQL como fuente de verdad y composición de lecturas en lote reutilizan ADR-0001/0003/0012/0019/0022. No hace falta un ADR nuevo.
+
+OpenAPI candidato se compara con `app.openapi()` en CI. S10 público usa el contrato del commit efectivamente desplegado `50d9352e5081f8c3e470bd9cda9220d21b14cc0a`, con revisión esperada igual; no compara producción con rutas del candidato sin promover. Esa referencia deberá actualizarse mediante promoción autorizada. [Evidencia](../evidencias/incremento-2-favoritos-2026-11-03.md).
+
+## Incremento 2 — Privacidad y límites de Mensajería
+
+Todas las rutas `/conversaciones` usan sesiones opacas y `no-store`; ningún cliente suministra comprador, vendedor o remitente. Los filtros de participante se aplican en el repositorio, también al enviar y paginar. La inserción de mensaje y preview comparten transacción propia. Reintentos conservan la clave generada por Flutter; cambiar el contenido crea otra. El cursor solo avanza por páginas leídas, evitando saltar mensajes entrantes al recibir el ID de un envío. Respuestas antiguas no repueblan otra sesión ni invalidan su token. No se almacenan mensajes en almacenamiento persistente del navegador ni se registran cuerpos en observabilidad.
+
+Texto privado es dato personal potencial; solo participantes pueden consultarlo, pero este control no equivale a cifrado extremo a extremo, moderación de mensajes, cumplimiento jurídico o política institucional de retención aprobada. Se conserva el riesgo S13 de backup/retención, sin tocar producción. ADR-0001/0003/0012/0022 cubren el enfoque. [Pruebas y límites](../evidencias/incremento-2-mensajeria-2026-11-03.md).
+
+## Incremento 2 — Identidad visible y lectura modular en lote
+
+`publicaciones.universidad_id` conserva la declaración al publicar; la metadata se lee del catálogo institucional por ese ID, no desde el perfil actual ni inferida del correo. Una institución inactiva puede seguir identificando anuncios históricos; no se ofrece para nuevas declaraciones. Ausencia heredada permanece sin atribuir. Las etiquetas no certifican matrícula ni pertenencia institucional.
+
+La composición añade una consulta por lote de instituciones, no N+1; ningún widget consulta la universidad por tarjeta. Usuarios inicializa/valida el catálogo mediante capacidades públicas de Universidades, sin importar su repositorio. El contrato solo añade un campo nullable opcional. No se alteran tablas/datos heredados ni filtros existentes. [Evidencia](../evidencias/incremento-2-universidad-visible-2026-11-03.md).

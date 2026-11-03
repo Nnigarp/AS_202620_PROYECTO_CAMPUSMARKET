@@ -710,3 +710,31 @@ Este registro corresponde a la evolución de producto **posterior a S13**, no a 
 | 2026-11-02/03 | ChatGPT — S10 y recuperación | Identificar en los registros públicos que la API publicada conserva el contrato exacto, mientras la expectativa de revisión era antigua; proponer actualizar solo ese SHA sin relajar los nueve checks | No suprimir S10 ni sustituir comparación real por un resultado simulado; no declarar un volcado dentro de `/tmp` equivalente a backup recuperable | [Run S10 posterior al deploy](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41576332272), [PR #83](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/83), [riesgos arc42 §11](arc42/11-riesgos-y-deuda-tecnica.md) |
 
 **Responsabilidad:** el equipo debe revisar las decisiones, el código, los resultados CI y la documentación antes de presentar este incremento al docente; esta tabla registra asistencia y validaciones observables, no una evaluación institucional favorable.
+
+## 2026-11-03 — Incremento 2, Favoritos
+
+ChatGPT/Codex implementó el corte MySQL/API/OpenAPI/Flutter en una rama del fork basada en `c7f15748a9a9dfd8b1160ab04fb8ee544a374437`. Propuestas aceptadas: clave compuesta, PUT/DELETE idempotentes con identidad de sesión, composición pública en lote y caché invalidada por token. Verificación local: Ruff, contrato/arquitectura y seis casos unitarios de Favoritos (18 pruebas en conjunto); integración MySQL y Flutter requieren CI aislado, registrada en [evidencia](evidencias/incremento-2-favoritos-2026-11-03.md).
+
+Se descartaron preferencias solo locales (no persisten por cuenta), identificadores de usuario enviados por Flutter (suplantación) y comparar nuevas rutas contra producción sin promoción (bloqueo circular S10). Límites: asistencia automatizada, sin revisión humana/docente afirmada ni cambios productivos; código y escenarios reales pendientes se distinguen en la evidencia.
+
+## 2026-11-03 — Incremento 2, Mensajería
+
+ChatGPT/Codex extendió el monolito con conversación única por contexto, mensajes/transacción propia y clave de reintento. Se aceptó actualización manual HTTP/JSON con páginas acotadas y sin otra infraestructura. Se descartaron remitentes/vendedores elegidos por cliente, consultas sin participante y WebSockets/brokers; no son necesarios para este corte. Favoritos ya cuenta con evidencia real Web/Android/MySQL; Mensajería pasó nueve pruebas locales de frontera y avanza a CI MySQL/Flutter, sin dar por aprobada su integración antes del resultado. Se verificó Ruff y el contrato generado. [Evidencia](evidencias/incremento-2-mensajeria-2026-11-03.md).
+
+Límites: pruebas sintéticas automatizadas; no se afirma revisión humana, auditoría de intrusión ni publicación. Privacidad/retención y despliegue mantienen sus aprobaciones separadas.
+
+## 2026-11-03 — Incremento 2, universidad visible
+
+ChatGPT/Codex aceptó composición de metadata por IDs únicos desde la institución fijada al publicar, con DTO nullable y etiquetas de declaración. Descartó consultar el perfil actual por publicación (N+1 y atribución retroactiva falsa), inferir universidad a NULL o presentar matrícula verificada. La capa pública de Universidades elimina imports de repositorio ajeno en sus consumidores; propiedad de datos se amplía al contexto.
+
+Verificación: 13 pruebas locales de contrato/lotes/propiedad/erosión y Ruff aprobados; el diff OpenAPI solo añade metadata opcional/nullable. Tarjetas compactas reservan espacio para la etiqueta manteniendo imagen, descripción y acciones. CI aislado validará MySQL, 5 tests Flutter añadidos y recorrido real; no se afirman esos resultados antes de ejecutarlos. [Evidencia](evidencias/incremento-2-universidad-visible-2026-11-03.md). Sin revisión humana afirmada, publicación ni datos personales reales.
+
+### Revisión final del Incremento 2
+
+La prueba de tarjeta de 250 px detectó un desbordamiento real; se ajustó la proporción de miniatura en altura compacta, conservando la prueba. También se corrigió caché de disponibilidad al regresar a Favoritos: consulta vigente y ocultación de resultados previos mientras valida, con prueba de respuesta diferida. Se rechaza atribuir aprobación de un run anterior a una fuente modificada; la fuente conjunta se valida nuevamente en CI. Sin despliegue ni revisión humana afirmada.
+
+### Resultado verificado del Incremento 2 — 2026-11-03
+
+Fuente `058f63f0882d388e40c85c347e406bb9777cb343` aprobada en el fork: Ruff/Gitleaks, 126 pytest + 4 contrato, 33 tests Flutter, dos mutaciones del cliente y recorridos reales Chrome escritorio/móvil y Android con 12 criterios por plataforma. S10 verifica candidato y producción con referencias distintas. Se corrigieron fixtures con timers pendientes, esperas de transición, desbordamiento real a 250 px, revalidación de Favoritos y conservación de Venta/Alquiler. No se eliminaron aserciones para aparentar resultados. [Runs, SHA y propuesta de PR](evidencias/incremento-2-universidad-visible-2026-11-03.md#validación-conjunta-final--fuente-058f63f).
+
+Este cierre solo documenta resultados observados por automatización; no declara revisión humana, matrícula verificada, imagen productiva nueva ni despliegue. La apertura del PR oficial requiere autorización conforme a la instrucción del usuario; no se hizo merge.

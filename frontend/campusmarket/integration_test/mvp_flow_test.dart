@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:campusmarket/app/campus_market_app.dart';
 import 'package:campusmarket/app/inicio_page.dart';
+import 'package:campusmarket/favoritos/favoritos_controller.dart';
 import 'package:campusmarket/publicaciones/publicaciones_api.dart';
 import 'package:campusmarket/publicaciones/mis_publicaciones_page.dart';
 import 'package:campusmarket/shared/api_configuration.dart';
@@ -152,6 +153,7 @@ void main() {
     }
     await enterAccount('Estudiante A', emailA, passwordA, register: true);
     final ownerA = session.usuario!.id;
+    await session.editarPerfil('Estudiante A', universidadId: 1);
     checks.add('Registro, login y usuario actual A');
 
     await click(find.byKey(const Key('nav-catalogo')));
@@ -242,6 +244,7 @@ void main() {
     await click(find.byKey(const Key('nav-catalogo')));
     await catalogResult(title, 'Producto visible en catálogo');
     await screenshot('catalogo');
+    expect(find.text('UTB'), findsWidgets, reason: 'Universidad declarada visible en tarjeta');
     await fill('catalogo-busqueda', 'inexistente-$nonce');
     await click(find.byTooltip('Buscar'));
     await catalogResult('No encontramos publicaciones', 'Búsqueda real sin resultados');
@@ -265,8 +268,13 @@ void main() {
     checks.add('Búsqueda, precios, error de rango, estado vacío y limpieza de filtros reales');
     await click(find.text(title));
     await until(() => find.text('Descripción').evaluate().isNotEmpty, 'Detalle actual consultado');
+    expect(find.text('Universidad Tecnológica de Bolívar'), findsOneWidget,
+      reason: 'Detalle identifica institución declarada al publicar');
+    checks.add('Universidad declarada visible en tarjeta y detalle sin consultas por tarjeta');
     expect(find.byKey(const Key('reportar-publicacion')), findsNothing);
     await screenshot('detalle-A');
+    await click(find.byKey(Key('favorito-$id')));
+    await until(() => FavoritosController.instance.contiene(id), 'Corazón A guardado en MySQL');
     await tester.pageBack();
     await tester.pump(const Duration(milliseconds: 200));
 
@@ -294,6 +302,67 @@ void main() {
     expect(find.text('Editar'), findsNothing);
     expect(find.text('Eliminar'), findsNothing);
     await screenshot('detalle-B');
+    await FavoritosController.instance.ensureLoaded();
+    expect(FavoritosController.instance.contiene(id), isFalse, reason: 'Favorito privado de A no aparece para B');
+    await click(find.byKey(Key('favorito-$id')));
+    await until(() => FavoritosController.instance.contiene(id), 'B guarda su propio favorito');
+    await tester.pageBack();
+    await tester.pump(const Duration(milliseconds: 200));
+    await click(find.byKey(const Key('nav-favoritos')));
+    await until(() => find.text(editedTitle).evaluate().isNotEmpty, 'Favorito visible en pantalla privada');
+    await screenshot('favoritos-B');
+    await logout();
+    await enterAccount('Estudiante B', emailB, passwordB);
+    await click(find.byKey(const Key('nav-favoritos')));
+    await until(() => find.text(editedTitle).evaluate().isNotEmpty, 'Favorito persiste tras logout y nuevo login');
+    await click(find.byKey(Key('favorito-$id')));
+    await until(() => !FavoritosController.instance.contiene(id), 'Quitar favorito confirmado por API');
+    checks.add('Favoritos privados A/B, corazón, pantalla, persistencia tras logout y eliminación');
+    await click(find.byKey(const Key('nav-catalogo')));
+    await catalogResult(editedTitle, 'Regreso al catálogo');
+    await click(find.text(editedTitle));
+    await until(() => find.byKey(const Key('reportar-publicacion')).evaluate().isNotEmpty, 'Detalle de B consultado de nuevo');
+
+    final buyerMessage = 'Hola, me interesa el libro $nonce';
+    final sellerMessage = 'Podemos coordinar la entrega en el campus $nonce';
+    await click(find.byKey(const Key('contactar-vendedor')));
+    await until(() => find.byKey(const Key('chat-texto')).evaluate().isNotEmpty &&
+      tester.widget<TextField>(find.byKey(const Key('chat-texto'))).enabled == true, 'Conversación propia cargada');
+    await fill('chat-texto', buyerMessage);
+    await click(find.byKey(const Key('chat-enviar')));
+    await until(() => find.text(buyerMessage).evaluate().isNotEmpty, 'Mensaje comprador persistido');
+    await screenshot('chat-comprador');
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    await click(find.byKey(const Key('nav-mensajes')));
+    await until(() => find.text(editedTitle).evaluate().isNotEmpty, 'Bandeja del comprador');
+    await logout();
+    await enterAccount('Estudiante A', emailA, passwordA);
+    await click(find.byKey(const Key('nav-mensajes')));
+    await until(() => find.text(editedTitle).evaluate().isNotEmpty, 'Bandeja del vendedor recibe conversación');
+    await click(find.text(editedTitle));
+    await until(() => find.text(buyerMessage).evaluate().isNotEmpty, 'Vendedor recibe mensaje persistente');
+    await fill('chat-texto', sellerMessage);
+    await click(find.byKey(const Key('chat-enviar')));
+    await until(() => find.text(sellerMessage).evaluate().isNotEmpty, 'Respuesta vendedor persistida');
+    await screenshot('chat-vendedor');
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    await logout();
+    await enterAccount('Estudiante B', emailB, passwordB);
+    await click(find.byKey(const Key('nav-mensajes')));
+    await until(() => find.text(editedTitle).evaluate().isNotEmpty, 'Conversación persiste tras logout');
+    await click(find.text(editedTitle));
+    await until(() => find.text(sellerMessage).evaluate().isNotEmpty, 'Comprador recibe respuesta real');
+    checks.add('Mensajería HTTP: contactar, bandejas A/B, envío/respuesta y persistencia tras logout');
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    await click(find.byKey(const Key('nav-catalogo')));
+    await catalogResult(editedTitle, 'Regreso desde Mensajes al catálogo');
+    await click(find.text(editedTitle));
+    await until(() => find.byKey(const Key('reportar-publicacion')).evaluate().isNotEmpty, 'Detalle antes de ataques EC-02');
 
     Future<void> spoofedRequest(String method, String path, {Object? body}) async {
       final request = http.Request(method, Uri.parse('$defaultApiBaseUrl$path?propietario_id=$ownerA'));

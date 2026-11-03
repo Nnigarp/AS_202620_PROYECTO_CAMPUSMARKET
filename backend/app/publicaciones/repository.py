@@ -307,6 +307,27 @@ def list_publications() -> list[dict]:
             connection.close()
 
 
+def list_publications_by_ids(publication_ids: list[int]) -> list[dict]:
+    """Lectura pública en lote; nunca expone ocultas ni publicaciones heredadas sin dueño."""
+    if not publication_ids:
+        return []
+    initialize_database()
+    connection = _connect()
+    try:
+        with connection.cursor() as cursor:
+            placeholders = ", ".join(["%s"] * len(publication_ids))
+            cursor.execute(
+                f"SELECT {_select_publication_fields()} FROM publicaciones "
+                f"WHERE id IN ({placeholders}) AND visible = TRUE AND propietario_id IS NOT NULL",
+                tuple(publication_ids),
+            )
+            return cursor.fetchall()
+    except pymysql.MySQLError as error:
+        raise PersistenceUnavailableError("La persistencia está temporalmente no disponible.") from error
+    finally:
+        connection.close()
+
+
 def list_publications_by_owner(propietario_id: int) -> list[dict]:
     initialize_database()
     connection = None

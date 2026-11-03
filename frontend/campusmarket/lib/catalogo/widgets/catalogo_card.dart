@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../shared/formatters.dart';
+import '../../favoritos/favorito_button.dart';
+import '../../favoritos/favoritos_controller.dart';
 
 import '../publicacion_catalogo.dart';
 
@@ -9,10 +11,12 @@ class CatalogoCard extends StatelessWidget {
     required this.publicacion,
     required this.onTap,
     super.key,
+    this.favoritosController,
   });
 
   final PublicacionCatalogo publicacion;
   final VoidCallback onTap;
+  final FavoritosController? favoritosController;
 
   String _formatearPrecio(double value) => formatoPrecio(value);
 
@@ -34,7 +38,9 @@ class CatalogoCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AspectRatio(
-                  aspectRatio: compacta ? 4 / 3 : 16 / 10,
+                  // En una cuadrícula baja, reservar espacio para título,
+                  // precio, institución y acciones sin recortar esos textos.
+                  aspectRatio: compacta && constraints.maxHeight < 400 ? 2.2 : 16 / 10,
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
@@ -58,21 +64,7 @@ class CatalogoCard extends StatelessWidget {
                       Positioned(
                         right: 10,
                         top: 10,
-                        child: Container(
-                          width: compacta ? 34 : 38,
-                          height: compacta ? 34 : 38,
-                          decoration: BoxDecoration(
-                            color: colors.surface.withValues(alpha: 0.92),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            publicacion.modalidad == 'venta'
-                                ? Icons.sell_outlined
-                                : Icons.key_outlined,
-                            size: compacta ? 17 : 19,
-                            color: colors.primary,
-                          ),
-                        ),
+                        child: FavoritoButton(publicacion: publicacion, controller: favoritosController),
                       ),
                       if (publicacion.estadoPublicacion != 'disponible')
                         Positioned(
@@ -144,6 +136,20 @@ class CatalogoCard extends StatelessWidget {
                                 color: colors.primary,
                                 fontWeight: FontWeight.w900,
                               ),
+                        ),
+                        const SizedBox(height: 7),
+                        Tooltip(
+                          message: publicacion.universidad == null ? publicacion.universidadEtiqueta
+                            : 'Universidad declarada al publicar: ${publicacion.universidadDetalle}',
+                          child: Row(children: [
+                            Icon(Icons.school_outlined, size: 15, color: colors.onSurfaceVariant),
+                            const SizedBox(width: 5),
+                            Expanded(child: Text(publicacion.universidadEtiqueta, maxLines: 1, overflow: TextOverflow.ellipsis,
+                              style: theme.textTheme.labelSmall?.copyWith(color: colors.onSurfaceVariant))),
+                            const SizedBox(width: 8),
+                            Text(publicacion.modalidad == 'alquiler' ? 'Alquiler' : 'Venta',
+                              style: theme.textTheme.labelSmall?.copyWith(fontWeight: FontWeight.w700)),
+                          ]),
                         ),
                         const SizedBox(height: 7),
                         Text(

@@ -61,3 +61,21 @@ El [PR #81](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/81) 
 La interfaz Flutter reutiliza la autenticación y la navegación actuales. Los usuarios existentes y publicaciones históricas con `universidad_id = NULL` siguen siendo compatibles y visibles en «Toda Cartagena». Elegir una universidad no demuestra matrícula verificada. Se mantiene la frontera `router → service → repository` y el contrato [OpenAPI v2](../../contracts/openapi-v2.json).
 
 **Evidencia verificable:** [pruebas backend de universidades](../../backend/tests/test_universidades_integracion.py), [publicaciones](../../backend/tests/test_universidades_publicaciones.py), [Flutter](../../frontend/campusmarket/test/universidades_integracion_test.dart) y [cierre público](../evidencias/cierre-universidades-cartagena-2026-11-02.md). Los apartados 5.1–5.5 conservan el estado histórico del MVP.
+
+## 5.7 Incremento 2 — Favoritos privados (2026-11-03)
+
+`favoritos/router → service → repository` es el único escritor de `favoritos`, con clave primaria `(usuario_id, publicacion_id)`. La identidad procede exclusivamente de `UsuarioActual`. GET privado compone referencias vigentes mediante Catálogo → capacidad pública por IDs de Publicaciones e imágenes en lote; no importa repositorios ajenos. Las referencias a anuncios ocultos/eliminados se omiten; reservado/vendido conserva su estado real. No se cambian tablas ni datos heredados.
+
+Flutter comparte `FavoritosController` entre corazones y «Mis favoritos»; MySQL conserva los favoritos al cerrar sesión. Cambio de token vacía la caché y descarta respuestas de la sesión anterior. [Evidencia del corte](../evidencias/incremento-2-favoritos-2026-11-03.md).
+
+## 5.8 Incremento 2 — Mensajería HTTP privada
+
+`mensajeria/router → service → repository` posee `conversaciones` y `mensajes`; las únicas escrituras son propias. La clave de contexto `(publicacion_id, comprador_id, vendedor_id)` impide duplicados. El servicio determina al vendedor leyendo la publicación pública; comprador/remitente proceden de `UsuarioActual`. Cada consulta/escritura exige ser participante; los DTOs de entrada rechazan identidades adicionales. Bandeja con preview se resuelve en una consulta propia y compone publicaciones/imágenes en lote, sin correos ni nuevos servicios.
+
+Flutter incorpora contacto en detalle, bandeja y chat, actualización manual y cursor de mensajes; el contenido privado se vacía al cambiar la sesión. Se conserva el monolito/API y MySQL existentes. [Código y pruebas](../evidencias/incremento-2-mensajeria-2026-11-03.md).
+
+## 5.9 Incremento 2 — Universidad visible sin atribuciones nuevas
+
+Catálogo añade `universidad` opcional/nullable al DTO de lectura; conserva `universidad_id` fijado al publicar. Universidades expone una capacidad pública por IDs y su repositorio resuelve las instituciones en lote, incluyendo instituciones posteriormente inactivas para conservar contexto histórico. No consulta el perfil actual para atribuir universidad a un anuncio viejo. Catálogo, detalle, Favoritos y contexto de Mensajería reciben esa misma composición.
+
+La capa pública de Universidades centraliza las lecturas y el hook de inicialización previo a la FK de Usuarios; los consumidores dejan de importar su repositorio. La prueba de único escritor/no repositorios ajenos incluye ahora Universidades además de Favoritos/Mensajería. Flutter presenta sigla en tarjeta, nombre en detalle y aclaración de declaración al publicar; legacy muestra «Universidad no declarada». [Pruebas/evidencia](../evidencias/incremento-2-universidad-visible-2026-11-03.md).

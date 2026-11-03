@@ -2,7 +2,7 @@ import os
 import secrets
 from datetime import datetime, timedelta, timezone
 
-from backend.app.universidades.repository import existe_activa
+from backend.app.universidades.service import existe_activa
 
 from .errors import AuthRateLimitError, InvalidCredentialsError
 from .repository import (

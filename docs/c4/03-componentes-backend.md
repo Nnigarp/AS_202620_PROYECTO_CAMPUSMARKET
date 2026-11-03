@@ -1,5 +1,8 @@
 # C4 Nivel 3 - Componentes del Backend API de CampusMarket
 
+> El diagrama incorpora el código candidato del Incremento 2. Sus adendas al final identifican capacidades y pruebas nuevas, todavía sin despliegue. Los apartados MVP preservan antecedentes; para el estado institucional vigente se consulta [arc42 §7](../arc42/07-vista-despliegue.md).
+
+
 Fuente canónica: [03-componentes-backend.puml](03-componentes-backend.puml).
 El backend es una sola aplicación FastAPI: monolito modular, cuatro contextos
 materializados al nivel MVP y una única base MySQL. Estado de verificación en
@@ -75,3 +78,15 @@ incorrecto, moderación sin capacidad, archivo disfrazado o erosión de frontera
 
 Decisiones aplicadas: ADR-0001/0003/0004/0009 y ADR-0011 a ADR-0019.
 El índice de [decisiones](../arc42/09-decisiones.md) mantiene sus estados y enlaces.
+
+## Incremento 2 — Favoritos (2026-11-03)
+
+El diagrama incorpora `Favoritos`: router privado → servicio → repositorio propio (`favoritos`). El router obtiene identidad de Usuarios; el servicio compone únicamente lecturas públicas de Catálogo/Publicaciones por IDs e imágenes en lote. La tabla privada no cambia propietarios ni anuncia disponibilidad de referencias ocultas/eliminadas. Una única API/MySQL y los dos contenedores existentes se conservan; no hay servicio adicional. [Código](../../backend/app/favoritos/) · [pruebas de propiedad](../../backend/tests/test_propiedad_datos.py) · [evidencia](../evidencias/incremento-2-favoritos-2026-11-03.md). Los estados de despliegue de apartados anteriores son históricos; este corte aún no está publicado.
+
+## Incremento 2 — Mensajería (2026-11-03)
+
+Router privado → servicio → repositorio de Mensajería, dueño exclusivo de conversaciones/mensajes. Usa identidad de Usuarios y contexto público de Catálogo; no modifica propietarios ni abre repositorios ajenos. Una transacción propia serializa envío y preview; unicidad de contexto y clave de reintento se apoyan en MySQL. Bandeja/chat comparten HTTP/JSON con Web/Android (ADR-0003), sin brokers o nuevos contenedores. [Código](../../backend/app/mensajeria/) · [Autorización/MySQL](../../backend/tests/test_mensajeria.py) · [evidencia](../evidencias/incremento-2-mensajeria-2026-11-03.md).
+
+## Incremento 2 — Universidad visible (2026-11-03)
+
+La capacidad de Universidades compone instituciones por IDs en lote para Catálogo, que enriquece sus DTOs sin SQL/repositorios ajenos. Usuarios valida por esa capacidad y usa su hook de inicialización antes de crear la FK existente; Universidades sigue siendo el único escritor del catálogo. Se conserva la institución del anuncio al publicar, incluso si el perfil cambia; NULL histórico no se inventa. Flutter muestra declaración, no matrícula verificada. [Código](../../backend/app/universidades/service.py) · [pruebas](../../backend/tests/test_identidad_universitaria_visible.py) · [evidencia](../evidencias/incremento-2-universidad-visible-2026-11-03.md).

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../catalogo/catalogo_page.dart';
+import '../favoritos/favoritos_page.dart';
+import '../favoritos/favoritos_controller.dart';
+import '../mensajeria/bandeja_page.dart';
 import '../publicaciones/mis_publicaciones_page.dart';
 import '../publicaciones/publicacion_form_page.dart';
 import '../usuarios/auth_page.dart';
@@ -55,6 +58,7 @@ class _MarketplaceShellState extends State<MarketplaceShell> {
       if (!mounted || entered != true || !SessionController.instance.authenticated) return;
     }
     if (!mounted) return;
+    if (indice == 4) FavoritosController.instance.refresh();
     setState(() {
       // Inicio vuelve a consultar la fuente de verdad al regresar de otra vista.
       // No conservar una portada potencialmente obsoleta tras editar imágenes
@@ -71,6 +75,8 @@ class _MarketplaceShellState extends State<MarketplaceShell> {
   void _irCatalogo() => _seleccionar(1);
   void _irMisPublicaciones() => _seleccionar(2);
   void _irPublicar() => _seleccionar(3);
+  void _irFavoritos() => _seleccionar(4);
+  void _irMensajes() => _seleccionar(5);
 
   void _publicacionCambiada() => setState(() => _catalogRevision++);
 
@@ -120,10 +126,16 @@ class _MarketplaceShellState extends State<MarketplaceShell> {
             key: ValueKey('publicar-$identity'), onPublicada: _publicacionCreada,
           )
         : const SizedBox.shrink(),
+      authenticated && _visited.contains(4)
+        ? FavoritosPage(key: ValueKey('favoritos-$identity'))
+        : const SizedBox.shrink(),
+      authenticated && _visited.contains(5)
+        ? BandejaPage(key: ValueKey('mensajes-$identity'))
+        : const SizedBox.shrink(),
     ];
 
     return LayoutBuilder(builder: (context, constraints) {
-      final desktop = constraints.maxWidth >= 1100;
+      final desktop = constraints.maxWidth >= 1200;
       final tablet = constraints.maxWidth >= 700 && !desktop;
       final content = IndexedStack(index: _indice, children: paginas);
       return Scaffold(
@@ -140,6 +152,9 @@ class _MarketplaceShellState extends State<MarketplaceShell> {
               _DesktopNavButton(key: const Key('nav-catalogo'), icon: Icons.storefront_outlined, label: 'Catálogo', selected: _indice == 1, onPressed: _irCatalogo),
               _DesktopNavButton(key: const Key('nav-mias'), icon: Icons.inventory_2_outlined, label: 'Mis publicaciones', selected: _indice == 2, onPressed: _irMisPublicaciones),
               _DesktopNavButton(key: const Key('nav-publicar'), icon: Icons.add_circle_outline, label: 'Publicar', selected: _indice == 3, onPressed: _irPublicar),
+              _DesktopNavButton(key: const Key('nav-favoritos'), icon: Icons.favorite_border, label: 'Favoritos', selected: _indice == 4, onPressed: _irFavoritos),
+              IconButton(key: const Key('nav-mensajes'), tooltip: 'Mis mensajes', isSelected: _indice == 5,
+                icon: const Icon(Icons.chat_bubble_outline), onPressed: _irMensajes),
               const SizedBox(width: 12),
             ],
             _accountButton(compact: !desktop),
@@ -157,6 +172,8 @@ class _MarketplaceShellState extends State<MarketplaceShell> {
                   NavigationRailDestination(icon: Icon(Icons.storefront_outlined, key: Key('nav-catalogo')), selectedIcon: Icon(Icons.storefront), label: Text('Catálogo')),
                   NavigationRailDestination(icon: Icon(Icons.inventory_2_outlined, key: Key('nav-mias')), selectedIcon: Icon(Icons.inventory_2), label: Text('Mis publicaciones')),
                   NavigationRailDestination(icon: Icon(Icons.add_circle_outline, key: Key('nav-publicar')), selectedIcon: Icon(Icons.add_circle), label: Text('Publicar')),
+                  NavigationRailDestination(icon: Icon(Icons.favorite_border, key: Key('nav-favoritos')), selectedIcon: Icon(Icons.favorite), label: Text('Favoritos')),
+                  NavigationRailDestination(icon: Icon(Icons.chat_bubble_outline, key: Key('nav-mensajes')), selectedIcon: Icon(Icons.chat_bubble), label: Text('Mensajes')),
                 ],
               ),
               const VerticalDivider(width: 1),
@@ -165,11 +182,14 @@ class _MarketplaceShellState extends State<MarketplaceShell> {
           : content,
         bottomNavigationBar: desktop || tablet ? null : NavigationBar(
           selectedIndex: _indice, onDestinationSelected: _seleccionar,
+          labelBehavior: constraints.maxWidth < 520 ? NavigationDestinationLabelBehavior.onlyShowSelected : NavigationDestinationLabelBehavior.alwaysShow,
           destinations: const [
             NavigationDestination(key: Key('nav-inicio'), icon: Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home), label: 'Inicio'),
             NavigationDestination(key: Key('nav-catalogo'), icon: Icon(Icons.storefront_outlined), selectedIcon: Icon(Icons.storefront), label: 'Catálogo'),
             NavigationDestination(key: Key('nav-mias'), icon: Icon(Icons.inventory_2_outlined), selectedIcon: Icon(Icons.inventory_2), label: 'Mis publicaciones'),
             NavigationDestination(key: Key('nav-publicar'), icon: Icon(Icons.add_circle_outline), selectedIcon: Icon(Icons.add_circle), label: 'Publicar'),
+            NavigationDestination(key: Key('nav-favoritos'), icon: Icon(Icons.favorite_border), selectedIcon: Icon(Icons.favorite), label: 'Favoritos'),
+            NavigationDestination(key: Key('nav-mensajes'), icon: Icon(Icons.chat_bubble_outline), selectedIcon: Icon(Icons.chat_bubble), label: 'Mensajes'),
           ],
         ),
       );
