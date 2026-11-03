@@ -1,0 +1,123 @@
+name: Imagen inmutable Incremento 2 sin despliegue
+
+on:
+  push:
+    branches: [ops/imagen-incremento2-20261103]
+    paths:
+      - .github/workflows/release-incremento2.yml
+      - backend/Dockerfile.web-release
+      - backend/app/web_entrypoint.py
+      - scripts/ensayar_incremento2_*.py
+      - scripts/verificar_incremento2_publicado.py
+      - scripts/test_ensayar_incremento2_imagen.py
+      - .dockerignore
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: campusmarket-imagen-incremento2
+  cancel-in-progress: false
+
+jobs:
+  imagen:
+    if: github.repository == 'Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET' && github.ref == 'refs/heads/ops/imagen-incremento2-20261103'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.12"
+      - name: Autenticación GHCR limitada al runner
+        env:
+          GHCR_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          directory=$(mktemp -d "$RUNNER_TEMP/cm-i2-docker.XXXXXX")
+          printf 'DOCKER_CONFIG=%s\n' "$directory" >> "$GITHUB_ENV"
+          DOCKER_CONFIG="$directory" docker login ghcr.io --username "$GITHUB_ACTOR" --password-stdin <<< "$GHCR_TOKEN" > /dev/null
+      - name: Impedir reconstruir una fuente ya publicada
+        run: |
+          python - <<'PY'
+          import os, subprocess
+          image = "ghcr.io/nnigarp/campusmarket-web-universidades:" + os.environ["GITHUB_SHA"]
+          result = subprocess.run(["docker", "manifest", "inspect", image], text=True, capture_output=True)
+          if result.returncode == 0:
+              raise SystemExit("Esta fuente ya tiene imagen publicada: reutilizar su digest, sin reconstruir.")
+          if "manifest unknown" not in result.stderr.lower() and "no such manifest" not in result.stderr.lower():
+              raise SystemExit("No se pudo acreditar ausencia del tag; detener antes de construir.")
+          PY
+      - name: Flutter fijado y pruebas de código ya acreditadas
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2
+        with:
+          flutter-version: "3.47.3"
+          channel: stable
+          cache: true
+      - name: Compilar una vez el bundle para /app/
+        working-directory: frontend/campusmarket
+        run: |
+          flutter pub get
+          flutter build web --release --base-href /app/ --dart-define=CAMPUSMARKET_API_BASE_URL=https://campusmarket.iscoutb.dev
+          git diff --exit-code -- .
+          test -s build/web/flutter_bootstrap.js
+      - name: Comprobar scripts del ensayo y construir una imagen
+        run: |
+          python -m pip install ruff==0.16.9
+          python -m ruff check scripts/ensayar_incremento2_http.py scripts/ensayar_incremento2_imagen.py scripts/verificar_incremento2_publicado.py scripts/test_ensayar_incremento2_imagen.py backend/app/web_entrypoint.py
+          python -m unittest scripts.test_ensayar_incremento2_imagen -q
+          docker build -f backend/Dockerfile.web-release --build-arg CAMPUSMARKET_REVISION="$GITHUB_SHA" -t "campusmarket-i2-local:$GITHUB_SHA" .
+      - name: Validación integral única y rollback con MySQL sintético
+        id: ensayo
+        run: |
+          set -euo pipefail
+          python scripts/ensayar_incremento2_imagen.py prepare
+          python scripts/ensayar_incremento2_imagen.py run
+          python scripts/ensayar_incremento2_imagen.py report
+      - name: Conservar exactamente la imagen ensayada
+        if: success()
+        run: |
+          image_id=$(python -c 'import json; print(json.load(open("artifacts/incremento2-imagen/ensayo.json"))["image_id"])')
+          docker save "$image_id" | gzip > "$RUNNER_TEMP/incremento2-imagen.tar.gz"
+      - name: Publicar la imagen aprobada sin reconstruir
+        if: success()
+        run: |
+          set -euo pipefail
+          image_id=$(python -c 'import json; print(json.load(open("artifacts/incremento2-imagen/ensayo.json"))["image_id"])')
+          reference="ghcr.io/nnigarp/campusmarket-web-universidades:$GITHUB_SHA"
+          docker tag "$image_id" "$reference"
+          docker push "$reference" | tee "$RUNNER_TEMP/cm-i2-push.log"
+          digest=$(sed -nE 's/.*digest: (sha256:[0-9a-f]{64}).*/\1/p' "$RUNNER_TEMP/cm-i2-push.log" | tail -1)
+          [[ "$digest" =~ ^sha256:[0-9a-f]{64}$ ]]
+          PUBLISHED_DIGEST="$digest" python scripts/verificar_incremento2_publicado.py
+      - name: Limpiar solo los recursos efímeros de este run
+        if: always()
+        run: |
+          status=0
+          if [ -f "$RUNNER_TEMP/cm-i2-private-state.json" ]; then
+            python scripts/ensayar_incremento2_imagen.py report || status=$?
+          fi
+          python scripts/ensayar_incremento2_imagen.py cleanup || status=$?
+          if [ -n "${DOCKER_CONFIG:-}" ]; then docker logout ghcr.io > /dev/null; fi
+          exit "$status"
+      - name: Conservar informes seguros
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: incremento2-evidencia-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/incremento2-imagen/
+          if-no-files-found: warn
+          retention-days: 90
+      - name: Conservar imagen probada como respaldo de transferencia
+        if: success()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: incremento2-imagen-${{ github.sha }}
+          path: ${{ runner.temp }}/incremento2-imagen.tar.gz
+          if-no-files-found: error
+          retention-days: 90
