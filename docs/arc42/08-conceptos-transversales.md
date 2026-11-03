@@ -143,7 +143,7 @@ La evolución conserva fronteras del monolito modular (ADR-0001/0009/0012/0021) 
 
 Los favoritos son información privada de una cuenta, no una preferencia global del dispositivo. Sus rutas exigen Bearer; ninguna acepta una identidad de entrada. La clave compuesta impide duplicados bajo concurrencia; las referencias se conservan desacopladas de la eliminación de otros contextos y se filtran por visibilidad al leer. No se crea almacenamiento ni infraestructura adicional. Sesiones opacas, MySQL como fuente de verdad y composición de lecturas en lote reutilizan ADR-0001/0003/0012/0019/0022. No hace falta un ADR nuevo.
 
-OpenAPI candidato se compara con `app.openapi()` en CI. S10 público usa el contrato del commit efectivamente desplegado `50d9352e5081f8c3e470bd9cda9220d21b14cc0a`, con revisión esperada igual; no compara producción con rutas del candidato sin promover. Esa referencia deberá actualizarse mediante promoción autorizada. [Evidencia](../evidencias/incremento-2-favoritos-2026-11-03.md).
+OpenAPI candidato se compara con `app.openapi()` en CI. S10 recupera explícitamente el SHA actual de `ISCOUTB/master` y su contrato base, sin `HEAD^1`. Producción usa un contrato versionado independiente de la revisión informada por la imagen: `.github/s10-produccion.json` fija contrato `c7f1574` y revisión instalada `50d9352`. No se usa la revisión como Git ref ni se exige al despliegue vigente el contrato nuevo del candidato. Tras Deploy autorizado, el modo `instalado` exige checkout y revisión del SHA exacto de imagen y ejecuta los mismos nueve criterios contra ese contrato; solo después se actualiza la referencia productiva. [Evidencia](../evidencias/incremento-2-favoritos-2026-11-03.md).
 
 ## Incremento 2 — Privacidad y límites de Mensajería
 

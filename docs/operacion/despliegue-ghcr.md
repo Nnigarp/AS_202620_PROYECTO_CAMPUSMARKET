@@ -282,3 +282,21 @@ El log registró `api-1 Recreated` y `Docker Compose Deployed: ✅`. La comproba
 **Advertencia persistente:** los montajes se confirmaron, pero no se acreditó backup recuperable ni se ejecutó rollback en el host. El rollback con MySQL sintético en Actions no sustituye la restauración real. Conservar Autodeploy desactivado y revisar antes de cualquier despliegue el Run Command personalizado, ya que el valor predeterminado incorpora `--build --remove-orphans`.
 
 Véanse la [evidencia de cierre](../evidencias/cierre-web-institucional-2026-11-01.md), el [ADR-0025](../adr/0025-servir-flutter-web-con-fastapi-en-servicio-existente.md) y [arc42 §7](../arc42/07-vista-despliegue.md).
+
+## Incremento 2 — Preparación del PR #85 sin desplegar
+
+Orden de autorización: validar y revisar PR #85 → autorización de merge → preparar/aprobar promoción independiente de `api.image` → autorización expresa de Deploy → comprobación HTTP posdespliegue. Nada de lo siguiente ejecuta un cambio productivo. Autodeploy permanece desactivado; si se observa activado, detener el procedimiento y resolver la coordinación antes de integrar.
+
+Servicio existente `campusmarket → production → sistema`, Compose `./deploy/compose.prod.yaml`. **Conservar exactamente Advanced → Run Command:**
+
+```text
+compose -p campusmarket-sistema-2zvsxj --env-file deploy/.env -f ./deploy/compose.prod.yaml up -d --no-deps --no-build --pull always api
+```
+
+La promoción solo podrá cambiar `api.image` al digest de una imagen nueva del incremento, ensayada con MySQL sintético. Mantener servicios api/db, MySQL 8.4, Environment, red, nombres de proyecto/volúmenes, fotos, etiquetas, healthchecks y límites existentes. No usar down, Fresh Volumes, build ni recrear db.
+
+Rollback configurado actual: `ghcr.io/nnigarp/campusmarket-web-universidades@sha256:384cbd0c08242d4a6d0343f26fab8521fd027908b639f638b2b9653f0f53dde1` (evidencia PR #82). Reconfirmar imagen ejecutada/recuperable y respaldo consistente antes de autorizar promoción. Favoritos/conversaciones/mensajes añaden tablas propias y no eliminan ni renombran columnas heredadas; esa compatibilidad y la vuelta a API anterior deben ensayarse con datos sintéticos, no inferirse solo de leer el esquema.
+
+S10 normal resuelve base oficial por SHA y compara HTTP con baseline productiva independiente. Tras Deploy autorizado, ejecutar workflow S10 con `mode=instalado`, `source_sha=<SHA construido e instalado>`, seleccionando la revisión de workflow correspondiente. Exige checkout del mismo SHA; mantiene los nueve criterios de tres fases, igualdad OpenAPI antes/después y revisión. Añadir pruebas públicas de /health, /app/, catálogo/detalle/fotos, login/favoritos/chat con cuenta de ensayo autorizada. No usar datos reales ni registrar secretos. Parar/revertir exclusivamente API si salud, revisión/digest, contrato, persistencia o navegación no coinciden. La baseline no se actualiza anticipadamente para aparentar verde.
+
+La rama/PR de promoción documentará fuente, run único de construcción/ensayo, Image ID, digest inmutable nuevo, digest anterior y resultados. Aún no hay imagen/digest nuevo del incremento acreditados en esta revisión; no sustituirlos por el digest anterior ni desplegar antes de autorización.

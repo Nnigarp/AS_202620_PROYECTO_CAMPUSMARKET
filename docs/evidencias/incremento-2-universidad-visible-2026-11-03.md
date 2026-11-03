@@ -63,3 +63,17 @@ Los cuatro workflows/seis jobs terminaron en success. Las pruebas reales reporta
 **Validación para incluir:** los cuatro runs de la tabla anterior sobre fuente `058f63f`; 130 pytest, 33 Flutter y tres recorridos reales aprobados. Documentación canónica: arc42 §5/6/8, C4 L3, aspectos con ocho columnas, IA, README y tres evidencias incrementales enlazadas.
 
 **Límites para incluir:** no despliega, modifica infraestructura ni publica imágenes; mantiene dos contenedores. Checks oficiales y revisión humana pendientes de abrir el PR y revisarlo. Promoción productiva separada, con los riesgos de recuperación ya registrados.
+
+## PR #85 — Corrección de S10 y preparación de promoción
+
+El usuario creó [PR #85 en Draft](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/85), head `531405c`, base institucional real `c7f15748a9a9dfd8b1160ab04fb8ee544a374437`. La autorización de apertura ya existe; las referencias anteriores a PR no abierto describen el cierre previo. No se autoriza merge ni despliegue.
+
+Fallo oficial: [41590254139](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41590254139), job `contrato-publico`, paso «Preparar contrato de referencia segun entorno», exit 128: el Git ref `50d9352` no contiene la ruta en ese checkout. Las ocho pruebas anteriores sí aprobaron; no se llegaron a ejecutar las condiciones HTTP.
+
+La revisión de imagen `50d9352e5081f8c3e470bd9cda9220d21b14cc0a` se conserva como expectativa del despliegue vigente, sin utilizarla para extraer archivos. `preparar_s10_referencias.py` recupera `refs/heads/master` de ISCOUTB y captura su SHA real; conserva contratos base, candidato, producción y referencia con sus hashes. Producción se compara contra contrato versionado en `c7f1574`, compatible con el despliegue observado, independientemente de futuras fusiones. `.github/s10-produccion.json` registra explícitamente esa separación. No se construye la expectativa copiando `/openapi.json` del objeto bajo prueba.
+
+El modo manual `instalado` solo se ejecutará tras Deploy autorizado, con `source_sha` igual al SHA de la imagen realmente instalada: checkout del mismo SHA, contrato candidato de esa revisión y expectativa de header igual. Si no coinciden, falla antes de HTTP. **Los nueve criterios y la carga acotada del experimento permanecen intactos.** Tras acreditarlos, se podrá actualizar la baseline productiva mediante un cambio separado. El header no acredita por sí solo el código/digest.
+
+Pruebas locales: 16 aprobadas, Ruff y Actionlint aprobados. Las historias sintéticas reproducen revisión sin fichero, candidato sin HEAD^1, avance de master antes de desplegar, selección estricta posdespliegue, referencia inválida y conservación de evidencias previas. El nuevo CI oficial queda pendiente hasta publicar la corrección. No se repiten manualmente Web/Android ya acreditados; las ejecuciones automáticas del PR verifican el nuevo HEAD.
+
+Preparación operativa: ver [procedimiento canónico](../operacion/despliegue-ghcr.md#incremento-2--preparación-del-pr-85-sin-desplegar). La imagen nueva y su digest solo se preparan después de validar completamente PR #85; siguen pendientes al escribir esta corrección. El digest anterior configurado, acreditado en PR #82, es `ghcr.io/nnigarp/campusmarket-web-universidades@sha256:384cbd0c08242d4a6d0343f26fab8521fd027908b639f638b2b9653f0f53dde1`; antes de una promoción deberá confirmarse su correspondencia con la instancia ejecutada.
