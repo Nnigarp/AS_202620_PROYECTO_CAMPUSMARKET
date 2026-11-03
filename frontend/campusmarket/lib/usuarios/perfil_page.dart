@@ -142,7 +142,7 @@ class _PerfilPageState extends State<PerfilPage> {
                           const SizedBox(height: 20),
                           DropdownButtonFormField<int>(
                             key: const Key('perfil-universidad'),
-                            initialValue: _universidadId,
+                            initialValue: _universidades.any((u) => u.id == _universidadId) ? _universidadId : null,
                             isExpanded: true,
                             decoration: InputDecoration(
                               labelText: 'Universidad en Cartagena',
