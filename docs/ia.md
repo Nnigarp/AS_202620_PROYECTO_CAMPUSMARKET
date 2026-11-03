@@ -716,3 +716,9 @@ Este registro corresponde a la evolución de producto **posterior a S13**, no a 
 ChatGPT/Codex implementó el corte MySQL/API/OpenAPI/Flutter en una rama del fork basada en `c7f15748a9a9dfd8b1160ab04fb8ee544a374437`. Propuestas aceptadas: clave compuesta, PUT/DELETE idempotentes con identidad de sesión, composición pública en lote y caché invalidada por token. Verificación local: Ruff, contrato/arquitectura y seis casos unitarios de Favoritos (18 pruebas en conjunto); integración MySQL y Flutter requieren CI aislado, registrada en [evidencia](evidencias/incremento-2-favoritos-2026-11-03.md).
 
 Se descartaron preferencias solo locales (no persisten por cuenta), identificadores de usuario enviados por Flutter (suplantación) y comparar nuevas rutas contra producción sin promoción (bloqueo circular S10). Límites: asistencia automatizada, sin revisión humana/docente afirmada ni cambios productivos; código y escenarios reales pendientes se distinguen en la evidencia.
+
+## 2026-11-03 — Incremento 2, Mensajería
+
+ChatGPT/Codex extendió el monolito con conversación única por contexto, mensajes/transacción propia y clave de reintento. Se aceptó actualización manual HTTP/JSON con páginas acotadas y sin otra infraestructura. Se descartaron remitentes/vendedores elegidos por cliente, consultas sin participante y WebSockets/brokers; no son necesarios para este corte. Favoritos ya cuenta con evidencia real Web/Android/MySQL; Mensajería pasó nueve pruebas locales de frontera y avanza a CI MySQL/Flutter, sin dar por aprobada su integración antes del resultado. Se verificó Ruff y el contrato generado. [Evidencia](evidencias/incremento-2-mensajeria-2026-11-03.md).
+
+Límites: pruebas sintéticas automatizadas; no se afirma revisión humana, auditoría de intrusión ni publicación. Privacidad/retención y despliegue mantienen sus aprobaciones separadas.

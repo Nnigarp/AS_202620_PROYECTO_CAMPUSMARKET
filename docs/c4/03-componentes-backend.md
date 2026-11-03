@@ -79,3 +79,7 @@ El índice de [decisiones](../arc42/09-decisiones.md) mantiene sus estados y enl
 ## Incremento 2 — Favoritos (2026-11-03)
 
 El diagrama incorpora `Favoritos`: router privado → servicio → repositorio propio (`favoritos`). El router obtiene identidad de Usuarios; el servicio compone únicamente lecturas públicas de Catálogo/Publicaciones por IDs e imágenes en lote. La tabla privada no cambia propietarios ni anuncia disponibilidad de referencias ocultas/eliminadas. Una única API/MySQL y los dos contenedores existentes se conservan; no hay servicio adicional. [Código](../../backend/app/favoritos/) · [pruebas de propiedad](../../backend/tests/test_propiedad_datos.py) · [evidencia](../evidencias/incremento-2-favoritos-2026-11-03.md). Los estados de despliegue de apartados anteriores son históricos; este corte aún no está publicado.
+
+## Incremento 2 — Mensajería (2026-11-03)
+
+Router privado → servicio → repositorio de Mensajería, dueño exclusivo de conversaciones/mensajes. Usa identidad de Usuarios y contexto público de Catálogo; no modifica propietarios ni abre repositorios ajenos. Una transacción propia serializa envío y preview; unicidad de contexto y clave de reintento se apoyan en MySQL. Bandeja/chat comparten HTTP/JSON con Web/Android (ADR-0003), sin brokers o nuevos contenedores. [Código](../../backend/app/mensajeria/) · [Autorización/MySQL](../../backend/tests/test_mensajeria.py) · [evidencia](../evidencias/incremento-2-mensajeria-2026-11-03.md).

@@ -576,3 +576,9 @@ Se conserva la matriz histórica de ocho columnas y se añade un aspecto operati
 | ID | Aspecto | Requisito | C4 | ADR | Código | Pruebas | Evidencia |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | I2-FAV | Preferencias privadas persistentes | Agregar/quitar, no duplicar, recuperar al iniciar sesión; excluir ocultas/eliminadas y evitar cruces de cuenta | [L3](c4/03-componentes-backend.puml) | [0012](adr/0012-autenticar-con-sesiones-opacas-revocables.md), [0019](adr/0019-consultar-imagenes-en-lote-a-traves-de-publicaciones.md) | [Backend](../backend/app/favoritos/), [Flutter](../frontend/campusmarket/lib/favoritos/) | [MySQL/autorización](../backend/tests/test_favoritos.py), [Flutter](../frontend/campusmarket/test/favoritos_test.dart), [Web/Android](../frontend/campusmarket/integration_test/mvp_flow_test.dart) | [Corte y límites](evidencias/incremento-2-favoritos-2026-11-03.md) |
+
+## Incremento 2 — Mensajería (2026-11-03)
+
+| ID | Aspecto | Requisito | C4 | ADR | Código | Pruebas | Evidencia |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| I2-MSG | Comunicación privada por contexto | Contacto con vendedor, conversación única, mensajes persistentes, bandeja y autorización de participantes sin suplantar remitente | [L3](c4/03-componentes-backend.puml) | [0003](adr/0003-usar-integracion-sincrona-http-json.md), [0012](adr/0012-autenticar-con-sesiones-opacas-revocables.md), [0022](adr/0022-mantener-mysql-como-fuente-de-verdad-y-evitar-proyecciones-asincronas.md) | [Backend](../backend/app/mensajeria/), [Flutter](../frontend/campusmarket/lib/mensajeria/) | [Autorización/MySQL](../backend/tests/test_mensajeria.py), [Flutter](../frontend/campusmarket/test/mensajeria_test.dart), [Web/Android](../frontend/campusmarket/integration_test/mvp_flow_test.dart) | [Resultados y límites](evidencias/incremento-2-mensajeria-2026-11-03.md) |

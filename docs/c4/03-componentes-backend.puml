@@ -42,6 +42,13 @@ package "Backend API · FastAPI · monolito modular" {
     fr --> fs
     fs --> fd
   }
+  package "Mensajería" {
+    rectangle "API privada\nrouter.py\nParticipantes y DTOs estrictos" as mr
+    rectangle "Servicio\nservice.py\nContexto y envío" as ms
+    rectangle "Repositorio\nrepository.py\nConversaciones/mensajes" as md
+    mr --> ms
+    ms --> md
+  }
 }
 database "MySQL 8.4\nTablas con único escritor por contexto" as db
 folder "Imágenes\nCAMPUSMARKET_UPLOAD_DIR\nVolumen nombrado en Compose" as files
@@ -51,6 +58,10 @@ main --> pr : registra
 main --> cr : registra
 main --> ar : registra
 main --> fr : registra
+main --> mr : registra
+mr --> ur : identidad de sesión
+ms --> cs : contexto público en lote
+md --> db : solo conversaciones/mensajes
 fr --> ur : identidad de sesión
 fs --> cs : lectura pública por IDs en lote
 fd --> db : solo favoritos

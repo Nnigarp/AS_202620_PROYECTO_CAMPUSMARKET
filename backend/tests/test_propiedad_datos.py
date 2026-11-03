@@ -3,7 +3,7 @@ import re
 from pathlib import Path
 
 APP = Path(__file__).resolve().parents[1] / "app"
-OWNERS = {"publicaciones": "publicaciones", "publicacion_imagenes": "publicaciones", "usuarios": "usuarios", "sesiones_usuario": "usuarios", "intentos_autenticacion": "usuarios", "reportes_publicacion": "administracion", "favoritos": "favoritos"}
+OWNERS = {"publicaciones": "publicaciones", "publicacion_imagenes": "publicaciones", "usuarios": "usuarios", "sesiones_usuario": "usuarios", "intentos_autenticacion": "usuarios", "reportes_publicacion": "administracion", "favoritos": "favoritos", "conversaciones": "mensajeria", "mensajes": "mensajeria"}
 WRITE = re.compile(r"\b(?:INSERT\s+INTO|UPDATE|DELETE\s+FROM)\s+([a-z_]+)\b", re.IGNORECASE)
 
 
@@ -21,7 +21,7 @@ def test_cada_tabla_solo_tiene_escritor_en_su_repository():
 
 def test_ningun_contexto_importa_repository_ajeno_incluso_por_alias():
     violations = []
-    for owner in ("usuarios", "publicaciones", "catalogo", "administracion", "favoritos"):
+    for owner in ("usuarios", "publicaciones", "catalogo", "administracion", "favoritos", "mensajeria"):
         for path in (APP / owner).rglob("*.py"):
             for node in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
                 names = []

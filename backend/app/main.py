@@ -12,6 +12,7 @@ from backend.app.administracion.router import router as administracion_router
 from backend.app.catalogo.router import router as catalogo_router
 from backend.app.db import PersistenceUnavailableError, database_is_available
 from backend.app.favoritos.router import router as favoritos_router
+from backend.app.mensajeria.router import router as mensajeria_router
 from backend.app.observability import (
     get_ec01_metric,
     log_http_request,
@@ -100,6 +101,7 @@ app.include_router(usuarios_router)
 app.include_router(universidades_router)
 app.include_router(administracion_router)
 app.include_router(favoritos_router)
+app.include_router(mensajeria_router)
 
 
 @app.get(

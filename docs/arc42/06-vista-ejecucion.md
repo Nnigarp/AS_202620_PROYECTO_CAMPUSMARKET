@@ -77,3 +77,9 @@ y S7. Los resultados de esas revisiones no validan por sí solos el MVP actual.
 ## 6.8 Incremento 2 — Guardar y recuperar favoritos
 
 Flutter exige sesión y carga la lista privada antes de decidir PUT/DELETE `/favoritos/{publicacion_id}`. El router obtiene el usuario autenticado; el servicio valida visibilidad mediante Catálogo y su repositorio inserta con clave compuesta/idempotencia SQL. DELETE restringe por ambos IDs y admite reintentos, incluso si el anuncio desapareció. GET `/favoritos` devuelve solo referencias públicas resueltas en lote y `Cache-Control: no-store`. Logout revoca la sesión, sin borrar favoritos; login recupera los datos desde MySQL. El controlador descarta lecturas y escrituras atrasadas tras un cambio de sesión. Pruebas y estado de CI en [evidencia](../evidencias/incremento-2-favoritos-2026-11-03.md).
+
+## 6.9 Incremento 2 — Contacto, conversación y reintento
+
+B selecciona «Contactar al vendedor» en la publicación de A; POST `/conversaciones` deriva comprador de la sesión y vendedor de la publicación vigente. MySQL devuelve la conversación única aun ante solicitudes concurrentes. GET bandeja/detalle/mensajes restringe a participante; una conversación ajena devuelve el mismo 404 que una inexistente. POST mensajes obtiene al remitente de la sesión y bloquea la fila de conversación durante inserción y actualización de preview. La clave de reintento es única por conversación/remitente; reutilizarla con otro texto devuelve 409.
+
+El chat recibe texto JSON de hasta 2000 caracteres, lo presenta como texto y consulta por cursor `despues_de` (50, máximo 100 por petición). La actualización es manual; no hay polling continuo ni WebSockets. Bandeja devuelve hasta 50 conversaciones por página. Si el anuncio se oculta/elimina, se conserva historia solo para participantes, sin metadatos públicos ni nuevos envíos. [Evidencia](../evidencias/incremento-2-mensajeria-2026-11-03.md).
