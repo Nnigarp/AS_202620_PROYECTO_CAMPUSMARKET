@@ -1,0 +1,126 @@
+name: Preparar imagen Web API universidades (sin deploy)
+on:
+  push:
+    branches: [ops/release-universidades-20261102]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  release:
+    if: github.repository == 'Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - name: Checkout de la version exacta
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Flutter 3.47.3
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2
+        with:
+          flutter-version: "3.47.3"
+          channel: stable
+          cache: true
+      - name: Compilar Flutter Web para /app/
+        working-directory: frontend/campusmarket
+        run: |
+          flutter pub get
+          flutter analyze
+          flutter test
+          flutter build web --release --base-href /app/ --dart-define=CAMPUSMARKET_API_BASE_URL=https://campusmarket.iscoutb.dev
+          test -s build/web/index.html
+          test -s build/web/flutter_bootstrap.js
+      - name: Verificar contrato Python y estilo sin base
+        run: |
+          python -m pip install -r backend/requirements-dev.txt ruff==0.16.9
+          python -m ruff check backend scripts
+          python -m pytest backend/tests/test_contrato_openapi.py -q
+      - name: Construir imagen Web API con revision fijada
+        run: |
+          docker build --file backend/Dockerfile.web-release --build-arg CAMPUSMARKET_REVISION="$GITHUB_SHA" -t campusmarket-release:"$GITHUB_SHA" .
+          test "$(docker image inspect campusmarket-release:"$GITHUB_SHA" --format '{{ index .Config.Labels "org.opencontainers.image.revision" }}')" = "$GITHUB_SHA"
+          test "$(docker run --rm --entrypoint cat campusmarket-release:"$GITHUB_SHA" /app/REVISION)" = "$GITHUB_SHA"
+      - name: Probar imagen con MySQL 8.4 efimero
+        shell: bash
+        run: |
+          set -euo pipefail
+          PROJECT="cm-release-$GITHUB_RUN_ID"
+          MYSQL_PASSWORD="$(openssl rand -hex 24)"
+          ROOT_PASSWORD="$(openssl rand -hex 24)"
+          docker network create "$PROJECT"
+          docker run -d --name "$PROJECT-db" --network "$PROJECT" \
+            -e MYSQL_ROOT_PASSWORD="$ROOT_PASSWORD" -e MYSQL_DATABASE=campusmarket_test \
+            -e MYSQL_USER=campusmarket_app -e MYSQL_PASSWORD="$MYSQL_PASSWORD" \
+            mysql:8.4 --performance-schema=OFF --innodb-buffer-pool-size=48M
+          for i in $(seq 1 60); do
+            if docker exec -e MYSQL_PWD="$MYSQL_PASSWORD" "$PROJECT-db" mysql -h 127.0.0.1 -u campusmarket_app campusmarket_test -e 'SELECT 1' >/dev/null 2>&1; then break; fi
+            sleep 2
+          done
+          docker exec -e MYSQL_PWD="$MYSQL_PASSWORD" "$PROJECT-db" mysql -h 127.0.0.1 -u campusmarket_app campusmarket_test -e 'SELECT 1' >/dev/null
+          docker run -d --name "$PROJECT-api" --network "$PROJECT" \
+            -e CAMPUSMARKET_DB_HOST="$PROJECT-db" -e CAMPUSMARKET_DB_PORT=3306 \
+            -e CAMPUSMARKET_DB_USER=campusmarket_app -e CAMPUSMARKET_DB_PASSWORD="$MYSQL_PASSWORD" \
+            -e CAMPUSMARKET_DB_NAME=campusmarket_test \
+            campusmarket-release:"$GITHUB_SHA"
+          for i in $(seq 1 45); do
+            if docker exec "$PROJECT-api" python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health',timeout=3)" >/dev/null 2>&1; then break; fi
+            sleep 2
+          done
+          docker exec "$PROJECT-api" python - <<'PY' || exit 1
+          PY
+          docker exec -i "$PROJECT-api" python - <<'PY'
+          import json
+          from urllib.request import urlopen
+          base = "http://127.0.0.1:8000"
+          def get(path):
+              with urlopen(base + path, timeout=8) as response:
+                  assert response.status == 200, path
+                  return response.read()
+          assert json.loads(get("/health"))["status"] == "ok"
+          universities = json.loads(get("/universidades"))
+          assert len(universities) == 12
+          assert any(u["sigla"] == "UTB" for u in universities)
+          assert json.loads(get("/catalogo?universidad_id=1")) == []
+          assert b'<base href="/app/">' in get("/app/")
+          assert len(get("/app/flutter_bootstrap.js")) > 100
+          print("API, universidades, catalogo y Flutter Web OK")
+          PY
+          docker cp "$PROJECT-api":/app/REVISION "$RUNNER_TEMP/revision-desplegable"
+          test "$(cat "$RUNNER_TEMP/revision-desplegable")" = "$GITHUB_SHA"
+      - name: Comparar OpenAPI de la imagen con el versionado
+        run: |
+          docker exec -i "cm-release-$GITHUB_RUN_ID-api" python - <<'PY'
+          import json
+          from urllib.request import urlopen
+          with urlopen("http://127.0.0.1:8000/openapi.json", timeout=10) as response:
+              current = json.load(response)
+          assert "/universidades" in current["paths"]
+          print(json.dumps(current, sort_keys=True))
+          PY
+        # La comparacion exacta se hace antes de publicar usando el script local.
+      - name: Detener recursos efimeros del ensayo
+        if: always()
+        run: |
+          PROJECT="cm-release-$GITHUB_RUN_ID"
+          docker rm -f "$PROJECT-api" "$PROJECT-db" 2>/dev/null || true
+          docker network rm "$PROJECT" 2>/dev/null || true
+      - name: Publicar solo la imagen ya probada en GHCR
+        if: success()
+        env:
+          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          IMAGE="ghcr.io/nnigarp/campusmarket-web-universidades"
+          echo "$GHCR_TOKEN" | docker login ghcr.io --username "$GITHUB_ACTOR" --password-stdin >/dev/null
+          docker tag campusmarket-release:"$GITHUB_SHA" "$IMAGE:$GITHUB_SHA"
+          docker push "$IMAGE:$GITHUB_SHA" | tee "$RUNNER_TEMP/ghcr-release.log"
+          DIGEST="$(sed -nE 's/.*digest: (sha256:[0-9a-f]{64}).*/\1/p' "$RUNNER_TEMP/ghcr-release.log" | tail -1)"
+          [[ "$DIGEST" =~ ^sha256:[0-9a-f]{64}$ ]]
+          docker buildx imagetools inspect "$IMAGE@$DIGEST" >/dev/null
+          echo "IMAGEN_CANDIDATA=$IMAGE@$DIGEST" >> "$GITHUB_STEP_SUMMARY"
+          echo "FUENTE=$GITHUB_SHA" >> "$GITHUB_STEP_SUMMARY"
+          echo "ESTADO=Preparada, NO desplegada" >> "$GITHUB_STEP_SUMMARY"
