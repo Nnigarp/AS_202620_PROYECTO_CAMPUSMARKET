@@ -150,4 +150,37 @@ void main() {
       }
     });
   }
+
+  testWidgets('Revalidar favoritos oculta resultados anteriores mientras comprueba disponibilidad', (tester) async {
+    final session = sessionFixture();
+    await login(session);
+    Completer<http.Response>? delayed;
+    final controller = FavoritosController(session: session, api: FavoritosApi(session: session,
+      client: MockClient((_) async {
+        final waiting = delayed;
+        if (waiting != null) return waiting.future;
+        return http.Response(jsonEncode([publication]), 200);
+      }),
+    ));
+    try {
+      await controller.ensureLoaded();
+      await tester.pumpWidget(MaterialApp(home: Scaffold(body: FavoritosPage(controller: controller))));
+      await tester.pumpAndSettle();
+      expect(find.text('Libro sintético'), findsOneWidget);
+      delayed = Completer<http.Response>();
+      await tester.tap(find.byTooltip('Actualizar favoritos'));
+      await tester.pump();
+      expect(find.text('Libro sintético'), findsNothing);
+      delayed.complete(http.Response('[]', 200));
+      await tester.pumpAndSettle();
+      expect(controller.items, isEmpty);
+      expect(find.text('Libro sintético'), findsNothing);
+      expect(tester.takeException(), isNull);
+    } finally {
+      if (delayed != null && !delayed.isCompleted) delayed.complete(http.Response('[]', 200));
+      await tester.pumpWidget(const SizedBox.shrink());
+      controller.dispose();
+      session.dispose();
+    }
+  });
 }

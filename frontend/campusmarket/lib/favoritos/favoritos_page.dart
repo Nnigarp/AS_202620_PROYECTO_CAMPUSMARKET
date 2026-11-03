@@ -38,9 +38,11 @@ class _FavoritosPageState extends State<FavoritosPage> {
         if (controller.loading) const LinearProgressIndicator(),
         if (controller.error != null)
           Padding(padding: const EdgeInsets.all(20), child: Semantics(liveRegion: true, child: Text(controller.error!))),
-        Expanded(child: controller.items.isEmpty
+        Expanded(child: controller.items.isEmpty || controller.loading || controller.error != null
           ? Center(child: Padding(padding: const EdgeInsets.all(24), child: Text(
-              controller.loading ? 'Consultando favoritos…' : 'Aún no tienes favoritos disponibles. Guarda publicaciones con el corazón.',
+              controller.loading ? 'Consultando favoritos…' : controller.error != null
+                ? 'Actualiza para volver a consultar tus favoritos.'
+                : 'Aún no tienes favoritos disponibles. Guarda publicaciones con el corazón.',
               textAlign: TextAlign.center,
             )))
           : GridView.builder(

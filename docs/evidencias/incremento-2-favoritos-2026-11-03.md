@@ -41,3 +41,7 @@ Corrección de fixtures: [`32472bd`](https://github.com/Nnigarp/AS_202620_PROYEC
 - Contrato aditivo: todas las rutas/esquemas anteriores conservados. Enlaces nuevos y ocho columnas de aspectos verificados localmente.
 
 Favoritos queda implementado y probado; **no desplegado**. Los fallos intermedios anteriores permanecen registrados. Mensajería continúa como corte siguiente de la misma rama.
+
+### Revalidación de disponibilidad al volver a la pantalla
+
+La revisión conjunta detectó que IndexedStack conservaba la pantalla ya visitada: el listado podía quedar obsoleto después de una eliminación/ocultamiento externo. El shell ahora pide revalidación cada vez que se entra a Favoritos; la pantalla oculta resultados antiguos durante carga o error y los muestra tras la consulta vigente. Se añade test de widget con respuesta retenida: durante revalidación no se presenta la tarjeta anterior y, cuando el servidor devuelve lista vacía, desaparece definitivamente. No cambia autenticación, persistencia ni idempotencia. Se valida en el siguiente CI conjunto.

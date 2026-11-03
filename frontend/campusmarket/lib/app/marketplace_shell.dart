@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../catalogo/catalogo_page.dart';
 import '../favoritos/favoritos_page.dart';
+import '../favoritos/favoritos_controller.dart';
 import '../mensajeria/bandeja_page.dart';
 import '../publicaciones/mis_publicaciones_page.dart';
 import '../publicaciones/publicacion_form_page.dart';
@@ -57,6 +58,7 @@ class _MarketplaceShellState extends State<MarketplaceShell> {
       if (!mounted || entered != true || !SessionController.instance.authenticated) return;
     }
     if (!mounted) return;
+    if (indice == 4) FavoritosController.instance.refresh();
     setState(() {
       // Inicio vuelve a consultar la fuente de verdad al regresar de otra vista.
       // No conservar una portada potencialmente obsoleta tras editar imágenes

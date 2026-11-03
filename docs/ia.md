@@ -728,3 +728,7 @@ Límites: pruebas sintéticas automatizadas; no se afirma revisión humana, audi
 ChatGPT/Codex aceptó composición de metadata por IDs únicos desde la institución fijada al publicar, con DTO nullable y etiquetas de declaración. Descartó consultar el perfil actual por publicación (N+1 y atribución retroactiva falsa), inferir universidad a NULL o presentar matrícula verificada. La capa pública de Universidades elimina imports de repositorio ajeno en sus consumidores; propiedad de datos se amplía al contexto.
 
 Verificación: 13 pruebas locales de contrato/lotes/propiedad/erosión y Ruff aprobados; el diff OpenAPI solo añade metadata opcional/nullable. Tarjetas compactas reservan espacio para la etiqueta manteniendo imagen, descripción y acciones. CI aislado validará MySQL, 5 tests Flutter añadidos y recorrido real; no se afirman esos resultados antes de ejecutarlos. [Evidencia](evidencias/incremento-2-universidad-visible-2026-11-03.md). Sin revisión humana afirmada, publicación ni datos personales reales.
+
+### Revisión final del Incremento 2
+
+La prueba de tarjeta de 250 px detectó un desbordamiento real; se ajustó la proporción de miniatura en altura compacta, conservando la prueba. También se corrigió caché de disponibilidad al regresar a Favoritos: consulta vigente y ocultación de resultados previos mientras valida, con prueba de respuesta diferida. Se rechaza atribuir aprobación de un run anterior a una fuente modificada; la fuente conjunta se valida nuevamente en CI. Sin despliegue ni revisión humana afirmada.

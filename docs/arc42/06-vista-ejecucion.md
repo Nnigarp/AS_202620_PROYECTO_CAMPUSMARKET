@@ -87,3 +87,7 @@ El chat recibe texto JSON de hasta 2000 caracteres, lo presenta como texto y con
 ## 6.10 Incremento 2 — Composición de identidad declarada
 
 Una consulta obtiene publicaciones públicas y fotografías en lote. Catálogo reúne los IDs únicos no nulos de universidad y llama una vez a la capacidad de Universidades; compone el resultado por ID, sin consultas por tarjeta ni acceso directo a otro repositorio. El detalle resuelve el mismo dato de la publicación. Cambiar el perfil a otra institución no altera anuncios ya creados; NULL queda NULL. «Toda Cartagena»/«Mi universidad» conservan sus filtros por ID. El nuevo campo es opcional para compatibilidad con clientes anteriores. [Evidencia](../evidencias/incremento-2-universidad-visible-2026-11-03.md).
+
+### Revalidación de Favoritos al navegar (Incremento 2)
+
+Cada entrada a la pantalla solicita el estado vigente; mientras carga o falla, no muestra tarjetas de la respuesta anterior como oferta disponible. La prueba con respuesta diferida comprueba que una tarjeta eliminada/oculta no reaparece cuando GET devuelve vacío. Los favoritos no se borran por cerrar sesión.
