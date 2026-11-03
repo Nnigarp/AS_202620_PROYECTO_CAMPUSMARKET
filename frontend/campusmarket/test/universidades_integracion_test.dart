@@ -25,6 +25,7 @@ void main() {
       )))));
       await tester.pumpAndSettle();
       expect(find.text('UTB'), findsOneWidget);
+      expect(find.text('Venta'), findsOneWidget);
       expect(find.byTooltip('Universidad declarada al publicar: Universidad Tecnológica de Bolívar'), findsOneWidget);
       expect(tester.takeException(), isNull);
       await tester.pumpWidget(const SizedBox.shrink());

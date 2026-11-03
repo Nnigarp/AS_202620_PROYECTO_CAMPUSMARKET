@@ -29,3 +29,7 @@ El commit de este corte inicia CI. Sus SHA/runs y resultados se incorporan despu
 Implementación: [`a079fb5`](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/a079fb5f11b21bdfd161c798e7a4425bf48114cc). [Flutter 41586208778](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41586208778) aprobó analyze y **31/32 tests**. El nuevo caso de tarjeta de 250 px detectó un desbordamiento real de 27 px al incluir la institución. Se mantiene el test y se adapta únicamente la miniatura cuando tarjeta compacta tiene menos de 400 px de alto (proporción 2.2); se conservan título, precio, institución, descripción y acciones. Se repite validación completa sobre la corrección.
 
 La corrección compacta está en [`dceb4ea`](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/dceb4ea20ca82017749064037889248abe6c88c8). La revisión final también incorpora la revalidación de disponibilidad de Favoritos al volver a su pantalla (documentada en su evidencia), con un test adicional. El siguiente commit es la fuente conjunta a validar; no se atribuyen resultados de un SHA anterior al nuevo sin identificar la diferencia.
+
+### Conservación de información de tarjeta
+
+El corazón reemplazó el icono de modalidad del MVP. La revisión final conserva explícitamente «Venta»/«Alquiler» en la fila de contexto universitario, sin añadir altura ni quitar descripción/acciones. Los cuatro casos de tarjeta también exigen que siga visible la modalidad, evitando perder esa información al incorporar Favoritos.
