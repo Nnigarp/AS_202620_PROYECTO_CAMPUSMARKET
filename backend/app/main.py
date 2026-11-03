@@ -17,8 +17,8 @@ from backend.app.observability import (
 )
 from backend.app.publicaciones.router import router as publicaciones_router
 from backend.app.resource_limits import RequestBodyLimitMiddleware
-from backend.app.usuarios.router import router as usuarios_router
 from backend.app.universidades.router import router as universidades_router
+from backend.app.usuarios.router import router as usuarios_router
 
 
 class HealthResponse(BaseModel):
