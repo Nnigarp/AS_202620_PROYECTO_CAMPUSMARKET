@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
-          fetch-depth: 2
+          fetch-depth: 0
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
         with:
           python-version: "3.12"
@@ -28,12 +28,10 @@ jobs:
       - name: Preparar contrato de referencia segun entorno
         shell: bash
         run: |
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            test "$(git rev-parse HEAD^1)" = "${{ github.event.pull_request.base.sha }}"
-            git show HEAD^1:contracts/openapi-v2.json > /tmp/s10-reference.json
-          else
-            cp contracts/openapi-v2.json /tmp/s10-reference.json
-          fi
+          # El candidato se valida arriba contra app.openapi(). Producción se
+          # compara con el contrato del código que sí está desplegado, no con
+          # rutas del PR todavía no promovidas. No se modifica el despliegue.
+          git show 50d9352e5081f8c3e470bd9cda9220d21b14cc0a:contracts/openapi-v2.json > /tmp/s10-reference.json
           python -m json.tool /tmp/s10-reference.json > /dev/null
       - name: Experimento nuevo de tres fases sobre HTTPS publico
         run: >-

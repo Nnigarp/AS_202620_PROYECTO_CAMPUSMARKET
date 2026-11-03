@@ -61,3 +61,9 @@ El [PR #81](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/81) 
 La interfaz Flutter reutiliza la autenticación y la navegación actuales. Los usuarios existentes y publicaciones históricas con `universidad_id = NULL` siguen siendo compatibles y visibles en «Toda Cartagena». Elegir una universidad no demuestra matrícula verificada. Se mantiene la frontera `router → service → repository` y el contrato [OpenAPI v2](../../contracts/openapi-v2.json).
 
 **Evidencia verificable:** [pruebas backend de universidades](../../backend/tests/test_universidades_integracion.py), [publicaciones](../../backend/tests/test_universidades_publicaciones.py), [Flutter](../../frontend/campusmarket/test/universidades_integracion_test.dart) y [cierre público](../evidencias/cierre-universidades-cartagena-2026-11-02.md). Los apartados 5.1–5.5 conservan el estado histórico del MVP.
+
+## 5.7 Incremento 2 — Favoritos privados (2026-11-03)
+
+`favoritos/router → service → repository` es el único escritor de `favoritos`, con clave primaria `(usuario_id, publicacion_id)`. La identidad procede exclusivamente de `UsuarioActual`. GET privado compone referencias vigentes mediante Catálogo → capacidad pública por IDs de Publicaciones e imágenes en lote; no importa repositorios ajenos. Las referencias a anuncios ocultos/eliminados se omiten; reservado/vendido conserva su estado real. No se cambian tablas ni datos heredados.
+
+Flutter comparte `FavoritosController` entre corazones y «Mis favoritos»; MySQL conserva los favoritos al cerrar sesión. Cambio de token vacía la caché y descarta respuestas de la sesión anterior. [Evidencia del corte](../evidencias/incremento-2-favoritos-2026-11-03.md).

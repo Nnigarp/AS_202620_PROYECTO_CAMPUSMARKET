@@ -138,3 +138,9 @@ Datos personales: correo, nombre, credenciales derivadas, sesiones e intentos; c
 | Mi universidad | Disponible tras iniciar sesión y declarar institución | Filtro de catálogo combinable con criterios previos |
 
 La evolución conserva fronteras del monolito modular (ADR-0001/0009/0012/0021) y el único contrato OpenAPI v2. No se crea un nuevo servicio ni broker. Véanse [arc42 §5](05-bloques-de-construccion.md), [matriz de aspectos](../aspectos.md) y [evidencia posterior a S13](../evidencias/cierre-universidades-cartagena-2026-11-02.md).
+
+## Incremento 2 — Privacidad de favoritos y contrato candidato
+
+Los favoritos son información privada de una cuenta, no una preferencia global del dispositivo. Sus rutas exigen Bearer; ninguna acepta una identidad de entrada. La clave compuesta impide duplicados bajo concurrencia; las referencias se conservan desacopladas de la eliminación de otros contextos y se filtran por visibilidad al leer. No se crea almacenamiento ni infraestructura adicional. Sesiones opacas, MySQL como fuente de verdad y composición de lecturas en lote reutilizan ADR-0001/0003/0012/0019/0022. No hace falta un ADR nuevo.
+
+OpenAPI candidato se compara con `app.openapi()` en CI. S10 público usa el contrato del commit efectivamente desplegado `50d9352e5081f8c3e470bd9cda9220d21b14cc0a`, con revisión esperada igual; no compara producción con rutas del candidato sin promover. Esa referencia deberá actualizarse mediante promoción autorizada. [Evidencia](../evidencias/incremento-2-favoritos-2026-11-03.md).

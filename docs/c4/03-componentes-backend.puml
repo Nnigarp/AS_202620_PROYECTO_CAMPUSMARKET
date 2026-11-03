@@ -1,6 +1,6 @@
 @startuml
 title CampusMarket - C4 Nivel 3 · Componentes del Backend API
-caption MVP previo al despliegue · cuatro contextos materializados
+caption Monolito modular · evolución Incremento 2
 top to bottom direction
 skinparam shadowing false
 skinparam packageStyle rectangle
@@ -35,6 +35,13 @@ package "Backend API · FastAPI · monolito modular" {
     ar --> ads
     ads --> ad
   }
+  package "Favoritos" {
+    rectangle "API privada\nrouter.py" as fr
+    rectangle "Servicio\nservice.py\nReferencias privadas vigentes" as fs
+    rectangle "Repositorio\nrepository.py\nClave usuario/publicación" as fd
+    fr --> fs
+    fs --> fd
+  }
 }
 database "MySQL 8.4\nTablas con único escritor por contexto" as db
 folder "Imágenes\nCAMPUSMARKET_UPLOAD_DIR\nVolumen nombrado en Compose" as files
@@ -43,6 +50,10 @@ main --> ur : registra
 main --> pr : registra
 main --> cr : registra
 main --> ar : registra
+main --> fr : registra
+fr --> ur : identidad de sesión
+fs --> cs : lectura pública por IDs en lote
+fd --> db : solo favoritos
 pr --> ur : resuelve identidad
 ar --> ur : resuelve identidad/capacidad
 cs --> ps : lectura pública y fotos en lote
@@ -61,6 +72,7 @@ note bottom of db
 Usuarios: usuarios, sesiones_usuario, intentos_autenticacion.
 Publicaciones: publicaciones, publicacion_imagenes.
 Administración: reportes_publicacion.
+Favoritos: favoritos (clave usuario/publicación).
 db.py comparte infraestructura, sin entidades de dominio.
 end note
 note bottom of files

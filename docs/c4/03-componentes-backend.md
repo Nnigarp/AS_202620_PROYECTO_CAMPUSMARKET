@@ -75,3 +75,7 @@ incorrecto, moderación sin capacidad, archivo disfrazado o erosión de frontera
 
 Decisiones aplicadas: ADR-0001/0003/0004/0009 y ADR-0011 a ADR-0019.
 El índice de [decisiones](../arc42/09-decisiones.md) mantiene sus estados y enlaces.
+
+## Incremento 2 — Favoritos (2026-11-03)
+
+El diagrama incorpora `Favoritos`: router privado → servicio → repositorio propio (`favoritos`). El router obtiene identidad de Usuarios; el servicio compone únicamente lecturas públicas de Catálogo/Publicaciones por IDs e imágenes en lote. La tabla privada no cambia propietarios ni anuncia disponibilidad de referencias ocultas/eliminadas. Una única API/MySQL y los dos contenedores existentes se conservan; no hay servicio adicional. [Código](../../backend/app/favoritos/) · [pruebas de propiedad](../../backend/tests/test_propiedad_datos.py) · [evidencia](../evidencias/incremento-2-favoritos-2026-11-03.md). Los estados de despliegue de apartados anteriores son históricos; este corte aún no está publicado.

@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:campusmarket/app/campus_market_app.dart';
 import 'package:campusmarket/app/inicio_page.dart';
+import 'package:campusmarket/favoritos/favoritos_controller.dart';
 import 'package:campusmarket/publicaciones/publicaciones_api.dart';
 import 'package:campusmarket/publicaciones/mis_publicaciones_page.dart';
 import 'package:campusmarket/shared/api_configuration.dart';
@@ -267,6 +268,8 @@ void main() {
     await until(() => find.text('Descripción').evaluate().isNotEmpty, 'Detalle actual consultado');
     expect(find.byKey(const Key('reportar-publicacion')), findsNothing);
     await screenshot('detalle-A');
+    await click(find.byKey(Key('favorito-$id')));
+    await until(() => FavoritosController.instance.contiene(id), 'Corazón A guardado en MySQL');
     await tester.pageBack();
     await tester.pump(const Duration(milliseconds: 200));
 
@@ -294,6 +297,26 @@ void main() {
     expect(find.text('Editar'), findsNothing);
     expect(find.text('Eliminar'), findsNothing);
     await screenshot('detalle-B');
+    await FavoritosController.instance.ensureLoaded();
+    expect(FavoritosController.instance.contiene(id), isFalse, reason: 'Favorito privado de A no aparece para B');
+    await click(find.byKey(Key('favorito-$id')));
+    await until(() => FavoritosController.instance.contiene(id), 'B guarda su propio favorito');
+    await tester.pageBack();
+    await tester.pump(const Duration(milliseconds: 200));
+    await click(find.byKey(const Key('nav-favoritos')));
+    await until(() => find.text(editedTitle).evaluate().isNotEmpty, 'Favorito visible en pantalla privada');
+    await screenshot('favoritos-B');
+    await logout();
+    await enterAccount('Estudiante B', emailB, passwordB);
+    await click(find.byKey(const Key('nav-favoritos')));
+    await until(() => find.text(editedTitle).evaluate().isNotEmpty, 'Favorito persiste tras logout y nuevo login');
+    await click(find.byKey(Key('favorito-$id')));
+    await until(() => !FavoritosController.instance.contiene(id), 'Quitar favorito confirmado por API');
+    checks.add('Favoritos privados A/B, corazón, pantalla, persistencia tras logout y eliminación');
+    await click(find.byKey(const Key('nav-catalogo')));
+    await catalogResult(editedTitle, 'Regreso al catálogo');
+    await click(find.text(editedTitle));
+    await until(() => find.byKey(const Key('reportar-publicacion')).evaluate().isNotEmpty, 'Detalle de B consultado de nuevo');
 
     Future<void> spoofedRequest(String method, String path, {Object? body}) async {
       final request = http.Request(method, Uri.parse('$defaultApiBaseUrl$path?propietario_id=$ownerA'));

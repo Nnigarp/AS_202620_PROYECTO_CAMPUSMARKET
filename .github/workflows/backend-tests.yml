@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - feat/incremento-2-20261103
       - S3-esqueleto-ejecutable
       - S4-corte-vertical
       - S7-interfaces-contratos

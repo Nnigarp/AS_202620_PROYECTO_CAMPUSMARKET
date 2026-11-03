@@ -4,6 +4,7 @@ import '../shared/formatters.dart';
 
 import '../administracion/reportar_publicacion.dart';
 import '../shared/api_error.dart';
+import '../favoritos/favorito_button.dart';
 import 'catalogo_api.dart';
 import 'publicacion_catalogo.dart';
 
@@ -189,6 +190,8 @@ class _DetalleContenido extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: 18),
+                            Row(children: [FavoritoButton(publicacion: publicacion), const Text('Guardar en favoritos')]),
+                            const SizedBox(height: 12),
                             ReportarPublicacionButton(
                               publicacionId: publicacion.id,
                               propietarioId: publicacion.propietarioId,

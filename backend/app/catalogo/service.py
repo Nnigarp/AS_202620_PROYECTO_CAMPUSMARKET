@@ -2,6 +2,7 @@ from backend.app.publicaciones.service import (
     listar_imagenes_publicacion,
     listar_imagenes_publicaciones,
     listar_publicaciones,
+    listar_publicaciones_por_ids,
 )
 
 
@@ -74,3 +75,11 @@ def obtener_publicacion(publicacion_id: int) -> dict | None:
             return _con_imagenes(publicacion)
 
     return None
+
+
+def obtener_publicaciones_por_ids(ids: list[int]) -> list[dict]:
+    """Composición de lecturas entre módulos, en lote y en el orden solicitado."""
+    publicaciones = listar_publicaciones_por_ids(ids)
+    imagenes = listar_imagenes_publicaciones([int(p["id"]) for p in publicaciones])
+    por_id = {int(p["id"]): {**p, "imagenes": imagenes.get(int(p["id"]), [])} for p in publicaciones}
+    return [por_id[id_] for id_ in ids if id_ in por_id]

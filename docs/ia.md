@@ -710,3 +710,9 @@ Este registro corresponde a la evolución de producto **posterior a S13**, no a 
 | 2026-11-02/03 | ChatGPT — S10 y recuperación | Identificar en los registros públicos que la API publicada conserva el contrato exacto, mientras la expectativa de revisión era antigua; proponer actualizar solo ese SHA sin relajar los nueve checks | No suprimir S10 ni sustituir comparación real por un resultado simulado; no declarar un volcado dentro de `/tmp` equivalente a backup recuperable | [Run S10 posterior al deploy](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41576332272), [PR #83](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/83), [riesgos arc42 §11](arc42/11-riesgos-y-deuda-tecnica.md) |
 
 **Responsabilidad:** el equipo debe revisar las decisiones, el código, los resultados CI y la documentación antes de presentar este incremento al docente; esta tabla registra asistencia y validaciones observables, no una evaluación institucional favorable.
+
+## 2026-11-03 — Incremento 2, Favoritos
+
+ChatGPT/Codex implementó el corte MySQL/API/OpenAPI/Flutter en una rama del fork basada en `c7f15748a9a9dfd8b1160ab04fb8ee544a374437`. Propuestas aceptadas: clave compuesta, PUT/DELETE idempotentes con identidad de sesión, composición pública en lote y caché invalidada por token. Verificación local: Ruff, contrato/arquitectura y seis casos unitarios de Favoritos (18 pruebas en conjunto); integración MySQL y Flutter requieren CI aislado, registrada en [evidencia](evidencias/incremento-2-favoritos-2026-11-03.md).
+
+Se descartaron preferencias solo locales (no persisten por cuenta), identificadores de usuario enviados por Flutter (suplantación) y comparar nuevas rutas contra producción sin promoción (bloqueo circular S10). Límites: asistencia automatizada, sin revisión humana/docente afirmada ni cambios productivos; código y escenarios reales pendientes se distinguen en la evidencia.

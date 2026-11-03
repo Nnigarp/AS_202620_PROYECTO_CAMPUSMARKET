@@ -2,7 +2,7 @@ name: Validación Flutter MVP
 
 on:
   push:
-    branches: [master, mvp-autenticacion-producto]
+    branches: [master, mvp-autenticacion-producto, feat/incremento-2-20261103]
   pull_request:
     branches: [master]
   workflow_dispatch:

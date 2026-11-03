@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../shared/formatters.dart';
+import '../../favoritos/favorito_button.dart';
+import '../../favoritos/favoritos_controller.dart';
 
 import '../publicacion_catalogo.dart';
 
@@ -9,10 +11,12 @@ class CatalogoCard extends StatelessWidget {
     required this.publicacion,
     required this.onTap,
     super.key,
+    this.favoritosController,
   });
 
   final PublicacionCatalogo publicacion;
   final VoidCallback onTap;
+  final FavoritosController? favoritosController;
 
   String _formatearPrecio(double value) => formatoPrecio(value);
 
@@ -58,21 +62,7 @@ class CatalogoCard extends StatelessWidget {
                       Positioned(
                         right: 10,
                         top: 10,
-                        child: Container(
-                          width: compacta ? 34 : 38,
-                          height: compacta ? 34 : 38,
-                          decoration: BoxDecoration(
-                            color: colors.surface.withValues(alpha: 0.92),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            publicacion.modalidad == 'venta'
-                                ? Icons.sell_outlined
-                                : Icons.key_outlined,
-                            size: compacta ? 17 : 19,
-                            color: colors.primary,
-                          ),
-                        ),
+                        child: FavoritoButton(publicacion: publicacion, controller: favoritosController),
                       ),
                       if (publicacion.estadoPublicacion != 'disponible')
                         Positioned(

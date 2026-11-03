@@ -73,3 +73,7 @@ logout en Chrome de escritorio, Chrome móvil y Android emulado.
 [Auditoría y resultados](../evidencias/auditoria-mvp-continuacion-2026-10-03.md).
 SQLite/ADR-0002 y OpenAPI v1 corresponden a revisiones históricas del primer corte
 y S7. Los resultados de esas revisiones no validan por sí solos el MVP actual.
+
+## 6.8 Incremento 2 — Guardar y recuperar favoritos
+
+Flutter exige sesión y carga la lista privada antes de decidir PUT/DELETE `/favoritos/{publicacion_id}`. El router obtiene el usuario autenticado; el servicio valida visibilidad mediante Catálogo y su repositorio inserta con clave compuesta/idempotencia SQL. DELETE restringe por ambos IDs y admite reintentos, incluso si el anuncio desapareció. GET `/favoritos` devuelve solo referencias públicas resueltas en lote y `Cache-Control: no-store`. Logout revoca la sesión, sin borrar favoritos; login recupera los datos desde MySQL. El controlador descarta lecturas y escrituras atrasadas tras un cambio de sesión. Pruebas y estado de CI en [evidencia](../evidencias/incremento-2-favoritos-2026-11-03.md).
