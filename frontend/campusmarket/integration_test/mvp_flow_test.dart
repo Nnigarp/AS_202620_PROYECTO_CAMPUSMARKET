@@ -328,9 +328,9 @@ void main() {
     await until(() => find.text(buyerMessage).evaluate().isNotEmpty, 'Mensaje comprador persistido');
     await screenshot('chat-comprador');
     await tester.pageBack();
-    await tester.pump(const Duration(milliseconds: 200));
+    await tester.pumpAndSettle();
     await tester.pageBack();
-    await tester.pump(const Duration(milliseconds: 200));
+    await tester.pumpAndSettle();
     await click(find.byKey(const Key('nav-mensajes')));
     await until(() => find.text(editedTitle).evaluate().isNotEmpty, 'Bandeja del comprador');
     await logout();
@@ -344,7 +344,7 @@ void main() {
     await until(() => find.text(sellerMessage).evaluate().isNotEmpty, 'Respuesta vendedor persistida');
     await screenshot('chat-vendedor');
     await tester.pageBack();
-    await tester.pump(const Duration(milliseconds: 200));
+    await tester.pumpAndSettle();
     await logout();
     await enterAccount('Estudiante B', emailB, passwordB);
     await click(find.byKey(const Key('nav-mensajes')));
@@ -353,7 +353,7 @@ void main() {
     await until(() => find.text(sellerMessage).evaluate().isNotEmpty, 'Comprador recibe respuesta real');
     checks.add('Mensajería HTTP: contactar, bandejas A/B, envío/respuesta y persistencia tras logout');
     await tester.pageBack();
-    await tester.pump(const Duration(milliseconds: 200));
+    await tester.pumpAndSettle();
     await click(find.byKey(const Key('nav-catalogo')));
     await catalogResult(editedTitle, 'Regreso desde Mensajes al catálogo');
     await click(find.text(editedTitle));

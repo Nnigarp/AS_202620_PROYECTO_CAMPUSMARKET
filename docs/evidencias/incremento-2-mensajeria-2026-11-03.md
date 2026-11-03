@@ -25,3 +25,9 @@ Pruebas Flutter preparadas: payload/identidad, cursor sin saltos, reintento con 
 ## Commits/runs y límites
 
 El commit de implementación inicia los workflows del fork; SHA y resultados se añadirán después de verificar. **MySQL/Flutter/recorrido Mensajería: PENDIENTE.** No hay cambios productivos ni aprobación humana afirmada. Datos sintéticos, sin acceso a usuarios reales. No equivale a cifrado extremo a extremo, moderación de mensajes, política de retención aprobada ni ensayo de carga institucional.
+
+### Primera ejecución y corrección del recorrido
+
+Implementación/documentación: [`3b23980`](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/3b239804b215338f2ab2b6e9dfd85f96a0b22176). [Backend 41584776751](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41584776751) aprobado en MySQL 8.4. [S10 41584776642](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41584776642) aprobado. Analyze/tests Flutter aprobados; compilación y recorrido pendientes al registrar este apartado.
+
+[Recorrido 41584776511](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41584776511): Chrome escritorio/móvil enviaron y mostraron el mensaje del comprador, pero fallaron al segundo pageBack: con solo 200 ms entre dos pops, la transición todavía exponía dos tooltips Back. Se corrige únicamente el ensayo para esperar pumpAndSettle tras volver de chat; se mantienen ambos retornos, controles de identidad y todas las aserciones. No se cambia la navegación ni la lógica productiva.
