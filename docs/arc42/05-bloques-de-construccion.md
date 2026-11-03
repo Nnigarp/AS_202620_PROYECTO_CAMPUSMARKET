@@ -52,3 +52,12 @@ del proveedor. Tests funcionales y mutaciones completan la evidencia.
 Véanse [auditoría](../evidencias/auditoria-mvp-continuacion-2026-10-03.md),
 [conceptos transversales](08-conceptos-transversales.md) y
 [decisiones](09-decisiones.md). Los ADR aceptados conservan su contenido original.
+
+
+## 5.6 Incremento posterior a S13 — universidad declarada y catálogo de Cartagena
+
+El [PR #81](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/81) agrega el catálogo de doce universidades y su asociación opcional a usuarios y publicaciones. La ruta `GET /universidades` expone el catálogo; Usuarios administra la universidad declarada en registro y perfil; Publicaciones fija la universidad del propietario al crear el anuncio; Catálogo filtra por `universidad_id` a través de la capacidad de consulta de Publicaciones. **No se extrae un microservicio** ni se concede a Catálogo escritura directa en MySQL.
+
+La interfaz Flutter reutiliza la autenticación y la navegación actuales. Los usuarios existentes y publicaciones históricas con `universidad_id = NULL` siguen siendo compatibles y visibles en «Toda Cartagena». Elegir una universidad no demuestra matrícula verificada. Se mantiene la frontera `router → service → repository` y el contrato [OpenAPI v2](../../contracts/openapi-v2.json).
+
+**Evidencia verificable:** [pruebas backend de universidades](../../backend/tests/test_universidades_integracion.py), [publicaciones](../../backend/tests/test_universidades_publicaciones.py), [Flutter](../../frontend/campusmarket/test/universidades_integracion_test.dart) y [cierre público](../evidencias/cierre-universidades-cartagena-2026-11-02.md). Los apartados 5.1–5.5 conservan el estado histórico del MVP.
