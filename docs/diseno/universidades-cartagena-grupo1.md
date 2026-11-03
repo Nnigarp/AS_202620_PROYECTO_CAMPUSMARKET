@@ -1,6 +1,6 @@
 # CampusMarket — diseño de universidades de Cartagena
 
-Estado: especificación de diseño, todavía no implementada ni desplegada. Alcance: Grupo 1, sin S14.
+Estado: **implementado e integrado mediante PR #81; desplegado con PR #82 el 2026-11-02**. Este archivo conserva la especificación inicial (no es una lista de verificación cerrada). Alcance: Grupo 1, sin atribución retroactiva a S14. Evidencia de implementación y límites: [cierre de universidades](../evidencias/cierre-universidades-cartagena-2026-11-02.md).
 
 ## Registro y acceso
 
