@@ -504,13 +504,37 @@ class _PanelFiltros extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 20),
-            SegmentedButton<bool>(
-              segments: [
-                const ButtonSegment(value: false, label: Text('Toda Cartagena')),
-                ButtonSegment(value: true, label: const Text('Mi universidad'), enabled: universidadDisponible),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                for (final soloUniversidad in [false, true])
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: OutlinedButton.icon(
+                      key: Key(soloUniversidad
+                          ? 'catalogo-mi-universidad'
+                          : 'catalogo-toda-cartagena'),
+                      onPressed: soloUniversidad && !universidadDisponible
+                          ? null
+                          : () => onMiUniversidadChanged(soloUniversidad),
+                      style: OutlinedButton.styleFrom(
+                        alignment: Alignment.centerLeft,
+                        backgroundColor: miUniversidad == soloUniversidad
+                            ? colors.primaryContainer
+                            : null,
+                        foregroundColor: miUniversidad == soloUniversidad
+                            ? colors.onPrimaryContainer
+                            : colors.onSurface,
+                      ),
+                      icon: Icon(miUniversidad == soloUniversidad
+                          ? Icons.check_circle_outline
+                          : Icons.circle_outlined),
+                      label: Text(soloUniversidad
+                          ? 'Mi universidad'
+                          : 'Toda Cartagena'),
+                    ),
+                  ),
               ],
-              selected: {miUniversidad},
-              onSelectionChanged: (selection) => onMiUniversidadChanged(selection.first),
             ),
             if (!universidadDisponible) ...[
               const SizedBox(height: 8),
