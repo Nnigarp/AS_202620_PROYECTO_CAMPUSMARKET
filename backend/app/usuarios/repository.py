@@ -1,7 +1,9 @@
 import pymysql
 
 from backend.app.db import transaction
-from backend.app.universidades.repository import initialize_database as init_universidades
+from backend.app.universidades.repository import (
+    initialize_database as init_universidades,
+)
 
 from .errors import DuplicateEmailError
 
