@@ -758,3 +758,9 @@ Se reutilizó el empaquetado Web anterior sobre base integrada `1c07c2c`, con fu
 Se rechazó reconstruir tras ensayar, etiquetar una imagen vieja como nueva, cambiar Run Command o tomar CI/headers como prueba de recuperación/acceso GHCR productivos. No hubo merge, acceso Dokploy ni modificación de producción. El nuevo digest está publicado, no desplegado; identidad/montajes/respaldo/pull del host y autorización siguen siendo gates. Los picos de memoria sintéticos no acreditan carga institucional.
 
 Verificación posterior de la promoción: [41597711177](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41597711177), fuente `0d98ff6`, aprobó identidad GHCR por lectura anónima y Compose con delta único `api.image`. Ruff, Actionlint y Gitleaks locales aprobados. El intento de abrir el Draft correctivo devolvió 403 de permisos de la integración; se dejó la comparación manual, sin afirmar que exista un PR nuevo. La actualización posterior es documental y no repite construcción/ensayo ni operaciones productivas.
+
+## Registro posterior a S13 — verificación del despliegue Incremento 2 (2026-11-03)
+
+| Fecha | Herramienta / uso | Propuesta aceptada y verificación | Propuesta rechazada o corregida y razón | Resultado verificable |
+|---|---|---|---|---|
+| 2026-11-03 | ChatGPT — revisión del log Dokploy, capturas de aceptación y documentación | Conservar digest/sha de imagen, distinguir CI de observación pública y documentar catálogo, favoritos y conversación bidireccional; comprobar contra configuración y PR #85–#88 | Rechazar declarar backup restaurable, rollback productivo o S10 posdespliegue sin prueba; no adjuntar conversaciones ni credenciales reales; no rehacer ADR ni reescribir historia S1–S13 | [Cierre productivo observado](evidencias/cierre-productivo-incremento2-2026-11-03.md), [arc42 §7](arc42/07-vista-despliegue.md), [matriz](aspectos.md). La revisión y aceptación final del equipo/docente no se presumen. |
