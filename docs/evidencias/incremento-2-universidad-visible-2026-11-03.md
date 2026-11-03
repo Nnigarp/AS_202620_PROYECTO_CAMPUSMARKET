@@ -23,3 +23,7 @@ Rama del fork `feat/incremento-2-20261103`, basada en oficial/fork `c7f15748a9a9
 ## Commits, CI y límites
 
 El commit de este corte inicia CI. Sus SHA/runs y resultados se incorporan después de verificar. **Integración MySQL/Flutter/recorrido conjunto: PENDIENTE.** No equivale a matrícula verificada ni revisión humana. No se publican imágenes o cambios productivos. ADR-0001/0003/0012/0019/0022 reutilizados; dos contenedores y presupuesto existentes, sin nueva infraestructura/dependencias. No se acredita carga institucional o recuperación productiva mediante estas pruebas sintéticas.
+
+### Primera ejecución y corrección visual
+
+Implementación: [`a079fb5`](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/a079fb5f11b21bdfd161c798e7a4425bf48114cc). [Flutter 41586208778](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41586208778) aprobó analyze y **31/32 tests**. El nuevo caso de tarjeta de 250 px detectó un desbordamiento real de 27 px al incluir la institución. Se mantiene el test y se adapta únicamente la miniatura cuando tarjeta compacta tiene menos de 400 px de alto (proporción 2.2); se conservan título, precio, institución, descripción y acciones. Se repite validación completa sobre la corrección.

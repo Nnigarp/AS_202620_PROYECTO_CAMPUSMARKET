@@ -38,7 +38,9 @@ class CatalogoCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AspectRatio(
-                  aspectRatio: 16 / 10,
+                  // En una cuadrícula baja, reservar espacio para título,
+                  // precio, institución y acciones sin recortar esos textos.
+                  aspectRatio: compacta && constraints.maxHeight < 400 ? 2.2 : 16 / 10,
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
