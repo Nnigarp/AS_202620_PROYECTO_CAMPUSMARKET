@@ -2,10 +2,20 @@ name: S10 contrato del cliente en despliegue publico
 
 on:
   push:
-    branches: [master, S10-contrato-cliente, feat/incremento-2-20261103]
+    branches: [master, S10-contrato-cliente, feat/incremento-2-20261103, fix/s10-base-oficial-20261103]
   pull_request:
     branches: [master]
   workflow_dispatch:
+    inputs:
+      mode:
+        description: "Producción vigente o comprobación posterior al Deploy autorizado"
+        type: choice
+        options: [produccion, instalado]
+        default: produccion
+      source_sha:
+        description: "Posdespliegue: SHA completo de la imagen realmente instalada"
+        type: string
+        default: ""
 
 permissions:
   contents: read
@@ -18,31 +28,38 @@ jobs:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
           fetch-depth: 0
+          persist-credentials: false
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
         with:
           python-version: "3.12"
       - name: Dependencias existentes para pruebas de frontera
         run: python -m pip install -r backend/requirements-dev.txt
       - name: Contrato, rechazo antes de servicio y correlacion de logs
-        run: python -m pytest backend/tests/test_s10_contrato_cliente.py backend/tests/test_contrato_openapi.py backend/tests/test_observability.py -q
+        run: python -m pytest backend/tests/test_s10_contrato_cliente.py backend/tests/test_s10_referencias.py backend/tests/test_contrato_openapi.py backend/tests/test_observability.py -q
       - name: Preparar contrato de referencia segun entorno
+        id: referencias
+        env:
+          S10_MODE: ${{ inputs.mode || 'produccion' }}
+          S10_INSTALLED_SHA: ${{ inputs.source_sha }}
         shell: bash
         run: |
-          # El candidato se valida arriba contra app.openapi(). Producción se
-          # compara con el contrato del código que sí está desplegado, no con
-          # rutas del PR todavía no promovidas. No se modifica el despliegue.
-          git show 50d9352e5081f8c3e470bd9cda9220d21b14cc0a:contracts/openapi-v2.json > /tmp/s10-reference.json
-          python -m json.tool /tmp/s10-reference.json > /dev/null
+          set -euo pipefail
+          python scripts/preparar_s10_referencias.py \
+            --output artifacts/s10-references \
+            --mode "$S10_MODE" --expected-revision "$S10_INSTALLED_SHA"
+          cat artifacts/s10-references/outputs.txt >> "$GITHUB_OUTPUT"
       - name: Experimento nuevo de tres fases sobre HTTPS publico
         run: >-
           python scripts/experimento_s10_contrato.py
           --output artifacts/s10/${{ github.run_id }}
-          --expected-revision 50d9352e5081f8c3e470bd9cda9220d21b14cc0a
-          --reference-contract /tmp/s10-reference.json
+          --expected-revision ${{ steps.referencias.outputs.expected_revision }}
+          --reference-contract artifacts/s10-references/reference-contract.json
       - name: Conservar todas las muestras, incluidas las fallidas
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: s10-contrato-${{ github.sha }}-${{ github.run_id }}
-          path: artifacts/s10/
+          path: |
+            artifacts/s10/
+            artifacts/s10-references/
           if-no-files-found: warn

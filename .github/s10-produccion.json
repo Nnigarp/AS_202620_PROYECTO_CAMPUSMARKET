@@ -1,0 +1,5 @@
+{
+  "contract_commit": "c7f15748a9a9dfd8b1160ab04fb8ee544a374437",
+  "runtime_revision": "50d9352e5081f8c3e470bd9cda9220d21b14cc0a",
+  "image": "ghcr.io/nnigarp/campusmarket-web-universidades@sha256:384cbd0c08242d4a6d0343f26fab8521fd027908b639f638b2b9653f0f53dde1"
+}
