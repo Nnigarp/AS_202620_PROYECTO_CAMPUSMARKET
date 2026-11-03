@@ -820,6 +820,23 @@
               ],
               "title": "Precio Max"
             }
+          },
+          {
+            "name": "universidad_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Universidad Id"
+            }
           }
         ],
         "responses": {
@@ -1672,6 +1689,17 @@
             "type": "integer",
             "title": "Propietario Id"
           },
+          "universidad_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Universidad Id"
+          },
           "visible": {
             "type": "boolean",
             "title": "Visible",
@@ -1736,6 +1764,17 @@
               }
             ],
             "title": "Propietario Id"
+          },
+          "universidad_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Universidad Id"
           },
           "estado_publicacion": {
             "type": "string",
@@ -1879,6 +1918,17 @@
           "propietario_id": {
             "type": "integer",
             "title": "Propietario Id"
+          },
+          "universidad_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Universidad Id"
           },
           "visible": {
             "type": "boolean",
