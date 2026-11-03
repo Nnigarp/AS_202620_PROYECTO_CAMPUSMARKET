@@ -65,16 +65,6 @@
               }
             }
           },
-          "409": {
-            "description": "Idempotency-Key reutilizada con datos distintos o publicación ausente",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "413": {
             "description": "La solicitud supera el límite permitido.",
             "content": {
@@ -93,22 +83,32 @@
               }
             }
           },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          },
           "503": {
             "description": "Persistencia temporalmente no disponible",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Idempotency-Key reutilizada con datos distintos o publicación ausente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
                 }
               }
             }
@@ -249,16 +249,6 @@
               }
             }
           },
-          "404": {
-            "description": "Publicación no encontrada para el propietario",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "413": {
             "description": "La solicitud supera el límite permitido.",
             "content": {
@@ -277,12 +267,12 @@
               }
             }
           },
-          "422": {
-            "description": "Validation Error",
+          "404": {
+            "description": "Publicación no encontrada para el propietario",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -293,6 +283,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
                 }
               }
             }
@@ -325,16 +325,6 @@
           "204": {
             "description": "Successful Response"
           },
-          "404": {
-            "description": "Publicación no encontrada para el propietario",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "413": {
             "description": "La solicitud supera el límite permitido.",
             "content": {
@@ -353,12 +343,12 @@
               }
             }
           },
-          "422": {
-            "description": "Validation Error",
+          "404": {
+            "description": "Publicación no encontrada para el propietario",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -369,6 +359,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
                 }
               }
             }
@@ -420,16 +420,6 @@
               }
             }
           },
-          "404": {
-            "description": "Publicación no encontrada para el propietario",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "413": {
             "description": "La solicitud supera el límite permitido.",
             "content": {
@@ -448,12 +438,12 @@
               }
             }
           },
-          "422": {
-            "description": "Validation Error",
+          "404": {
+            "description": "Publicación no encontrada para el propietario",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -464,6 +454,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
                 }
               }
             }
@@ -515,6 +515,24 @@
               }
             }
           },
+          "413": {
+            "description": "La solicitud supera el límite permitido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "detail": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "detail"
+                  ]
+                }
+              }
+            }
+          },
           "400": {
             "description": "Imagen inválida o máximo alcanzado",
             "content": {
@@ -535,20 +553,12 @@
               }
             }
           },
-          "413": {
-            "description": "La solicitud supera el límite permitido.",
+          "503": {
+            "description": "Persistencia temporalmente no disponible",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "detail": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "detail"
-                  ]
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -559,16 +569,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          },
-          "503": {
-            "description": "Persistencia temporalmente no disponible",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -1189,6 +1189,49 @@
         ]
       }
     },
+    "/universidades": {
+      "get": {
+        "tags": [
+          "universidades"
+        ],
+        "summary": "Universidades",
+        "operationId": "listarUniversidades",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Universidad"
+                  },
+                  "type": "array",
+                  "title": "Response Listaruniversidades"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "La solicitud supera el límite permitido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "detail": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "required": [
+                    "detail"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/administracion/reportes": {
       "get": {
         "tags": [
@@ -1409,49 +1452,6 @@
           }
         }
       }
-    },
-    "/universidades": {
-      "get": {
-        "tags": [
-          "universidades"
-        ],
-        "summary": "Universidades",
-        "operationId": "listarUniversidades",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "items": {
-                    "$ref": "#/components/schemas/Universidad"
-                  },
-                  "type": "array",
-                  "title": "Response Listaruniversidades"
-                }
-              }
-            }
-          },
-          "413": {
-            "description": "La solicitud supera el límite permitido.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "detail": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "detail"
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
     }
   },
   "components": {
@@ -1601,14 +1601,13 @@
             "anyOf": [
               {
                 "type": "integer",
-                "minimum": 1
+                "minimum": 1.0
               },
               {
                 "type": "null"
               }
             ],
-            "title": "Universidad Id",
-            "default": null
+            "title": "Universidad Id"
           }
         },
         "additionalProperties": false,
@@ -1635,7 +1634,7 @@
           "precio": {
             "type": "number",
             "maximum": 9999999999.99,
-            "exclusiveMinimum": 0,
+            "exclusiveMinimum": 0.0,
             "title": "Precio"
           },
           "modalidad": {
@@ -1784,7 +1783,7 @@
           "precio": {
             "type": "number",
             "maximum": 9999999999.99,
-            "exclusiveMinimum": 0,
+            "exclusiveMinimum": 0.0,
             "title": "Precio"
           },
           "modalidad": {
@@ -1843,7 +1842,7 @@
           "precio": {
             "type": "number",
             "maximum": 9999999999.99,
-            "exclusiveMinimum": 0,
+            "exclusiveMinimum": 0.0,
             "title": "Precio"
           },
           "modalidad": {
@@ -1957,7 +1956,7 @@
           "precio": {
             "type": "number",
             "maximum": 9999999999.99,
-            "exclusiveMinimum": 0,
+            "exclusiveMinimum": 0.0,
             "title": "Precio"
           },
           "modalidad": {
@@ -2014,14 +2013,13 @@
             "anyOf": [
               {
                 "type": "integer",
-                "minimum": 1
+                "minimum": 1.0
               },
               {
                 "type": "null"
               }
             ],
-            "title": "Universidad Id",
-            "default": null
+            "title": "Universidad Id"
           }
         },
         "additionalProperties": false,
@@ -2129,7 +2127,7 @@
         "properties": {
           "publicacion_id": {
             "type": "integer",
-            "exclusiveMinimum": 0,
+            "exclusiveMinimum": 0.0,
             "title": "Publicacion Id"
           },
           "motivo": {
@@ -2200,6 +2198,34 @@
         ],
         "title": "Sesion"
       },
+      "Universidad": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "nombre": {
+            "type": "string",
+            "title": "Nombre"
+          },
+          "sigla": {
+            "type": "string",
+            "title": "Sigla"
+          },
+          "ciudad": {
+            "type": "string",
+            "title": "Ciudad"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "nombre",
+          "sigla",
+          "ciudad"
+        ],
+        "title": "Universidad"
+      },
       "Usuario": {
         "properties": {
           "id": {
@@ -2227,8 +2253,7 @@
                 "type": "null"
               }
             ],
-            "title": "Universidad Id",
-            "default": null
+            "title": "Universidad Id"
           }
         },
         "type": "object",
@@ -2279,34 +2304,6 @@
           "type"
         ],
         "title": "ValidationError"
-      },
-      "Universidad": {
-        "properties": {
-          "id": {
-            "type": "integer",
-            "title": "Id"
-          },
-          "nombre": {
-            "type": "string",
-            "title": "Nombre"
-          },
-          "sigla": {
-            "type": "string",
-            "title": "Sigla"
-          },
-          "ciudad": {
-            "type": "string",
-            "title": "Ciudad"
-          }
-        },
-        "type": "object",
-        "required": [
-          "id",
-          "nombre",
-          "sigla",
-          "ciudad"
-        ],
-        "title": "Universidad"
       }
     },
     "securitySchemes": {
