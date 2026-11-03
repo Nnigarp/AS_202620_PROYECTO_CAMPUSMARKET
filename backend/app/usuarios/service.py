@@ -2,8 +2,9 @@ import os
 import secrets
 from datetime import datetime, timedelta, timezone
 
-from .errors import AuthRateLimitError, InvalidCredentialsError
 from backend.app.universidades.repository import existe_activa
+
+from .errors import AuthRateLimitError, InvalidCredentialsError
 from .repository import (
     consume_auth_budget,
     create_session,
