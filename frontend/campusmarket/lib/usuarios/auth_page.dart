@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../shared/api_error.dart';
 import 'session_controller.dart';
+import 'universidades_api.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key, this.registroInicial = false});
@@ -20,6 +21,25 @@ class _AuthPageState extends State<AuthPage> {
   bool _ocultar = true;
   String? _error;
   String? _notice;
+  List<Universidad> _universidades = const [];
+  int? _universidadId;
+  bool _cargandoUniversidades = true;
+  String? _errorUniversidades;
+
+  @override
+  void initState() {
+    super.initState();
+    _cargarUniversidades();
+  }
+
+  Future<void> _cargarUniversidades() async {
+    try {
+      final lista = await const UniversidadesApi().listar();
+      if (mounted) setState(() { _universidades = lista; _cargandoUniversidades = false; _errorUniversidades = null; });
+    } catch (_) {
+      if (mounted) setState(() { _cargandoUniversidades = false; _errorUniversidades = 'No se pudo cargar el listado de universidades.'; });
+    }
+  }
 
   @override
   void dispose() {
@@ -40,6 +60,7 @@ class _AuthPageState extends State<AuthPage> {
           nombre: _nombre.text.trim(),
           correo: _correo.text.trim(),
           password: _password.text,
+          universidadId: _universidadId,
         );
         if (!mounted) return;
         _password.clear();
@@ -118,6 +139,22 @@ class _AuthPageState extends State<AuthPage> {
                       decoration: const InputDecoration(labelText: 'Nombre', prefixIcon: Icon(Icons.person_outline)),
                       validator: (value) => (value ?? '').trim().length < 2
                           ? 'Ingresa un nombre de al menos 2 caracteres.' : null,
+                    ),
+                    const SizedBox(height: 16),
+                    DropdownButtonFormField<int>(
+                      key: const Key('auth-universidad'),
+                      initialValue: _universidadId,
+                      isExpanded: true,
+                      decoration: InputDecoration(
+                        labelText: 'Universidad en Cartagena',
+                        helperText: _cargandoUniversidades ? 'Cargando universidades...' : 'Selecciona tu universidad; no exigimos correo institucional.',
+                        errorText: _errorUniversidades,
+                        prefixIcon: const Icon(Icons.school_outlined),
+                      ),
+                      items: _universidades.map((u) => DropdownMenuItem<int>(
+                        value: u.id, child: Text(u.nombre, overflow: TextOverflow.ellipsis),
+                      )).toList(),
+                      onChanged: _busy || _cargandoUniversidades ? null : (id) => setState(() => _universidadId = id),
                     ),
                     const SizedBox(height: 16),
                   ],
