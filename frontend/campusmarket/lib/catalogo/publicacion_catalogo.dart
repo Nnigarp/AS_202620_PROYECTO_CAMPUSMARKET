@@ -46,6 +46,7 @@ class PublicacionCatalogo {
     required this.estado,
     required this.imagenes,
     this.propietarioId,
+    this.universidadId,
     this.estadoPublicacion = 'disponible',
   });
 
@@ -57,6 +58,7 @@ class PublicacionCatalogo {
   final String estado;
   final List<ImagenCatalogo> imagenes;
   final int? propietarioId;
+  final int? universidadId;
   final String estadoPublicacion;
 
   ImagenCatalogo? get imagenPrincipal {
@@ -98,6 +100,7 @@ class PublicacionCatalogo {
       estado: json['estado'] as String,
       imagenes: imagenes,
       propietarioId: json['propietario_id'] as int?,
+      universidadId: json['universidad_id'] as int?,
       estadoPublicacion: json['estado_publicacion'] as String? ?? 'disponible',
     );
   }
