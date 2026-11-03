@@ -1,5 +1,8 @@
 # Incremento 2 — Favoritos privados (2026-11-03)
 
+> **Estado de cierre:** código y pruebas del fork **VERIFICADOS** en `058f63f0882d388e40c85c347e406bb9777cb343`. 126 pruebas backend + 4 de contrato, 33 Flutter y 12 criterios en cada recorrido Chrome escritorio/móvil y Android. **Incremento 2 no desplegado.** Los apartados intermedios conservan resultados fallidos/pendientes de su momento; el cierre al final los actualiza. Checks oficiales todavía no ejecutados: PR no abierto.
+
+
 ## Alcance y revisión
 
 Rama del fork: `feat/incremento-2-20261103`, base oficial/fork comprobada `c7f15748a9a9dfd8b1160ab04fb8ee544a374437`. PR oficial todavía no abierto; requiere autorización. Este corte no despliega, publica imagen ni modifica Dokploy.
@@ -45,3 +48,7 @@ Favoritos queda implementado y probado; **no desplegado**. Los fallos intermedio
 ### Revalidación de disponibilidad al volver a la pantalla
 
 La revisión conjunta detectó que IndexedStack conservaba la pantalla ya visitada: el listado podía quedar obsoleto después de una eliminación/ocultamiento externo. El shell ahora pide revalidación cada vez que se entra a Favoritos; la pantalla oculta resultados antiguos durante carga o error y los muestra tras la consulta vigente. Se añade test de widget con respuesta retenida: durante revalidación no se presenta la tarjeta anterior y, cuando el servidor devuelve lista vacía, desaparece definitivamente. No cambia autenticación, persistencia ni idempotencia. Se valida en el siguiente CI conjunto.
+
+## Cierre conjunto del Incremento 2
+
+Fuente final `058f63f0882d388e40c85c347e406bb9777cb343`: **126 + 4 pytest, 33 Flutter y 12 criterios en cada uno de los tres recorridos reales**, con los seis jobs aprobados. Tabla de runs, correspondencia del SHA, propuesta de PR y límites en [validación conjunta](incremento-2-universidad-visible-2026-11-03.md#validación-conjunta-final--fuente-058f63f). Este corte está probado en el fork y todavía no desplegado.

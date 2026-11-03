@@ -1,5 +1,8 @@
 # Incremento 2 — Universidad declarada visible (2026-11-03)
 
+> **Estado de cierre:** código y pruebas del fork **VERIFICADOS** en `058f63f0882d388e40c85c347e406bb9777cb343`. 126 pruebas backend + 4 de contrato, 33 Flutter y 12 criterios en cada recorrido Chrome escritorio/móvil y Android. **Incremento 2 no desplegado.** Los apartados intermedios conservan resultados fallidos/pendientes de su momento; el cierre al final los actualiza. Checks oficiales todavía no ejecutados: PR no abierto.
+
+
 ## Alcance y estado
 
 Rama del fork `feat/incremento-2-20261103`, basada en oficial/fork `c7f15748a9a9dfd8b1160ab04fb8ee544a374437`. Corte posterior a [Favoritos](incremento-2-favoritos-2026-11-03.md) y [Mensajería](incremento-2-mensajeria-2026-11-03.md). No se modifica producción ni despliegue; PR oficial no abierto sin autorización.
@@ -33,3 +36,30 @@ La corrección compacta está en [`dceb4ea`](https://github.com/Nnigarp/AS_20262
 ### Conservación de información de tarjeta
 
 El corazón reemplazó el icono de modalidad del MVP. La revisión final conserva explícitamente «Venta»/«Alquiler» en la fila de contexto universitario, sin añadir altura ni quitar descripción/acciones. Los cuatro casos de tarjeta también exigen que siga visible la modalidad, evitando perder esa información al incorporar Favoritos.
+
+## Validación conjunta final — fuente 058f63f
+
+Fuente completa: [`058f63f0882d388e40c85c347e406bb9777cb343`](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/058f63f0882d388e40c85c347e406bb9777cb343), rama del fork `feat/incremento-2-20261103`. Oficial y fork master seguían en `c7f15748a9a9dfd8b1160ab04fb8ee544a374437` al comprobar la integración.
+
+| Comprobación | Run del fork | Resultado sobre esa fuente |
+| --- | --- | --- |
+| Backend/MySQL 8.4 | [41587498618](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41587498618) | Ruff, Gitleaks historial/checkout, **126 pytest + 4 contrato**, mutaciones detectadas y checkout limpio |
+| Flutter | [41587498606](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41587498606) | analyze, **33 tests**, 2 mutaciones, builds Web/APK aprobados; toolchain snapshot vacío |
+| Chrome escritorio/móvil y Android | [41587498624](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41587498624) | **Tres jobs aprobados; 12 criterios por plataforma** y capturas/informes con SHA igual; incluye Favoritos, Mensajería, universidad visible y controles previos de seguridad/imágenes |
+| S10 candidato/producción | [41587498665](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41587498665) | Contrato candidato ejecutable; público comparado con contrato/revisión del despliegue vigente, sin exigir rutas nuevas no promovidas |
+
+Los cuatro workflows/seis jobs terminaron en success. Las pruebas reales reportaron el mismo SHA de fuente; no se atribuye este resultado al contenido de una imagen productiva. Los estados intermedios anteriores explican correcciones y no sustituyen este conjunto final.
+
+**Integración:** PR oficial no abierto sin autorización. No hay merge, publicación GHCR, despliegue ni cambios Dokploy. Compose, Dockerfile, variables, servicios, límites, redes, volúmenes y dominio permanecen intactos. Estos tests sintéticos no acreditan carga en los 512 MiB institucionales, backup/restore productivo, revisión humana ni retención jurídica aprobada. La promoción posterior requiere una imagen nueva del incremento, prueba por digest y autorización separada; no se reutiliza una imagen anterior como si contuviera este código.
+
+## Propuesta de PR para revisión (todavía no abierto)
+
+**Título:** feat: favoritos, mensajería privada e identidad universitaria visible
+
+**Base:** `ISCOUTB:master` · **head:** `Nnigarp:feat/incremento-2-20261103` · estado solicitado: **Draft**.
+
+**Descripción preparada:** CampusMarket incorpora favoritos privados persistentes, contacto/conversaciones/mensajes por participante mediante HTTP y universidad declarada en tarjetas/detalle. La identidad siempre procede de sesiones opacas; MySQL impide duplicados y las lecturas se componen en lote. Se preservan publicaciones heredadas y filtros actuales. OpenAPI evoluciona de forma aditiva, con validación separada de candidato y producción en S10.
+
+**Validación para incluir:** los cuatro runs de la tabla anterior sobre fuente `058f63f`; 130 pytest, 33 Flutter y tres recorridos reales aprobados. Documentación canónica: arc42 §5/6/8, C4 L3, aspectos con ocho columnas, IA, README y tres evidencias incrementales enlazadas.
+
+**Límites para incluir:** no despliega, modifica infraestructura ni publica imágenes; mantiene dos contenedores. Checks oficiales y revisión humana pendientes de abrir el PR y revisarlo. Promoción productiva separada, con los riesgos de recuperación ya registrados.

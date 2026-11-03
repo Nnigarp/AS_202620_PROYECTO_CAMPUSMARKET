@@ -732,3 +732,9 @@ Verificación: 13 pruebas locales de contrato/lotes/propiedad/erosión y Ruff ap
 ### Revisión final del Incremento 2
 
 La prueba de tarjeta de 250 px detectó un desbordamiento real; se ajustó la proporción de miniatura en altura compacta, conservando la prueba. También se corrigió caché de disponibilidad al regresar a Favoritos: consulta vigente y ocultación de resultados previos mientras valida, con prueba de respuesta diferida. Se rechaza atribuir aprobación de un run anterior a una fuente modificada; la fuente conjunta se valida nuevamente en CI. Sin despliegue ni revisión humana afirmada.
+
+### Resultado verificado del Incremento 2 — 2026-11-03
+
+Fuente `058f63f0882d388e40c85c347e406bb9777cb343` aprobada en el fork: Ruff/Gitleaks, 126 pytest + 4 contrato, 33 tests Flutter, dos mutaciones del cliente y recorridos reales Chrome escritorio/móvil y Android con 12 criterios por plataforma. S10 verifica candidato y producción con referencias distintas. Se corrigieron fixtures con timers pendientes, esperas de transición, desbordamiento real a 250 px, revalidación de Favoritos y conservación de Venta/Alquiler. No se eliminaron aserciones para aparentar resultados. [Runs, SHA y propuesta de PR](evidencias/incremento-2-universidad-visible-2026-11-03.md#validación-conjunta-final--fuente-058f63f).
+
+Este cierre solo documenta resultados observados por automatización; no declara revisión humana, matrícula verificada, imagen productiva nueva ni despliegue. La apertura del PR oficial requiere autorización conforme a la instrucción del usuario; no se hizo merge.

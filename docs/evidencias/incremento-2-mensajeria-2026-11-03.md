@@ -1,5 +1,8 @@
 # Incremento 2 — Mensajería privada (2026-11-03)
 
+> **Estado de cierre:** código y pruebas del fork **VERIFICADOS** en `058f63f0882d388e40c85c347e406bb9777cb343`. 126 pruebas backend + 4 de contrato, 33 Flutter y 12 criterios en cada recorrido Chrome escritorio/móvil y Android. **Incremento 2 no desplegado.** Los apartados intermedios conservan resultados fallidos/pendientes de su momento; el cierre al final los actualiza. Checks oficiales todavía no ejecutados: PR no abierto.
+
+
 ## Alcance
 
 Rama `feat/incremento-2-20261103` del fork Nnigarp. Corte posterior a [Favoritos probado](incremento-2-favoritos-2026-11-03.md). No se abre PR oficial sin autorización; no se modifica producción, Compose ni imágenes.
@@ -41,3 +44,7 @@ Implementación/documentación: [`3b23980`](https://github.com/Nnigarp/AS_202620
 Contrato de Mensajería aditivo: se conservaron todas las rutas y esquemas previos de Favoritos/MVP. Solo resta registrar el recorrido Android y la validación conjunta del siguiente corte.
 
 **Cierre Mensajería:** Android también aprobó [41585402540](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41585402540) sobre `871865d`: los tres flujos reales completaron 11 criterios. Implementación probada en MySQL, Flutter, Chrome escritorio/móvil y Android; no desplegada. La validación conjunta posterior a universidad visible queda en su evidencia.
+
+## Cierre conjunto del Incremento 2
+
+Fuente final `058f63f0882d388e40c85c347e406bb9777cb343`: **126 + 4 pytest, 33 Flutter y 12 criterios en cada uno de los tres recorridos reales**, con los seis jobs aprobados. Tabla de runs, correspondencia del SHA, propuesta de PR y límites en [validación conjunta](incremento-2-universidad-visible-2026-11-03.md#validación-conjunta-final--fuente-058f63f). Este corte está probado en el fork y todavía no desplegado.
