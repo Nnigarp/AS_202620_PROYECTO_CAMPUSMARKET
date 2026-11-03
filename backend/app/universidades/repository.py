@@ -1,5 +1,6 @@
 """Persistencia del catálogo de instituciones declarado por los usuarios."""
 from backend.app.db import transaction
+
 from .catalogo import listar_instituciones
 
 
