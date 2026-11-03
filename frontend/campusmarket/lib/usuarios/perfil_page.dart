@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../administracion/moderacion_page.dart';
 import '../shared/api_error.dart';
 import 'session_controller.dart';
+import 'universidades_api.dart';
 
 class PerfilPage extends StatefulWidget {
   const PerfilPage({super.key});
@@ -16,11 +17,24 @@ class _PerfilPageState extends State<PerfilPage> {
   bool _busy = false;
   String? _error;
   String? _notice;
+  List<Universidad> _universidades = const [];
+  int? _universidadId;
+  String? _universidadesError;
 
   @override
   void initState() {
     super.initState();
     _actualizar();
+    _cargarUniversidades();
+  }
+
+  Future<void> _cargarUniversidades() async {
+    try {
+      final lista = await const UniversidadesApi().listar();
+      if (mounted) setState(() => _universidades = lista);
+    } catch (_) {
+      if (mounted) setState(() => _universidadesError = 'No se pudo cargar la lista de universidades.');
+    }
   }
 
   @override
@@ -34,6 +48,7 @@ class _PerfilPageState extends State<PerfilPage> {
     try {
       await SessionController.instance.consultarActual();
       _nombre.text = SessionController.instance.usuario?.nombre ?? '';
+      if (mounted) setState(() => _universidadId = SessionController.instance.usuario?.universidadId);
     } catch (error) {
       if (mounted) setState(() => _error = readableError(error));
     } finally {
@@ -45,8 +60,8 @@ class _PerfilPageState extends State<PerfilPage> {
     if (_busy || !_formKey.currentState!.validate()) return;
     setState(() { _busy = true; _error = null; _notice = null; });
     try {
-      await SessionController.instance.editarPerfil(_nombre.text.trim());
-      if (mounted) setState(() => _notice = 'Tu nombre fue actualizado.');
+      await SessionController.instance.editarPerfil(_nombre.text.trim(), universidadId: _universidadId);
+      if (mounted) setState(() => _notice = 'Tu perfil fue actualizado.');
     } catch (error) {
       if (mounted) setState(() => _error = readableError(error));
     } finally {
@@ -123,6 +138,21 @@ class _PerfilPageState extends State<PerfilPage> {
                             maxLength: 80,
                             decoration: const InputDecoration(labelText: 'Nombre'),
                             validator: (value) => (value ?? '').trim().length < 2 ? 'Ingresa al menos 2 caracteres.' : null,
+                          ),
+                          const SizedBox(height: 20),
+                          DropdownButtonFormField<int>(
+                            key: const Key('perfil-universidad'),
+                            initialValue: _universidadId,
+                            isExpanded: true,
+                            decoration: InputDecoration(
+                              labelText: 'Universidad en Cartagena',
+                              helperText: 'Universidad declarada en tu perfil',
+                              errorText: _universidadesError,
+                            ),
+                            items: _universidades.map((u) => DropdownMenuItem<int>(
+                              value: u.id, child: Text(u.nombre, overflow: TextOverflow.ellipsis),
+                            )).toList(),
+                            onChanged: _busy ? null : (id) => setState(() => _universidadId = id),
                           ),
                           const SizedBox(height: 20),
                           FilledButton(
