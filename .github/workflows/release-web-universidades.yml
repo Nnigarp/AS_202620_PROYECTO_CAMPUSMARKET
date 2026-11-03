@@ -69,8 +69,6 @@ jobs:
             if docker exec "$PROJECT-api" python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health',timeout=3)" >/dev/null 2>&1; then break; fi
             sleep 2
           done
-          docker exec "$PROJECT-api" python - <<'PY' || exit 1
-          PY
           docker exec -i "$PROJECT-api" python - <<'PY'
           import json
           from urllib.request import urlopen
@@ -92,15 +90,22 @@ jobs:
           test "$(cat "$RUNNER_TEMP/revision-desplegable")" = "$GITHUB_SHA"
       - name: Comparar OpenAPI de la imagen con el versionado
         run: |
-          docker exec -i "cm-release-$GITHUB_RUN_ID-api" python - <<'PY'
+          docker exec -i "cm-release-$GITHUB_RUN_ID-api" python - <<'PY' > "$RUNNER_TEMP/openapi-desplegable.json"
           import json
           from urllib.request import urlopen
           with urlopen("http://127.0.0.1:8000/openapi.json", timeout=10) as response:
-              current = json.load(response)
-          assert "/universidades" in current["paths"]
-          print(json.dumps(current, sort_keys=True))
+              print(json.dumps(json.load(response), sort_keys=True))
           PY
-        # La comparacion exacta se hace antes de publicar usando el script local.
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          actual = json.loads((Path(os.environ["RUNNER_TEMP"]) / "openapi-desplegable.json").read_text())
+          versioned = json.loads(Path("contracts/openapi-v2.json").read_text())
+          assert "/universidades" in actual["paths"]
+          assert actual == versioned, "OpenAPI de imagen no coincide con contrato versionado"
+          print("Contrato de imagen igual a contracts/openapi-v2.json")
+          PY
       - name: Detener recursos efimeros del ensayo
         if: always()
         run: |
