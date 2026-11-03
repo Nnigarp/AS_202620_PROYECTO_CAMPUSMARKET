@@ -33,11 +33,26 @@ class _CatalogoPageState extends State<CatalogoPage> {
   @override
   void initState() {
     super.initState();
+    SessionController.instance.addListener(_onSessionChanged);
     _cargar();
+  }
+
+  void _onSessionChanged() {
+    if (!mounted) return;
+    if (_miUniversidad) {
+      if (!SessionController.instance.authenticated ||
+          SessionController.instance.usuario?.universidadId == null) {
+        setState(() => _miUniversidad = false);
+      }
+      _cargar();
+    } else {
+      setState(() {});
+    }
   }
 
   @override
   void dispose() {
+    SessionController.instance.removeListener(_onSessionChanged);
     _busquedaController.dispose();
     _precioMinController.dispose();
     _precioMaxController.dispose();
