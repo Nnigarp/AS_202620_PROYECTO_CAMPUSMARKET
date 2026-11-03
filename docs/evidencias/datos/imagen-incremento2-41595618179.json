@@ -1,0 +1,202 @@
+{
+  "run_id": 41595618179,
+  "artifact_id": 13212201894,
+  "artifact_sha256": "1aae2e616f74afa72b3973f96ea8bcb34e1b77e08481378f558eaba64e5c5569",
+  "ensayo": {
+    "project": "cm-i2-41595618179-1",
+    "source": "46ede525602161826b75273fbb12528e739908cc",
+    "image_id": "sha256:3b5357bd997ad391426438b483e0b0794fd76ab92f6e054ce09cf80e15d59f96",
+    "previous_image_id": "sha256:a7d335ba525bc3cd786d90731d47ded9bf90f221fd3b88160d8ca3a666957ce2",
+    "checks": [
+      "seed:imagen-previa-crea-usuarios-publicacion-foto-sinteticos",
+      "upgrade:publicacion-foto-y-sesion-conservadas",
+      "upgrade:favoritos-privados-idempotentes-en-mysql",
+      "upgrade:chat-bandejas-participantes-e-idempotencia",
+      "upgrade:universidad-snapshot-null-y-eliminadas",
+      "upgrade:logout-revoca-sesion-sin-borrar-datos",
+      "upgrade:persistencia-web-assets-y-contrato-exacto",
+      "persist:publicacion-foto-y-sesion-conservadas",
+      "persist:persistencia-web-assets-y-contrato-exacto",
+      "rollback:publicacion-foto-y-sesion-conservadas",
+      "rollback:rollback-api-previa-compatible-con-datos-ampliados",
+      "persist:publicacion-foto-y-sesion-conservadas",
+      "persist:persistencia-web-assets-y-contrato-exacto"
+    ],
+    "resources": [
+      {
+        "phase": "previous",
+        "services": {
+          "api": {
+            "container_id": "b617cd7aa343f349f8169a461a8e48205ecbbed24eb6988ea64a26fdd99b67b6",
+            "image_id": "sha256:a7d335ba525bc3cd786d90731d47ded9bf90f221fd3b88160d8ca3a666957ce2",
+            "memory_limit": 268435456,
+            "memory_peak": 168583168,
+            "mounts": [
+              {
+                "name": "cm-i2-41595618179-1_publication_images",
+                "destination": "/app/backend/uploads"
+              }
+            ]
+          },
+          "db": {
+            "container_id": "744f687ac48d50765bfc5ea78a7a169d4d12a476ca40d49546038255ea64ed38",
+            "image_id": "sha256:0f1a0ccadda3a1734d1db557e203ec58621d56fa248525016e85fe4f631311ec",
+            "memory_limit": 268435456,
+            "memory_peak": 185425920,
+            "mounts": [
+              {
+                "name": "cm-i2-41595618179-1_mysql_data",
+                "destination": "/var/lib/mysql"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "phase": "candidate",
+        "services": {
+          "api": {
+            "container_id": "bf01b280d65db1596cb4a5c43e3bc792d39b8421db9b56ded7f6478b64e8d0d4",
+            "image_id": "sha256:3b5357bd997ad391426438b483e0b0794fd76ab92f6e054ce09cf80e15d59f96",
+            "memory_limit": 268435456,
+            "memory_peak": 169025536,
+            "mounts": [
+              {
+                "name": "cm-i2-41595618179-1_publication_images",
+                "destination": "/app/backend/uploads"
+              }
+            ]
+          },
+          "db": {
+            "container_id": "744f687ac48d50765bfc5ea78a7a169d4d12a476ca40d49546038255ea64ed38",
+            "image_id": "sha256:0f1a0ccadda3a1734d1db557e203ec58621d56fa248525016e85fe4f631311ec",
+            "memory_limit": 268435456,
+            "memory_peak": 185425920,
+            "mounts": [
+              {
+                "name": "cm-i2-41595618179-1_mysql_data",
+                "destination": "/var/lib/mysql"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "phase": "restart",
+        "services": {
+          "api": {
+            "container_id": "bf01b280d65db1596cb4a5c43e3bc792d39b8421db9b56ded7f6478b64e8d0d4",
+            "image_id": "sha256:3b5357bd997ad391426438b483e0b0794fd76ab92f6e054ce09cf80e15d59f96",
+            "memory_limit": 268435456,
+            "memory_peak": 168038400,
+            "mounts": [
+              {
+                "name": "cm-i2-41595618179-1_publication_images",
+                "destination": "/app/backend/uploads"
+              }
+            ]
+          },
+          "db": {
+            "container_id": "744f687ac48d50765bfc5ea78a7a169d4d12a476ca40d49546038255ea64ed38",
+            "image_id": "sha256:0f1a0ccadda3a1734d1db557e203ec58621d56fa248525016e85fe4f631311ec",
+            "memory_limit": 268435456,
+            "memory_peak": 185425920,
+            "mounts": [
+              {
+                "name": "cm-i2-41595618179-1_mysql_data",
+                "destination": "/var/lib/mysql"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "phase": "rollback",
+        "services": {
+          "api": {
+            "container_id": "88c0fe9a412b0a18379d50db811ca206eddfd229d0930f963af6ce16cca0ffd7",
+            "image_id": "sha256:a7d335ba525bc3cd786d90731d47ded9bf90f221fd3b88160d8ca3a666957ce2",
+            "memory_limit": 268435456,
+            "memory_peak": 168808448,
+            "mounts": [
+              {
+                "name": "cm-i2-41595618179-1_publication_images",
+                "destination": "/app/backend/uploads"
+              }
+            ]
+          },
+          "db": {
+            "container_id": "744f687ac48d50765bfc5ea78a7a169d4d12a476ca40d49546038255ea64ed38",
+            "image_id": "sha256:0f1a0ccadda3a1734d1db557e203ec58621d56fa248525016e85fe4f631311ec",
+            "memory_limit": 268435456,
+            "memory_peak": 185425920,
+            "mounts": [
+              {
+                "name": "cm-i2-41595618179-1_mysql_data",
+                "destination": "/var/lib/mysql"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "phase": "restore-candidate",
+        "services": {
+          "api": {
+            "container_id": "81e2a662a24e96c98ef5733d87e61f0032e785e44aba4c219d7415d01cf625c3",
+            "image_id": "sha256:3b5357bd997ad391426438b483e0b0794fd76ab92f6e054ce09cf80e15d59f96",
+            "memory_limit": 268435456,
+            "memory_peak": 168808448,
+            "mounts": [
+              {
+                "name": "cm-i2-41595618179-1_publication_images",
+                "destination": "/app/backend/uploads"
+              }
+            ]
+          },
+          "db": {
+            "container_id": "744f687ac48d50765bfc5ea78a7a169d4d12a476ca40d49546038255ea64ed38",
+            "image_id": "sha256:0f1a0ccadda3a1734d1db557e203ec58621d56fa248525016e85fe4f631311ec",
+            "memory_limit": 268435456,
+            "memory_peak": 185425920,
+            "mounts": [
+              {
+                "name": "cm-i2-41595618179-1_mysql_data",
+                "destination": "/var/lib/mysql"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "passed": true,
+    "base_master": "1c07c2c3c2610455b1dc1c07b4ebc4c2ab362e24",
+    "previous_image": "ghcr.io/nnigarp/campusmarket-web-universidades@sha256:384cbd0c08242d4a6d0343f26fab8521fd027908b639f638b2b9653f0f53dde1",
+    "production_changed": false,
+    "contract_sha256": "da6d8d9322c32bb854f61355c74fe6bf837607140f7fae8aecc589edd97fae30",
+    "web_main_sha256": "1c4de9fd3c813005c4319785765d6e2851d7a8ca75795720519c455832b9ff1f",
+    "packaging_reused_from": "50d9352e5081f8c3e470bd9cda9220d21b14cc0a",
+    "reused_code_ci": [
+      41591551904,
+      41591551934,
+      41591551894,
+      41591551878
+    ],
+    "s10_correction_ci": 41595145649
+  },
+  "publicacion": {
+    "source_sha": "46ede525602161826b75273fbb12528e739908cc",
+    "base_master": "1c07c2c3c2610455b1dc1c07b4ebc4c2ab362e24",
+    "image_id": "sha256:3b5357bd997ad391426438b483e0b0794fd76ab92f6e054ce09cf80e15d59f96",
+    "image": "ghcr.io/nnigarp/campusmarket-web-universidades@sha256:11d92aa9b66f1a4c6b879a6e8cd62cc3c102a37c034a44cbde27442b73694fa7",
+    "runtime_manifest_digest": "sha256:11d92aa9b66f1a4c6b879a6e8cd62cc3c102a37c034a44cbde27442b73694fa7",
+    "config_digest": "sha256:3b5357bd997ad391426438b483e0b0794fd76ab92f6e054ce09cf80e15d59f96",
+    "previous_image": "ghcr.io/nnigarp/campusmarket-web-universidades@sha256:384cbd0c08242d4a6d0343f26fab8521fd027908b639f638b2b9653f0f53dde1",
+    "contract_sha256": "da6d8d9322c32bb854f61355c74fe6bf837607140f7fae8aecc589edd97fae30",
+    "web_main_sha256": "1c4de9fd3c813005c4319785765d6e2851d7a8ca75795720519c455832b9ff1f",
+    "run_id": "41595618179",
+    "production_changed": false,
+    "registry_pull_verified_in_ci": true,
+    "dokploy_pull_verified": false
+  }
+}

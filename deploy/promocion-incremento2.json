@@ -1,0 +1,15 @@
+{
+  "source_sha": "46ede525602161826b75273fbb12528e739908cc",
+  "base_master": "1c07c2c3c2610455b1dc1c07b4ebc4c2ab362e24",
+  "image_id": "sha256:3b5357bd997ad391426438b483e0b0794fd76ab92f6e054ce09cf80e15d59f96",
+  "image": "ghcr.io/nnigarp/campusmarket-web-universidades@sha256:11d92aa9b66f1a4c6b879a6e8cd62cc3c102a37c034a44cbde27442b73694fa7",
+  "runtime_manifest_digest": "sha256:11d92aa9b66f1a4c6b879a6e8cd62cc3c102a37c034a44cbde27442b73694fa7",
+  "config_digest": "sha256:3b5357bd997ad391426438b483e0b0794fd76ab92f6e054ce09cf80e15d59f96",
+  "previous_image": "ghcr.io/nnigarp/campusmarket-web-universidades@sha256:384cbd0c08242d4a6d0343f26fab8521fd027908b639f638b2b9653f0f53dde1",
+  "contract_sha256": "da6d8d9322c32bb854f61355c74fe6bf837607140f7fae8aecc589edd97fae30",
+  "web_main_sha256": "1c4de9fd3c813005c4319785765d6e2851d7a8ca75795720519c455832b9ff1f",
+  "run_id": "41595618179",
+  "production_changed": false,
+  "registry_pull_verified_in_ci": true,
+  "dokploy_pull_verified": false
+}

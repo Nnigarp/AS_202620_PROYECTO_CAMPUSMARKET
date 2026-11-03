@@ -2,12 +2,15 @@ name: Configuracion de promocion Web sin reconstruccion
 
 on:
   push:
-    branches: [ops/produccion-web-digest-20261031]
+    branches: [ops/produccion-web-digest-20261031, ops/promocion-incremento2-20261103]
     paths:
       - deploy/compose.prod.yaml
       - scripts/verificar_promocion_web.py
       - scripts/ensayar_imagen_ghcr.py
       - scripts/verificar_promocion_universidades.py
+      - scripts/verificar_promocion_incremento2.py
+      - deploy/promocion-incremento2.json
+      - docs/evidencias/datos/imagen-incremento2-41595618179.json
       - .github/workflows/promocion-web-config.yml
   pull_request:
     branches: [master]
@@ -15,6 +18,9 @@ on:
       - deploy/compose.prod.yaml
       - scripts/verificar_promocion_web.py
       - scripts/ensayar_imagen_ghcr.py
+      - scripts/verificar_promocion_incremento2.py
+      - deploy/promocion-incremento2.json
+      - docs/evidencias/datos/imagen-incremento2-41595618179.json
       - .github/workflows/promocion-web-config.yml
   workflow_dispatch:
 
@@ -30,10 +36,19 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
-      - name: Recuperar solo el codigo fuente de la imagen aprobada para comparar persistencia
-        run: git fetch --no-tags --depth=1 https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET.git a9b6709a67f8036346acb64b9c2b9849ee355cf2
-      - name: Validar delta exacto e integridad del manifiesto y configuracion OCI
-        run: python3 scripts/verificar_promocion_universidades.py --output artifacts/promocion-web/configuracion.json
+      - name: Validar delta exacto y fuente de la imagen aprobada
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -f deploy/promocion-incremento2.json ]; then
+            source=$(python3 -c 'import json; print(json.load(open("deploy/promocion-incremento2.json"))["source_sha"])')
+            [[ "$source" =~ ^[0-9a-f]{40}$ ]]
+            git fetch --no-tags https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET.git "$source"
+            python3 scripts/verificar_promocion_incremento2.py --registry --output artifacts/promocion-web/configuracion.json
+          else
+            git fetch --no-tags --depth=1 https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET.git a9b6709a67f8036346acb64b9c2b9849ee355cf2
+            python3 scripts/verificar_promocion_universidades.py --output artifacts/promocion-web/configuracion.json
+          fi
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: promocion-web-config-${{ github.run_id }}-${{ github.run_attempt }}
