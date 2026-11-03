@@ -9,6 +9,10 @@ venv
 **/*.env
 backend/uploads
 backend/tests
-frontend
+frontend/campusmarket/.dart_tool
+frontend/campusmarket/build/app
+frontend/campusmarket/build/linux
+frontend/campusmarket/build/windows
+frontend/campusmarket/build/ios
 docs
 artifacts
