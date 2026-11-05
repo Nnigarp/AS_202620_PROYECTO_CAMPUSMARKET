@@ -37,6 +37,12 @@ class SafetyAndCriterionTests(unittest.TestCase):
                     experiment.request(path)
             open_url.assert_not_called()
 
+    def test_seed_never_writes_to_nonempty_catalog(self):
+        with patch.object(experiment, "request", return_value=(200, b'[{"id":1}]', {})), patch.object(experiment, "compose_exec") as execute:
+            with self.assertRaises(RuntimeError):
+                experiment.seed({})
+            execute.assert_not_called()
+
     def test_other_project_container_cannot_become_target(self):
         fake = {"Config": {"Labels": {"com.docker.compose.project": "campusmarket-sistema-2zvsxj", "com.docker.compose.service": "api"}}}
         with patch.dict(os.environ, self.environment(), clear=True), self.assertRaises(RuntimeError):

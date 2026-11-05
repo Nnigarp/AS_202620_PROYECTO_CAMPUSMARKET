@@ -158,6 +158,8 @@ def select_backend(api_data):
 
 
 def seed(state):
+    status, raw, _ = request("/catalogo")
+    require(status == 200 and json.loads(raw) == [], "El catálogo sintético debe empezar vacío y con su esquema inicializado.")
     owner = json.loads(request("/usuarios/registro", {"nombre": "Usuario sintético S14", "correo": "fixture@s14.invalid",
                                                    "password": secrets.token_urlsafe(24)})[1])["id"]
     fixture = '''import os, json
@@ -184,7 +186,7 @@ with transaction() as cursor:
 
 def compose_exec(state, source):
     require(state["project"] == guard(), "Proyecto ajeno.")
-    wrapper = "import json, traceback\ntry:\n exec(compile(" + repr(source) + ", '<s14-fixture>', 'exec'), {})\nexcept Exception as error:\n details={'type':type(error).__name__, 'line':traceback.extract_tb(error.__traceback__)[-1].lineno, 'mysql_code':error.args[0] if error.args and isinstance(error.args[0],int) else None}\n print('S14_SAFE_ERROR='+json.dumps(details))\n"
+    wrapper = "import json, traceback\ntry:\n exec(compile(" + repr(source) + ", '<s14-fixture>', 'exec'), {})\nexcept Exception as error:\n details={'type':type(error).__name__, 'line':traceback.extract_tb(error.__traceback__)[-1].lineno, 'mysql_code':error.__cause__.args[0] if error.__cause__ and error.__cause__.args and isinstance(error.__cause__.args[0],int) else (error.args[0] if error.args and isinstance(error.args[0],int) else None)}\n print('S14_SAFE_ERROR='+json.dumps(details))\n"
     output = command(["docker", "compose", "-p", state["project"], "-f", state["compose"], "exec", "-T", "api", "python", "-"], stdin=wrapper)
     errors = [line for line in output.splitlines() if line.startswith("S14_SAFE_ERROR=")]
     require(not errors, "Fixture sintético rechazado: " + (errors[-1] if errors else ""))
@@ -337,7 +339,9 @@ def run():
     try:
         state = prepare()
         result.update({"orchestration_sha": state["orchestration_sha"], "image_id": state["image_id"],
-                       "mysql_digest": state["mysql_digest"], "dataset": seed(state), "resources_before": snapshot(state)})
+                       "mysql_digest": state["mysql_digest"]})
+        result["dataset"] = seed(state)
+        result["resources_before"] = snapshot(state)
         meta = json.loads((ROOT / "deploy/promocion-incremento2.json").read_text())
         result["main_dart_js_sha256"] = hashlib.sha256(request("/app/main.dart.js")[1]).hexdigest()
         require(result["main_dart_js_sha256"] == meta["web_main_sha256"], "Bundle distinto al publicado.")
