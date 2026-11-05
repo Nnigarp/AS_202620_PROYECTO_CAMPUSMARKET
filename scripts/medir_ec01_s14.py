@@ -184,7 +184,11 @@ with transaction() as cursor:
 
 def compose_exec(state, source):
     require(state["project"] == guard(), "Proyecto ajeno.")
-    return command(["docker", "compose", "-p", state["project"], "-f", state["compose"], "exec", "-T", "api", "python", "-"], stdin=source)
+    wrapper = "import json, traceback\ntry:\n exec(compile(" + repr(source) + ", '<s14-fixture>', 'exec'), {})\nexcept Exception as error:\n details={'type':type(error).__name__, 'line':traceback.extract_tb(error.__traceback__)[-1].lineno, 'mysql_code':error.args[0] if error.args and isinstance(error.args[0],int) else None}\n print('S14_SAFE_ERROR='+json.dumps(details))\n"
+    output = command(["docker", "compose", "-p", state["project"], "-f", state["compose"], "exec", "-T", "api", "python", "-"], stdin=wrapper)
+    errors = [line for line in output.splitlines() if line.startswith("S14_SAFE_ERROR=")]
+    require(not errors, "Fixture sintético rechazado: " + (errors[-1] if errors else ""))
+    return output
 
 
 def snapshot(state):
@@ -258,7 +262,7 @@ def browser_measure():
             page.goto(LOCAL + "/app/", wait_until="domcontentloaded", timeout=90000)
             page.locator("flt-semantics-placeholder").wait_for(state="attached", timeout=90000)
             page.locator("flt-semantics-placeholder").evaluate("element => element.click()")
-            page.get_by_text("Catálogo", exact=True).first.click(timeout=90000, force=True)
+            page.get_by_text("Catálogo", exact=True).or_(page.get_by_label("Catálogo", exact=True)).first.click(timeout=90000, force=True)
             field = page.get_by_role("textbox").first
             button = page.get_by_role("button", name="Buscar en el catálogo", exact=True)
             field.wait_for(timeout=90000)
