@@ -268,14 +268,29 @@ def browser_measure():
             field = page.get_by_role("textbox").first
             button = page.get_by_role("button", name="Buscar en el catálogo", exact=True)
             field.wait_for(timeout=90000)
+            trace = {}
             def search(group):
+                trace.clear()
+                trace.update({"stage": "prepare_focus", "network_offset": len(observed)})
                 query = f"S14-G{group:02}"
                 rectangle = field.bounding_box()
                 require(rectangle is not None, "Buscador fuera del viewport.")
                 page.mouse.click(rectangle["x"] + rectangle["width"] / 2, rectangle["y"] + rectangle["height"] / 2)
+                page.wait_for_function("""() => {
+                  let element = document.activeElement;
+                  while (element && element.shadowRoot && element.shadowRoot.activeElement) element = element.shadowRoot.activeElement;
+                  return element && ['INPUT','TEXTAREA'].includes(element.tagName);
+                }""", timeout=10000)
                 page.keyboard.press("Control+A")
                 page.keyboard.type(query)
-                page.evaluate("() => new Promise(resolve => requestAnimationFrame(() => resolve()))")
+                page.wait_for_function("""expected => {
+                  let element = document.activeElement;
+                  while (element && element.shadowRoot && element.shadowRoot.activeElement) element = element.shadowRoot.activeElement;
+                  return element && element.value === expected;
+                }""", arg=query, timeout=10000)
+                page.evaluate("() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve())))")
+                require(field.input_value() == query, "El buscador aún no refleja el estímulo esperado.")
+                trace["stage"] = "await_response"
                 page.evaluate("() => { window.__s14Start = null; window.addEventListener('pointerdown', () => { window.__s14Start = performance.now(); }, {capture:true, once:true}); }")
                 with page.expect_response(lambda response: urllib.parse.urlsplit(response.url).path == "/catalogo" and urllib.parse.parse_qs(urllib.parse.urlsplit(response.url).query).get("q") == [query], timeout=30000):
                     button.click()
@@ -284,6 +299,7 @@ def browser_measure():
                 response = next((x for x in reversed(observed) if x["query"] == query), None)
                 require(response is not None, "El navegador no ejecutó la consulta esperada.")
                 title = response["first_title"]
+                trace["stage"] = "await_visible_results"
                 results = page.get_by_text("Resultados (100)", exact=True).or_(page.get_by_label("Resultados (100)", exact=True)).first
                 card = page.get_by_role("group", name=re.compile(re.escape(title))).first
                 results.wait_for(state="visible", timeout=30000)
@@ -304,15 +320,21 @@ def browser_measure():
                     sample = search(group)
                 except (PlaywrightError, RuntimeError, ValueError, KeyError, TypeError) as error:
                     sample = {"query": f"S14-G{group:02}", "ms": round((time.perf_counter()-start)*1000, 3),
-                              "valid": False, "error_type": type(error).__name__}
+                              "valid": False, "error_type": type(error).__name__, "error_stage": trace.get("stage"),
+                              "observed_queries": [x["query"] for x in observed[trace.get("network_offset", 0):]]}
                 sample["index"] = group
                 samples.append(sample)
             page.screenshot(path=str(OUT / "chrome-final.png"))
             result = summarize(samples)
+            if any(x.get("error_stage") == "prepare_focus" for x in samples):
+                result["outcome"] = "NO CONCLUYENTE: falló preparación del observador"
             result.update({"browser": browser.version, "playwright": importlib.metadata.version("playwright"),
                            "viewport": [1440, 1600], "warmup": 1, "production_api_network_allowed": False,
                            "mapped_api_requests": len(observed), "blocked_requests": blocked,
-                           "page_errors": browser_errors, "measurement": "Desde pointerdown del botón hasta grupo con título y contador visibles y dos animation frames"})
+                           "page_errors": browser_errors,
+                           "api_queries": [{"query": x["query"], "status": x["status"], "returned": len(x["ids"])} for x in observed],
+                           "preparation": "Foco nativo y valor exacto verificados antes de pointerdown; dos frames de sincronización fuera del cronómetro; sin reintentos",
+                           "measurement": "Desde pointerdown del botón hasta grupo con título y contador visibles y dos animation frames"})
             return result
         except Exception:
             page.screenshot(path=str(OUT / "chrome-diagnostico.png"))
