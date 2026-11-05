@@ -37,6 +37,11 @@ class SafetyAndCriterionTests(unittest.TestCase):
                     experiment.request(path)
             open_url.assert_not_called()
 
+    def test_other_project_container_cannot_become_target(self):
+        fake = {"Config": {"Labels": {"com.docker.compose.project": "campusmarket-sistema-2zvsxj", "com.docker.compose.service": "api"}}}
+        with patch.dict(os.environ, self.environment(), clear=True), self.assertRaises(RuntimeError):
+            experiment.select_backend(fake)
+
     def test_nine_of_ten_can_pass_with_p95_above_budget(self):
         samples = [{"ms": 100, "valid": True} for _ in range(9)] + [{"ms": 5000, "valid": True}]
         result = experiment.summarize(samples)

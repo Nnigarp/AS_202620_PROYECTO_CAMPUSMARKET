@@ -2,6 +2,7 @@
 import argparse
 import hashlib
 import importlib.metadata
+import ipaddress
 import json
 import math
 import os
@@ -24,6 +25,7 @@ RUNTIME = "46ede525602161826b75273fbb12528e739908cc"
 IMAGE = "ghcr.io/nnigarp/campusmarket-web-universidades@sha256:11d92aa9b66f1a4c6b879a6e8cd62cc3c102a37c034a44cbde27442b73694fa7"
 LOCAL = "http://127.0.0.1:8000"
 PUBLIC_HOST = "campusmarket.iscoutb.dev"
+BACKEND = None
 OUT = ROOT / "artifacts/s14"
 
 
@@ -61,8 +63,9 @@ def compose(state, *args):
 
 def request(path, payload=None):
     require(path.startswith("/") and not path.startswith("//") and "://" not in path, "Ruta no local rechazada.")
+    require(BACKEND is not None, "La API debe identificarse en el proyecto privado antes de HTTP.")
     data = json.dumps(payload).encode() if payload is not None else None
-    req = urllib.request.Request(LOCAL + path, data=data,
+    req = urllib.request.Request(BACKEND + path, data=data,
                                  headers={"Content-Type": "application/json"} if data else {})
     try:
         response = urllib.request.urlopen(req, timeout=30)
@@ -110,7 +113,6 @@ def prepare():
         require(not volume.get("external") and volume["name"].startswith(project + "_"), "Volumen ajeno.")
     require(len(config["networks"]) == 1 and not config["networks"]["default"].get("external"), "Red externa rechazada.")
     config["networks"]["default"]["internal"] = True
-    config["services"]["api"]["ports"] = [{"target": 8000, "published": "8000", "host_ip": "127.0.0.1", "protocol": "tcp"}]
     config["services"]["api"]["environment"]["CAMPUSMARKET_S14_SYNTHETIC"] = "true"
     mysql = os.getenv("S14_MYSQL_DIGEST", "mysql:8.4")
     require(mysql == "mysql:8.4" or re.fullmatch(r"mysql@sha256:[0-9a-f]{64}", mysql), "Referencia MySQL inválida.")
@@ -128,6 +130,9 @@ def prepare():
     require(command(["docker", "run", "--rm", "--network", "none", "--entrypoint", "cat", IMAGE, "/app/REVISION"]) == RUNTIME,
             "Fichero REVISION distinto.")
     compose(state, "up", "-d", "--no-build", "--wait", "--wait-timeout", "180")
+    api_id = compose(state, "ps", "-q", "api")
+    api_data = json.loads(command(["docker", "inspect", api_id]))[0]
+    select_backend(api_data)
     status, raw, headers = request("/health")
     require(status == 200 and json.loads(raw)["status"] == "ok", "Health sintético falló.")
     require(headers.get("X-CampusMarket-Revision") == RUNTIME, "Header distinto.")
@@ -135,6 +140,21 @@ def prepare():
     mysql_data = json.loads(command(["docker", "image", "inspect", mysql]))[0]
     state["mysql_digest"] = mysql_data["RepoDigests"][0]
     return state
+
+
+
+def select_backend(api_data):
+    global BACKEND
+    labels = api_data["Config"]["Labels"]
+    require(labels["com.docker.compose.project"] == guard(), "API ajena al proyecto: rechazada.")
+    require(labels["com.docker.compose.service"] == "api", "Servicio distinto a API.")
+    networks = api_data["NetworkSettings"]["Networks"]
+    require(list(networks) == [guard() + "_default"], "Red ajena o adicional rechazada.")
+    require(not api_data["HostConfig"]["PortBindings"], "No debe publicar puertos del ensayo.")
+    address = networks[guard() + "_default"]["IPAddress"]
+    require(ipaddress.ip_address(address).version == 4 and ipaddress.ip_address(address).is_private,
+            "Dirección no privada rechazada.")
+    BACKEND = "http://" + address + ":8000"
 
 
 def seed(state):
@@ -216,11 +236,9 @@ def browser_measure():
         def route_handler(route):
             req = route.request
             url = urllib.parse.urlsplit(req.url)
-            if url.hostname == "127.0.0.1" and url.port == 8000:
-                route.continue_()
-            elif url.hostname == PUBLIC_HOST and req.method in {"GET", "OPTIONS", "HEAD"}:
+            if ((url.hostname == "127.0.0.1" and url.port == 8000) or url.hostname == PUBLIC_HOST) and req.method in {"GET", "OPTIONS", "HEAD"}:
                 headers = {k: v for k, v in req.headers.items() if k.lower() not in {"host", "authorization", "cookie", "content-length"}}
-                target = LOCAL + url.path + ("?" + url.query if url.query else "")
+                target = BACKEND + url.path + ("?" + url.query if url.query else "")
                 response = context.request.fetch(target, method=req.method, headers=headers, max_redirects=0)
                 if url.path == "/catalogo" and req.method == "GET":
                     rows = response.json()
@@ -309,7 +327,7 @@ def run():
               "runtime_source_sha": RUNTIME, "api_image": IMAGE, "run_id": os.environ.get("GITHUB_RUN_ID"),
               "run_attempt": os.environ.get("GITHUB_RUN_ATTEMPT"), "python": platform.python_version(),
               "runner_os": platform.platform(), "runner_cpus": os.cpu_count(), "production_changed": False,
-              "network": "Docker interno; HTTP loopback sin latencia inyectada; API Flutter remapeada antes de salir; CDN estático en warm-up",
+              "network": "Runner a bridge Docker interna, sin puertos publicados ni latencia inyectada; orígenes Chrome/API remapeados al contenedor propio; CDN estático en warm-up",
               "dataset_profile": "1000 filas, 10 grupos de 100, sin fotos ni afiliación declarada; no representa todos los perfiles de datos",
               "execution_complete": False}
     try:
