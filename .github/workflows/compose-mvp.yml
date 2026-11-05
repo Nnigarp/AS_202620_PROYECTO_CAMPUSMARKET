@@ -2,7 +2,7 @@ name: Compose y persistencia del MVP
 
 on:
   push:
-    branches: [master, mvp-autenticacion-producto]
+    branches: [master, mvp-autenticacion-producto, eval/s14-ec01-20261105]
   pull_request:
     branches: [master]
   workflow_dispatch:
@@ -12,6 +12,7 @@ permissions:
 
 jobs:
   compose:
+    if: github.ref != 'refs/heads/eval/s14-ec01-20261105'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
@@ -120,3 +121,52 @@ jobs:
         run: |
           docker compose --project-name "$CAMPUSMARKET_CI_PROJECT" --env-file "$RUNNER_TEMP/campusmarket-compose.env" -f deploy/compose.lab.yaml -f deploy/compose.local.yaml down -v
           rm -f "$RUNNER_TEMP/campusmarket-compose.env"
+
+  s14-ec01:
+    if: github.ref == 'refs/heads/eval/s14-ec01-20261105' || (github.event_name == 'pull_request' && startsWith(github.head_ref, 'eval/s14-'))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.12"
+      - name: Herramientas y controles del experimento, sin suites funcionales repetidas
+        run: |
+          python -m pip install -r backend/requirements-dev.txt playwright==1.56.0 ruff==0.16.9
+          google-chrome --version
+          ruff check scripts/medir_ec01_s14.py scripts/test_medir_ec01_s14.py
+          python -m unittest scripts.test_medir_ec01_s14 -v
+      - name: Reutilizar auditoría Gitleaks del historial acotado y checkout
+        run: |
+          cm_gitleaks_dir=$(mktemp -d "$RUNNER_TEMP/campusmarket-gitleaks.XXXXXX")
+          trap 'rm -rf "$cm_gitleaks_dir"' EXIT
+          curl --fail --location --retry 3 --output "$cm_gitleaks_dir/gitleaks.tar.gz" "https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz"
+          printf '%s  %s\n' '551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb' "$cm_gitleaks_dir/gitleaks.tar.gz" | sha256sum --check -
+          tar --extract --gzip --file "$cm_gitleaks_dir/gitleaks.tar.gz" --directory "$cm_gitleaks_dir" gitleaks
+          "$cm_gitleaks_dir/gitleaks" git . --redact --config .gitleaks.toml --log-opts="bfe3222c1e29dddc404560cdd9d61095d4bdb3fe..HEAD" --report-format json --report-path "$RUNNER_TEMP/campusmarket-secretos-historial.json"
+          "$cm_gitleaks_dir/gitleaks" dir . --redact --config .gitleaks.toml --report-format json --report-path "$RUNNER_TEMP/campusmarket-secretos-checkout.json"
+
+          mkdir -p artifacts/s14
+          python - <<'PY_SUMMARY'
+          import json, os
+          from pathlib import Path
+          root = Path(os.environ['RUNNER_TEMP'])
+          report = {'gitleaks': '8.30.1', 'history_range': 'bfe3222c1e29dddc404560cdd9d61095d4bdb3fe..HEAD', 'history_findings': len(json.loads((root/'campusmarket-secretos-historial.json').read_text())), 'checkout_findings': len(json.loads((root/'campusmarket-secretos-checkout.json').read_text())), 'entire_history_verified': False}
+          Path('artifacts/s14/secretos.json').write_text(json.dumps(report, indent=2)+'\n')
+          PY_SUMMARY
+      - name: Medir imagen inmutable y Chrome contra MySQL sintético bajo cuota
+        run: python scripts/medir_ec01_s14.py run
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: s14-ec01-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/s14/
+          if-no-files-found: error
+          retention-days: 90
+      - name: Retirar exclusivamente el proyecto sintético de este run
+        if: always()
+        run: python scripts/medir_ec01_s14.py cleanup
