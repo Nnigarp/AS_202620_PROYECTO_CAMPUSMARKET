@@ -270,18 +270,22 @@ def browser_measure():
             field.wait_for(timeout=90000)
             def search(group):
                 query = f"S14-G{group:02}"
-                field.fill(query)
-                begin = page.evaluate("performance.now()")
-                button.click()
-                page.wait_for_timeout(20)
-                deadline = time.monotonic() + 30
-                while not any(x["query"] == query for x in observed) and time.monotonic() < deadline:
-                    page.wait_for_timeout(20)
+                rectangle = field.bounding_box()
+                require(rectangle is not None, "Buscador fuera del viewport.")
+                page.mouse.click(rectangle["x"] + rectangle["width"] / 2, rectangle["y"] + rectangle["height"] / 2)
+                page.keyboard.press("Control+A")
+                page.keyboard.type(query)
+                page.evaluate("() => new Promise(resolve => requestAnimationFrame(() => resolve()))")
+                page.evaluate("() => { window.__s14Start = null; window.addEventListener('pointerdown', () => { window.__s14Start = performance.now(); }, {capture:true, once:true}); }")
+                with page.expect_response(lambda response: urllib.parse.urlsplit(response.url).path == "/catalogo" and urllib.parse.parse_qs(urllib.parse.urlsplit(response.url).query).get("q") == [query], timeout=30000):
+                    button.click()
+                begin = page.evaluate("window.__s14Start")
+                require(isinstance(begin, (int, float)), "No se observó pointerdown del usuario.")
                 response = next((x for x in reversed(observed) if x["query"] == query), None)
                 require(response is not None, "El navegador no ejecutó la consulta esperada.")
                 title = response["first_title"]
                 results = page.get_by_text("Resultados (100)", exact=True).or_(page.get_by_label("Resultados (100)", exact=True)).first
-                card = page.get_by_text(title, exact=True).or_(page.get_by_label(title, exact=True)).first
+                card = page.get_by_role("group", name=re.compile(re.escape(title))).first
                 results.wait_for(state="visible", timeout=30000)
                 card.wait_for(state="visible", timeout=30000)
                 rectangle = card.bounding_box()
@@ -308,11 +312,12 @@ def browser_measure():
             result.update({"browser": browser.version, "playwright": importlib.metadata.version("playwright"),
                            "viewport": [1440, 1600], "warmup": 1, "production_api_network_allowed": False,
                            "mapped_api_requests": len(observed), "blocked_requests": blocked,
-                           "page_errors": browser_errors, "measurement": "Desde antes del click hasta título/count semánticos visibles y dos animation frames"})
+                           "page_errors": browser_errors, "measurement": "Desde pointerdown del botón hasta grupo con título y contador visibles y dos animation frames"})
             return result
         except Exception:
             page.screenshot(path=str(OUT / "chrome-diagnostico.png"))
             (OUT / "chrome-semantica.txt").write_text(page.locator("body").aria_snapshot())
+            (OUT / "chrome-red.json").write_text(json.dumps({"requests": observed, "blocked": blocked, "page_errors": browser_errors}, indent=2))
             raise
         finally:
             browser.close()

@@ -158,7 +158,28 @@ jobs:
           report = {'gitleaks': '8.30.1', 'history_range': 'bfe3222c1e29dddc404560cdd9d61095d4bdb3fe..HEAD', 'history_findings': len(json.loads((root/'campusmarket-secretos-historial.json').read_text())), 'checkout_findings': len(json.loads((root/'campusmarket-secretos-checkout.json').read_text())), 'entire_history_verified': False}
           Path('artifacts/s14/secretos.json').write_text(json.dumps(report, indent=2)+'\n')
           PY_SUMMARY
+      - name: Distinguir medición nueva de actualización documental con código idéntico
+        id: observacion
+        shell: bash
+        run: |
+          python - <<'PY_REUSE'
+          import hashlib, json, os, re, subprocess
+          from pathlib import Path
+          path = Path('docs/evidencias/datos/ec01-s14-2026-11-05.json')
+          reuse = path.exists()
+          if reuse:
+              data = json.loads(path.read_text())
+              sha = data['orchestration_sha']
+              assert re.fullmatch(r'[0-9a-f]{40}', sha)
+              assert data['execution_complete'] and len(data['http']['samples']) == len(data['browser']['samples']) == 10
+              subprocess.run(['git', 'diff', '--exit-code', sha, 'HEAD', '--', 'scripts/medir_ec01_s14.py', 'scripts/test_medir_ec01_s14.py', '.github/workflows/compose-mvp.yml', 'deploy/compose.prod.yaml', 'backend/app', 'frontend/campusmarket/lib', 'contracts'], check=True)
+              Path('artifacts/s14').mkdir(parents=True, exist_ok=True)
+              Path('artifacts/s14/reutilizacion.json').write_text(json.dumps({'documentation_sha': os.environ['GITHUB_SHA'], 'measured_sha': sha, 'measured_run': data['run_id'], 'result_sha256': hashlib.sha256(path.read_bytes()).hexdigest(), 'same_experiment_and_functional_code': True, 'measurement_executed_now': False}, indent=2)+'\n')
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              print('reuse=' + str(reuse).lower(), file=output)
+          PY_REUSE
       - name: Medir imagen inmutable y Chrome contra MySQL sintético bajo cuota
+        if: steps.observacion.outputs.reuse != 'true'
         run: python scripts/medir_ec01_s14.py run
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
