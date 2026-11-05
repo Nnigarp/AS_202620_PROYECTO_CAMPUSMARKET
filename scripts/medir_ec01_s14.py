@@ -232,8 +232,8 @@ def http_measure():
 
 def browser_measure():
     from playwright.sync_api import Error as PlaywrightError
-    from playwright.sync_api import sync_playwright
-    observed, blocked, browser_errors = [], [], []
+    from playwright.sync_api import expect, sync_playwright
+    observed, blocked, browser_errors, started_queries = [], [], [], []
     with sync_playwright() as pw:
         browser = pw.chromium.launch(channel="chrome", headless=True,
                                      args=["--disable-dev-shm-usage", "--use-angle=swiftshader", "--enable-unsafe-swiftshader"])
@@ -245,6 +245,8 @@ def browser_measure():
             if ((url.hostname == "127.0.0.1" and url.port == 8000) or url.hostname == PUBLIC_HOST) and req.method in {"GET", "OPTIONS", "HEAD"}:
                 headers = {k: v for k, v in req.headers.items() if k.lower() not in {"host", "authorization", "cookie", "content-length"}}
                 target = BACKEND + url.path + ("?" + url.query if url.query else "")
+                if url.path == "/catalogo" and req.method == "GET":
+                    started_queries.append(urllib.parse.parse_qs(url.query).get("q", [""])[0])
                 response = context.request.fetch(target, method=req.method, headers=headers, max_redirects=0)
                 if url.path == "/catalogo" and req.method == "GET":
                     rows = response.json()
@@ -268,10 +270,11 @@ def browser_measure():
             field = page.get_by_role("textbox").first
             button = page.get_by_role("button", name="Buscar en el catálogo", exact=True)
             field.wait_for(timeout=90000)
+            page.get_by_text("Resultados (1000)", exact=True).or_(page.get_by_label("Resultados (1000)", exact=True)).first.wait_for(state="visible", timeout=90000)
             trace = {}
             def search(group):
                 trace.clear()
-                trace.update({"stage": "prepare_focus", "network_offset": len(observed)})
+                trace.update({"stage": "prepare_focus", "network_offset": len(observed), "started_offset": len(started_queries)})
                 query = f"S14-G{group:02}"
                 rectangle = field.bounding_box()
                 require(rectangle is not None, "Buscador fuera del viewport.")
@@ -288,8 +291,10 @@ def browser_measure():
                   while (element && element.shadowRoot && element.shadowRoot.activeElement) element = element.shadowRoot.activeElement;
                   return element && element.value === expected;
                 }""", arg=query, timeout=10000)
-                page.evaluate("() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve())))")
-                require(field.input_value() == query, "El buscador aún no refleja el estímulo esperado.")
+                page.keyboard.press("Tab")
+                page.wait_for_function("expected => [...document.querySelectorAll('input')].some(element => element.value === expected)", arg=query, timeout=10000)
+                expect(field).to_have_value(query, timeout=10000)
+                require(len(started_queries) == trace["started_offset"], "Se consultó antes del estímulo medido.")
                 trace["stage"] = "await_response"
                 page.evaluate("() => { window.__s14Start = null; window.addEventListener('pointerdown', () => { window.__s14Start = performance.now(); }, {capture:true, once:true}); }")
                 with page.expect_response(lambda response: urllib.parse.urlsplit(response.url).path == "/catalogo" and urllib.parse.parse_qs(urllib.parse.urlsplit(response.url).query).get("q") == [query], timeout=30000):
@@ -333,7 +338,7 @@ def browser_measure():
                            "mapped_api_requests": len(observed), "blocked_requests": blocked,
                            "page_errors": browser_errors,
                            "api_queries": [{"query": x["query"], "status": x["status"], "returned": len(x["ids"])} for x in observed],
-                           "preparation": "Foco nativo y valor exacto verificados antes de pointerdown; dos frames de sincronización fuera del cronómetro; sin reintentos",
+                           "preparation": "Foco nativo, edición confirmada con Tab y valor semántico exacto verificados antes de pointerdown; ninguna consulta en preparación; sin reintentos",
                            "measurement": "Desde pointerdown del botón hasta grupo con título y contador visibles y dos animation frames"})
             return result
         except Exception:
