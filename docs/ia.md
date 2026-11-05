@@ -764,3 +764,18 @@ Verificación posterior de la promoción: [41597711177](https://github.com/Nniga
 | Fecha | Herramienta / uso | Propuesta aceptada y verificación | Propuesta rechazada o corregida y razón | Resultado verificable |
 |---|---|---|---|---|
 | 2026-11-03 | ChatGPT — revisión del log Dokploy, capturas de aceptación y documentación | Conservar digest/sha de imagen, distinguir CI de observación pública y documentar catálogo, favoritos y conversación bidireccional; comprobar contra configuración y PR #85–#88 | Rechazar declarar backup restaurable, rollback productivo o S10 posdespliegue sin prueba; no adjuntar conversaciones ni credenciales reales; no rehacer ADR ni reescribir historia S1–S13 | [Cierre productivo observado](evidencias/cierre-productivo-incremento2-2026-11-03.md), [arc42 §7](arc42/07-vista-despliegue.md), [matriz](aspectos.md). La revisión y aceptación final del equipo/docente no se presumen. |
+
+## 2026-11-05 — S14, EC-01 y ATAM reducido
+
+Herramienta: ChatGPT/Codex con GitHub, Python, Docker/Compose y Chrome/Playwright en runners aislados. Base `d5b8b500e309e5997a6063f20b6c7da6682ef785`; orquestador medido `e4f5c1026206a86c2df7d07f7a16479c807dd34b`; imagen/runtime `46ede525602161826b75273fbb12528e739908cc`. [Datos, intentos y análisis](evidencias/evidencia-s14-ec01-2026-11-05.md); [run 42126089440](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/42126089440). No se afirma revisión humana ni aprobación de pares.
+
+| Propuesta | Decisión y motivo técnico | Verificación / límite |
+| --- | --- | --- |
+| Reutilizar imagen integrada por digest y cotejar código funcional | Aceptada: evita reconstrucción e identifica exactamente el runtime evaluado | OCI/REVISION/header, Image ID y bundle; diff funcional vacío |
+| Medir 1.000 filas reales sin tocar datos institucionales | Aceptada: MySQL sintético exclusivo, red interna, dos contenedores con límites e identidades propias | SQL/HTTP verifican 1.000 IDs; cuatro series HTTP 10/10; no experiencia pública |
+| Acceso loopback del montaje inicial y carga SQL antes de inicializar propietario | Corregida: observador usa solo IP privada identificada por etiquetas; inicializa catálogo vacío mediante API antes de fixture | Intentos fallidos conservados; ninguna cifra de esos montajes se presenta como medición válida |
+| Entrada DOM y equiparar timeout con latencia del backend | Corregida: eventos de ratón/teclado, verificación de foco/valor y trazas distinguen preparación y filtro recibido | El resultado visible queda NO CONCLUYENTE; se conserva el 6/10 inicial y no se recortan muestras para fabricar éxito |
+| Sustituir 9/10 por p95, reutilizar el verde S9 como prueba pública, o añadir caché/microservicio desde el ejemplo de clase | Rechazada: cambiaría escenario o atribuiría una mejora causal no contrastada | Umbral original, percentil complementario y límites declarados; sin cambio funcional ni ADR nuevo |
+| Inventar pares, cerrar backups/rollback o considerar que CI verde acredita aptitud total | Rechazada: faltan fuentes auténticas y evidencia operativa independiente | 6/8 acreditados; dos criterios de pares pendientes; riesgos S13/productivos conservados |
+
+La documentación se actualizó después de ejecutar y verificar los artefactos, separando SHA base, medido/runtime y cierre documental. CI documental solo reutiliza si experimento, workflow y código funcional son idénticos; ejecuta las guardas/Ruff/Gitleaks y declara que no repitió la medición. No se modificaron Dokploy, producción, ADR aceptados ni modelos C4; no hubo merge ni Deploy.
