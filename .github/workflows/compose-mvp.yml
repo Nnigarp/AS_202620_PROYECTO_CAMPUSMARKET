@@ -52,6 +52,7 @@ jobs:
         run: |
           python scripts/verificar_compose_mvp.py --project "$CAMPUSMARKET_CI_PROJECT" --env-file "$RUNNER_TEMP/campusmarket-compose.env" --revision "$GITHUB_SHA"
       - name: Verificar identidad de imagen probada
+        id: identidad
         shell: bash
         run: |
           set -euo pipefail
@@ -66,6 +67,9 @@ jobs:
             images -q api)"
 
           test -n "$IMAGE_ID"
+          # Compose puede devolver 64 hex sin prefijo; docker save exige una referencia válida.
+          IMAGE_ID="$(docker image inspect "$IMAGE_ID" --format '{{.Id}}')"
+          [[ "$IMAGE_ID" =~ ^sha256:[0-9a-f]{64}$ ]]
 
           OCI="$(docker image inspect "$IMAGE_ID" \
             --format '{{ index .Config.Labels "org.opencontainers.image.revision" }}')"
@@ -75,8 +79,9 @@ jobs:
 
           test "$OCI" = "$EXPECTED"
           test "$FILE" = "$EXPECTED"
+          printf 'image_id=%s\n' "$IMAGE_ID" >> "$GITHUB_OUTPUT"
 
-          echo "Imagen Compose verificada para SHA=$EXPECTED"
+          echo "Imagen Compose verificada: $IMAGE_ID para SHA=$EXPECTED"
       - name: Verificar diff y ausencia de cambios en tracked files
         run: |
           git diff --check bfe3222c1e29dddc404560cdd9d61095d4bdb3fe HEAD
@@ -84,19 +89,17 @@ jobs:
       - name: Exportar imagen Compose verificada
         if: github.repository == 'ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET' && (github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref == 'refs/heads/master'))
         shell: bash
+        env:
+          IMAGE_ID: ${{ steps.identidad.outputs.image_id }}
         run: |
           set -euo pipefail
-          IMAGE_ID="$(docker compose \
-            --project-name "$CAMPUSMARKET_CI_PROJECT" \
-            --env-file "$RUNNER_TEMP/campusmarket-compose.env" \
-            -f deploy/compose.lab.yaml \
-            -f deploy/compose.local.yaml \
-            images -q api)"
-
-          test -n "$IMAGE_ID"
+          [[ "$IMAGE_ID" =~ ^sha256:[0-9a-f]{64}$ ]]
+          test "$(docker image inspect "$IMAGE_ID" --format '{{.Id}}')" = "$IMAGE_ID"
           mkdir -p "$RUNNER_TEMP/campusmarket-release"
           docker save "$IMAGE_ID" -o "$RUNNER_TEMP/campusmarket-release/api.tar"
           printf '%s\n' "$GITHUB_SHA" > "$RUNNER_TEMP/campusmarket-release/source-sha.txt"
+          printf '%s\n' "$IMAGE_ID" > "$RUNNER_TEMP/campusmarket-release/image-id.txt"
+          (cd "$RUNNER_TEMP/campusmarket-release" && sha256sum api.tar > api.tar.sha256)
 
       - name: Conservar imagen verificada para publicacion posterior
         if: github.repository == 'ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET' && (github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref == 'refs/heads/master'))
@@ -165,16 +168,22 @@ jobs:
           python - <<'PY_REUSE'
           import hashlib, json, os, re, subprocess
           from pathlib import Path
-          path = Path('docs/evidencias/datos/ec01-s14-2026-11-05.json')
-          reuse = path.exists()
-          if reuse:
+          reuse = False
+          for path in sorted(Path('docs/evidencias/datos').glob('ec01-s14-*.json')):
               data = json.loads(path.read_text())
+              if 'orchestration_sha' not in data:
+                  continue
               sha = data['orchestration_sha']
               assert re.fullmatch(r'[0-9a-f]{40}', sha)
               assert data['execution_complete'] and len(data['http']['samples']) == len(data['browser']['samples']) == 10
-              subprocess.run(['git', 'diff', '--exit-code', sha, 'HEAD', '--', 'scripts/medir_ec01_s14.py', 'scripts/test_medir_ec01_s14.py', '.github/workflows/compose-mvp.yml', 'deploy/compose.prod.yaml', 'backend/app', 'frontend/campusmarket/lib', 'contracts'], check=True)
+              comparison = subprocess.run(['git', 'diff', '--quiet', sha, 'HEAD', '--', 'scripts/medir_ec01_s14.py', 'scripts/test_medir_ec01_s14.py', '.github/workflows/compose-mvp.yml', 'deploy/compose.prod.yaml', 'backend/app', 'frontend/campusmarket/lib', 'contracts'])
+              if comparison.returncode == 1:
+                  continue  # Código distinto: exige una nueva medición, no reutiliza la anterior.
+              comparison.check_returncode()
+              reuse = True
               Path('artifacts/s14').mkdir(parents=True, exist_ok=True)
               Path('artifacts/s14/reutilizacion.json').write_text(json.dumps({'documentation_sha': os.environ['GITHUB_SHA'], 'measured_sha': sha, 'measured_run': data['run_id'], 'result_sha256': hashlib.sha256(path.read_bytes()).hexdigest(), 'same_experiment_and_functional_code': True, 'measurement_executed_now': False}, indent=2)+'\n')
+              break
           with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
               print('reuse=' + str(reuse).lower(), file=output)
           PY_REUSE
