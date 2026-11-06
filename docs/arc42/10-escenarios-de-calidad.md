@@ -98,6 +98,8 @@ usa 1000 filas MySQL reales, HTTP loopback y Compose bajo cuota:
 Las muestras y límites están en el [complemento final S9](../evidencias/evidencia-s9-2026-10-01.md#17-complemento-final-de-auditoria-s9--4-de-octubre-de-2026).
 No se atribuyen a este SHA valores históricos ni latencia de navegador público.
 
+[Evaluación S14 de la imagen vigente](../evidencias/evidencia-s14-ec01-2026-11-05.md): HTTP/MySQL con 1.000 filas verificado en CI; experiencia completa en navegador NO CONCLUYENTE. Se conserva el umbral original y la distinción de entorno.
+
 ---
 
 # EC-02 - Protección de publicaciones

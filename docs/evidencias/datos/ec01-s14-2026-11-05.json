@@ -1,0 +1,376 @@
+{
+  "started_utc": "2026-11-05T23:00:06.503093+00:00",
+  "official_base_sha": "d5b8b500e309e5997a6063f20b6c7da6682ef785",
+  "runtime_source_sha": "46ede525602161826b75273fbb12528e739908cc",
+  "api_image": "ghcr.io/nnigarp/campusmarket-web-universidades@sha256:11d92aa9b66f1a4c6b879a6e8cd62cc3c102a37c034a44cbde27442b73694fa7",
+  "run_id": "42126089440",
+  "run_attempt": "1",
+  "python": "3.12.16",
+  "runner_os": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+  "runner_cpus": 4,
+  "production_changed": false,
+  "network": "Runner a bridge Docker interna, sin puertos publicados ni latencia inyectada; orígenes Chrome/API remapeados al contenedor propio; CDN estático en warm-up",
+  "dataset_profile": "1000 filas, 10 grupos de 100, sin fotos ni afiliación declarada; no representa todos los perfiles de datos",
+  "execution_complete": true,
+  "orchestration_sha": "e4f5c1026206a86c2df7d07f7a16479c807dd34b",
+  "image_id": "sha256:3b5357bd997ad391426438b483e0b0794fd76ab92f6e054ce09cf80e15d59f96",
+  "mysql_digest": "mysql@sha256:a81d043930e51745522bd5c430961cf8286f0a23f0a9a2a6e0108f7ea71b0902",
+  "dataset": {
+    "count": 1000,
+    "mysql_version": "8.4.13",
+    "titles_sha256": "d4662351b4b47cc98ee822886f208b66aa8bb1db766f072153c6408781fb2f35",
+    "groups": 10,
+    "per_group": 100,
+    "photos": 0,
+    "universidad": null,
+    "personal_data": false
+  },
+  "resources_before": {
+    "api": {
+      "id": "a747869d8c1d62b243568b74f775841a4c0fb0925d6873bb0c18656716bc3f73",
+      "image_id": "sha256:3b5357bd997ad391426438b483e0b0794fd76ab92f6e054ce09cf80e15d59f96",
+      "healthy": "healthy",
+      "oom": false,
+      "restarts": 0,
+      "memory_limit": 268435456,
+      "nano_cpus": 500000000,
+      "memory_peak": 177147904,
+      "mounts": [
+        {
+          "name": "cm-s14-42126089440-1_publication_images",
+          "target": "/app/backend/uploads"
+        }
+      ],
+      "networks": [
+        "cm-s14-42126089440-1_default"
+      ]
+    },
+    "db": {
+      "id": "94c131b5591af1271549f088b044a8a3fa6f30717fea00479e893e1e2501574c",
+      "image_id": "sha256:0f1a0ccadda3a1734d1db557e203ec58621d56fa248525016e85fe4f631311ec",
+      "healthy": "healthy",
+      "oom": false,
+      "restarts": 0,
+      "memory_limit": 268435456,
+      "nano_cpus": 500000000,
+      "memory_peak": 185319424,
+      "mounts": [
+        {
+          "name": "cm-s14-42126089440-1_mysql_data",
+          "target": "/var/lib/mysql"
+        }
+      ],
+      "networks": [
+        "cm-s14-42126089440-1_default"
+      ]
+    }
+  },
+  "main_dart_js_sha256": "1c4de9fd3c813005c4319785765d6e2851d7a8ca75795720519c455832b9ff1f",
+  "http": {
+    "samples": [
+      {
+        "index": 1,
+        "status": 200,
+        "returned": 1000,
+        "valid": true,
+        "ms": 292.807
+      },
+      {
+        "index": 2,
+        "status": 200,
+        "returned": 1000,
+        "valid": true,
+        "ms": 251.552
+      },
+      {
+        "index": 3,
+        "status": 200,
+        "returned": 1000,
+        "valid": true,
+        "ms": 300.116
+      },
+      {
+        "index": 4,
+        "status": 200,
+        "returned": 1000,
+        "valid": true,
+        "ms": 284.684
+      },
+      {
+        "index": 5,
+        "status": 200,
+        "returned": 1000,
+        "valid": true,
+        "ms": 292.164
+      },
+      {
+        "index": 6,
+        "status": 200,
+        "returned": 1000,
+        "valid": true,
+        "ms": 292.11
+      },
+      {
+        "index": 7,
+        "status": 200,
+        "returned": 1000,
+        "valid": true,
+        "ms": 291.294
+      },
+      {
+        "index": 8,
+        "status": 200,
+        "returned": 1000,
+        "valid": true,
+        "ms": 288.163
+      },
+      {
+        "index": 9,
+        "status": 200,
+        "returned": 1000,
+        "valid": true,
+        "ms": 250.779
+      },
+      {
+        "index": 10,
+        "status": 200,
+        "returned": 1000,
+        "valid": true,
+        "ms": 292.68
+      }
+    ],
+    "within_2000ms": 10,
+    "required": 9,
+    "repetitions": 10,
+    "median_ms": 291.702,
+    "p95_ms": 300.116,
+    "outcome": "CUMPLE EN ENTORNO AISLADO",
+    "errors": 0
+  },
+  "browser": {
+    "samples": [
+      {
+        "query": "S14-G01",
+        "ms": 1217.6,
+        "status": 200,
+        "returned": 100,
+        "first_visible_title": "Producto S14-G01 0100",
+        "valid": true,
+        "index": 1
+      },
+      {
+        "query": "S14-G02",
+        "ms": 30174.614,
+        "valid": false,
+        "error_type": "TimeoutError",
+        "error_stage": "await_response",
+        "observed_queries": [
+          "S14-G01"
+        ],
+        "index": 2
+      },
+      {
+        "query": "S14-G03",
+        "ms": 1270.2,
+        "status": 200,
+        "returned": 100,
+        "first_visible_title": "Producto S14-G03 0300",
+        "valid": true,
+        "index": 3
+      },
+      {
+        "query": "S14-G04",
+        "ms": 30140.91,
+        "valid": false,
+        "error_type": "TimeoutError",
+        "error_stage": "await_response",
+        "observed_queries": [
+          "S14-G03"
+        ],
+        "index": 4
+      },
+      {
+        "query": "S14-G05",
+        "ms": 1062.6,
+        "status": 200,
+        "returned": 100,
+        "first_visible_title": "Producto S14-G05 0500",
+        "valid": true,
+        "index": 5
+      },
+      {
+        "query": "S14-G06",
+        "ms": 30275.193,
+        "valid": false,
+        "error_type": "TimeoutError",
+        "error_stage": "await_response",
+        "observed_queries": [
+          "S14-G05"
+        ],
+        "index": 6
+      },
+      {
+        "query": "S14-G07",
+        "ms": 1214.1,
+        "status": 200,
+        "returned": 100,
+        "first_visible_title": "Producto S14-G07 0700",
+        "valid": true,
+        "index": 7
+      },
+      {
+        "query": "S14-G08",
+        "ms": 10221.927,
+        "valid": false,
+        "error_type": "TimeoutError",
+        "error_stage": "prepare_focus",
+        "observed_queries": [],
+        "index": 8
+      },
+      {
+        "query": "S14-G09",
+        "ms": 1181.3,
+        "status": 200,
+        "returned": 100,
+        "first_visible_title": "Producto S14-G09 0900",
+        "valid": true,
+        "index": 9
+      },
+      {
+        "query": "S14-G10",
+        "ms": 30230.202,
+        "valid": false,
+        "error_type": "TimeoutError",
+        "error_stage": "await_response",
+        "observed_queries": [
+          "S14-G09"
+        ],
+        "index": 10
+      }
+    ],
+    "within_2000ms": 5,
+    "required": 9,
+    "repetitions": 10,
+    "median_ms": 5746.064,
+    "p95_ms": 30275.193,
+    "outcome": "NO CONCLUYENTE: falló preparación del observador",
+    "errors": 5,
+    "browser": "156.0.8078.79",
+    "playwright": "1.56.0",
+    "viewport": [
+      1440,
+      1600
+    ],
+    "warmup": 1,
+    "production_api_network_allowed": false,
+    "mapped_api_requests": 12,
+    "blocked_requests": [],
+    "page_errors": [],
+    "api_queries": [
+      {
+        "query": "",
+        "status": 200,
+        "returned": 1000
+      },
+      {
+        "query": "",
+        "status": 200,
+        "returned": 1000
+      },
+      {
+        "query": "S14-G10",
+        "status": 200,
+        "returned": 100
+      },
+      {
+        "query": "S14-G01",
+        "status": 200,
+        "returned": 100
+      },
+      {
+        "query": "S14-G01",
+        "status": 200,
+        "returned": 100
+      },
+      {
+        "query": "S14-G03",
+        "status": 200,
+        "returned": 100
+      },
+      {
+        "query": "S14-G03",
+        "status": 200,
+        "returned": 100
+      },
+      {
+        "query": "S14-G05",
+        "status": 200,
+        "returned": 100
+      },
+      {
+        "query": "S14-G05",
+        "status": 200,
+        "returned": 100
+      },
+      {
+        "query": "S14-G07",
+        "status": 200,
+        "returned": 100
+      },
+      {
+        "query": "S14-G09",
+        "status": 200,
+        "returned": 100
+      },
+      {
+        "query": "S14-G09",
+        "status": 200,
+        "returned": 100
+      }
+    ],
+    "preparation": "Foco nativo, edición confirmada con Tab y valor semántico exacto verificados antes de pointerdown; ninguna consulta en preparación; sin reintentos",
+    "measurement": "Desde pointerdown del botón hasta grupo con título y contador visibles y dos animation frames"
+  },
+  "resources_after": {
+    "api": {
+      "id": "a747869d8c1d62b243568b74f775841a4c0fb0925d6873bb0c18656716bc3f73",
+      "image_id": "sha256:3b5357bd997ad391426438b483e0b0794fd76ab92f6e054ce09cf80e15d59f96",
+      "healthy": "healthy",
+      "oom": false,
+      "restarts": 0,
+      "memory_limit": 268435456,
+      "nano_cpus": 500000000,
+      "memory_peak": 177147904,
+      "mounts": [
+        {
+          "name": "cm-s14-42126089440-1_publication_images",
+          "target": "/app/backend/uploads"
+        }
+      ],
+      "networks": [
+        "cm-s14-42126089440-1_default"
+      ]
+    },
+    "db": {
+      "id": "94c131b5591af1271549f088b044a8a3fa6f30717fea00479e893e1e2501574c",
+      "image_id": "sha256:0f1a0ccadda3a1734d1db557e203ec58621d56fa248525016e85fe4f631311ec",
+      "healthy": "healthy",
+      "oom": false,
+      "restarts": 0,
+      "memory_limit": 268435456,
+      "nano_cpus": 500000000,
+      "memory_peak": 185319424,
+      "mounts": [
+        {
+          "name": "cm-s14-42126089440-1_mysql_data",
+          "target": "/var/lib/mysql"
+        }
+      ],
+      "networks": [
+        "cm-s14-42126089440-1_default"
+      ]
+    }
+  },
+  "dataset_count_after": 1000,
+  "public_ec01_outcome": "NO CONCLUYENTE: no mide red ni navegador institucional público"
+}

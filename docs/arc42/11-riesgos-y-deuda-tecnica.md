@@ -64,3 +64,18 @@ No ejecutar pruebas destructivas ni restauraciones sobre los volúmenes producti
 
 
 **Vinculación S13:** el [ADR-0026 propuesto](../adr/0026-incorporar-auditoria-de-dependencias-python-en-ci.md) trata el riesgo T13-03 en Python. Conservamos abiertos el análisis de Dart e imagen OCI, la revisión de secretos de todo el historial y la aprobación formal de bases de tratamiento de datos. Los riesgos históricos no se borran al actualizar la estrategia.
+
+## Evaluación S14 — 2026-11-05
+
+[Procedimiento, mediciones y ATAM reducido](../evidencias/evidencia-s14-ec01-2026-11-05.md), orquestador `e4f5c1026206a86c2df7d07f7a16479c807dd34b`, fuente de imagen `46ede525602161826b75273fbb12528e739908cc`. HTTP/MySQL real obtuvo 10/10 ≤2 s con 1.000 publicaciones sintéticas bajo 256 MiB/0,5 CPU por servicio. Chrome no acredita diez estímulos válidos: registra filtros anteriores y un fallo de preparación. **EC-01 completo sigue NO CONCLUYENTE**. No se atribuye causalidad ni se incorporan optimizaciones por preferencia.
+
+| ID / origen | Componente y consecuencia | Estado / siguiente acción |
+| --- | --- | --- |
+| R14-01 / medición técnica S14 | Observador HTML/Flutter y consulta: estímulos no acreditados impiden inferir latencia visible | Pendiente: contrastar entrada real con observador independiente; conservar todas las muestras |
+| R14-02 / límites del experimento | Red/dispositivo/carga: CI serial sin fotos ni universidad no representa toda experiencia institucional | Pendiente: mantener alcance; contraste autorizado antes de extrapolar |
+| R14-03 / revisión técnica, no de pares | Recursos/consistencia: picos seriales sin OOM no prueban concurrencia, recuperación o consistencia SQL/fotos | Pendiente; T13-07/T13-10 y respaldos/rollback productivos permanecen abiertos |
+| R14-04 / contraste documental | C4 L2/L3 conserva notas de despliegue antiguas; puede confundirse fuente/imagen/estado instalado | Pendiente para S16: reconciliar notas con arc42 §7 y evidencias sin reescribir ADR aceptados |
+
+**Revisión entre pares S14: pendiente de recepción.** No hay observaciones auténticas en las fuentes consultadas. El seguimiento docente y esta revisión asistida por IA no se presentan como pares. Cuando se reciban, registrar para cada una origen/autor/fecha/enlace, componente, consecuencia y evidencia, respuesta motivada y estado **corregido, asumido o pendiente**. No se inventan observaciones para cerrar los criterios 6 y 7.
+
+No se alteran estados históricos S10–S13: siguen pendientes copia externa, restauración SQL/fotos, rollback del host, configuración/montajes efectivos, seguridad de alcance limitado y la revisión de issue #33 contra la documentación S6 existente.

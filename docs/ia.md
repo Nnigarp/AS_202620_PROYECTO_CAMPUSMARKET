@@ -764,3 +764,31 @@ Verificación posterior de la promoción: [41597711177](https://github.com/Nniga
 | Fecha | Herramienta / uso | Propuesta aceptada y verificación | Propuesta rechazada o corregida y razón | Resultado verificable |
 |---|---|---|---|---|
 | 2026-11-03 | ChatGPT — revisión del log Dokploy, capturas de aceptación y documentación | Conservar digest/sha de imagen, distinguir CI de observación pública y documentar catálogo, favoritos y conversación bidireccional; comprobar contra configuración y PR #85–#88 | Rechazar declarar backup restaurable, rollback productivo o S10 posdespliegue sin prueba; no adjuntar conversaciones ni credenciales reales; no rehacer ADR ni reescribir historia S1–S13 | [Cierre productivo observado](evidencias/cierre-productivo-incremento2-2026-11-03.md), [arc42 §7](arc42/07-vista-despliegue.md), [matriz](aspectos.md). La revisión y aceptación final del equipo/docente no se presumen. |
+
+## 2026-11-05 — S14, EC-01 y ATAM reducido
+
+Herramienta: ChatGPT/Codex con GitHub, Python, Docker/Compose y Chrome/Playwright en runners aislados. Base `d5b8b500e309e5997a6063f20b6c7da6682ef785`; orquestador medido `e4f5c1026206a86c2df7d07f7a16479c807dd34b`; imagen/runtime `46ede525602161826b75273fbb12528e739908cc`. [Datos, intentos y análisis](evidencias/evidencia-s14-ec01-2026-11-05.md); [run 42126089440](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/42126089440). No se afirma revisión humana ni aprobación de pares.
+
+| Propuesta | Decisión y motivo técnico | Verificación / límite |
+| --- | --- | --- |
+| Reutilizar imagen integrada por digest y cotejar código funcional | Aceptada: evita reconstrucción e identifica exactamente el runtime evaluado | OCI/REVISION/header, Image ID y bundle; diff funcional vacío |
+| Medir 1.000 filas reales sin tocar datos institucionales | Aceptada: MySQL sintético exclusivo, red interna, dos contenedores con límites e identidades propias | SQL/HTTP verifican 1.000 IDs; cuatro series HTTP 10/10; no experiencia pública |
+| Acceso loopback del montaje inicial y carga SQL antes de inicializar propietario | Corregida: observador usa solo IP privada identificada por etiquetas; inicializa catálogo vacío mediante API antes de fixture | Intentos fallidos conservados; ninguna cifra de esos montajes se presenta como medición válida |
+| Entrada DOM y equiparar timeout con latencia del backend | Corregida: eventos de ratón/teclado, verificación de foco/valor y trazas distinguen preparación y filtro recibido | El resultado visible queda NO CONCLUYENTE; se conserva el 6/10 inicial y no se recortan muestras para fabricar éxito |
+| Sustituir 9/10 por p95, reutilizar el verde S9 como prueba pública, o añadir caché/microservicio desde el ejemplo de clase | Rechazada: cambiaría escenario o atribuiría una mejora causal no contrastada | Umbral original, percentil complementario y límites declarados; sin cambio funcional ni ADR nuevo |
+| Inventar pares, cerrar backups/rollback o considerar que CI verde acredita aptitud total | Rechazada: faltan fuentes auténticas y evidencia operativa independiente | 6/8 acreditados; dos criterios de pares pendientes; riesgos S13/productivos conservados |
+
+La documentación se actualizó después de ejecutar y verificar los artefactos, separando SHA base, medido/runtime y cierre documental. CI documental solo reutiliza si experimento, workflow y código funcional son idénticos; ejecuta las guardas/Ruff/Gitleaks y declara que no repitió la medición. No se modificaron Dokploy, producción, ADR aceptados ni modelos C4; no hubo merge ni Deploy.
+
+
+## 2026-11-05 — PR #92: corregir CI sin cambiar el producto
+
+Herramienta: ChatGPT/Codex, GitHub y Python. HEAD revisado `0d56980b465ab94b1a294b2a9070f4c600095cfd`; corrección en el fork `8bd91b988a5f34d5297b4421fa13aaeca45b0acb`. Se inspeccionaron logs de Compose/Android y el artefacto Android original; este conservaba captura vacía y evidencia de desconexión ADB antes de empezar las aserciones funcionales. No se interpreta como regresión demostrada ni como prueba Android aprobada.
+
+| Propuesta | Decisión y razón | Verificación / límite |
+| --- | --- | --- |
+| Exportar el Image ID canónico ya verificado | Aceptada: `docker save` rechaza los 64 hex sin prefijo; se conserva identidad OCI/REVISION y se transfiere exactamente `.Id` al exportador | [Compose oficial 42134493732](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/42134493732), job `127619063529`: ocho comprobaciones y exportación aprobadas; ZIP/TAR e identidad OCI contrastados tras descargar |
+| Reutilizar la medición anterior con un workflow diferente | Rechazada: se exige una nueva medición si no hay evidencia con código/configuración idénticos; errores de SHA/metadatos fallan | [42134485805](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/42134485805), fuente `8bd91b9`: 11 guardas, Ruff, Gitleaks y ejecución aprobados; HTTP 10/10, visible NO CONCLUYENTE, originales intactos |
+| Desactivar Android, ocultar un error o declarar pares por CI verde | Rechazada: se mantienen las aserciones reales, sin `continue-on-error`; cierre Android requiere una ejecución completa aprobada | Pruebas/driver/workflow Android y código funcional idénticos al master; criterios S14 6/7 pendientes de fuentes auténticas |
+
+[Seguimiento y hashes](evidencias/evidencia-s14-ec01-2026-11-05.md#10-seguimiento-del-pr-92-exportación-compose-y-nueva-medición). Se conserva SHA medido frente al documental y runtime; no se tocaron contratos ni producción, no hubo merge ni publicación GHCR.

@@ -1,5 +1,7 @@
 # CampusMarket
 
+> **S14 — EC-01:** [medición, reproducción, ATAM y límites](docs/evidencias/evidencia-s14-ec01-2026-11-05.md). Ensayo aislado; revisión de pares y medición visible completa pendientes.
+
 > **Estado vigente — Incremento 2, 2026-11-03 (posterior a S13):** [PR #85–#90](docs/evidencias/cierre-productivo-incremento2-2026-11-03.md) integrados; [master `494c433`](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/494c4336920d3a9515e60e06d7e16a880a9868ed) con 8/8 checks verdes. Dokploy descargó el digest `11d92aa9…` y recreó `api` según log; se observaron catálogo, fotografías, Favoritos y mensajería bidireccional. [S10 posdespliegue: 9/9 criterios, 58 solicitudes, revisión `46ede525…`](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41616502184); la referencia productiva se actualizó mediante [PR #90](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/90). **Sin acreditar:** ID/montajes posdeploy, restauración independiente SQL/fotos, rollback productivo y captura de una universidad no nula en anuncio nuevo. [Evidencia y alcance](docs/evidencias/cierre-productivo-incremento2-2026-11-03.md).
 
 
