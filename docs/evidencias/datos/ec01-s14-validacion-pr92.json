@@ -1,0 +1,362 @@
+{
+  "started_utc": "2026-11-06T00:07:36.280133+00:00",
+  "official_base_sha": "d5b8b500e309e5997a6063f20b6c7da6682ef785",
+  "runtime_source_sha": "46ede525602161826b75273fbb12528e739908cc",
+  "api_image": "ghcr.io/nnigarp/campusmarket-web-universidades@sha256:11d92aa9b66f1a4c6b879a6e8cd62cc3c102a37c034a44cbde27442b73694fa7",
+  "run_id": "42134485805",
+  "run_attempt": "1",
+  "python": "3.12.16",
+  "runner_os": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+  "runner_cpus": 4,
+  "production_changed": false,
+  "network": "Runner a bridge Docker interna, sin puertos publicados ni latencia inyectada; orígenes Chrome/API remapeados al contenedor propio; CDN estático en warm-up",
+  "dataset_profile": "1000 filas, 10 grupos de 100, sin fotos ni afiliación declarada; no representa todos los perfiles de datos",
+  "execution_complete": true,
+  "orchestration_sha": "8bd91b988a5f34d5297b4421fa13aaeca45b0acb",
+  "image_id": "sha256:3b5357bd997ad391426438b483e0b0794fd76ab92f6e054ce09cf80e15d59f96",
+  "mysql_digest": "mysql@sha256:a81d043930e51745522bd5c430961cf8286f0a23f0a9a2a6e0108f7ea71b0902",
+  "dataset": {
+    "count": 1000,
+    "mysql_version": "8.4.13",
+    "titles_sha256": "d4662351b4b47cc98ee822886f208b66aa8bb1db766f072153c6408781fb2f35",
+    "groups": 10,
+    "per_group": 100,
+    "photos": 0,
+    "universidad": null,
+    "personal_data": false
+  },
+  "resources_before": {
+    "api": {
+      "id": "b663120730877e6595e18c09dbe24e70cf01bb090fcf815b864de279af3f3fbb",
+      "image_id": "sha256:3b5357bd997ad391426438b483e0b0794fd76ab92f6e054ce09cf80e15d59f96",
+      "healthy": "healthy",
+      "oom": false,
+      "restarts": 0,
+      "memory_limit": 268435456,
+      "nano_cpus": 500000000,
+      "memory_peak": 177438720,
+      "mounts": [
+        {
+          "name": "cm-s14-42134485805-1_publication_images",
+          "target": "/app/backend/uploads"
+        }
+      ],
+      "networks": [
+        "cm-s14-42134485805-1_default"
+      ]
+    },
+    "db": {
+      "id": "70087ebc5c3da20b20b03fa48961a17c6fafd44ba2a45aa8bf366412b2c2730a",
+      "image_id": "sha256:0f1a0ccadda3a1734d1db557e203ec58621d56fa248525016e85fe4f631311ec",
+      "healthy": "healthy",
+      "oom": false,
+      "restarts": 0,
+      "memory_limit": 268435456,
+      "nano_cpus": 500000000,
+      "memory_peak": 182501376,
+      "mounts": [
+        {
+          "name": "cm-s14-42134485805-1_mysql_data",
+          "target": "/var/lib/mysql"
+        }
+      ],
+      "networks": [
+        "cm-s14-42134485805-1_default"
+      ]
+    }
+  },
+  "main_dart_js_sha256": "1c4de9fd3c813005c4319785765d6e2851d7a8ca75795720519c455832b9ff1f",
+  "http": {
+    "samples": [
+      {
+        "index": 1,
+        "status": 200,
+        "returned": 1000,
+        "valid": true,
+        "ms": 146.228
+      },
+      {
+        "index": 2,
+        "status": 200,
+        "returned": 1000,
+        "valid": true,
+        "ms": 193.255
+      },
+      {
+        "index": 3,
+        "status": 200,
+        "returned": 1000,
+        "valid": true,
+        "ms": 186.272
+      },
+      {
+        "index": 4,
+        "status": 200,
+        "returned": 1000,
+        "valid": true,
+        "ms": 189.611
+      },
+      {
+        "index": 5,
+        "status": 200,
+        "returned": 1000,
+        "valid": true,
+        "ms": 190.03
+      },
+      {
+        "index": 6,
+        "status": 200,
+        "returned": 1000,
+        "valid": true,
+        "ms": 143.232
+      },
+      {
+        "index": 7,
+        "status": 200,
+        "returned": 1000,
+        "valid": true,
+        "ms": 189.259
+      },
+      {
+        "index": 8,
+        "status": 200,
+        "returned": 1000,
+        "valid": true,
+        "ms": 186.771
+      },
+      {
+        "index": 9,
+        "status": 200,
+        "returned": 1000,
+        "valid": true,
+        "ms": 189.535
+      },
+      {
+        "index": 10,
+        "status": 200,
+        "returned": 1000,
+        "valid": true,
+        "ms": 187.758
+      }
+    ],
+    "within_2000ms": 10,
+    "required": 9,
+    "repetitions": 10,
+    "median_ms": 188.508,
+    "p95_ms": 193.255,
+    "outcome": "CUMPLE EN ENTORNO AISLADO",
+    "errors": 0
+  },
+  "browser": {
+    "samples": [
+      {
+        "query": "S14-G01",
+        "ms": 10197.412,
+        "valid": false,
+        "error_type": "TimeoutError",
+        "error_stage": "prepare_focus",
+        "observed_queries": [],
+        "index": 1
+      },
+      {
+        "query": "S14-G02",
+        "ms": 764.2,
+        "status": 200,
+        "returned": 100,
+        "first_visible_title": "Producto S14-G02 0200",
+        "valid": true,
+        "index": 2
+      },
+      {
+        "query": "S14-G03",
+        "ms": 10159.407,
+        "valid": false,
+        "error_type": "TimeoutError",
+        "error_stage": "prepare_focus",
+        "observed_queries": [],
+        "index": 3
+      },
+      {
+        "query": "S14-G04",
+        "ms": 775.9,
+        "status": 200,
+        "returned": 100,
+        "first_visible_title": "Producto S14-G04 0400",
+        "valid": true,
+        "index": 4
+      },
+      {
+        "query": "S14-G05",
+        "ms": 10160.885,
+        "valid": false,
+        "error_type": "TimeoutError",
+        "error_stage": "prepare_focus",
+        "observed_queries": [],
+        "index": 5
+      },
+      {
+        "query": "S14-G06",
+        "ms": 783.5,
+        "status": 200,
+        "returned": 100,
+        "first_visible_title": "Producto S14-G06 0600",
+        "valid": true,
+        "index": 6
+      },
+      {
+        "query": "S14-G07",
+        "ms": 30163.994,
+        "valid": false,
+        "error_type": "TimeoutError",
+        "error_stage": "await_response",
+        "observed_queries": [
+          "S14-G06"
+        ],
+        "index": 7
+      },
+      {
+        "query": "S14-G08",
+        "ms": 763.1,
+        "status": 200,
+        "returned": 100,
+        "first_visible_title": "Producto S14-G08 0800",
+        "valid": true,
+        "index": 8
+      },
+      {
+        "query": "S14-G09",
+        "ms": 615.8,
+        "status": 200,
+        "returned": 100,
+        "first_visible_title": "Producto S14-G09 0900",
+        "valid": true,
+        "index": 9
+      },
+      {
+        "query": "S14-G10",
+        "ms": 30102.962,
+        "valid": false,
+        "error_type": "TimeoutError",
+        "error_stage": "await_response",
+        "observed_queries": [
+          "S14-G09"
+        ],
+        "index": 10
+      }
+    ],
+    "within_2000ms": 5,
+    "required": 9,
+    "repetitions": 10,
+    "median_ms": 5471.453,
+    "p95_ms": 30163.994,
+    "outcome": "NO CONCLUYENTE: falló preparación del observador",
+    "errors": 5,
+    "browser": "156.0.8078.79",
+    "playwright": "1.56.0",
+    "viewport": [
+      1440,
+      1600
+    ],
+    "warmup": 1,
+    "production_api_network_allowed": false,
+    "mapped_api_requests": 10,
+    "blocked_requests": [],
+    "page_errors": [],
+    "api_queries": [
+      {
+        "query": "",
+        "status": 200,
+        "returned": 1000
+      },
+      {
+        "query": "",
+        "status": 200,
+        "returned": 1000
+      },
+      {
+        "query": "S14-G10",
+        "status": 200,
+        "returned": 100
+      },
+      {
+        "query": "S14-G02",
+        "status": 200,
+        "returned": 100
+      },
+      {
+        "query": "S14-G04",
+        "status": 200,
+        "returned": 100
+      },
+      {
+        "query": "S14-G06",
+        "status": 200,
+        "returned": 100
+      },
+      {
+        "query": "S14-G06",
+        "status": 200,
+        "returned": 100
+      },
+      {
+        "query": "S14-G08",
+        "status": 200,
+        "returned": 100
+      },
+      {
+        "query": "S14-G09",
+        "status": 200,
+        "returned": 100
+      },
+      {
+        "query": "S14-G09",
+        "status": 200,
+        "returned": 100
+      }
+    ],
+    "preparation": "Foco nativo, edición confirmada con Tab y valor semántico exacto verificados antes de pointerdown; ninguna consulta en preparación; sin reintentos",
+    "measurement": "Desde pointerdown del botón hasta grupo con título y contador visibles y dos animation frames"
+  },
+  "resources_after": {
+    "api": {
+      "id": "b663120730877e6595e18c09dbe24e70cf01bb090fcf815b864de279af3f3fbb",
+      "image_id": "sha256:3b5357bd997ad391426438b483e0b0794fd76ab92f6e054ce09cf80e15d59f96",
+      "healthy": "healthy",
+      "oom": false,
+      "restarts": 0,
+      "memory_limit": 268435456,
+      "nano_cpus": 500000000,
+      "memory_peak": 177438720,
+      "mounts": [
+        {
+          "name": "cm-s14-42134485805-1_publication_images",
+          "target": "/app/backend/uploads"
+        }
+      ],
+      "networks": [
+        "cm-s14-42134485805-1_default"
+      ]
+    },
+    "db": {
+      "id": "70087ebc5c3da20b20b03fa48961a17c6fafd44ba2a45aa8bf366412b2c2730a",
+      "image_id": "sha256:0f1a0ccadda3a1734d1db557e203ec58621d56fa248525016e85fe4f631311ec",
+      "healthy": "healthy",
+      "oom": false,
+      "restarts": 0,
+      "memory_limit": 268435456,
+      "nano_cpus": 500000000,
+      "memory_peak": 182501376,
+      "mounts": [
+        {
+          "name": "cm-s14-42134485805-1_mysql_data",
+          "target": "/var/lib/mysql"
+        }
+      ],
+      "networks": [
+        "cm-s14-42134485805-1_default"
+      ]
+    }
+  },
+  "dataset_count_after": 1000,
+  "public_ec01_outcome": "NO CONCLUYENTE: no mide red ni navegador institucional público"
+}

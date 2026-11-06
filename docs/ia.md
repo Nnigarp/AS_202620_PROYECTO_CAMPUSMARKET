@@ -779,3 +779,16 @@ Herramienta: ChatGPT/Codex con GitHub, Python, Docker/Compose y Chrome/Playwrigh
 | Inventar pares, cerrar backups/rollback o considerar que CI verde acredita aptitud total | Rechazada: faltan fuentes auténticas y evidencia operativa independiente | 6/8 acreditados; dos criterios de pares pendientes; riesgos S13/productivos conservados |
 
 La documentación se actualizó después de ejecutar y verificar los artefactos, separando SHA base, medido/runtime y cierre documental. CI documental solo reutiliza si experimento, workflow y código funcional son idénticos; ejecuta las guardas/Ruff/Gitleaks y declara que no repitió la medición. No se modificaron Dokploy, producción, ADR aceptados ni modelos C4; no hubo merge ni Deploy.
+
+
+## 2026-11-05 — PR #92: corregir CI sin cambiar el producto
+
+Herramienta: ChatGPT/Codex, GitHub y Python. HEAD revisado `0d56980b465ab94b1a294b2a9070f4c600095cfd`; corrección en el fork `8bd91b988a5f34d5297b4421fa13aaeca45b0acb`. Se inspeccionaron logs de Compose/Android y el artefacto Android original; este conservaba captura vacía y evidencia de desconexión ADB antes de empezar las aserciones funcionales. No se interpreta como regresión demostrada ni como prueba Android aprobada.
+
+| Propuesta | Decisión y razón | Verificación / límite |
+| --- | --- | --- |
+| Exportar el Image ID canónico ya verificado | Aceptada: `docker save` rechaza los 64 hex sin prefijo; se conserva identidad OCI/REVISION y se transfiere exactamente `.Id` al exportador | [Compose oficial 42134493732](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/42134493732), job `127619063529`: ocho comprobaciones y exportación aprobadas; ZIP/TAR e identidad OCI contrastados tras descargar |
+| Reutilizar la medición anterior con un workflow diferente | Rechazada: se exige una nueva medición si no hay evidencia con código/configuración idénticos; errores de SHA/metadatos fallan | [42134485805](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/42134485805), fuente `8bd91b9`: 11 guardas, Ruff, Gitleaks y ejecución aprobados; HTTP 10/10, visible NO CONCLUYENTE, originales intactos |
+| Desactivar Android, ocultar un error o declarar pares por CI verde | Rechazada: se mantienen las aserciones reales, sin `continue-on-error`; cierre Android requiere una ejecución completa aprobada | Pruebas/driver/workflow Android y código funcional idénticos al master; criterios S14 6/7 pendientes de fuentes auténticas |
+
+[Seguimiento y hashes](evidencias/evidencia-s14-ec01-2026-11-05.md#10-seguimiento-del-pr-92-exportación-compose-y-nueva-medición). Se conserva SHA medido frente al documental y runtime; no se tocaron contratos ni producción, no hubo merge ni publicación GHCR.
