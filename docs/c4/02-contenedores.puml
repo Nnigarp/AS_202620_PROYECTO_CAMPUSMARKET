@@ -1,7 +1,7 @@
 @startuml
 
 title CampusMarket - C4 Nivel 2 · Contenedores
-caption Estado vigente · Flutter Web/Android · FastAPI · MySQL · sin broker ni caché de aplicación
+caption Código integrado 2d28489 · dos contenedores Docker · sin broker ni caché del catálogo en backend
 
 left to right direction
 
@@ -13,11 +13,11 @@ actor "Estudiante" as estudiante
 actor "Administrador" as administrador
 
 package "CampusMarket" {
-    rectangle "Frontend\n\nFlutter / Dart\n\nWeb y Android\nInicio, Catálogo, sesión, perfil,\nPublicar y moderación" as frontend
+    rectangle "Frontend\n\nFlutter / Dart\n\nWeb y Android\nCatálogo, perfil, publicaciones,\nfavoritos, conversaciones y moderación" as frontend
 
-    rectangle "Backend API\n\nFastAPI / Python\n\nHTTP/JSON, Usuarios, Publicaciones,\nCatálogo, Administración,\nhealth y observabilidad" as backend
+    rectangle "Backend API\n\nFastAPI / Python\n\nUsuarios, Publicaciones, Catálogo,\nAdministración, Universidades,\nFavoritos y Mensajería\nWeb estática /app/, health y observabilidad" as backend
 
-    database "Persistencia\n\nMySQL\n\nBase: campusmarket\nUsuarios, sesiones, intentos,\npublicaciones, fotos y reportes" as mysql
+    database "Persistencia\n\nMySQL 8.4\n\nOnce tablas declaradas\nIdentidad, publicaciones, fotos,\nidempotencia, reportes, universidades,\nfavoritos, conversaciones y mensajes" as mysql
 
     folder "Archivos de imágenes\n\nDirectorio configurable\nVolumen nombrado en Compose" as uploads
 }
@@ -25,7 +25,7 @@ package "CampusMarket" {
 estudiante --> frontend : Consulta, publica y gestiona productos\n[HTTPS / Flutter]
 administrador --> frontend : Supervisa contenido\n[Web / Android con capacidad]
 
-frontend --> backend : Cuatro contextos, Bearer e imágenes\n[HTTP/JSON + multipart]
+frontend --> backend : API, Bearer, imágenes y bundle Web\n[HTTPS / JSON + multipart + estáticos]
 backend --> mysql : Lee/escribe datos del dominio\n[PyMySQL / SQL]
 backend --> uploads : Guarda/sirve archivos de imágenes\n[filesystem / volumen]
 
@@ -46,19 +46,22 @@ note right of uploads
 
 Desarrollo: directorio configurable.
 Compose: volumen nombrado verificado.
-Azure requiere almacenamiento durable.
-ADR-0011, ADR-0015 y ADR-0018.
-MVP público: API en Dokploy,\nfrontend en GitHub Pages.
+El volumen no es un respaldo independiente.
+ADR-0011, ADR-0015, ADR-0018 y ADR-0025.
+Flutter Web se sirve desde api por /app/.
+Frontend lógico y archivos no son
+contenedores Docker adicionales: solo api y db.
 end note
 
 note right of mysql
 **PROPIEDAD DE DATOS**
 
 Gestión de Publicaciones mantiene
-la escritura de publicaciones y
-publicacion_imagenes.
+la escritura de publicaciones,
+publicacion_imagenes y solicitudes_idempotentes.
 
-Usuarios y Administración escriben
+Usuarios, Administración, Universidades,
+Favoritos y Mensajería escriben
 sus tablas mediante sus repositories.
 Catálogo no tiene repository SQL.
 Conexión compartida: db.py.

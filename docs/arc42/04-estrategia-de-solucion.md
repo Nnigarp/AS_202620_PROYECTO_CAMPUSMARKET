@@ -1,7 +1,14 @@
 # 4. Estrategia de solución
 
+> **Evolución contrastada — 8/nov/2026:** la comparación y la organización
+> inicial siguientes conservan el razonamiento de S3. El código integrado mantiene
+> ADR-0001 con siete contextos en una API, MySQL y archivos; Favoritos,
+> Mensajería y Universidades no añaden servicios Docker. La composición actual
+> está en [§5](05-bloques-de-construccion.md) y [C4 L3](../c4/03-componentes-backend.md).
+> No se reabre la decisión de estilo ni se sustituye un ADR aceptado.
+
 La comparación y elección inicial siguientes conservan su contexto histórico.
-En el MVP actual ADR-0001 sigue vigente: un backend modular, cuatro contextos
+En el código actual ADR-0001 sigue vigente: un backend modular, siete contextos
 materializados, Flutter Web/Android y MySQL. La autenticación y las sesiones,
 fotografías, moderación y límites se concretan en ADR-0012–0017; ADR-0018 prepara
 Compose y ADR-0019 optimiza lecturas sin cambiar fronteras. El estado ejecutable

@@ -15,3 +15,12 @@
 | Administrador | Usuario responsable de supervisar publicaciones y apoyar la gestión del contenido. |
 | Catálogo | Conjunto consultable de publicaciones disponibles en CampusMarket. |
 | Corte vertical | Recorrido mínimo ejecutable que conecta la interfaz, la lógica y la persistencia del sistema. |
+| Universidad declarada | Institución elegida por la cuenta; se fija en el anuncio al crearlo y no demuestra matrícula. |
+| Publicación heredada | Anuncio anterior que puede conservar institución `NULL`; no se le atribuye la del perfil actual. |
+| Favorito | Referencia privada cuenta/publicación, persistida en MySQL y filtrada por visibilidad al leer. |
+| Conversación | Contexto de una publicación y dos participantes autorizados: comprador y vendedor. |
+| Mensaje | Texto privado de una conversación; se obtiene por HTTP y actualización manual, sin promesa de push. |
+| Clave de idempotencia | Identificador estable del intento; permite recuperar el resultado sin duplicar una creación equivalente. |
+| Hash del payload | Huella de la solicitud para detectar contenido distinto reutilizando una clave; no reemplaza autorización. |
+| Imagen por digest | Artefacto OCI inmutable; su digest, Image ID, código fuente y revisión informada tienen funciones distintas. |
+| Evidencia histórica | Observación con fecha, SHA y entorno propios; un cambio documental posterior no la vuelve a ejecutar. |

@@ -2,20 +2,28 @@
 
 ## 5.1 Backend modular
 
-ADR-0001 mantiene una sola aplicación FastAPI. Los cuatro contextos tienen
+ADR-0001 mantiene una sola aplicación FastAPI. Los siete contextos tienen
 funcionalidad MVP comprobable; sus componentes se detallan en
 [C4 Nivel 3](../c4/03-componentes-backend.md) y su fuente PlantUML.
 
 | Contexto | Capacidades materializadas | Tablas propias / escritor |
 |---|---|---|
 | Usuarios | Registro, login, usuario actual, perfil, logout, expiración y presupuesto de intentos | `usuarios`, `sesiones_usuario`, `intentos_autenticacion`; `usuarios/repository.py` |
-| Publicaciones | Crear, consultar propias, editar, estado, eliminar y galería segura | `publicaciones`, `publicacion_imagenes`; `publicaciones/repository.py` |
+| Publicaciones | Crear con clave de idempotencia opcional, consultar propias, editar, estado, eliminar y galería segura | `publicaciones`, `publicacion_imagenes`, `solicitudes_idempotentes`; `publicaciones/repository.py` |
 | Catálogo | Búsqueda, filtros, composición de imágenes y detalle | Sin SQL ni tablas; servicio de Publicaciones |
 | Administración | Reportar, listar pendientes, resolver con nota y ocultar | `reportes_publicacion`; `administracion/repository.py` |
+| Universidades | Catálogo institucional y capacidades de lectura/validación por IDs | `universidades`; `universidades/repository.py` |
+| Favoritos | Referencias privadas por cuenta; composición visible por Catálogo | `favoritos`; `favoritos/repository.py` |
+| Mensajería | Conversaciones por contexto, bandeja y envío idempotente autorizado | `conversaciones`, `mensajes`; `mensajeria/repository.py` |
+
+Son **once declaraciones de tabla en el código**, no un inventario inspeccionado
+del MySQL productivo. La omisión de `solicitudes_idempotentes` en la guarda
+`OWNERS` se registra en [§11](11-riesgos-y-deuda-tecnica.md); no se afirma cobertura
+automática completa por tener CI verde.
 
 ## 5.2 Componentes e interfaces
 
-`main.py` registra cuatro routers, CORS, middleware de tamaño, errores,
+`main.py` registra siete routers, CORS, middleware de tamaño, errores,
 observabilidad, health y StaticFiles. Cada router → service → repository → MySQL.
 `db.py` comparte conexión/transacción sin entidades ni SQL de dominio.
 `usuarios/dependencies.py` resuelve identidad y capacidad de moderación;

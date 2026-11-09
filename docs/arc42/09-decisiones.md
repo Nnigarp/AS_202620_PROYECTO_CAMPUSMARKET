@@ -16,7 +16,7 @@ Las decisiones históricas se conservan; una evolución posterior no reescribe e
 | [ADR-0003](../adr/0003-usar-integracion-sincrona-http-json.md) | Aceptado | Integración síncrona HTTP/JSON protegida por contrato OpenAPI. | Frontend → Backend |
 | [ADR-0004](../adr/0004-migrar-persistencia-a-mysql.md) | Aceptado | Migrar la persistencia vigente a MySQL. | Persistencia vigente |
 | [ADR-0005](../adr/0005-desplegar-campusmarket-en-azure-y-github-pages.md) | Aceptado histórico; elección de backend sustituida por ADR-0018 | Desplegar CampusMarket mediante GitHub Pages y Azure. | Despliegue S8 |
-| [ADR-0006](../adr/0006-publicar-frontend-flutter-web-en-github-pages.md) | Aceptado | Publicar Flutter Web en GitHub Pages. | Frontend |
+| [ADR-0006](../adr/0006-publicar-frontend-flutter-web-en-github-pages.md) | Aceptado histórico; operación institucional posterior en ADR-0025 | Publicar Flutter Web en GitHub Pages. | Frontend histórico; no servicio principal actual |
 | [ADR-0007](../adr/0007-desplegar-api-fastapi-en-azure-app-service.md) | Aceptado histórico; entorno principal sustituido por ADR-0018 | Desplegar FastAPI en Azure App Service. | Backend S8 |
 | [ADR-0008](../adr/0008-desplegar-mysql-en-azure-flexible-server.md) | Aceptado histórico; entorno principal sustituido por ADR-0018 | Desplegar MySQL en Azure Database for MySQL Flexible Server. | Persistencia S8 |
 | [ADR-0009](../adr/0009-materializar-catalogo-sin-romper-fronteras.md) | Aceptado | Materializar Catálogo mediante capacidad explícita de lectura de Publicaciones. | Modularidad / EC-01 |
@@ -30,6 +30,13 @@ Las decisiones históricas se conservan; una evolución posterior no reescribe e
 | [ADR-0017](../adr/0017-serializar-inicializacion-y-migracion-de-identidad.md) | Aceptado | Lock MySQL y migración de identidad única. | Persistencia |
 | [ADR-0018](../adr/0018-ejecutar-el-monolito-en-dokploy-con-volumenes.md) | Aceptado para preparación; implementación pública posterior acreditada | Compose con volúmenes y backend principal Dokploy. | Operación vigente |
 | [ADR-0019](../adr/0019-consultar-imagenes-en-lote-a-traves-de-publicaciones.md) | Aceptado | Lectura de imágenes en lote por el service propietario. | Catálogo / rendimiento |
+| [ADR-0020](../adr/0020-preservar-contrato-v2-y-adaptar-consumidor-incompatible.md) | Aceptado para S10-CT-01 | Adaptar el consumidor incompatible conservando API/contrato. | Experimento S10 |
+| [ADR-0021](../adr/0021-mantener-catalogo-en-el-monolito-modular.md) | Decidido para S11 | No extraer Catálogo con los criterios y carga actuales. | Modularidad / operación |
+| [ADR-0022](../adr/0022-mantener-mysql-como-fuente-de-verdad-y-evitar-proyecciones-asincronas.md) | Aceptado para el alcance S12, con límites declarados | MySQL como fuente de verdad; no proyección asíncrona. | Consistencia / reversibilidad |
+| [ADR-0023](../adr/0023-probar-mensajes-aislados-sin-introducir-broker-productivo.md) | Aceptado para prototipo formativo aislado | Ensayar mensajes sin introducir broker en producto. | Taller S12, no chat HTTP |
+| [ADR-0024](../adr/0024-publicar-imagen-verificada-y-condicionar-promocion.md) | Aceptada para publicación; promoción aplazada en su fecha | Publicar exactamente la imagen verificada y condicionar Deploy. | Artefactos; aplicación posterior registrada fuera del ADR |
+| [ADR-0025](../adr/0025-servir-flutter-web-con-fastapi-en-servicio-existente.md) | Propuesto para aceptación; aplicación técnica observada | Servir Flutter Web por `/app/` desde `api`. | No atribuir aceptación formal por haber desplegado |
+| [ADR-0026](../adr/0026-incorporar-auditoria-de-dependencias-python-en-ci.md) | Propuesto para aceptación; control Python ejecutado | Auditoría de dependencias con evidencia JSON y fallo explícito. | Cadena de suministro; no sustituye Sonar |
 
 ## Composición vigente
 
@@ -55,7 +62,11 @@ La materialización de Catálogo sigue ADR-0009: `catalogo` no accede directamen
 La gestión de imágenes sigue ADR-0011/0015/0016. MySQL conserva metadatos;
 Compose usa un volumen nombrado (ADR-0018). Azure requiere almacenamiento durable.
 Usuarios y Administración persisten sus tablas en sus repositories; Catálogo
-consume el service de Publicaciones. Los cuatro contextos están materializados.
+consume el service de Publicaciones. Los siete contextos se detallan en
+[§5](05-bloques-de-construccion.md) y [C4 L3](../c4/03-componentes-backend.md).
+La idempotencia incorporada el 29/oct (`7705c2b3`) conserva la transacción MySQL
+del contexto Publicaciones; su [lectura actual](06-vista-ejecucion.md#61-autenticar-y-crear-una-publicación)
+no reescribe el diseño pendiente documentado en S11.
 
 ## Estado de identidad
 
@@ -101,7 +112,7 @@ se actualizan aquí y en evidencias.
 | Identidad y migración segura | [0012](../adr/0012-autenticar-con-sesiones-opacas-revocables.md), [0017](../adr/0017-serializar-inicializacion-y-migracion-de-identidad.md) | Revocación cuesta consulta SQL; lock coordina procesos y evita reasignar datos heredados; [sesiones](../../backend/tests/test_usuarios.py), [migración](../../backend/tests/test_migracion_identidad.py) |
 | Moderación y habilitación | [0013](../adr/0013-materializar-reportes-y-moderacion-minima.md), [0014](../adr/0014-habilitar-moderadores-por-identificador-interno.md) | Reportes/ocultado por servicios; 0014 sustituye solo correo privilegiado por ID comprobado, porque no se verifica correo; [test](../../backend/tests/test_administracion.py) |
 | Ciclo de vida de fotografías | [0011](../adr/0011-gestionar-imagenes-de-publicaciones.md), [0015](../adr/0015-validar-y-reencodificar-imagenes-con-pillow.md), [0016](../adr/0016-ajustar-recursos-a-la-cuota-del-laboratorio.md) | Metadatos SQL/binarios separados, decodificación y retiro EXIF; 0016 sustituye concurrencia intensiva por guardia compartida bajo cuota; [test](../../backend/tests/test_imagenes_seguras.py) |
-| Infraestructura y recursos | [0016](../adr/0016-ajustar-recursos-a-la-cuota-del-laboratorio.md), [0018](../adr/0018-ejecutar-el-monolito-en-dokploy-con-volumenes.md) | Dos contenedores de 256 MiB y volúmenes; Dokploy principal, Pages frontend; Azure conserva su historia, sin afirmar validación actual; [Compose](../../deploy/compose.lab.yaml) y [evidencia pública](../evidencias/despliegue-publico-mvp-2026-10-04.md) |
+| Infraestructura y recursos | [0016](../adr/0016-ajustar-recursos-a-la-cuota-del-laboratorio.md), [0018](../adr/0018-ejecutar-el-monolito-en-dokploy-con-volumenes.md), [0024](../adr/0024-publicar-imagen-verificada-y-condicionar-promocion.md), [0025](../adr/0025-servir-flutter-web-con-fastapi-en-servicio-existente.md) | Dos servicios de 256 MiB; Web/API en `api` por digest y MySQL en `db`; Pages/Azure históricos. [Compose productivo](../../deploy/compose.prod.yaml) y [observación del 3/nov](../evidencias/cierre-productivo-incremento2-2026-11-03.md); recuperación productiva pendiente |
 | Uso de IA dentro del producto | [0010](../adr/0010-no-incorporar-componente-generativo-en-campusmarket.md) | No hay necesidad demostrada de runtime generativo; evita costo/latencia/proveedor adicionales. IA de desarrollo sí se audita en [registro](../ia.md) |
 
 ### Aclaraciones históricas y de presentación

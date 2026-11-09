@@ -8,10 +8,17 @@ Los actores y el sistema se muestran en [C4 Nivel 1](../c4/01-contexto.md).
 
 ## 3.2 Alcance funcional
 
-Los cuatro contextos están materializados al nivel MVP: Usuarios, Publicaciones,
-Catálogo y Administración. Registro por correo/contraseña no verifica afiliación
-universitaria ni titularidad del correo. El MVP no ofrece pagos, banca, envíos,
-logística, chat, recuperación de contraseña ni verificación de correo.
+Los siete contextos del código integrado son Usuarios, Publicaciones, Catálogo,
+Administración, Universidades, Favoritos y Mensajería. Son módulos de la misma
+API, no siete servicios desplegables. Registro por correo/contraseña y universidad
+declarada no verifican afiliación ni titularidad del correo. Se ofrecen favoritos
+privados y conversaciones HTTP por publicación; no pagos, banca, envíos, logística,
+recuperación de contraseña, verificación de correo, push ni WebSockets.
+
+La [aceptación del Incremento 2](../evidencias/cierre-productivo-incremento2-2026-11-03.md)
+corresponde al 3/nov; la [auditoría del 8/nov](../evidencias/auditoria-documental-s1-s14-2026-11-08.md)
+registra por separado el HTTP 500 actual de `/universidades`. Capacidad en código
+no implica disponibilidad de cada ruta pública en todo momento.
 
 ## 3.3 Interfaces externas
 

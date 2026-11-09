@@ -1,17 +1,22 @@
-# campusmarket
+# CampusMarket — cliente Flutter
 
-A new Flutter project.
+Cliente Web y Android del monolito CampusMarket: catálogo y filtros, sesión/perfil, publicaciones con fotografías, moderación, universidad declarada, Favoritos y conversaciones HTTP con actualización manual. La universidad visible no acredita matrícula; las publicaciones anteriores pueden no tenerla.
 
-## Getting Started
+## Desarrollo y comprobación
 
-This project is a starting point for a Flutter application.
+Desde este directorio, con Flutter y el backend local disponibles:
 
-A few resources to get you started if this is your first Flutter project:
+```bash
+flutter pub get
+flutter analyze
+flutter test
+flutter run -d chrome --web-port=3000
+```
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+La [configuración de API](lib/shared/api_configuration.dart) usa `CAMPUSMARKET_API_BASE_URL` mediante `--dart-define`: por defecto `http://localhost:8000` en Web y `http://10.0.2.2:8000` en el emulador Android. La [reproducción del backend y del emulador](../../README.md#reproducción-local) está en el README raíz. No introducir tokens ni credenciales en el bundle.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Publicación y evidencias
+
+La imagen integrada ya promovida compila Web con base href `/app/` y API `https://campusmarket.iscoutb.dev`; el [workflow de empaquetado](../../.github/workflows/release-incremento2.yml) conserva esa configuración. El bundle se sirve dentro de `api`, sin un contenedor Flutter adicional. Esta revisión documental no lo recompila ni publica.
+
+Consultar [C4 L2](../../docs/c4/02-contenedores.md), [aceptación observada el 3/nov](../../docs/evidencias/cierre-productivo-incremento2-2026-11-03.md), [evidencia Web/Android del Incremento 2](../../docs/evidencias/incremento-2-universidad-visible-2026-11-03.md) y [auditoría S1–S14 del 8/nov](../../docs/evidencias/auditoria-documental-s1-s14-2026-11-08.md). Los resultados CI, la observación pública y los pendientes operativos se registran por separado; no implican una nueva aceptación humana.

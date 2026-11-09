@@ -1,4 +1,19 @@
-﻿# CampusMarket - Plan de despliegue GHCR
+﻿# CampusMarket — despliegue GHCR y registro operativo
+
+## Lectura vigente — 8 de noviembre de 2026
+
+Los apartados siguientes son un registro **cronológico**: las condiciones de preparación de octubre no describen el resultado de noviembre. Para operar, partir del [cierre observado del 3/nov](../evidencias/cierre-productivo-incremento2-2026-11-03.md), [arc42 §7](../arc42/07-vista-despliegue.md) y la [auditoría S1–S14](../evidencias/auditoria-documental-s1-s14-2026-11-08.md), sin ejecutar un plan antiguo por su mera existencia.
+
+| Referencia | Estado y alcance |
+|---|---|
+| Imagen promovida el 3/nov | `ghcr.io/nnigarp/campusmarket-web-universidades@sha256:11d92aa9b66f1a4c6b879a6e8cd62cc3c102a37c034a44cbde27442b73694fa7`; fuente/runtime `46ede525602161826b75273fbb12528e739908cc`. [Registro de promoción](../../deploy/promocion-incremento2.json) y [baseline S10](../../.github/s10-produccion.json). |
+| Configuración observada el 3/nov | Servicio `production/sistema`, `./deploy/compose.prod.yaml`, proyecto `campusmarket-sistema-2zvsxj`, únicamente `api` y `db`. Conservar el Run Command API-only con `--no-deps --no-build --pull always api` registrado en el cierre; Autodeploy desactivado. No se volvió a consultar el panel en esta auditoría. |
+| Lectura pública del 8/nov | `/app/` y `/docs`: HTTP 200; GET `/health`: 200/ok, revisión `46ede525…`; **GET `/universidades`: HTTP 500**, causa no determinada. No se repitió la aceptación funcional ni se leyeron datos personales. S10 verde del 5/nov no acredita todas las rutas hoy. |
+| Recuperación | Ensayo sintético aprobado; respaldo externo restaurable SQL/fotos, montajes/identidades posdeploy y rollback real del host siguen sin acreditarse. Antes de cualquier nueva intervención requieren evidencia independiente y autorización expresa. |
+
+No se modifican Dokploy, Run Command, variables, dominios, redes o volúmenes por esta actualización. Los valores de imagen y Autodeploy de los planes siguientes tienen **su fecha histórica**. El digest `f9eaabdb…` del plan inicial contiene un error de transcripción respecto a la [trazabilidad conservada](../evidencias/trazabilidad-ghcr-2026-10-30.md); no utilizarlo como referencia recuperable ni como imagen actual.
+
+## Plan original — preparación de octubre de 2026
 
 ## 1. Objetivo
 
@@ -29,7 +44,7 @@ Run de publicacion GHCR:
 Imagen:
 ghcr.io/iscoutb/campusmarket-api@sha256:f9eaabdb166274225e9ad490c44999f71f6b1f7c9c5902dc68ab98b07115ce8b
 
-## 3. Infraestructura actual
+## 3. Infraestructura observada al redactar el plan original
 
 Dokploy: campusmarket / production / sistema
 

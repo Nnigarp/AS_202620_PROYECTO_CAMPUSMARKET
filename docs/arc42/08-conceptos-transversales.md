@@ -12,6 +12,10 @@
 | Sesión | Token opaco aleatorio, digest persistido, expiración absoluta y revocación |
 | Moderador | Cuenta existente/comprobada habilitada externamente por ID |
 | Reporte | Motivo, autor, publicación y resolución pendiente/ocultado/descartado con nota |
+| Favorito | Referencia privada de una cuenta a una publicación; lectura sujeta a visibilidad |
+| Conversación | Contexto único de publicación, comprador y vendedor; acceso solo de participantes |
+| Universidad declarada | Institución elegida al publicar; no certifica matrícula ni se infiere para anuncios antiguos |
+| Clave de idempotencia | Identifica un intento de creación; la misma clave y payload recuperan el mismo resultado |
 
 ## 8.2 Contextos delimitados
 
@@ -19,6 +23,9 @@ Usuarios posee identidad, sesiones y presupuestos de intentos. Publicaciones pos
 ciclo de vida, propiedad y fotografías. Catálogo compone lecturas. Administración
 posee reportes y coordina revisión; solicita cambios de visibilidad a Publicaciones.
 Todos están materializados al nivel MVP en una sola aplicación FastAPI.
+
+La evolución añade Universidades (catálogo institucional), Favoritos (referencias
+privadas) y Mensajería (conversaciones/mensajes): siete contextos en el mismo proceso.
 
 ## 8.3 Mapa de contextos
 
@@ -28,6 +35,9 @@ Todos están materializados al nivel MVP en una sola aplicación FastAPI.
 | Usuarios → Administración | Identidad y capacidad de moderación | Configuración por ID fuera del registro público |
 | Publicaciones → Catálogo | Publicaciones públicas y galerías en lote | Catálogo no escribe ni usa SQL |
 | Publicaciones → Administración | Obtener y ocultar publicación | Administración escribe solo reportes |
+| Usuarios → Favoritos / Mensajería | Identidad vigente de la cuenta y participantes | No aceptar usuario/remitente desde body o query |
+| Catálogo → Favoritos / Mensajería | Contexto público y tarjetas en lote | Sin importar repositories de otro contexto |
+| Universidades → Usuarios / Catálogo | Validar declaración y leer instituciones por IDs | Capacidad pública del service; sin N+1 por tarjeta |
 
 Estas dependencias son llamadas internas de servicio. No se introduce un Shared
 Kernel de entidades ni servicios desplegables por contexto.
@@ -37,13 +47,23 @@ Kernel de entidades ni servicios desplegables por contexto.
 | Tablas | Único contexto escritor | Repository |
 |---|---|---|
 | `usuarios`, `sesiones_usuario`, `intentos_autenticacion` | Usuarios | `usuarios/repository.py` |
-| `publicaciones`, `publicacion_imagenes` | Publicaciones | `publicaciones/repository.py` |
+| `publicaciones`, `publicacion_imagenes`, `solicitudes_idempotentes` | Publicaciones | `publicaciones/repository.py` |
 | `reportes_publicacion` | Administración | `administracion/repository.py` |
+| `universidades` | Universidades | `universidades/repository.py` |
+| `favoritos` | Favoritos | `favoritos/repository.py` |
+| `conversaciones`, `mensajes` | Mensajería | `mensajeria/repository.py` |
 | Ninguna | Catálogo | Consume services; no repository SQL |
 
 `db.py` aporta conexión/transacción común, sin tablas de dominio. Cada operación
 sigue router → service → repository → MySQL. Infraestructura compartida no concede
 autoridad para escribir tablas de otro contexto.
+
+La tabla cubre once declaraciones SQL del código. Publicaciones lee la universidad
+del autor desde `usuarios` al crear; es una dependencia de lectura SQL compartida,
+no escritura ni importación de su repository. No se afirma aislamiento físico
+entre esquemas. La guarda `test_propiedad_datos.py` aún omite
+`solicitudes_idempotentes` en `OWNERS`; la lectura no encontró otro escritor, pero
+esa cobertura automática sigue pendiente ([riesgo documental](11-riesgos-y-deuda-tecnica.md)).
 
 ## 8.5 Seguridad y comunicación
 
@@ -92,7 +112,7 @@ plataformas reales. Véanse [C4 Nivel 3](../c4/03-componentes-backend.md),
 [auditoría](../evidencias/auditoria-mvp-continuacion-2026-10-03.md).
 
 SQLite y bloqueo del primer corte permanecen en evidencia/ADR históricos.
-La evolución materializa los cuatro contextos; conserva ADR-0001 y el único
+La evolución actual materializa siete contextos; conserva ADR-0001 y el único
 escritor por tabla. Esta continuación sincroniza documentación, no cambia ADR
 aceptados ni efectúa despliegue.
 
@@ -103,11 +123,15 @@ La garantía se determina **por operación**, no como propiedad universal de Cam
 
 La [tabla operación → garantía de S12](../evidencias/evidencia-s12-2026-10-25.md#2-tabla-operación--garantía-de-consistencia) identifica rutas, consecuencias de desfase y límites por operación. Se conserva [ADR-0022](../adr/0022-mantener-mysql-como-fuente-de-verdad-y-evitar-proyecciones-asincronas.md) para explicar el costo de revertir la propiedad de datos.
 
+**Evolución posterior a S12:** desde el 29/oct la creación admite `Idempotency-Key`; [§6](06-vista-ejecucion.md) documenta su transacción, pruebas y límites. No modifica la observación original del 25/oct ni convierte cualquier timeout en un fallo confirmado.
+
 ## 8.10 Estrategia de caché — S12 (2026-10-25)
 
 **No incorporar caché mutable de aplicación en S12.** Las lecturas del catálogo acceden al servicio propietario/MySQL. No hay entradas ni TTL de aplicación que invalidar; cualquier futura caché necesitaría una política explícita de invalidación **tras cada escritura confirmada** (creación, edición, cambio de estado, moderación, borrado) y clave o versión para todas las variantes de filtros. TTL por sí solo dejaría lecturas obsoletas. Esta alternativa de cache-aside es **propuesta, no implementada**, y requiere medición EC-01 para justificarla. Los motores y navegadores pueden tener mecanismos internos distintos, que no se presentan aquí como caché del dominio.
 
-La implementación productiva no agrega broker ni consumidor de mensajes; un eventual laboratorio de mensajería se documenta como prototipo aislado. [Evidencia y política completa S12](../evidencias/evidencia-s12-2026-10-25.md).
+La implementación no agrega broker ni consumidor de eventos; el laboratorio S12 de mensajes es un prototipo aislado. El chat del Incremento 2 usa HTTP y tablas propias, sin esa infraestructura. [Evidencia y política completa S12](../evidencias/evidencia-s12-2026-10-25.md).
+
+**Lectura del código al 8/nov:** la ausencia de caché anterior se refiere al backend del catálogo y al diseño S12. Flutter sí mantiene una caché privada en [FavoritosController](../../frontend/campusmarket/lib/favoritos/favoritos_controller.dart): clave de identidad de sesión, limpieza al cambiar token, versiones para ignorar respuestas antiguas y modificación local solo tras PUT/DELETE exitoso. [FavoritosPage](../../frontend/campusmarket/lib/favoritos/favoritos_page.dart) refresca al entrar y permite actualización manual; no existe TTL ni invalidación push desde otra cuenta. [Pruebas Flutter](../../frontend/campusmarket/test/favoritos_test.dart) cubren privacidad y revalidación. MySQL sigue siendo la fuente de verdad; esta caché de interfaz no acredita frescura global.
 
 
 ## 8.11 Arquitectura de seguridad y privacidad — S13 (2026-11-01)
@@ -118,6 +142,8 @@ Controles observados en el código: autorización por usuario y moderador en rou
 
 Datos personales: correo, nombre, credenciales derivadas, sesiones e intentos; contenido/imágenes asociadas a propietarios; reportes y datos de moderación. Principio de minimización: no registrar contraseñas/tokens, limitar exposición de correo y reportes, eliminar EXIF al cargar fotos, documentar conservación y derechos. La **base jurídica exacta, aviso y retención** requieren verificación con responsable institucional antes de afirmar cumplimiento de protección de datos. No existe LLM productivo según [ADR-0010](../adr/0010-no-incorporar-componente-generativo-en-campusmarket.md); sus vectores de prompt/contexto no aplican al runtime actual.
 
+
+**Inventario posterior al Incremento 2 — 8/nov:** también se tratan universidad declarada, referencias privadas de Favoritos y textos/participantes de conversaciones. [Favoritos](../../backend/app/favoritos/router.py) exige identidad propia; [Mensajería](../../backend/app/mensajeria/router.py) exige participación y no ofrece consulta global de textos privados. Estos controles y las pruebas de autorización no sustituyen aviso, base de tratamiento, plazos de conservación o procedimiento de supresión aprobados. Esos requisitos continúan pendientes; no se consultaron datos personales para esta auditoría.
 
 **Seguimiento del escáner S13:** [primer run](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41360317202) auditó 16 dependencias Python y reportó 51 entradas de advisory; las versiones de `python-multipart` y `Pillow` fueron actualizadas en la rama S13 del fork, con [run final exitoso](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41362904998). La imagen de Dokploy no cambia y la auditoría no cubre todos los riesgos de suministro. [Detalle y artefacto](../evidencias/evidencia-s13-amenazas-2026-11-01.md).
 
@@ -139,11 +165,19 @@ Datos personales: correo, nombre, credenciales derivadas, sesiones e intentos; c
 
 La evolución conserva fronteras del monolito modular (ADR-0001/0009/0012/0021) y el único contrato OpenAPI v2. No se crea un nuevo servicio ni broker. Véanse [arc42 §5](05-bloques-de-construccion.md), [matriz de aspectos](../aspectos.md) y [evidencia posterior a S13](../evidencias/cierre-universidades-cartagena-2026-11-02.md).
 
-## Incremento 2 — Privacidad de favoritos y contrato candidato
+## Incremento 2 — Privacidad de favoritos y contrato vigente
 
 Los favoritos son información privada de una cuenta, no una preferencia global del dispositivo. Sus rutas exigen Bearer; ninguna acepta una identidad de entrada. La clave compuesta impide duplicados bajo concurrencia; las referencias se conservan desacopladas de la eliminación de otros contextos y se filtran por visibilidad al leer. No se crea almacenamiento ni infraestructura adicional. Sesiones opacas, MySQL como fuente de verdad y composición de lecturas en lote reutilizan ADR-0001/0003/0012/0019/0022. No hace falta un ADR nuevo.
 
-OpenAPI candidato se compara con `app.openapi()` en CI. S10 recupera explícitamente el SHA actual de `ISCOUTB/master` y su contrato base, sin `HEAD^1`. Producción usa un contrato versionado independiente de la revisión informada por la imagen: `.github/s10-produccion.json` fija contrato `c7f1574` y revisión instalada `50d9352`. No se usa la revisión como Git ref ni se exige al despliegue vigente el contrato nuevo del candidato. Tras Deploy autorizado, el modo `instalado` recupera el contrato y exige la revisión del SHA exacto de imagen, registrando separadamente el SHA del orquestador y ejecuta los mismos nueve criterios contra ese contrato; solo después se actualiza la referencia productiva. [Evidencia](../evidencias/incremento-2-favoritos-2026-11-03.md).
+OpenAPI del código se compara con `app.openapi()` en CI. S10 resuelve la base
+oficial explícitamente, sin `HEAD^1`. La [referencia productiva](../../.github/s10-produccion.json)
+fija contrato y runtime `46ede525602161826b75273fbb12528e739908cc`, con origen
+`Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET` y digest `11d92aa9…`. Orquestador,
+contrato candidato, contrato de imagen y observación HTTP se registran por separado.
+El [S10 del master auditado](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/42138355890)
+aprobó nueve criterios; no demuestra disponibilidad de todas las rutas ni autoriza
+otro Deploy. Las referencias `c7f1574`/`50d9352` pertenecen a la preparación anterior
+conservada en [la evidencia del incremento](../evidencias/incremento-2-favoritos-2026-11-03.md).
 
 ## Incremento 2 — Privacidad y límites de Mensajería
 

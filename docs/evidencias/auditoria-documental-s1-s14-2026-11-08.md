@@ -263,3 +263,119 @@ Se comprobaron los metadatos de los **94 runs distintos enlazados** en la base; 
 [Registro verificable](datos/auditoria-documental-s1-s14-2026-11-08.json): resultados de enlaces, SHA de los runs, inventario de fuentes y huellas de los archivos preservados. No contiene credenciales ni conversaciones.
 
 El 8/nov (UTC en el JSON), `/app/` y `/docs` respondieron HEAD 200; `/health` GET 200 con revisión `46ede525…`. **GET `/universidades` devolvió HTTP 500** en la lectura actual. No se probó la interfaz completa ni se consultaron cuentas o publicaciones. El éxito HTTP de la página estática y del health no acredita ese endpoint; no se atribuye la causa sin logs. La observación anterior de doce universidades (3/nov) permanece histórica. Se requiere diagnóstico operativo autorizado separado; esta tarea no modifica producción.
+
+## Resultado posterior a las correcciones
+
+La matriz anterior permanece como diagnóstico de la base. Se conserva en el [commit inicial `4bf20ed2cd2032c608c7a110d116ef477795a10e`](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/4bf20ed2cd2032c608c7a110d116ef477795a10e); las correcciones posteriores están en la misma rama. El JSON registra `baseline_state` y `post_audit_state` de las **139 filas**. Se resolvieron **33 brechas documentales por criterio**: de 87 a 120 verificaciones de contenido/evidencia, con 12 parciales, 5 no verificadas y 2 pendientes de recepción. **No son 120 requisitos funcionales aprobados ni una nota académica:** la vigencia, puntualidad y alcance de cada evidencia siguen separados. Las brechas transversales siguientes tampoco desaparecen de ese recuento.
+
+| Brecha / criterios afectados | Resultado posterior | Ruta de la corrección y límite |
+|---|---|---|
+| D01 · S02-C04, S04-C04 | Corregida | [README](../../README.md) y [contexto](../arc42/03-contexto.md): Favoritos/chat HTTP/universidad declarada; Pages queda como etapa histórica. |
+| D02 · S02-C02, S03-C09, S04-C01, S05-C05, S06-C01/C06, S12-C09, S13-C09 | Corregida | [arc42 1–12](../arc42/ARC42.md), siete contextos, once tablas declaradas y revisión de runtime separada del HEAD. [§8](../arc42/08-conceptos-transversales.md) distingue caché privada Flutter de caché del catálogo en backend e inventaría datos nuevos. |
+| D03 · S02-C08, S04-C05/C06, S05-C07, S06-C07, S07-C10, S12-C08 | Corregida | [C4 L1](../c4/01-contexto.md), [L2](../c4/02-contenedores.md) y [L3](../c4/03-componentes-backend.md): código integrado y fuentes/renderizados coherentes. La topología lógica no añade contenedores Docker. |
+| D04 · S06-C02/C03/C04/C05 | **PARCIAL** | [Propiedad de datos](../arc42/08-conceptos-transversales.md) documenta once tablas; [OWNERS](../../backend/tests/test_propiedad_datos.py) sigue omitiendo `solicitudes_idempotentes`. Lectura estática identifica su escritor en Publicaciones y una lectura SQL de `usuarios.universidad_id` desde ese repositorio. No se modifica código/pruebas en esta auditoría documental. |
+| D05 · S03-C06, S04-C10, S05-C03/C06/C10, S09-C02, S11-C09 | Corregida | [Aspectos](../aspectos.md), 12 matrices canónicas/28 filas de ocho columnas, con evidencia navegable. Los pendientes no se sustituyen por enlaces de apariencia probatoria. |
+| D06 · S09-C06 | **PARCIAL** | [Registro IA, adenda del 8/nov](../ia.md#2026-11-08--auditoría-documental-s1s14) identifica propuestas aceptadas/rechazadas, verificaciones automáticas y límites. No hay recibos independientes para validar retrospectivamente todas las afirmaciones humanas antiguas. |
+| D07 · S08-C10 | Corregida | Ancla de [arc42 §7](../arc42/07-vista-despliegue.md) corregida al encabezado existente; comprobación local sin enlaces internos fallidos. |
+| D08 · S04-C02, S08-C12, S09-C03 | Corregida | [Índice ADR](../arc42/09-decisiones.md) enumera 26 decisiones; 0025/0026 conservan su estado formal propuesto y los archivos aceptados permanecen intactos. La cerca sin cerrar de ADR-0009 queda como excepción histórica explícita. |
+| D09 · S10-C11 | Corregida | [§8](../arc42/08-conceptos-transversales.md) usa la [baseline S10](../../.github/s10-produccion.json), repositorio de contrato del fork y runtime `46ede525…`; no se altera contrato ni la observación original. |
+| D10 · S07-C09, S11-C04/C05/C08 | Corregida | [Ejecución](../arc42/06-vista-ejecucion.md) y [riesgos](../arc42/11-riesgos-y-deuda-tecnica.md) distinguen S11 original de implementación `7705c2b3` del 29/oct. Ocho pruebas de idempotencia, header opcional, transacción y límites; T4 descarta respuesta, no corta la red real. |
+
+## Brechas que no puede cerrar una edición documental
+
+| ID / estado | Evidencia o intervención que falta |
+|---|---|
+| X01 · NO VERIFICADO/PARCIAL | Permisos actuales de integrantes/equipo; la lista de nombres y contribuciones históricas no acredita membresía actual. No se pidió ni expuso información privada. |
+| X02 · NO VERIFICADO | Recibos/adjuntos de entrega de SAVIO de S5/S10 y consignas/política no aportadas. Los PDF de clase consultados no son recibos de presentación. |
+| X03 · NO VERIFICADO | Sustentaciones de los cortes: no se infieren de archivos ni CI. Se conserva la valoración docente publicada, sin emitir otra. |
+| X04 · PARCIAL | Montajes e identidades efectivas posdeploy, respaldo externo consistente SQL/fotos, restauración y rollback productivos. Ensayos sintéticos y declaraciones Compose no los sustituyen. |
+| X05 · PARCIAL transversal | SonarCloud Code Analysis verde no aporta por sí solo el scanner completo, métricas y Quality Gate exigibles por CONTRATO. El dashboard público devolvió 403. Ruleset activo exige PR y solo `test`; no todos los jobs. No se simula un merge fallido ni se cambian reglas. |
+| X06 · PENDIENTE DE RECEPCIÓN | S14 C6/C7: observaciones auténticas de otro equipo y tratamiento documentado; el usuario espera indicación docente. Esta auditoría no es esa revisión. |
+| X07 · PARCIAL | Validación institucional de base de tratamiento, aviso, retención y supresión, incluyendo Favoritos y mensajes privados. Autorización técnica no equivale a conformidad jurídica. |
+| X08 · PARCIAL | Los barridos históricos de secretos/dependencias tienen rangos y ecosistemas acotados. No se certifica ausencia universal ni una nueva auditoría OCI/Dart. |
+| X09 · NO VERIFICADO transversal | Falta un cambio medido que permita acreditar el umbral original de EC-03 de como máximo dos módulos de negocio. Se corrige su lectura en [§10](../arc42/10-escenarios-de-calidad.md), sin inventar mediciones. |
+| Incidencia pública del 8/nov | GET `/universidades` 500, pese a health ok y archivos Web accesibles. Causa y efecto funcional completos NO VERIFICADOS; requieren diagnóstico operativo autorizado separado. No se consultaron logs privados, cuentas o SQL. |
+
+## Matriz de trazabilidad consolidada
+
+Las fichas y sus líneas están enlazadas en cada fila semanal. Esta vista enlaza los recorridos concretos; donde no existe escenario/medición o aprobación no se fuerza una relación.
+
+| Criterio / escenario | arc42 y C4 | ADR / aspecto | Código y prueba | Run / SHA y evidencia |
+|---|---|---|---|---|
+| S2/S9/S14 · EC-01 | [§10](../arc42/10-escenarios-de-calidad.md#ec-01---consulta-de-productos), [L2](../c4/02-contenedores.md), [L3](../c4/03-componentes-backend.md) | [0019](../adr/0019-consultar-imagenes-en-lote-a-traves-de-publicaciones.md), ASP-01 en [aspectos](../aspectos.md) | [Catálogo](../../backend/app/catalogo/service.py), [prueba](../../backend/tests/test_catalogo.py), [medidor](../../scripts/medir_ec01_s14.py) | [S9](evidencia-ec01-catalogo-s9-2026-10-01.md); [S14 original y adicional](evidencia-s14-ec01-2026-11-05.md), `e4f5c102…` / `8bd91b9…`; HTTP aislado aprobado, visible/público NO CONCLUYENTE. |
+| S2/S9 · EC-02 | [§6](../arc42/06-vista-ejecucion.md), [L3](../c4/03-componentes-backend.md) | [0012](../adr/0012-autenticar-con-sesiones-opacas-revocables.md), ASP-02 | [Autorización](../../backend/app/usuarios/dependencies.py), [prueba](../../backend/tests/test_ec02_autorizacion.py) | [Backend 42138355897](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/42138355897), `2d28489`; [evidencia histórica](auditoria-mvp-continuacion-2026-10-03.md). No pentest. |
+| S2/S4 · EC-03 | [§10 y límite](../arc42/10-escenarios-de-calidad.md#ec-03---modificación-del-sistema), [L3](../c4/03-componentes-backend.md) | [0001](../adr/0001-usar-monolito-modular.md), ASP-03 | [Guarda modularidad](../../backend/tests/test_modularidad_s6.py); no mide todos los cambios de negocio | Medición específica `≤2 módulos` NO VERIFICADA; X09. |
+| S4/S8 · EC-04 | [§7](../arc42/07-vista-despliegue.md), [L2](../c4/02-contenedores.md) | [0018](../adr/0018-ejecutar-el-monolito-en-dokploy-con-volumenes.md), ASP-04/10 | [Compose](../../deploy/compose.prod.yaml), [ensayo](../../scripts/verificar_compose_mvp.py) | [Compose 42138355822](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/42138355822), `2d28489`; recreación sintética no cierra recuperación productiva. |
+| S5 · EC-05 | [§6](../arc42/06-vista-ejecucion.md), [§10](../arc42/10-escenarios-de-calidad.md) | [0002 histórico](../adr/0002-manejo-bloqueo-sqlite.md), [0004](../adr/0004-migrar-persistencia-a-mysql.md), ASP-06 | [Medidor original](../../scripts/medir_bloqueo_sqlite.py); implementación MySQL posterior | [Medición S5](medicion-bloqueo-sqlite-2026-09-06.md), SHA `8044215…`; no atribuir bloqueo SQLite al runtime MySQL actual. |
+| S7/S10 · EC-06 y S10-CT-01 | [§6](../arc42/06-vista-ejecucion.md), [§8](../arc42/08-conceptos-transversales.md), [escenario C4](../c4/04-escenario-s10-contrato.md) | [0003](../adr/0003-usar-integracion-sincrona-http-json.md), [0020](../adr/0020-preservar-contrato-v2-y-adaptar-consumidor-incompatible.md), ASP-07/I2-S10 | [Contrato versionado](../../contracts/openapi-v2.json), [prueba proveedor](../../backend/tests/test_contrato_openapi.py), [HTTP independiente](../../scripts/experimento_s10_contrato.py) | [S10 42138355890](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/42138355890), orquestador `2d28489`, runtime/contrato `46ede525…`: 17 tests + 9 criterios; [experimento original](evidencia-s10-corte2-2026-10-11.md). |
+| S11/S12 · fallo parcial/idempotencia | [§6](../arc42/06-vista-ejecucion.md), [§8](../arc42/08-conceptos-transversales.md), [L3](../c4/03-componentes-backend.md) | [0021](../adr/0021-mantener-catalogo-en-el-monolito-modular.md), [0022](../adr/0022-mantener-mysql-como-fuente-de-verdad-y-evitar-proyecciones-asincronas.md), ASP-13/14 | [Transacción y key](../../backend/app/publicaciones/repository.py), [8 tests](../../backend/tests/test_idempotencia_publicaciones.py), [Flutter](../../frontend/campusmarket/test/idempotencia_publicaciones_test.dart) | Introducido en [`7705c2b3cad07c727b7fd4cbe2a623d9a19d967c`](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/7705c2b3cad07c727b7fd4cbe2a623d9a19d967c); incluido en backend del SHA base. [S11 original](evidencia-s11-2026-10-18.md) no se reescribe. |
+| Taller S12 · siete propiedades, separado del chat | [§8](../arc42/08-conceptos-transversales.md), [L2 sin broker productivo](../c4/02-contenedores.md) | [0023](../adr/0023-probar-mensajes-aislados-sin-introducir-broker-productivo.md), S12-MSG | [Simulador](../../scripts/taller_mensajes_s12.py), [pruebas](../../backend/tests/test_taller_mensajes_s12.py) | [Run 40265066306](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/40265066306); [taller y corrección temporal](taller-mensajes-s12-2026-10-25.md). No se infiere broker por existir mensajería HTTP. |
+| S13 · amenazas y datos | [§8](../arc42/08-conceptos-transversales.md), [§11](../arc42/11-riesgos-y-deuda-tecnica.md), [L2](../c4/02-contenedores.md) | [0010](../adr/0010-no-incorporar-componente-generativo-en-campusmarket.md), [0026 propuesto](../adr/0026-incorporar-auditoria-de-dependencias-python-en-ci.md), ASP-S13 | [Auditoría Python](../../.github/workflows/s13-dependencias.yml); alcance Python | [Rojo 41360317202](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41360317202), `0701cea2…`; [verde 41362904998](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41362904998), `1504bafc…`. [Modelo STRIDE](evidencia-s13-amenazas-2026-11-01.md), privacidad jurídica pendiente. |
+| Incremento 2 · requisitos posteriores, sin escenario nuevo inventado | [§5/§8](../arc42/08-conceptos-transversales.md), [L3](../c4/03-componentes-backend.md) | Reutiliza ADR existentes; I2-FAV/MSG/UNI en [aspectos](../aspectos.md) | [Favoritos](../../backend/tests/test_favoritos.py), [Mensajería](../../backend/tests/test_mensajeria.py), [Universidad](../../backend/tests/test_identidad_universitaria_visible.py), [Flutter/Android](../../frontend/campusmarket/integration_test/mvp_flow_test.dart) | [E2E 42138355883](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/42138355883), `2d28489`; [cierre observado 3/nov](cierre-productivo-incremento2-2026-11-03.md), runtime `46ede525…`. |
+| S14 · revisión de pares | [§11](../arc42/11-riesgos-y-deuda-tecnica.md) | No corresponde fabricar ADR/aspecto o prueba automática | Evidencia auténtica no recibida | C6/C7 **PENDIENTES DE RECEPCIÓN**, sin commit ni run que los cierre. |
+
+## Fuentes históricas y materiales del aula
+
+Los SHA usados por revisiones publicadas S1–S11 se mantienen distintos del HEAD actual. S12 tiene una revisión preliminar sobre S11; no debe atribuirse a esa consulta la integración posterior. No se altera una fecha de entrega ni se convierte la auditoría actual en reevaluación.
+
+| Hito | SHA contrastado | Alcance |
+|---|---|---|
+| S1 | `81ef5f10326ab27622a9b1e507fee2e7752f494e` | Consulta histórica docente. |
+| S2 | `4f72799a8f92ac5f25687ef7afa9b7c783bc47db` | Consulta histórica docente. |
+| S3 | `4dd857a1e238e50956facd7156b967f03ae30db0` | Consulta histórica docente. |
+| S4 | `f3f436713bc79a7da4d5792c4f0876cc85fcdd3c` | Consulta histórica docente. |
+| S5 | `8044215811e53b111888f75b30fc175fb889dc56` | Corte histórico; no acredita recibo PDF en SAVIO. |
+| S6 | `dc548c068ea3b60ae6edc672208a425748759bdf` | Consulta histórica docente. |
+| S7 | `c53ee320c755299fb5d30b14ec4465a29142b0bf` | Consulta histórica docente. |
+| S8 | `784d788c19418099decde77a2cfb5ba831ab993b` | Consulta histórica docente. |
+| S9 | `de6ed67c05ccdb7eabd9b1951f146ab8958b1d00` | Consulta histórica docente. |
+| S10 | `1582c1ff609202fa2cc4a06fa14d18b9b61bed74` | Corte histórico; el experimento tiene SHA propio `6eb4c999…`. |
+| S11 | `a237dd2f22b02bb547f87a07d15b6d31ea0dc758` | Consulta histórica docente. |
+| S12 | Preliminar `a237dd2…`; integración `14ab852610f75bd5cf0e6aefda6a592b559116ed` | No es evidencia de puntualidad SAVIO. |
+| S13 | `049dc30ceac1386b648bef5f6713c050762e2dbf` | Integración del modelo y control; los runs fallido/corregido se conservan. |
+| S14 | `2d2848922db799389ffdcf0db4ef50437cd27ef2` | Integración de medición/cierre; pares pendientes. |
+
+El JSON inventaría diez PDF aportados con nombre, páginas y SHA-256; no se publican los adjuntos de clase. S12 se leyó por OCR y contraste visual de páginas 25–26: exige siete propiedades del taller y distingue prototipo aislado de infraestructura productiva. S14 se contrastó con el PDF exacto ya conservado y su ficha. El material disponible de SAVIO **no acredita acceso autenticado, todas las consignas ni entregas efectivas**. La guía escrita del laboratorio consultada mantiene 512 MB/cuatro contenedores: no se asume la cuota 1 GB/seis a partir de un anuncio anterior del panel. La configuración del proyecto sigue en dos servicios/512 MiB.
+
+## Validación documental reproducible
+
+El [verificador local](../../scripts/verificar_documentacion.py) no usa red ni modifica datos. Requiere Python y `markdown-it-py==3.0.0`:
+
+```bash
+python -m pip install markdown-it-py==3.0.0
+python scripts/verificar_documentacion.py --out /tmp/campusmarket-documentacion.json
+ruff check backend scripts
+git diff --check
+```
+
+Comprueba enlaces/imágenes Markdown locales, rutas, anclas y referencias `?plain=1#L…`, además de las ocho columnas de las matrices ID/Aspecto; falla con salida 1 ante errores. Enumera enlaces externos, pero no afirma disponibilidad HTTP. Un control sintético confirmó ancla repetida válida, ruta ausente y ancla ausente. No es un linter de estilo completo ni valida la semántica de una evidencia.
+
+Los tres modelos C4 se comprobaron con PlantUML **1.2026.1** y se renderizaron con Smetana, sin servidor externo. JAR oficial SHA-256 `89c116168a2a0f7cf5292e11617ba22abd743f891914f1fec5bc9c7d257b3092`. Los SVG son vistas derivadas; cada `.puml` sigue siendo canónico. PNG de inspección en scratch, sin incorporarlos como evidencia de un sistema en ejecución.
+
+```bash
+java -jar plantuml-1.2026.1.jar -checkonly docs/c4/01-contexto.puml docs/c4/02-contenedores.puml docs/c4/03-componentes-backend.puml
+java -Djava.awt.headless=true -jar plantuml-1.2026.1.jar -Playout=smetana -tsvg docs/c4/01-contexto.puml docs/c4/02-contenedores.puml docs/c4/03-componentes-backend.puml
+```
+
+Se consultaron los 94 runs enlazados y 89 recursos GitHub adicionales, con sus ocho fragmentos históricos. Los endpoints no admitidos por la ruta genérica se contrastaron mediante API/HTTP; no se clasificó un error del conector como enlace roto. En los veinte destinos externos de la base, se conservan el 403 de Sonar y el 500 de Universidades, además de los accesibles. Los enlaces nuevos de fichas se contrastan contra el kit fijado y sus líneas. No se rastrean enlaces dentro de snippets de ejemplo ni se certifican recursos privados.
+
+El barrido Gitleaks 8.30.1 del checkout detectó tres falsos positivos en el inventario: hashes públicos de archivos cuyo nombre contiene «secretos». Se recalcularon contra sus archivos. La [excepción de configuración](../../.gitleaks.toml) requiere a la vez la ruta exacta del JSON nuevo, la regla `generic-api-key` y uno de esos tres SHA-256 completos. No ignora otras rutas ni otros valores. Checkout y rango nuevo de la rama pasan; un valor sintético diferente en la misma ruta sigue provocando salida 1. No se reescribe el commit inicial de la matriz para ocultar el hallazgo.
+
+Se comparan por hash los 26 ADR y todas las evidencias preexistentes; también backend, contratos, Compose, workflows, scripts anteriores y fuentes/pruebas Flutter. La única modificación bajo `frontend/` es su README. No cambian el procedimiento S14, muestras, umbral, código funcional ni imagen: no hay causa para repetir las mediciones o reconstruir Flutter.
+
+### CI de la base y checks de esta rama
+
+| Workflow/check de base `2d28489` | Evidencia consultada | Resultado real |
+|---|---|---|
+| Backend | [42138355897](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/42138355897) | success; 135 pytest + 4 contrato. |
+| Flutter | [42138355941](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/42138355941) | success; análisis, pruebas y build existentes. |
+| Web escritorio/móvil y Android | [42138355883](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/42138355883) | Tres jobs success; Android conserva doce criterios y capturas. |
+| Compose | [42138355822](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/42138355822) | compose success; `s14-ec01` skipped en master. |
+| S10 | [42138355890](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/42138355890) | success; 17 tests y 9 criterios HTTP, runtime `46ede525…`. |
+| SonarCloud Code Analysis | [Check 127632261233](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/runs/127632261233) | success; no acredita por sí solo scanner completo/Quality Gate. |
+
+**Ocho checks success y uno skipped en la base no son los checks de esta rama.** El resultado nuevo se verificará en el PR; no se autoriza fusión automática ni se declara verde por herencia. Esta auditoría no modifica servicios ni políticas de GitHub. El registro JSON conserva los resultados locales y el estado de esa verificación separado de los runs históricos.
+
+### Resultado local del cierre
+
+Comprobaciones iniciadas el 8/nov, completadas el 9/nov/2026 (UTC en el JSON): enlaces locales sin fallos; doce matrices/28 filas de ocho columnas; tres modelos C4 con sintaxis, XML SVG y renderizado inspeccionados; Ruff y `git diff --check` aprobados. Se contrastaron **372 archivos protegidos**, con la única diferencia documental esperada del README Flutter: **26 ADR y 55 archivos de evidencia histórica idénticos**. Los 139 enlaces a líneas de criterios oficiales resuelven en el kit fijado. El JSON conserva los recuentos exactos y los límites de cada control. La excepción Gitleaks es la única modificación de configuración de comprobación; no se alteran suites, workflows, permisos o resultados históricos.

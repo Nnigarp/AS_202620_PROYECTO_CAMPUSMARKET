@@ -12,6 +12,22 @@
    La transacción inserta y devuelve la publicación con propietario real, HTTP 201.
 5. Un logout elimina la sesión; volver a presentar el mismo token devuelve 401.
 
+**Idempotencia implementada después de S11 (29/oct, `7705c2b3`):** el formulario
+genera y conserva `Idempotency-Key` durante el intento; `publicaciones_api.dart`
+la envía como header. Publicaciones reserva `(propietario_id, operacion, clave)`
+en `solicitudes_idempotentes`, compara el hash del payload y confirma la referencia
+junto con la publicación en la misma transacción. Un reenvío equivalente devuelve
+el mismo recurso; distinta carga o recurso original ausente produce 409. El header
+es opcional para clientes anteriores: sin él no se promete deduplicación.
+
+[Ocho pruebas MySQL](../../backend/tests/test_idempotencia_publicaciones.py) cubren
+repetición serial/concurrente, conflicto, recuperación por reenvío, claves distintas,
+aislamiento y compatibilidad; [Flutter](../../frontend/campusmarket/test/idempotencia_publicaciones_test.dart)
+comprueba transporte de la clave. El test de respuesta perdida descarta la primera
+respuesta: **no inyecta una caída de red real**. Se conserva la evidencia histórica
+[S11](../evidencias/evidencia-s11-2026-10-18.md), sin declarar resueltos deadline
+global, crash SQL/archivos, retención de claves ni recuperación productiva.
+
 ## 6.2 Autorizar una mutación / EC-02
 
 | Situación | Recorrido y respuesta |

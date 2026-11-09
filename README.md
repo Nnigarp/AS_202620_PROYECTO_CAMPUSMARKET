@@ -1,5 +1,7 @@
 # CampusMarket
 
+> **Lectura documental — 8/nov/2026:** [auditoría S1–S14, 139 criterios, brechas y trazabilidad](docs/evidencias/auditoria-documental-s1-s14-2026-11-08.md), construida sobre `ISCOUTB/master` `2d28489`. El código integra siete contextos y declara once tablas; la última promoción observada usa la fuente `46ede525…`, distinta del HEAD documental. En la lectura pública actual `/app/` y `/docs` responden 200 y `/health` devuelve `ok`, pero **GET `/universidades` responde 500**. No se acredita un recorrido UI completo nuevo ni recuperación productiva. Los registros fechados siguientes conservan su alcance histórico.
+
 > **S14 — EC-01:** [medición, reproducción, ATAM y límites](docs/evidencias/evidencia-s14-ec01-2026-11-05.md). Ensayo aislado; revisión de pares y medición visible completa pendientes.
 
 > **Estado vigente — Incremento 2, 2026-11-03 (posterior a S13):** [PR #85–#90](docs/evidencias/cierre-productivo-incremento2-2026-11-03.md) integrados; [master `494c433`](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/494c4336920d3a9515e60e06d7e16a880a9868ed) con 8/8 checks verdes. Dokploy descargó el digest `11d92aa9…` y recreó `api` según log; se observaron catálogo, fotografías, Favoritos y mensajería bidireccional. [S10 posdespliegue: 9/9 criterios, 58 solicitudes, revisión `46ede525…`](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41616502184); la referencia productiva se actualizó mediante [PR #90](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/90). **Sin acreditar:** ID/montajes posdeploy, restauración independiente SQL/fotos, rollback productivo y captura de una universidad no nula en anuncio nuevo. [Evidencia y alcance](docs/evidencias/cierre-productivo-incremento2-2026-11-03.md).
@@ -9,7 +11,7 @@
 
 Marketplace universitario para publicar, consultar, vender y alquilar productos dentro de la comunidad universitaria.
 
-## Estado vigente · 1 de noviembre de 2026 (hasta S13)
+## Estado institucional observado · 1 de noviembre de 2026 (hasta S13)
 
 **CampusMarket está publicado en el dominio institucional.** Flutter Web se sirve en [`/app/`](https://campusmarket.iscoutb.dev/app/) desde FastAPI en el contenedor `api` existente, junto a MySQL `db` del servicio Dokploy `campusmarket → production → sistema`. **No existe tercer contenedor**. Las fotografías y la base de datos mantienen volúmenes persistentes separados. [Salud](https://campusmarket.iscoutb.dev/health) · [API](https://campusmarket.iscoutb.dev/docs).
 
@@ -47,6 +49,7 @@ El README funciona como **puerta de entrada al estado vigente**. La evolución s
 | **S11** | Fallos parciales, idempotencia diseñada y extracción evaluada | [Evidencia](docs/evidencias/evidencia-s11-2026-10-18.md) · [ADR-0021](docs/adr/0021-mantener-catalogo-en-el-monolito-modular.md) |
 | **S12** | Consistencia MySQL, caché y mensajería aislada | [Evidencia](docs/evidencias/evidencia-s12-2026-10-25.md) · [cierre S12](docs/evidencias/cierre-s12-2026-10-25.md) · [ADR-0022](docs/adr/0022-mantener-mysql-como-fuente-de-verdad-y-evitar-proyecciones-asincronas.md) · [taller](docs/evidencias/taller-mensajes-s12-2026-10-25.md) |
 | **S13** | STRIDE, riesgos, privacidad y auditoría Python con remediación | [Evidencia S13](docs/evidencias/evidencia-s13-amenazas-2026-11-01.md) · [arc42 §8](docs/arc42/08-conceptos-transversales.md) / [§11](docs/arc42/11-riesgos-y-deuda-tecnica.md) · [CI](.github/workflows/s13-dependencias.yml) · [ADR-0026 propuesto](docs/adr/0026-incorporar-auditoria-de-dependencias-python-en-ci.md) |
+| **S14** | Medición EC-01, interpretación y límites de validez | [Mediciones y reproducción](docs/evidencias/evidencia-s14-ec01-2026-11-05.md) · [datos originales](docs/evidencias/datos/ec01-s14-2026-11-05.json) · [riesgos y pares pendientes](docs/arc42/11-riesgos-y-deuda-tecnica.md#evaluación-s14--2026-11-05). **6/8; C6/C7 pendientes de recepción** |
 | **Evolución transversal (posterior a S12)** | GHCR por digest, despliegue Flutter Web institucional y trazabilidad | [evidencia GHCR](docs/operacion/despliegue-ghcr.md) · [Web institucional](docs/evidencias/cierre-web-institucional-2026-11-01.md) |
 Para una revisión automática o manual, la ruta recomendada es:
 
@@ -85,7 +88,7 @@ El diff de `backend`, `frontend`, `contracts` y `deploy` entre esas revisiones y
 - Métrica: https://campusmarket.iscoutb.dev/ops/metrics/ec01
 - [Evidencia pública y pendientes](docs/evidencias/despliegue-publico-mvp-2026-10-04.md)
 
-El registro público inicial conserva 23 comprobaciones HTTP y observación de Inicio/detalle. La revisión del 4 de octubre de 2026 volvió a comprobar `/health` y `/docs` con HTTP 200 y el bundle Pages con la URL API Dokploy, sin la URL Azure antigua. La raíz del dominio API no aloja Flutter; el frontend está en Pages.
+El registro público inicial conserva 23 comprobaciones HTTP y observación de Inicio/detalle. La revisión del 4 de octubre de 2026 volvió a comprobar `/health` y `/docs` con HTTP 200 y el bundle Pages con la URL API Dokploy, sin la URL Azure antigua. En aquella revisión la raíz del dominio API no alojaba Flutter y el frontend estaba en Pages; desde el 1/nov la interfaz institucional está en `/app/`.
 
 La recreación pública registrada corresponde solo a API, con publicación e imagen conservadas; MySQL no se recreó. Recreación de API/MySQL y EC-01 con 1000 filas se verifican separadamente en CI/Compose. EC-01 extremo a extremo público, moderación pública y flujo autenticado en navegador siguen fuera de ese alcance. El scanner Sonar en CI está pendiente de configuración/ejecución; el Quality Gate automático no basta para cerrar CONTRATO §8.
 
@@ -107,6 +110,12 @@ Contextos delimitados:
 - `publicaciones`;
 - `catalogo`;
 - `administracion`.
+
+La evolución posterior incorpora además `universidades`, `favoritos` y
+`mensajeria`: **siete contextos en una misma API**, sin nuevos servicios Docker.
+El [mapa y la propiedad de las once tablas declaradas](docs/arc42/08-conceptos-transversales.md)
+incluyen `solicitudes_idempotentes`, propiedad de Publicaciones. El esquema físico
+productivo no se infiere de este inventario estático.
 
 La persistencia vigente es **MySQL**. Usuarios, Publicaciones y Administración escriben únicamente sus tablas mediante sus repositories y PyMySQL; Catálogo consume lectura del servicio de Publicaciones. `db.py` comparte infraestructura.
 
@@ -158,6 +167,13 @@ CampusMarket materializa actualmente:
 - reportes y moderación con capacidad comprobada;
 - health check y degradación controlada cuando la persistencia no está disponible.
 
+El Incremento 2 añade [Favoritos privados](docs/evidencias/incremento-2-favoritos-2026-11-03.md),
+[conversaciones y bandeja HTTP](docs/evidencias/incremento-2-mensajeria-2026-11-03.md)
+y [universidad declarada visible](docs/evidencias/incremento-2-universidad-visible-2026-11-03.md),
+con compatibilidad para anuncios anteriores sin institución. No hay WebSockets,
+push ni verificación de matrícula. La [aceptación del 3/nov](docs/evidencias/cierre-productivo-incremento2-2026-11-03.md)
+se distingue de la incidencia HTTP observada el 8/nov.
+
 El flujo fue verificado tanto en Flutter Web como en Android.
 
 ## Identidad y alcance MVP
@@ -168,7 +184,10 @@ Reporte/moderación requieren sesión/capacidad; registro/perfil no conceden pri
 
 El token vive en memoria: recargar Web o reiniciar Android requiere login.
 
-El MVP no verifica correo/afiliación ni incluye recuperación de contraseña, chat, pagos o logística. Las limitaciones y comprobaciones se detallan en la [auditoría de continuación](docs/evidencias/auditoria-mvp-continuacion-2026-10-03.md).
+El sistema no verifica correo/afiliación ni incluye recuperación de contraseña,
+pagos o logística. La exclusión de chat pertenece al [MVP del 3/oct](docs/evidencias/auditoria-mvp-continuacion-2026-10-03.md);
+la mensajería privada HTTP se incorporó después. La idempotencia de creación usa
+`Idempotency-Key`, con [alcance y límites actuales](docs/arc42/06-vista-ejecucion.md#61-autenticar-y-crear-una-publicación).
 
 ---
 
@@ -263,7 +282,7 @@ Pillow verifica contenido real, orienta/normaliza fotos y retira metadatos (ADR-
 
 Compose conserva fotos en volumen nombrado (ADR-0018), probado tras recreación.
 
-En el despliegue público vigente, Flutter Web se publica mediante GitHub Pages y la API FastAPI se ejecuta en Dokploy.
+En el despliegue institucional observado desde el 1/nov, Flutter Web se sirve en `/app/` dentro de la misma API FastAPI en Dokploy. Pages corresponde a la publicación anterior del MVP.
 
 Las imágenes se conservan en el volumen nombrado `publication_images` y MySQL utiliza el volumen `mysql_data`.
 
@@ -413,9 +432,9 @@ No se considera un gate de otro hash como validación automática de un estado d
 | Análisis estático | Ruff / `flutter analyze` |
 | Integración continua | GitHub Actions |
 | Calidad | SonarQube Cloud |
-| IaC vigente de laboratorio | Docker Compose (`deploy/compose.lab.yaml`) |
+| IaC productiva vigente | Docker Compose (`deploy/compose.prod.yaml`), API por digest; `compose.lab.yaml` conserva el build histórico |
 | IaC histórica S8 | Azure Bicep (`infra/main.bicep`) |
-| Frontend público vigente | GitHub Pages |
+| Frontend público institucional | Flutter Web en `https://campusmarket.iscoutb.dev/app/`, servido dentro de `api` |
 | Backend/API público vigente | Dokploy |
 | Persistencia pública vigente | MySQL 8.4 en servicio interno del Compose de Dokploy |
 | Despliegue histórico S8 | Azure App Service + Azure Database for MySQL |
@@ -496,59 +515,33 @@ flutter run -d emulator-5554 --dart-define=CAMPUSMARKET_API_BASE_URL=http://10.0
 
 # Despliegue público vigente
 
-La topología pública vigente es:
+La última promoción observada corresponde al 3/nov/2026: Flutter Web integrado
+con FastAPI en `api`, MySQL 8.4 en `db`, dos contenedores y los volúmenes
+`publication_images`/`mysql_data` declarados. La [evidencia de promoción](docs/evidencias/cierre-productivo-incremento2-2026-11-03.md)
+separa lo observado de los montajes, respaldos y recuperación aún no acreditados.
 
-```text
-Usuario
-   ↓
-Flutter Web
-GitHub Pages
-   ↓ HTTPS / JSON
-FastAPI
-Dokploy
-   ↓
-MySQL 8.4
-   ↓
-volúmenes persistentes
+```mermaid
+flowchart TD
+  U["Navegador · Flutter Web"] -->|"HTTPS · /app/ y API"| A["Dokploy · api · FastAPI y Web"]
+  A -->|"SQL privado"| D["db · MySQL 8.4"]
+  A --> F["Volumen de fotografías declarado"]
 ```
 
-Frontend:
+- Interfaz institucional: <https://campusmarket.iscoutb.dev/app/>.
+- Base API: `https://campusmarket.iscoutb.dev`; [health](https://campusmarket.iscoutb.dev/health), [documentación interactiva](https://campusmarket.iscoutb.dev/docs).
+- Configuración: [Compose productivo](deploy/compose.prod.yaml), [Dockerfile Web/API](backend/Dockerfile.web-release), [fuente y digest promovidos](deploy/promocion-incremento2.json).
+- Límites declarados: 256 MiB/0,5 CPU por servicio, 512 MiB totales. No se infiere aumento de cuota ni capacidad de carga por CI verde.
 
-```text
-https://nnigarp.github.io/AS_202620_PROYECTO_CAMPUSMARKET/
-```
+**Lectura pública del 8/nov:** `/app/` y `/docs` responden 200; GET `/health`
+responde `ok` con revisión `46ede525…`. **GET `/universidades` responde 500**;
+causa no determinada. Esta lectura no constituye una nueva aceptación funcional.
+S10 conserva sus nueve criterios y el [resultado del SHA base](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/42138355890),
+con revisión de runtime separada del HEAD documental; no cubre todas las rutas.
 
-API:
-
-```text
-https://campusmarket.iscoutb.dev
-```
-
-Health:
-
-```text
-https://campusmarket.iscoutb.dev/health
-```
-
-OpenAPI interactivo:
-
-```text
-https://campusmarket.iscoutb.dev/docs
-```
-
-Infraestructura vigente para el laboratorio:
-
-- [`deploy/compose.lab.yaml`](deploy/compose.lab.yaml)
-- [`backend/Dockerfile`](backend/Dockerfile)
-
-El Compose despliega:
-
-- `api`;
-- `db`.
-
-La API y MySQL están limitados a la cuota documentada del laboratorio y utilizan volúmenes nombrados para persistencia.
-
-El dominio público expone la API. Flutter Web permanece publicado independientemente en GitHub Pages.
+La [topología Pages/API de octubre](docs/evidencias/despliegue-publico-mvp-2026-10-04.md)
+se conserva como historial, sin atribuirle la publicación institucional actual.
+[Guía operativa y precondiciones](docs/operacion/despliegue-ghcr.md): no ejecutar
+Deploy, reconstruir o recrear MySQL por una actualización documental.
 
 ---
 
@@ -585,7 +578,7 @@ Infraestructura como código utilizada en S8:
 La plantilla declara App Service, Azure Database for MySQL Flexible Server y configuración dependiente del entorno. Las credenciales sensibles se suministran mediante configuración externa y parámetros seguros.
 
 > Las URLs anteriores corresponden exclusivamente al despliegue histórico verificado en S8.
-> El estado público vigente evolucionó posteriormente a Flutter Web en GitHub Pages y API FastAPI en Dokploy.
+> Tras S8 hubo una etapa Pages/API en Dokploy; desde el 1/nov la Web institucional se integra en `api` por `/app/`. Cada etapa conserva su evidencia fechada.
 > Las evidencias de cada despliegue conservan sus hashes y resultados por separado; no se atribuyen resultados de una revisión a otra únicamente porque formen parte de la misma evolución del proyecto.
 > Véase el apartado «Despliegue público vigente» y la evidencia asociada.
 

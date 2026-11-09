@@ -1,5 +1,8 @@
 # Correcciones acumuladas - CampusMarket
 
+> Este registro conserva la retroalimentación y correcciones del **primer corte**.
+> La revisión documental posterior del 8/nov/2026 está en la [matriz S1–S14](docs/evidencias/auditoria-documental-s1-s14-2026-11-08.md), con base, fuentes y estados propios; no reemplaza las evaluaciones históricas siguientes.
+
 Este documento registra la retroalimentación recibida durante las evidencias
 S1, S2, S3 y S4, junto con las correcciones realizadas por el equipo antes
 del primer corte.

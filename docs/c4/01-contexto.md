@@ -1,9 +1,18 @@
 # C4 Nivel 1 - Contexto de CampusMarket
 
+![Vista derivada del modelo PlantUML](./01-contexto.svg)
+
+Vista generada con PlantUML 1.2026.1/Smetana; el archivo `.puml` sigue siendo la fuente canónica. [Reproducción y verificaciones](../evidencias/auditoria-documental-s1-s14-2026-11-08.md#validación-documental-reproducible).
+
 El diagrama de contexto vigente de CampusMarket se mantiene como
 **diagrama como código** en:
 
 [`01-contexto.puml`](./01-contexto.puml)
+
+Lectura actualizada al código `2d28489`: incluye Favoritos y conversaciones
+sin añadir actores ni sistemas externos. La universidad es declarada, no una
+identidad verificada. El [modelo anterior al 8/nov](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/blob/2d2848922db799389ffdcf0db4ef50437cd27ef2/docs/c4/01-contexto.puml)
+se conserva en Git; no se reescribe la evidencia de S2/S4.
 
 ---
 

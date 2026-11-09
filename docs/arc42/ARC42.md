@@ -133,8 +133,9 @@ Detalle: [02-restricciones.md](02-restricciones.md).
 ### 3.2 Alcance funcional
 
 Registro/login/logout/perfil, catálogo/detalle, CRUD y disponibilidad propia,
-galería de hasta tres imágenes y reportes/moderación. Cuatro contextos materializados.
-Correo/afiliación universitaria no se verifican; sesión del cliente vive en memoria.
+galería de hasta tres imágenes, reportes/moderación, Favoritos privados,
+conversaciones HTTP y universidad declarada. Siete contextos materializados en
+una API; correo/afiliación no se verifican y la sesión del cliente vive en memoria.
 Detalle: [03-contexto.md](03-contexto.md) y [C4 Nivel 1](../c4/01-contexto.md).
 
 ## 4. Estrategia de solución
@@ -155,31 +156,33 @@ y [C4 Nivel 3](../c4/03-componentes-backend.md).
 
 Identidad resuelta por sesión, propiedad SQL y 10/10 rechazos EC-02 con datos
 intactos. Selector real, sanitización de fotografías, catálogo actualizado,
-reporte/resolución y logout revocado.
+reporte/resolución y logout revocado. La creación soporta clave de idempotencia
+persistida en MySQL; las pruebas de repetición no equivalen a un corte real de red.
 Secuencia: [06-vista-ejecucion.md](06-vista-ejecucion.md).
 
 ## 7. Vista de despliegue
 
-S8 acredita una revisión anterior en Pages/Azure. El backend público vigente está
-operativo en Dokploy con revisión `7856416795bb4accdf9d05e01adb470654875e56`.
-Pages conserva frontend compilado desde c38e0cf con la API Dokploy; PR #51 cambia
-workflow/documentación, no código de aplicación. El 4 de octubre a las 03:27 UTC
-se recreó API y se comprobó HTTP 200, la revisión, la publicación y su imagen
-con hash idéntico; MySQL permaneció running/healthy, sin recrearse públicamente.
-ADR-0018 define volúmenes/cuota; la persistencia ante recreación API/MySQL en CI
-se acredita separadamente. [Decisiones y alcance vigente](09-decisiones.md).
-Detalle: [07-vista-despliegue.md](07-vista-despliegue.md).
+La última promoción observada (3/nov) usa la imagen Web + API `11d92aa9…`, fuente
+`46ede525602161826b75273fbb12528e739908cc`, en `api`; `db` conserva MySQL 8.4.
+Flutter Web se sirve en `/app/` desde esa API, sin tercer contenedor. El header
+coincidente no demuestra por sí solo toda la identidad instalada. El 8/nov se
+observan `/health` GET 200, `/app/` HEAD 200 y `/universidades` GET 500; no se hizo
+otra aceptación UI. Persistencia sintética y recuperación productiva son evidencias
+distintas. S8/Azure/Pages y la observación del 4/oct siguen en la
+[vista de despliegue](07-vista-despliegue.md), con sus fechas.
 
 ## 8. Conceptos transversales
 
-Único escritor de seis tablas, sin repositories ajenos. Sesiones revocables,
+Once tablas declaradas y único escritor por contexto, sin repositories ajenos.
+La guarda automática omite `solicitudes_idempotentes`: esa cobertura queda abierta.
+Sesiones revocables,
 scrypt, capacidad de moderación por ID comprobado, límites de cuerpo/trabajo y
 observabilidad sin credenciales. SQL y archivos usan compensación ante errores.
 Detalle: [08-conceptos-transversales.md](08-conceptos-transversales.md).
 
 ## 9. Decisiones arquitectónicas
 
-[09-decisiones.md](09-decisiones.md) indexa ADR-0001 a ADR-0019. Los ADR aceptados
+[09-decisiones.md](09-decisiones.md) indexa ADR-0001 a ADR-0026. Los ADR aceptados
 conservan su contenido; decisiones posteriores indican qué extienden o sustituyen.
 ADR-0002 y despliegue S8 son historia. ADR-0018 fue aceptado para preparación;
 el estado operativo posterior se actualiza en el índice, sin reescribir ese ADR.

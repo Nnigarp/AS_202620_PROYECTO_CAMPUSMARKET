@@ -724,366 +724,604 @@
   "github_links": [
     {
       "url": "https://github.com/Dokploy/dokploy/blob/v0.30.10/packages/server/src/utils/builders/compose.ts",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/Dokploy/dokploy/blob/v0.30.10/packages/server/src/utils/builders/compose.ts",
+      "state": "ACCESSIBLE",
+      "resource_state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
       "state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/blob/669368894d583406c7610e8c735f686c02931de3/docs/evidencias/uso-ia-ensayo-ghcr-2026-10-30.md",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/blob/669368894d583406c7610e8c735f686c02931de3/docs/evidencias/uso-ia-ensayo-ghcr-2026-10-30.md",
+      "state": "ACCESSIBLE",
+      "resource_state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/blob/669368894d583406c7610e8c735f686c02931de3/docs/evidencias/uso-ia-ghcr-2026-10-30.md",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/blob/669368894d583406c7610e8c735f686c02931de3/docs/evidencias/uso-ia-ghcr-2026-10-30.md",
+      "state": "ACCESSIBLE",
+      "resource_state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/blob/7856416795bb4accdf9d05e01adb470654875e56/backend/Dockerfile",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/blob/7856416795bb4accdf9d05e01adb470654875e56/backend/Dockerfile",
+      "state": "ACCESSIBLE",
+      "resource_state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/blob/7856416795bb4accdf9d05e01adb470654875e56/deploy/compose.lab.yaml",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/blob/7856416795bb4accdf9d05e01adb470654875e56/deploy/compose.lab.yaml",
+      "state": "ACCESSIBLE",
+      "resource_state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/blob/b5f10a2c93836cad539a9a195f6a0911d4b3ca91/docs/evidencias/evidencia-s7-2026-09-15.md#estado-transversal-pendiente-de-saneamiento",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/blob/b5f10a2c93836cad539a9a195f6a0911d4b3ca91/docs/evidencias/evidencia-s7-2026-09-15.md",
+      "state": "ACCESSIBLE",
+      "resource_state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/049dc30ceac1386b648bef5f6713c050762e2dbf",
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/049dc30ceac1386b648bef5f6713c050762e2dbf",
+      "sha": "049dc30ceac1386b648bef5f6713c050762e2dbf",
       "state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/14ab852610f75bd5cf0e6aefda6a592b559116ed",
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/14ab852610f75bd5cf0e6aefda6a592b559116ed",
+      "sha": "14ab852610f75bd5cf0e6aefda6a592b559116ed",
       "state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/1febc859a4466e73af706fd364d633bfa5276747",
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/1febc859a4466e73af706fd364d633bfa5276747",
+      "sha": "1febc859a4466e73af706fd364d633bfa5276747",
       "state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/494c4336920d3a9515e60e06d7e16a880a9868ed",
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/494c4336920d3a9515e60e06d7e16a880a9868ed",
+      "sha": "494c4336920d3a9515e60e06d7e16a880a9868ed",
       "state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/5ef0d6b139138d1260435b1b884240f093904749",
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/5ef0d6b139138d1260435b1b884240f093904749",
+      "sha": "5ef0d6b139138d1260435b1b884240f093904749",
       "state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/7861c3788037e5319e1724a0e642349fba5f396c",
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/7861c3788037e5319e1724a0e642349fba5f396c",
+      "sha": "7861c3788037e5319e1724a0e642349fba5f396c",
       "state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/9aad45e9c1b8889b5a9f3f241ad9ec4f359bb535",
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/9aad45e9c1b8889b5a9f3f241ad9ec4f359bb535",
+      "sha": "9aad45e9c1b8889b5a9f3f241ad9ec4f359bb535",
       "state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/b75e5a0023ab6abd850d400f8d6372b71b034699",
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/b75e5a0023ab6abd850d400f8d6372b71b034699",
+      "sha": "b75e5a0023ab6abd850d400f8d6372b71b034699",
       "state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/cfb93309ea159ee82ddc8faf54fb1561d25b6d57",
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/cfb93309ea159ee82ddc8faf54fb1561d25b6d57",
+      "sha": "cfb93309ea159ee82ddc8faf54fb1561d25b6d57",
       "state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/f2e94972f0327cd11f2c956fd894f66d779cede6",
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/f2e94972f0327cd11f2c956fd894f66d779cede6",
+      "sha": "f2e94972f0327cd11f2c956fd894f66d779cede6",
       "state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/fda38976882fd5abcca8486b4b114efd28ca2b1c",
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/fda38976882fd5abcca8486b4b114efd28ca2b1c",
+      "sha": "fda38976882fd5abcca8486b4b114efd28ca2b1c",
       "state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/ff68cf255b90340634e0760f056870f9a19e9abd",
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/ff68cf255b90340634e0760f056870f9a19e9abd",
+      "sha": "ff68cf255b90340634e0760f056870f9a19e9abd",
       "state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/compare/784d788...7856416795bb4accdf9d05e01adb470654875e56",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/compare/784d788...7856416795bb4accdf9d05e01adb470654875e56",
+      "state": "ACCESSIBLE",
+      "reason": "Original URL HEAD 200; API comparison also retrieved"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/compare/master...Nnigarp:AS_202620_PROYECTO_CAMPUSMARKET:fix/s10-base-oficial-20261103?expand=1",
-      "state": "NOT_VERIFIED",
-      "reason": "INVALID_ARGUMENT"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/compare/master...Nnigarp:AS_202620_PROYECTO_CAMPUSMARKET:fix/s10-base-oficial-20261103?expand=1",
+      "state": "ACCESSIBLE",
+      "reason": "Original URL HEAD 200; API comparison also retrieved"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/compare/master...Nnigarp:S10-contrato-cliente?expand=1",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/compare/master...Nnigarp:S10-contrato-cliente?expand=1",
+      "state": "ACCESSIBLE",
+      "reason": "Original URL HEAD 200; API comparison also retrieved"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/compare/master...Nnigarp:ci/ensayo-ghcr-20261030-0971b2b?expand=1",
-      "state": "NOT_VERIFIED",
-      "reason": "INVALID_ARGUMENT"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/compare/master...Nnigarp:ci/ensayo-ghcr-20261030-0971b2b?expand=1",
+      "state": "ACCESSIBLE",
+      "reason": "Original URL HEAD 200; API comparison also retrieved"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/issues/33",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/issues/33",
+      "state": "ACCESSIBLE",
+      "number": 33,
+      "resource_state": "open"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/28",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/28",
+      "state": "ACCESSIBLE",
+      "number": 28,
+      "merged": true,
+      "merge_commit_sha": "ff68cf255b90340634e0760f056870f9a19e9abd",
+      "resource_state": "closed"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/52",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/52",
+      "state": "ACCESSIBLE",
+      "number": 52,
+      "merged": true,
+      "merge_commit_sha": "b5f10a2c93836cad539a9a195f6a0911d4b3ca91",
+      "resource_state": "closed"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/55",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/55",
+      "state": "ACCESSIBLE",
+      "number": 55,
+      "merged": true,
+      "merge_commit_sha": "1582c1ff609202fa2cc4a06fa14d18b9b61bed74",
+      "resource_state": "closed"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/56",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/56",
+      "state": "ACCESSIBLE",
+      "number": 56,
+      "merged": true,
+      "merge_commit_sha": "7861c3788037e5319e1724a0e642349fba5f396c",
+      "resource_state": "closed"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/57",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/57",
+      "state": "ACCESSIBLE",
+      "number": 57,
+      "merged": true,
+      "merge_commit_sha": "f2e94972f0327cd11f2c956fd894f66d779cede6",
+      "resource_state": "closed"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/58",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/58",
+      "state": "ACCESSIBLE",
+      "number": 58,
+      "merged": true,
+      "merge_commit_sha": "4bec2f8187982c3de41d796b2531e626dee5b66d",
+      "resource_state": "closed"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/61",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/61",
+      "state": "ACCESSIBLE",
+      "number": 61,
+      "merged": true,
+      "merge_commit_sha": "14ab852610f75bd5cf0e6aefda6a592b559116ed",
+      "resource_state": "closed"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/64",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/64",
+      "state": "ACCESSIBLE",
+      "number": 64,
+      "merged": true,
+      "merge_commit_sha": "dfab94be47df792a7e18edee4a85ea4d7be0c244",
+      "resource_state": "closed"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/73",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/73",
+      "state": "ACCESSIBLE",
+      "number": 73,
+      "merged": true,
+      "merge_commit_sha": "1068764ba84095b93fe0d643cf401503131473ec",
+      "resource_state": "closed"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/74",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/74",
+      "state": "ACCESSIBLE",
+      "number": 74,
+      "merged": true,
+      "merge_commit_sha": "669368894d583406c7610e8c735f686c02931de3",
+      "resource_state": "closed"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/77",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/77",
+      "state": "ACCESSIBLE",
+      "number": 77,
+      "merged": true,
+      "merge_commit_sha": "5ef0d6b139138d1260435b1b884240f093904749",
+      "resource_state": "closed"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/77/checks",
-      "state": "NOT_VERIFIED",
-      "reason": "NOT_FOUND"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/77/checks",
+      "state": "ACCESSIBLE",
+      "reason": "Original URL HEAD 200; PR and check-runs API accessible"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/78",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/78",
+      "state": "ACCESSIBLE",
+      "number": 78,
+      "merged": true,
+      "merge_commit_sha": "ad9c784eb14f848a912788a7b9b12bf43eaeefb9",
+      "resource_state": "closed"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/79",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/79",
+      "state": "ACCESSIBLE",
+      "number": 79,
+      "merged": true,
+      "merge_commit_sha": "049dc30ceac1386b648bef5f6713c050762e2dbf",
+      "resource_state": "closed"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/81",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/81",
+      "state": "ACCESSIBLE",
+      "number": 81,
+      "merged": true,
+      "merge_commit_sha": "92805c412534348e8f550e6c6d6ff852fdf56ee3",
+      "resource_state": "closed"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/82",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/82",
+      "state": "ACCESSIBLE",
+      "number": 82,
+      "merged": true,
+      "merge_commit_sha": "b75e5a0023ab6abd850d400f8d6372b71b034699",
+      "resource_state": "closed"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/83",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/83",
+      "state": "ACCESSIBLE",
+      "number": 83,
+      "merged": true,
+      "merge_commit_sha": "9aad45e9c1b8889b5a9f3f241ad9ec4f359bb535",
+      "resource_state": "closed"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/85",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/85",
+      "state": "ACCESSIBLE",
+      "number": 85,
+      "merged": true,
+      "merge_commit_sha": "1c07c2c3c2610455b1dc1c07b4ebc4c2ab362e24",
+      "resource_state": "closed"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/86",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/86",
+      "state": "ACCESSIBLE",
+      "number": 86,
+      "merged": true,
+      "merge_commit_sha": "2215d5420a8414c4486a0db5a145dfbd3ed1c687",
+      "resource_state": "closed"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/87",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/87",
+      "state": "ACCESSIBLE",
+      "number": 87,
+      "merged": true,
+      "merge_commit_sha": "7c27087af768f39d8f6859aa4a8713c4c681e88c",
+      "resource_state": "closed"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/88",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/88",
+      "state": "ACCESSIBLE",
+      "number": 88,
+      "merged": true,
+      "merge_commit_sha": "cfb93309ea159ee82ddc8faf54fb1561d25b6d57",
+      "resource_state": "closed"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/89",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/89",
+      "state": "ACCESSIBLE",
+      "number": 89,
+      "merged": true,
+      "merge_commit_sha": "494c4336920d3a9515e60e06d7e16a880a9868ed",
+      "resource_state": "closed"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/90",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/90",
+      "state": "ACCESSIBLE",
+      "number": 90,
+      "merged": true,
+      "merge_commit_sha": "6b46eeb1e03ab2253d1cf2db080bce6229fd9714",
+      "resource_state": "closed"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/rules/24001118",
-      "state": "NOT_VERIFIED",
-      "reason": "INVALID_ARGUMENT"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/rules/24001118",
+      "state": "ACCESSIBLE_VIA_API",
+      "reason": "Active ruleset JSON read from GitHub REST; requires pull_request and test only"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_feedback/blob/553c3f21c87c928f4b2f1e1a3352c1f72ac3b4b0/CONTRATO.md",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_feedback/blob/553c3f21c87c928f4b2f1e1a3352c1f72ac3b4b0/CONTRATO.md",
+      "state": "ACCESSIBLE",
+      "resource_state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_feedback/blob/553c3f21c87c928f4b2f1e1a3352c1f72ac3b4b0/fichas/semana-14-evidencia-s14.md",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_feedback/blob/553c3f21c87c928f4b2f1e1a3352c1f72ac3b4b0/fichas/semana-14-evidencia-s14.md",
+      "state": "ACCESSIBLE",
+      "resource_state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_feedback/blob/553c3f21c87c928f4b2f1e1a3352c1f72ac3b4b0/revisiones/2026-2/AS_202620_PROYECTO_CAMPUSMARKET/feedback.md",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_feedback/blob/553c3f21c87c928f4b2f1e1a3352c1f72ac3b4b0/revisiones/2026-2/AS_202620_PROYECTO_CAMPUSMARKET/feedback.md",
+      "state": "ACCESSIBLE",
+      "resource_state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_feedback/blob/553c3f21c87c928f4b2f1e1a3352c1f72ac3b4b0/revisiones/2026-2/AS_202620_PROYECTO_CAMPUSMARKET/planilla.md",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_feedback/blob/553c3f21c87c928f4b2f1e1a3352c1f72ac3b4b0/revisiones/2026-2/AS_202620_PROYECTO_CAMPUSMARKET/planilla.md",
+      "state": "ACCESSIBLE",
+      "resource_state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_feedback/blob/553c3f21c87c928f4b2f1e1a3352c1f72ac3b4b0/revisiones/2026-2/seguimiento-2026-11-05.md#campusmarket",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_feedback/blob/553c3f21c87c928f4b2f1e1a3352c1f72ac3b4b0/revisiones/2026-2/seguimiento-2026-11-05.md",
+      "state": "ACCESSIBLE",
+      "resource_state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_feedback/blob/553c3f21c87c928f4b2f1e1a3352c1f72ac3b4b0/revisiones/2026-2/seguimiento-despliegues-2026-11-05.md",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_feedback/blob/553c3f21c87c928f4b2f1e1a3352c1f72ac3b4b0/revisiones/2026-2/seguimiento-despliegues-2026-11-05.md",
+      "state": "ACCESSIBLE",
+      "resource_state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_feedback/blob/553c3f21c87c928f4b2f1e1a3352c1f72ac3b4b0/revisiones/2026-2/seguimiento-issues-2026-11-05.md",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_feedback/blob/553c3f21c87c928f4b2f1e1a3352c1f72ac3b4b0/revisiones/2026-2/seguimiento-issues-2026-11-05.md",
+      "state": "ACCESSIBLE",
+      "resource_state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_feedback/blob/master/CONTRATO.md",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_feedback/blob/master/CONTRATO.md",
+      "state": "ACCESSIBLE",
+      "resource_state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_feedback/blob/master/fichas/semana-10-corte2.md",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_feedback/blob/master/fichas/semana-10-corte2.md",
+      "state": "ACCESSIBLE",
+      "resource_state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_feedback/blob/master/revisiones/2026-2/AS_202620_PROYECTO_CAMPUSMARKET/semana-09-evidencia-s9.md",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_feedback/blob/master/revisiones/2026-2/AS_202620_PROYECTO_CAMPUSMARKET/semana-09-evidencia-s9.md",
+      "state": "ACCESSIBLE",
+      "resource_state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/AS_202620_feedback/blob/master/revisiones/2026-2/AS_202620_PROYECTO_CAMPUSMARKET/semana-10-corte2.md",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/AS_202620_feedback/blob/master/revisiones/2026-2/AS_202620_PROYECTO_CAMPUSMARKET/semana-10-corte2.md",
+      "state": "ACCESSIBLE",
+      "resource_state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/iscoutb.dev/blob/0d121afd28a8472d75232b95ab6bb6b071a61e21/README.md",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/iscoutb.dev/blob/0d121afd28a8472d75232b95ab6bb6b071a61e21/README.md",
+      "state": "ACCESSIBLE",
+      "resource_state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/iscoutb.dev/blob/0d121afd28a8472d75232b95ab6bb6b071a61e21/docs/politicas-uso.md",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/iscoutb.dev/blob/0d121afd28a8472d75232b95ab6bb6b071a61e21/docs/politicas-uso.md",
+      "state": "ACCESSIBLE",
+      "resource_state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/iscoutb.dev/blob/main/README.md",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/iscoutb.dev/blob/main/README.md",
+      "state": "ACCESSIBLE",
+      "resource_state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/iscoutb.dev/blob/main/README.md#5-evidencia-para-tus-entregas",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/iscoutb.dev/blob/main/README.md",
+      "state": "ACCESSIBLE",
+      "resource_state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/iscoutb.dev/blob/main/docs/politicas-uso.md",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/iscoutb.dev/blob/main/docs/politicas-uso.md",
+      "state": "ACCESSIBLE",
+      "resource_state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/ISCOUTB/iscoutb.dev/blob/main/plantillas/compose.lab.mysql.yaml",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/ISCOUTB/iscoutb.dev/blob/main/plantillas/compose.lab.mysql.yaml",
+      "state": "ACCESSIBLE",
+      "resource_state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/Kludex/python-multipart",
+      "fetch_url": "https://github.com/Kludex/python-multipart",
       "state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/blob/52762bd/docs/operacion/evidencia-ensayo-flutter-local-20261031.md",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/blob/52762bd/docs/operacion/evidencia-ensayo-flutter-local-20261031.md",
+      "state": "ACCESSIBLE",
+      "resource_state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/blob/e4f5c1026206a86c2df7d07f7a16479c807dd34b/scripts/medir_ec01_s14.py#L216",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/blob/e4f5c1026206a86c2df7d07f7a16479c807dd34b/scripts/medir_ec01_s14.py",
+      "state": "ACCESSIBLE",
+      "resource_state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/blob/e4f5c1026206a86c2df7d07f7a16479c807dd34b/scripts/medir_ec01_s14.py#L233",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/blob/e4f5c1026206a86c2df7d07f7a16479c807dd34b/scripts/medir_ec01_s14.py",
+      "state": "ACCESSIBLE",
+      "resource_state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/blob/e4f5c1026206a86c2df7d07f7a16479c807dd34b/scripts/medir_ec01_s14.py#L78",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/blob/e4f5c1026206a86c2df7d07f7a16479c807dd34b/scripts/medir_ec01_s14.py",
+      "state": "ACCESSIBLE",
+      "resource_state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/blob/e4f5c1026206a86c2df7d07f7a16479c807dd34b/scripts/medir_ec01_s14.py#L88",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/blob/e4f5c1026206a86c2df7d07f7a16479c807dd34b/scripts/medir_ec01_s14.py",
+      "state": "ACCESSIBLE",
+      "resource_state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/blob/e4f5c1026206a86c2df7d07f7a16479c807dd34b/scripts/test_medir_ec01_s14.py#L10",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/blob/e4f5c1026206a86c2df7d07f7a16479c807dd34b/scripts/test_medir_ec01_s14.py",
+      "state": "ACCESSIBLE",
+      "resource_state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/blob/ops/release-universidades-20261102/backend/Dockerfile.web-release",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/blob/ops/release-universidades-20261102/backend/Dockerfile.web-release",
+      "state": "ACCESSIBLE",
+      "resource_state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/058f63f0882d388e40c85c347e406bb9777cb343",
+      "fetch_url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/058f63f0882d388e40c85c347e406bb9777cb343",
+      "sha": "058f63f0882d388e40c85c347e406bb9777cb343",
       "state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/32472bd2e21dac3890484dcb19c0ca0becd07172",
+      "fetch_url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/32472bd2e21dac3890484dcb19c0ca0becd07172",
+      "sha": "32472bd2e21dac3890484dcb19c0ca0becd07172",
       "state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/39cc948b74ff7a21f4b1dc40b4257ee82f85f727",
+      "fetch_url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/39cc948b74ff7a21f4b1dc40b4257ee82f85f727",
+      "sha": "39cc948b74ff7a21f4b1dc40b4257ee82f85f727",
       "state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/3b239804b215338f2ab2b6e9dfd85f96a0b22176",
+      "fetch_url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/3b239804b215338f2ab2b6e9dfd85f96a0b22176",
+      "sha": "3b239804b215338f2ab2b6e9dfd85f96a0b22176",
       "state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/52762bd",
+      "fetch_url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/52762bd",
+      "sha": "52762bd2d84367865b66ec0f66b4260113b04d9f",
       "state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/62b984418c2d1be3f097564eef4f571bf5da1600",
+      "fetch_url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/62b984418c2d1be3f097564eef4f571bf5da1600",
+      "sha": "62b984418c2d1be3f097564eef4f571bf5da1600",
       "state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/871865de804ae00a86d11993946d9c26108f115c",
+      "fetch_url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/871865de804ae00a86d11993946d9c26108f115c",
+      "sha": "871865de804ae00a86d11993946d9c26108f115c",
       "state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/a079fb5f11b21bdfd161c798e7a4425bf48114cc",
+      "fetch_url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/a079fb5f11b21bdfd161c798e7a4425bf48114cc",
+      "sha": "a079fb5f11b21bdfd161c798e7a4425bf48114cc",
       "state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/a2b8af5b985b6f614649b88aa1aae8becd2a0484",
+      "fetch_url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/a2b8af5b985b6f614649b88aa1aae8becd2a0484",
+      "sha": "a2b8af5b985b6f614649b88aa1aae8becd2a0484",
       "state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/c701c9b794b0a9bae7793789f6b0a20f80eeb710",
+      "fetch_url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/c701c9b794b0a9bae7793789f6b0a20f80eeb710",
+      "sha": "c701c9b794b0a9bae7793789f6b0a20f80eeb710",
       "state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/dceb4ea20ca82017749064037889248abe6c88c8",
+      "fetch_url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/dceb4ea20ca82017749064037889248abe6c88c8",
+      "sha": "dceb4ea20ca82017749064037889248abe6c88c8",
       "state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/tree/S10-contrato-cliente",
+      "fetch_url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/tree/S10-contrato-cliente",
       "state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/docker-library/official-images/blob/master/library/python",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/docker-library/official-images/blob/master/library/python",
+      "state": "ACCESSIBLE",
+      "resource_state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/flutter/flutter/blob/3.47.3/packages/integration_test/pubspec.yaml",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/flutter/flutter/blob/3.47.3/packages/integration_test/pubspec.yaml",
+      "state": "ACCESSIBLE",
+      "resource_state": "ACCESSIBLE"
     },
     {
       "url": "https://github.com/flutter/flutter/issues/129231",
-      "state": "ACCESSIBLE"
+      "fetch_url": "https://github.com/flutter/flutter/issues/129231",
+      "state": "ACCESSIBLE",
+      "number": 129231,
+      "resource_state": "closed"
     },
     {
       "url": "https://github.com/python-pillow/Pillow",
+      "fetch_url": "https://github.com/python-pillow/Pillow",
       "state": "ACCESSIBLE"
     }
   ],
-  "documentation_fixes_applied": false,
+  "documentation_fixes_applied": true,
   "production_changed": false,
   "peer_review_received": false,
   "s14_criteria_6_7": "PENDIENTE DE RECEPCIÓN",
@@ -1091,697 +1329,836 @@
     {
       "id": "S01-C01",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S01-C02",
       "baseline_state": "NO VERIFICADO",
-      "gap_id": "X01"
+      "gap_id": "X01",
+      "post_audit_state": "NO VERIFICADO"
     },
     {
       "id": "S01-C03",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S01-C04",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S01-C05",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S01-C06",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S01-C07",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S01-C08",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S01-C09",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S02-C01",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S02-C02",
       "baseline_state": "PARCIAL",
-      "gap_id": "D02"
+      "gap_id": "D02",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S02-C03",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S02-C04",
       "baseline_state": "PARCIAL",
-      "gap_id": "D01"
+      "gap_id": "D01",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S02-C05",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S02-C06",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S02-C07",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S02-C08",
       "baseline_state": "PARCIAL",
-      "gap_id": "D03"
+      "gap_id": "D03",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S02-C09",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S03-C01",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S03-C02",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S03-C03",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S03-C04",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S03-C05",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S03-C06",
       "baseline_state": "PARCIAL",
-      "gap_id": "D05"
+      "gap_id": "D05",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S03-C07",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S03-C08",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S03-C09",
       "baseline_state": "PARCIAL",
-      "gap_id": "D02"
+      "gap_id": "D02",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S04-C01",
       "baseline_state": "PARCIAL",
-      "gap_id": "D02"
+      "gap_id": "D02",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S04-C02",
       "baseline_state": "PARCIAL",
-      "gap_id": "D08"
+      "gap_id": "D08",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S04-C03",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S04-C04",
       "baseline_state": "PARCIAL",
-      "gap_id": "D01"
+      "gap_id": "D01",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S04-C05",
       "baseline_state": "PARCIAL",
-      "gap_id": "D03"
+      "gap_id": "D03",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S04-C06",
       "baseline_state": "PARCIAL",
-      "gap_id": "D03"
+      "gap_id": "D03",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S04-C07",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S04-C08",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S04-C09",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S04-C10",
       "baseline_state": "PARCIAL",
-      "gap_id": "D05"
+      "gap_id": "D05",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S05-C01",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S05-C02",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S05-C03",
       "baseline_state": "PARCIAL",
-      "gap_id": "D05"
+      "gap_id": "D05",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S05-C04",
       "baseline_state": "PARCIAL",
-      "gap_id": "X01"
+      "gap_id": "X01",
+      "post_audit_state": "PARCIAL"
     },
     {
       "id": "S05-C05",
       "baseline_state": "PARCIAL",
-      "gap_id": "D02"
+      "gap_id": "D02",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S05-C06",
       "baseline_state": "PARCIAL",
-      "gap_id": "D05"
+      "gap_id": "D05",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S05-C07",
       "baseline_state": "PARCIAL",
-      "gap_id": "D03"
+      "gap_id": "D03",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S05-C08",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S05-C09",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S05-C10",
       "baseline_state": "PARCIAL",
-      "gap_id": "D05"
+      "gap_id": "D05",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S05-C11",
       "baseline_state": "NO VERIFICADO",
-      "gap_id": "X02"
+      "gap_id": "X02",
+      "post_audit_state": "NO VERIFICADO"
     },
     {
       "id": "S05-C12",
       "baseline_state": "NO VERIFICADO",
-      "gap_id": "X03"
+      "gap_id": "X03",
+      "post_audit_state": "NO VERIFICADO"
     },
     {
       "id": "S06-C01",
       "baseline_state": "PARCIAL",
-      "gap_id": "D02"
+      "gap_id": "D02",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S06-C02",
       "baseline_state": "PARCIAL",
-      "gap_id": "D04"
+      "gap_id": "D04",
+      "post_audit_state": "PARCIAL"
     },
     {
       "id": "S06-C03",
       "baseline_state": "PARCIAL",
-      "gap_id": "D04"
+      "gap_id": "D04",
+      "post_audit_state": "PARCIAL"
     },
     {
       "id": "S06-C04",
       "baseline_state": "PARCIAL",
-      "gap_id": "D04"
+      "gap_id": "D04",
+      "post_audit_state": "PARCIAL"
     },
     {
       "id": "S06-C05",
       "baseline_state": "PARCIAL",
-      "gap_id": "D04"
+      "gap_id": "D04",
+      "post_audit_state": "PARCIAL"
     },
     {
       "id": "S06-C06",
       "baseline_state": "PARCIAL",
-      "gap_id": "D02"
+      "gap_id": "D02",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S06-C07",
       "baseline_state": "PARCIAL",
-      "gap_id": "D03"
+      "gap_id": "D03",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S06-C08",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S07-C01",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S07-C02",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S07-C03",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S07-C04",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S07-C05",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S07-C06",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S07-C07",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S07-C08",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S07-C09",
       "baseline_state": "PARCIAL",
-      "gap_id": "D10"
+      "gap_id": "D10",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S07-C10",
       "baseline_state": "PARCIAL",
-      "gap_id": "D03"
+      "gap_id": "D03",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S08-C01",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S08-C02",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S08-C03",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S08-C04",
       "baseline_state": "PARCIAL",
-      "gap_id": "X04"
+      "gap_id": "X04",
+      "post_audit_state": "PARCIAL"
     },
     {
       "id": "S08-C05",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S08-C06",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S08-C07",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S08-C08",
       "baseline_state": "PARCIAL",
-      "gap_id": "X08"
+      "gap_id": "X08",
+      "post_audit_state": "PARCIAL"
     },
     {
       "id": "S08-C09",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S08-C10",
       "baseline_state": "PARCIAL",
-      "gap_id": "D07"
+      "gap_id": "D07",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S08-C11",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S08-C12",
       "baseline_state": "PARCIAL",
-      "gap_id": "D08"
+      "gap_id": "D08",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S09-C01",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S09-C02",
       "baseline_state": "PARCIAL",
-      "gap_id": "D05"
+      "gap_id": "D05",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S09-C03",
       "baseline_state": "PARCIAL",
-      "gap_id": "D08"
+      "gap_id": "D08",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S09-C04",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S09-C05",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S09-C06",
       "baseline_state": "PARCIAL",
-      "gap_id": "D06"
+      "gap_id": "D06",
+      "post_audit_state": "PARCIAL"
     },
     {
       "id": "S09-C07",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S09-C08",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S09-C09",
       "baseline_state": "PARCIAL",
-      "gap_id": "X08"
+      "gap_id": "X08",
+      "post_audit_state": "PARCIAL"
     },
     {
       "id": "S09-C10",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S10-C01",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S10-C02",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S10-C03",
       "baseline_state": "NO VERIFICADO",
-      "gap_id": "X02"
+      "gap_id": "X02",
+      "post_audit_state": "NO VERIFICADO"
     },
     {
       "id": "S10-C04",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S10-C05",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S10-C06",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S10-C07",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S10-C08",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S10-C09",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S10-C10",
       "baseline_state": "PARCIAL",
-      "gap_id": "X08"
+      "gap_id": "X08",
+      "post_audit_state": "PARCIAL"
     },
     {
       "id": "S10-C11",
       "baseline_state": "PARCIAL",
-      "gap_id": "D09"
+      "gap_id": "D09",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S10-C12",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S10-C13",
       "baseline_state": "NO VERIFICADO",
-      "gap_id": "X03"
+      "gap_id": "X03",
+      "post_audit_state": "NO VERIFICADO"
     },
     {
       "id": "S11-C01",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S11-C02",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S11-C03",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S11-C04",
       "baseline_state": "PARCIAL",
-      "gap_id": "D10"
+      "gap_id": "D10",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S11-C05",
       "baseline_state": "PARCIAL",
-      "gap_id": "D10"
+      "gap_id": "D10",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S11-C06",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S11-C07",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S11-C08",
       "baseline_state": "PARCIAL",
-      "gap_id": "D10"
+      "gap_id": "D10",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S11-C09",
       "baseline_state": "PARCIAL",
-      "gap_id": "D05"
+      "gap_id": "D05",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S12-C01",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S12-C02",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S12-C03",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S12-C04",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S12-C05",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S12-C06",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S12-C07",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S12-C08",
       "baseline_state": "PARCIAL",
-      "gap_id": "D03"
+      "gap_id": "D03",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S12-C09",
       "baseline_state": "PARCIAL",
-      "gap_id": "D02"
+      "gap_id": "D02",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S13-C01",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S13-C02",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S13-C03",
       "baseline_state": "PARCIAL",
-      "gap_id": "X07"
+      "gap_id": "X07",
+      "post_audit_state": "PARCIAL"
     },
     {
       "id": "S13-C04",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S13-C05",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S13-C06",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S13-C07",
       "baseline_state": "PARCIAL",
-      "gap_id": "X07"
+      "gap_id": "X07",
+      "post_audit_state": "PARCIAL"
     },
     {
       "id": "S13-C08",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S13-C09",
       "baseline_state": "PARCIAL",
-      "gap_id": "D02"
+      "gap_id": "D02",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S13-C10",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S13-C11",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S14-C01",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S14-C02",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S14-C03",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S14-C04",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S14-C05",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     },
     {
       "id": "S14-C06",
       "baseline_state": "PENDIENTE DE RECEPCIÓN",
-      "gap_id": "X06"
+      "gap_id": "X06",
+      "post_audit_state": "PENDIENTE DE RECEPCIÓN"
     },
     {
       "id": "S14-C07",
       "baseline_state": "PENDIENTE DE RECEPCIÓN",
-      "gap_id": "X06"
+      "gap_id": "X06",
+      "post_audit_state": "PENDIENTE DE RECEPCIÓN"
     },
     {
       "id": "S14-C08",
       "baseline_state": "VERIFICADO",
-      "gap_id": ""
+      "gap_id": "",
+      "post_audit_state": "VERIFICADO"
     }
   ],
   "local_links_baseline": {
@@ -2172,7 +2549,7 @@
     "docs/evidencias/s10/ci-38204357938/observaciones.jsonl": "b08a87f3d89be86ae5f5c4a382960df96afe8da0edb8208ed92da6852d479c54"
   },
   "source_materials_reading": {
-    "S12": "32 páginas OCR; dos finales sin contenido extraíble; contraste visual de páginas críticas pendiente",
+    "S12": "32 páginas OCR; páginas 25–26 contrastadas visualmente; dos finales sin contenido extraíble; la numeración de las diapositivas indica /30",
     "S14": "OCR previo reutilizado tras verificar mismo SHA256; lectura pp. 14, 16–22",
     "S2_S3_S4_S6_S7_S8_S9": "Texto extraído y consigna de entrega contrastada; no representa acceso autenticado a SAVIO"
   },
@@ -2184,6 +2561,209 @@
     ],
     "idempotency_introduced_in": "7705c2b3cad07c727b7fd4cbe2a623d9a19d967c",
     "universidades_http_get": 500,
-    "universidades_cause": "NO VERIFICADA; no acceso a logs privados/DB"
+    "universidades_cause": "NO VERIFICADA; no acceso a logs privados/DB",
+    "frontend_cache": "FavoritosController conserva estado privado por token, sin TTL/push; no equivale a cachear Catálogo en backend.",
+    "configuration_change": ".gitleaks.toml: excepción acotada a tres hashes públicos del JSON de auditoría; sin desactivar regla ni workflows."
+  },
+  "github_fragments_verified": [
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/blob/b5f10a2c93836cad539a9a195f6a0911d4b3ca91/docs/evidencias/evidencia-s7-2026-09-15.md#estado-transversal-pendiente-de-saneamiento",
+      "fragment": "estado-transversal-pendiente-de-saneamiento",
+      "state": "VERIFIED"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_feedback/blob/553c3f21c87c928f4b2f1e1a3352c1f72ac3b4b0/revisiones/2026-2/seguimiento-2026-11-05.md#campusmarket",
+      "fragment": "campusmarket",
+      "state": "VERIFIED"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/iscoutb.dev/blob/main/README.md#5-evidencia-para-tus-entregas",
+      "fragment": "5-evidencia-para-tus-entregas",
+      "state": "VERIFIED"
+    },
+    {
+      "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/blob/e4f5c1026206a86c2df7d07f7a16479c807dd34b/scripts/medir_ec01_s14.py#L216",
+      "fragment": "L216",
+      "state": "VERIFIED"
+    },
+    {
+      "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/blob/e4f5c1026206a86c2df7d07f7a16479c807dd34b/scripts/medir_ec01_s14.py#L233",
+      "fragment": "L233",
+      "state": "VERIFIED"
+    },
+    {
+      "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/blob/e4f5c1026206a86c2df7d07f7a16479c807dd34b/scripts/medir_ec01_s14.py#L78",
+      "fragment": "L78",
+      "state": "VERIFIED"
+    },
+    {
+      "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/blob/e4f5c1026206a86c2df7d07f7a16479c807dd34b/scripts/medir_ec01_s14.py#L88",
+      "fragment": "L88",
+      "state": "VERIFIED"
+    },
+    {
+      "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/blob/e4f5c1026206a86c2df7d07f7a16479c807dd34b/scripts/test_medir_ec01_s14.py#L10",
+      "fragment": "L10",
+      "state": "VERIFIED"
+    }
+  ],
+  "public_ruleset": {
+    "id": 24001118,
+    "name": "Proteccion master - CI",
+    "target": "branch",
+    "source_type": "Repository",
+    "source": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+    "enforcement": "active",
+    "conditions": {
+      "ref_name": {
+        "exclude": [],
+        "include": [
+          "~DEFAULT_BRANCH"
+        ]
+      }
+    },
+    "rules": [
+      {
+        "type": "required_status_checks",
+        "parameters": {
+          "strict_required_status_checks_policy": false,
+          "do_not_enforce_on_create": false,
+          "required_status_checks": [
+            {
+              "context": "test",
+              "integration_id": 15368
+            }
+          ]
+        }
+      },
+      {
+        "type": "pull_request",
+        "parameters": {
+          "required_approving_review_count": 0,
+          "dismiss_stale_reviews_on_push": false,
+          "required_reviewers": [],
+          "require_code_owner_review": false,
+          "dismissal_restriction": {
+            "enabled": false,
+            "allowed_actors": []
+          },
+          "require_last_push_approval": false,
+          "required_review_thread_resolution": false,
+          "require_extra_approval_for_unattributed_changes": false,
+          "allowed_merge_methods": [
+            "merge",
+            "squash",
+            "rebase"
+          ]
+        }
+      }
+    ],
+    "node_id": "RRS_lACqUmVwb3NpdG9yec5PLEw1zgFuOl4",
+    "created_at": "2026-09-25T09:05:08.786-05:00",
+    "updated_at": "2026-09-25T09:05:08.928-05:00",
+    "bypass_actors": [],
+    "current_user_can_bypass": "never",
+    "_links": {
+      "self": {
+        "href": "https://api.github.com/repos/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/rulesets/24001118"
+      },
+      "html": {
+        "href": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/rules/24001118"
+      }
+    }
+  },
+  "post_audit_counts": {
+    "VERIFICADO": 120,
+    "NO VERIFICADO": 5,
+    "PARCIAL": 12,
+    "PENDIENTE DE RECEPCIÓN": 2
+  },
+  "matrix_baseline_commit": "4bf20ed2cd2032c608c7a110d116ef477795a10e",
+  "ci_of_documentation_branch": {
+    "state": "PENDING_PR",
+    "note": "Los checks de la base oficial no se atribuyen al commit documental; no se reejecutan mediciones sin cambios del experimento."
+  },
+  "validation_completed_utc": "2026-11-09T05:06:15.337041+00:00",
+  "local_validation": {
+    "markdown_files": 98,
+    "internal_count": 1477,
+    "internal_failures": [],
+    "external_occurrences": 589,
+    "external_distinct": 372,
+    "aspects": {
+      "tables": 12,
+      "rows": 28,
+      "failures": []
+    },
+    "ruff": "0.16.9: backend scripts passed",
+    "git_diff_check": "passed",
+    "plantuml": {
+      "version": "1.2026.1",
+      "jar_sha256": "89c116168a2a0f7cf5292e11617ba22abd743f891914f1fec5bc9c7d257b3092",
+      "syntax_models": 3,
+      "render_engine": "smetana",
+      "svg_xml_valid": true,
+      "png_visually_inspected": true
+    },
+    "verifier_negative_controls": [
+      "missing_path_detected",
+      "missing_anchor_detected",
+      "duplicate_heading_valid",
+      "ninth_aspect_column_exit_1"
+    ],
+    "preservation": {
+      "protected_files_compared": 372,
+      "allowed_documentation_changes": [
+        "frontend/campusmarket/README.md"
+      ],
+      "immutable_adrs": 26,
+      "historical_evidence_files": 55,
+      "historical_evidence_and_adrs_unchanged": true,
+      "official_criterion_line_links_valid": 139,
+      "c4_rendered": [
+        {
+          "path": "docs/c4/01-contexto.svg",
+          "sha256": "22e5b12be3e7f3dc8f9abc4c328c87b878781692bf38c8d4f929d484ee78f344",
+          "well_formed": true
+        },
+        {
+          "path": "docs/c4/02-contenedores.svg",
+          "sha256": "99c041d20113e090e8cc30e15396ddf23188a4eabde68b0e2fddda82bbaa935b",
+          "well_formed": true
+        },
+        {
+          "path": "docs/c4/03-componentes-backend.svg",
+          "sha256": "5afcddc59feca737655d2aa5b3c1c02e462d9e03e311c104585f62057404e38b",
+          "well_formed": true
+        }
+      ],
+      "functional_code_contracts_deploy_workflows_existing_scripts_unchanged": true
+    },
+    "gitleaks": {
+      "version": "8.30.1",
+      "checkout_findings": 0,
+      "new_branch_history_findings": 0,
+      "history_checked_through": "4bf20ed2cd2032c608c7a110d116ef477795a10e",
+      "entire_history_verified": false,
+      "initial_false_positives": [
+        {
+          "public_file": "docs/evidencias/auditoria-s9-dependencias-secretos-2026-10-01.md",
+          "sha256": "1d4bae958ddec157286be1e18a160b0e5b462997dbae11ba529d45a75e4527ac",
+          "rule": "generic-api-key"
+        },
+        {
+          "public_file": "docs/evidencias/s10/barrido-secretos-resumen.json",
+          "sha256": "33711d4d77e9fd718d08f6eadac639f057d2ee09df108c588120a2ce242969d6",
+          "rule": "generic-api-key"
+        },
+        {
+          "public_file": "docs/evidencias/s10/barrido-secretos-checkout.json",
+          "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+          "rule": "generic-api-key"
+        }
+      ],
+      "allowlist_scope": "exact new audit JSON path AND generic-api-key AND three complete public SHA256 values only",
+      "different_value_same_path_still_detected": true
+    }
   }
 }

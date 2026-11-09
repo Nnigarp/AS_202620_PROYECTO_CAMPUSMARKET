@@ -1,6 +1,6 @@
 @startuml
 title CampusMarket - C4 Nivel 3 · Componentes del Backend API
-caption Monolito modular · evolución Incremento 2
+caption Monolito modular · siete contextos · código integrado 2d28489
 top to bottom direction
 skinparam shadowing false
 skinparam packageStyle rectangle
@@ -17,7 +17,7 @@ package "Backend API · FastAPI · monolito modular" {
   package "Publicaciones" {
     rectangle "API\nrouter.py\nCRUD y galería con identidad" as pr
     rectangle "Servicio\nservice.py\nPropiedad y capacidades de lectura" as ps
-    rectangle "Repositorio\nrepository.py\nPublicaciones y metadatos de fotos" as pd
+    rectangle "Repositorio\nrepository.py\nPublicaciones, fotos e idempotencia" as pd
     rectangle "Almacenamiento de imágenes\nimage_storage.py\nPillow y archivos" as storage
     pr --> ps
     ps --> pd
@@ -91,7 +91,7 @@ ADR-0009 y ADR-0019; prueba de erosión.
 end note
 note bottom of db
 Usuarios: usuarios, sesiones_usuario, intentos_autenticacion.
-Publicaciones: publicaciones, publicacion_imagenes.
+Publicaciones: publicaciones, publicacion_imagenes, solicitudes_idempotentes.
 Administración: reportes_publicacion.
 Favoritos: favoritos (clave usuario/publicación).
 Mensajería: conversaciones y mensajes.
@@ -102,6 +102,7 @@ note bottom of files
 Máximo 3 imágenes de 5 MiB y 20 MP.
 Orientación y reducción a 2048 px; sin EXIF.
 Compose conserva dos contenedores y volúmenes.
-Incremento 2 candidato: todavía sin promoción productiva.
+Incremento 2 promovido según evidencia del 03/11/2026.
+La observación HTTP no acredita montajes ni restauración.
 end note
 @enduml

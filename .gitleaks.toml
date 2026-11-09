@@ -9,3 +9,11 @@ targetRules = ["generic-api-key"]
 condition = "AND"
 paths = ['''(^|/)docs/evidencias/evidencia-s7-2026-09-15\.md$''']
 regexes = ['''^ISCOUTB_AS_202620_PROYECTO_CAMPUSMARKET$''']
+
+[[allowlists]]
+description = "Tres SHA256 públicos recalculados de evidencias; sus rutas contienen secretos, no son credenciales"
+targetRules = ["generic-api-key"]
+condition = "AND"
+regexTarget = "secret"
+paths = ['''(^|/)docs/evidencias/datos/auditoria-documental-s1-s14-2026-11-08\.json$''']
+regexes = ['''^(1d4bae958ddec157286be1e18a160b0e5b462997dbae11ba529d45a75e4527ac|33711d4d77e9fd718d08f6eadac639f057d2ee09df108c588120a2ce242969d6|37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570)$''']

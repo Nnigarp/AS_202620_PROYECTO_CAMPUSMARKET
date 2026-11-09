@@ -1,10 +1,17 @@
 # C4 Nivel 3 - Componentes del Backend API de CampusMarket
 
-> El diagrama incorpora el código candidato del Incremento 2. Sus adendas al final identifican capacidades y pruebas nuevas, todavía sin despliegue. Los apartados MVP preservan antecedentes; para el estado institucional vigente se consulta [arc42 §7](../arc42/07-vista-despliegue.md).
+![Vista derivada del modelo PlantUML](./03-componentes-backend.svg)
+
+Vista generada con PlantUML 1.2026.1/Smetana; el archivo `.puml` sigue siendo la fuente canónica. [Reproducción y verificaciones](../evidencias/auditoria-documental-s1-s14-2026-11-08.md#validación-documental-reproducible).
+
+> El diagrama describe el código integrado en `2d28489`, incluido el Incremento 2.
+> La promoción observada del 3/nov tiene [evidencia propia](../evidencias/cierre-productivo-incremento2-2026-11-03.md);
+> no se la atribuye al SHA de esta actualización documental. La disponibilidad
+> observada el 8/nov y sus límites se registran en [arc42 §7](../arc42/07-vista-despliegue.md).
 
 
 Fuente canónica: [03-componentes-backend.puml](03-componentes-backend.puml).
-El backend es una sola aplicación FastAPI: monolito modular, cuatro contextos
+El backend es una sola aplicación FastAPI: monolito modular, siete contextos
 materializados al nivel MVP y una única base MySQL. Estado de verificación en
 [auditoría de continuación](../evidencias/auditoria-mvp-continuacion-2026-10-03.md).
 
@@ -13,13 +20,20 @@ materializados al nivel MVP y una única base MySQL. Estado de verificación en
 | Contexto | Entrada y servicio | Repositorio / datos propios | Estado MVP |
 |---|---|---|---|
 | Usuarios | `usuarios/router.py`, `service.py`, `dependencies.py`, `security.py` | `usuarios/repository.py`: `usuarios`, `sesiones_usuario`, `intentos_autenticacion` | Registro, login, perfil, sesión y logout |
-| Publicaciones | `publicaciones/router.py`, `service.py`, `image_storage.py` | `publicaciones/repository.py`: `publicaciones`, `publicacion_imagenes` | CRUD propio, disponibilidad y galería |
+| Publicaciones | `publicaciones/router.py`, `service.py`, `image_storage.py` | `publicaciones/repository.py`: `publicaciones`, `publicacion_imagenes`, `solicitudes_idempotentes` | CRUD propio, disponibilidad, galería e idempotencia opcional |
 | Catálogo | `catalogo/router.py`, `service.py` | Sin tablas ni SQL propios; lee por el servicio de Publicaciones | Búsqueda, filtros, tarjetas y detalle |
 | Administración | `administracion/router.py`, `service.py` | `administracion/repository.py`: `reportes_publicacion` | Reportar, cola de revisión, ocultar o descartar con nota |
+| Universidades | `universidades/router.py`, `service.py` | `universidades/repository.py`: `universidades` | Catálogo y capacidades públicas por IDs |
+| Favoritos | `favoritos/router.py`, `service.py` | `favoritos/repository.py`: `favoritos` | Referencias privadas por cuenta y composición de tarjetas |
+| Mensajería | `mensajeria/router.py`, `service.py` | `mensajeria/repository.py`: `conversaciones`, `mensajes` | Contexto, participantes, bandeja y envío idempotente |
 
-Las rutas son relativas a `backend/app/`. `main.py` registra los cuatro routers,
+Las rutas son relativas a `backend/app/`. `main.py` registra los siete routers,
 CORS, manejo de errores, límites HTTP, observabilidad, health y lectura pública de
 `/uploads`. `db.py` comparte conexión/transacción, sin SQL de dominio.
+
+Las once tablas son el esquema **declarado en código**. No se inspeccionó MySQL
+productivo. La guarda `OWNERS` omite `solicitudes_idempotentes`; no afirmar que
+CI demuestra cobertura de propiedad de esa tabla. [Hallazgo y plan](../arc42/11-riesgos-y-deuda-tecnica.md).
 
 ## Relaciones permitidas
 
@@ -52,7 +66,9 @@ compensación y reconciliación de huérfanos siguen ADR-0015.
 
 El directorio se configura con `CAMPUSMARKET_UPLOAD_DIR`. Compose conserva el
 directorio en un volumen nombrado (ADR-0018), probado tras recrear contenedores.
-El MVP público usa Flutter Web en GitHub Pages y API FastAPI en Dokploy,
+### Registro histórico de despliegue — 4/oct/2026
+
+En aquella revisión el MVP público usaba Flutter Web en GitHub Pages y API FastAPI en Dokploy,
 https://campusmarket.iscoutb.dev, con /health y /docs operativos (HTTP 200).
 El bundle Pages consume esa API. Dokploy conserva fotos en publication_images
 y MySQL en mysql_data. El registro público acredita recreación de API con la
@@ -63,6 +79,8 @@ c38e0cf36a30dddec39f169b7618b7c6127e0a71; master auditado:
 b5f10a2c93836cad539a9a195f6a0911d4b3ca91. El código relevante es idéntico,
 pero cada ejecución conserva su hash en el [complemento S9](../evidencias/evidencia-s9-2026-10-01.md#17-complemento-final-de-auditoria-s9--4-de-octubre-de-2026).
 Azure corresponde a la línea base histórica S8.
+
+Desde el 1/nov la Web institucional se sirve dentro de `api` por `/app/`; el 3/nov se promovió el Incremento 2. [C4 L2](02-contenedores.md) y [arc42 §7](../arc42/07-vista-despliegue.md) identifican el digest y los límites de la observación posterior. Las revisiones de este apartado son las históricas del 4/oct.
 
 ## Contrato y verificación
 

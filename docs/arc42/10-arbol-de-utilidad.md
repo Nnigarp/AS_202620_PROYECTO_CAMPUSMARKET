@@ -8,7 +8,7 @@ El árbol de utilidad permite organizar los atributos de calidad de CampusMarket
 
 ### Refinamiento: Control de acceso a publicaciones
 
-**Escenario relacionado:** EC-02 - Protección de publicaciones.
+**Escenario relacionado:** [EC-02](10-escenarios-de-calidad.md#ec-02---protección-de-publicaciones) - Protección de publicaciones.
 
 Un estudiante que no sea propietario de una publicación no podrá modificarla ni eliminarla.
 
@@ -24,7 +24,7 @@ Un estudiante que no sea propietario de una publicación no podrá modificarla n
 
 ### Refinamiento: Facilidad de modificación
 
-**Escenario relacionado:** EC-03 - Modificación del sistema.
+**Escenario relacionado:** [EC-03](10-escenarios-de-calidad.md#ec-03---modificación-del-sistema) - Modificación del sistema.
 
 El equipo debe poder agregar nuevas características relacionadas con los productos sin tener que modificar funciones no relacionadas.
 
@@ -40,7 +40,7 @@ El equipo debe poder agregar nuevas características relacionadas con los produc
 
 ### Refinamiento: Tiempo de respuesta de búsquedas
 
-**Escenario relacionado:** EC-01 - Consulta de productos.
+**Escenario relacionado:** [EC-01](10-escenarios-de-calidad.md#ec-01---consulta-de-productos) - Consulta de productos.
 
 El sistema debe responder adecuadamente cuando un estudiante busque o filtre productos.
 
@@ -56,7 +56,7 @@ El sistema debe responder adecuadamente cuando un estudiante busque o filtre pro
 
 ### Refinamiento: Recuperación ante fallas
 
-**Escenario relacionado:** EC-04 - Recuperación del prototipo.
+**Escenario relacionado:** [EC-04](10-escenarios-de-calidad.md#ec-04---recuperación-del-prototipo) - Recuperación del prototipo.
 
 Si CampusMarket deja de responder, el equipo debe poder recuperar el funcionamiento en un tiempo razonable.
 
@@ -72,10 +72,10 @@ Si CampusMarket deja de responder, el equipo debe poder recuperar el funcionamie
 
 | Atributo | Refinamiento | Escenario | Impacto | Riesgo | Prioridad |
 |---|---|---|---|---|---|
-| Seguridad | Control de acceso | EC-02 | Alto | Alto | Alta |
-| Mantenibilidad | Facilidad de modificación | EC-03 | Alto | Alto | Alta |
-| Rendimiento | Tiempo de respuesta | EC-01 | Alto | Medio | Alta |
-| Disponibilidad | Recuperación | EC-04 | Medio | Medio | Media |
+| Seguridad | Control de acceso | [EC-02](10-escenarios-de-calidad.md#ec-02---protección-de-publicaciones) | Alto | Alto | Alta |
+| Mantenibilidad | Facilidad de modificación | [EC-03](10-escenarios-de-calidad.md#ec-03---modificación-del-sistema) | Alto | Alto | Alta |
+| Rendimiento | Tiempo de respuesta | [EC-01](10-escenarios-de-calidad.md#ec-01---consulta-de-productos) | Alto | Medio | Alta |
+| Disponibilidad | Recuperación | [EC-04](10-escenarios-de-calidad.md#ec-04---recuperación-del-prototipo) | Medio | Medio | Media |
 
 ## Conclusión
 

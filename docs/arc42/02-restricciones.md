@@ -1,5 +1,13 @@
 # Restricciones - CampusMarket
 
+> **Lectura actualizada — 8/nov/2026:** R-07 y los cálculos/plataformas S8
+> conservan su fecha y supuestos; no describen la infraestructura vigente.
+> La configuración de código mantiene dos servicios de 256 MiB/0,5 CPU cada uno
+> ([Compose productivo](../../deploy/compose.prod.yaml)); no se amplía la cuota
+> por anuncios del panel. La guía escrita consultada sigue indicando 512 MB y
+> cuatro contenedores por equipo. El despliegue observado y sus límites se separan
+> en [arc42 §7](07-vista-despliegue.md) y la [auditoría fechada](../evidencias/auditoria-documental-s1-s14-2026-11-08.md).
+
 Las siguientes restricciones delimitan el desarrollo de CampusMarket y
 condicionan las decisiones arquitectónicas que puede tomar el equipo. Se
 identifican a partir del contexto académico, las condiciones del proyecto,
@@ -102,10 +110,10 @@ semestre.
 Durante S8 esta restricción se materializa mediante Flutter Web publicado en
 GitHub Pages.
 
-Ese despliegue pertenece a la revisión S8. El MVP de esta rama conserva Web y
-también implementa Android, verificados por CI; aún no se despliega públicamente.
-Las evidencias por revisión están en la
-[auditoría MVP](../evidencias/auditoria-mvp-continuacion-2026-10-03.md).
+Ese despliegue pertenece a la revisión S8. El código actual conserva Web y Android,
+verificados por CI; la Web institucional se sirve dentro de `api` desde el 1/nov.
+Las evidencias conservan su revisión en la [auditoría MVP histórica](../evidencias/auditoria-mvp-continuacion-2026-10-03.md)
+y el [cierre institucional posterior](../evidencias/cierre-web-institucional-2026-11-01.md).
 
 ---
 

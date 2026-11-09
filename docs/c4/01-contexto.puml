@@ -1,7 +1,7 @@
 @startuml
 
 title CampusMarket - C4 Nivel 1 · Contexto
-caption MVP previo al despliegue · 03/10/2026 · Equipo CampusMarket
+caption Código integrado 2d28489 · lectura documental 08/11/2026
 
 left to right direction
 
@@ -14,7 +14,7 @@ actor "Administrador" as administrador
 
 rectangle "CampusMarket\n\nMarketplace universitario para\npublicar, consultar y buscar productos" as campusmarket
 
-estudiante --> campusmarket : Publica, consulta y busca productos\n[Web / Android · HTTP local, HTTPS público]
+estudiante --> campusmarket : Publica, consulta, guarda favoritos y conversa\n[Web / Android · HTTP local, HTTPS público]
 
 administrador --> campusmarket : Revisa reportes y modera publicaciones\n[Web / Android · HTTP local, HTTPS público]
 
@@ -40,7 +40,8 @@ Fuera del alcance actual:
 - servicios externos de transporte.
 
 Durante el desarrollo local se utiliza HTTP.
-HTTPS queda previsto para un despliegue externo.
+El acceso público observado utiliza HTTPS.
+La universidad es declarada, no matrícula verificada.
 
 Los contenedores y tecnologías internas
 se detallan en el C4 Nivel 2.

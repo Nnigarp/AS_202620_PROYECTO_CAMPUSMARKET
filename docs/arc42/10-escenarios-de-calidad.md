@@ -162,6 +162,13 @@ módulos principales y sin requerir cambios en autenticación o búsqueda.
 
 **Estado:** Verificado durante la evolución del corte vertical.
 
+**Alcance de la declaración anterior — revisión documental del 8/nov/2026:** el
+estado histórico se conserva, pero no se localizó un commit/medición enlazado
+que contabilice el cambio EC-03 frente al máximo de dos módulos. Admitir
+`reacondicionado` en código o pasar CI no mide por sí solo ese esfuerzo. La
+[auditoría S1–S14](../evidencias/auditoria-documental-s1-s14-2026-11-08.md)
+mantiene esa brecha; no se modifica el escenario ni su umbral.
+
 ---
 
 # EC-04 - Recuperación del prototipo

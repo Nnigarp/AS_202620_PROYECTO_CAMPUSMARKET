@@ -2,6 +2,13 @@
 
 Esta sección consolida los riesgos documentados en S10 y la evolución S11 sin alterar los hechos históricos de cada revisión.
 
+**Lectura vigente:** las tablas fechadas preservan su estado al prepararse.
+El [seguimiento documental del 8/nov](#seguimiento-documental-del-8nov2026--no-es-revisión-de-pares)
+distingue mitigaciones implementadas posteriormente y brechas actuales.
+
+S14 **C6 y C7 continúan pendientes de recepción** de observaciones auténticas de
+otro equipo. La autoauditoría siguiente no es peer review ni se clasifica como tal.
+
 ## Riesgos registrados en S10
 
 Fecha: 2026-10-11, America/Bogota. No sustituye los riesgos ya descritos en evidencias S8/S9.
@@ -79,3 +86,19 @@ No ejecutar pruebas destructivas ni restauraciones sobre los volúmenes producti
 **Revisión entre pares S14: pendiente de recepción.** No hay observaciones auténticas en las fuentes consultadas. El seguimiento docente y esta revisión asistida por IA no se presentan como pares. Cuando se reciban, registrar para cada una origen/autor/fecha/enlace, componente, consecuencia y evidencia, respuesta motivada y estado **corregido, asumido o pendiente**. No se inventan observaciones para cerrar los criterios 6 y 7.
 
 No se alteran estados históricos S10–S13: siguen pendientes copia externa, restauración SQL/fotos, rollback del host, configuración/montajes efectivos, seguridad de alcance limitado y la revisión de issue #33 contra la documentación S6 existente.
+
+
+## Seguimiento documental del 8/nov/2026 — no es revisión de pares
+
+Base `2d2848922db799389ffdcf0db4ef50437cd27ef2`. [Matriz S1–S14 y evidencia de lectura](../evidencias/auditoria-documental-s1-s14-2026-11-08.md). Los hallazgos proceden de esta revisión asistida; no se atribuyen al docente ni a otro equipo.
+
+| Hallazgo / riesgo | Estado contrastado y límites | Acción / condición de cierre |
+|---|---|---|
+| Deriva del resumen y de C4 respecto al Incremento 2 | Corrección documental propuesta: siete contextos, once tablas declaradas, Web servida por API y revisión de imagen separada del HEAD | Revisar el diff, enlaces, diagramas y CI de la rama; no equivale a Deploy |
+| Idempotencia de creación presentada todavía como pendiente | La [implementación `7705c2b3`](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/7705c2b3cad07c727b7fd4cbe2a623d9a19d967c) es posterior al S11 histórico. [Pruebas](../../backend/tests/test_idempotencia_publicaciones.py) y [cliente](../../frontend/campusmarket/test/idempotencia_publicaciones_test.dart) están incluidos en los jobs del SHA base | Mitigación implementada para la misma clave y payload; no cerrar pruebas de red/crash reales, retención/limpieza de claves ni reconciliación SQL/archivos |
+| Cobertura de único escritor incompleta | `solicitudes_idempotentes` pertenece a Publicaciones y no tiene otro escritor observado; falta en `OWNERS` de [test_propiedad_datos.py](../../backend/tests/test_propiedad_datos.py) | Ampliar la guarda en una tarea de código autorizada y demostrar sensibilidad; aquí solo se documenta, sin declarar cobertura de once tablas |
+| Universidad pública no disponible en la observación actual | GET `/universidades` respondió 500; `/health` GET 200 y `/app/` HEAD 200. No se inspeccionaron logs privados, filas o montajes | Diagnóstico operativo autorizado separado. No atribuir causa ni inferir que todo el frontend funciona por servir HTML |
+| Escenario EC-03 sin medición puntual trazada | Se conserva la declaración histórica, pero no se localizó el commit/recorrido que cuenta como máximo dos módulos | Identificar ese cambio y su evidencia, o mantener NO VERIFICADO el cumplimiento del escenario; no inventar otra medición |
+| Evidencia Sonar y bloqueo de integración | Check Sonar success; no hay scanner invocado por los workflows versionados y el dashboard responde 403 al observador. La regla pública `24001118` está activa y exige PR + check `test`, sin bypass declarado | La configuración de bloqueo de `test` sí es verificable; no obliga Android/Compose/Sonar. El Gate público y la cadena exigida por CONTRATO §8 siguen sin acreditación completa |
+| Alcance de IA y validación humana | Las declaraciones históricas se conservan; la revisión automatizada actual no prueba que todos los integrantes o pares revisaran cada salida | Añadir únicamente verificaciones propias con fuente/commit y mantener pendientes las confirmaciones humanas |
+| Recuperación, privacidad y pares | Backup externo restaurado, rollback productivo, aceptación jurídica y observaciones de pares siguen abiertos | No resolverlos mediante cambios documentales ni asumir permisos de servidor; S14 C6/C7 no se cierran |
