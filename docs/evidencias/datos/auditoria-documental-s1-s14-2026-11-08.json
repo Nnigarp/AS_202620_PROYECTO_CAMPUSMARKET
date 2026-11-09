@@ -2781,5 +2781,140 @@
     "official_master_unchanged": "2d2848922db799389ffdcf0db4ef50437cd27ef2",
     "new_commit_workflow_runs": 0,
     "new_commit_check_runs": 0
+  },
+  "pr93_followup": {
+    "date_local": "2026-11-09",
+    "original_head": "f6948e47138c2be9b0b534a8f9c9e4285ebe922f",
+    "draft": true,
+    "original_check_counts": {
+      "success": 6,
+      "failure": 3,
+      "skipped": 1
+    },
+    "backend": {
+      "run": 42566371280,
+      "job": 128993629893,
+      "cause": "HTTP 504 downloading Gitleaks before scanner/tests",
+      "fallback_asset": 378332058,
+      "binary_sha256": "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb",
+      "fallback_download_verified": true
+    },
+    "android": {
+      "run": 42566371307,
+      "job": 128993630386,
+      "artifact": 13651568106,
+      "zip_sha256": "529867f6ed2074bc2e55d0a05305c8134343e2b4c5650bf0c86db73d5064d0f7",
+      "cause": "HTTP 504 downloading Gradle before application build/assertions",
+      "adb_final_state": "device",
+      "gradle_version": "8.14",
+      "gradle_zip_sha256": "efe9a3d147d948d7528a9887fa35abcf24ca1a43ad06439996490f77569b02d1",
+      "wrapper_blob_verified": "1b33c55baabb587c669f562ae36f953de2481846",
+      "cached_zip_consumed_without_https": true,
+      "corrupt_zip_rejected": true,
+      "android_new_ci": "PENDING"
+    },
+    "s10": {
+      "run": 42566371250,
+      "job": 128993629939,
+      "artifact": 13651199656,
+      "zip_sha256": "1e747a6094e7f2330f8d4649268dbfaa2ea90b46d1ee717f59a091bd77882b8f",
+      "summary": {
+        "scenario_id": "S10-CT-01",
+        "started_at": "2026-11-09T05:17:03.787238+00:00",
+        "finished_at": "2026-11-09T05:19:57.217981+00:00",
+        "metric_scope": "Observador externo HTTP, todas las muestras, percentil nearest-rank",
+        "metrics": {
+          "baseline": {
+            "requests": 15,
+            "expected_status": 200,
+            "matching_status": 0,
+            "matching_status_ratio": 0.0,
+            "p95_ms": 5389.661,
+            "max_ms": 5389.661,
+            "network_errors": 0
+          },
+          "incompatible": {
+            "requests": 15,
+            "expected_status": 422,
+            "matching_status": 15,
+            "matching_status_ratio": 1.0,
+            "p95_ms": 245.648,
+            "max_ms": 245.648,
+            "network_errors": 0
+          },
+          "adapted": {
+            "requests": 15,
+            "expected_status": 200,
+            "matching_status": 0,
+            "matching_status_ratio": 0.0,
+            "p95_ms": 5324.151,
+            "max_ms": 5324.151,
+            "network_errors": 0
+          }
+        },
+        "checks": {
+          "phase_statuses": false,
+          "phase_p95_within_budget": true,
+          "healthy_dependency": true,
+          "correlated_requests": true,
+          "single_expected_runtime_revision": true,
+          "public_contract_equals_versioned_before_after": true,
+          "valid_catalog_payloads": false,
+          "rejection_identifies_query_modalidad": true,
+          "catalog_snapshot_unchanged": false
+        },
+        "total_http_requests": 58,
+        "health_checks": 9,
+        "correlation_ratio": 1.0,
+        "observed_runtime_revisions": [
+          "46ede525602161826b75273fbb12528e739908cc"
+        ],
+        "catalog_before_sha256": "cd49335847536d6d2fb7934d90c0aad01731d77e1d873679ce677a5636d2b886",
+        "catalog_after_sha256": "cd49335847536d6d2fb7934d90c0aad01731d77e1d873679ce677a5636d2b886",
+        "catalog_items_before": null,
+        "catalog_items_after": null,
+        "passed": false
+      },
+      "state": "BLOCKED_PUBLIC_CATALOG_503",
+      "criteria_unchanged": true,
+      "contract_and_baseline_unchanged": true
+    },
+    "additional_readonly_http": [
+      {
+        "url": "https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz",
+        "method": "HEAD",
+        "status": 504,
+        "revision": null,
+        "response_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "elapsed_ms": 5992
+      },
+      {
+        "url": "https://github.com/gradle/gradle-distributions/releases/download/v8.14.0/gradle-8.14-all.zip",
+        "method": "HEAD",
+        "status": 504,
+        "revision": null,
+        "response_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "elapsed_ms": 16993
+      },
+      {
+        "url": "https://campusmarket.iscoutb.dev/health",
+        "method": "GET",
+        "status": 200,
+        "revision": "46ede525602161826b75273fbb12528e739908cc",
+        "response_sha256": "26bb94efbd6dddbf37591743e8304a5e143290003a29f0055cf6e8140b90cbba",
+        "elapsed_ms": 7836
+      },
+      {
+        "url": "https://campusmarket.iscoutb.dev/catalogo?modalidad=venta",
+        "method": "GET",
+        "status": 503,
+        "revision": "46ede525602161826b75273fbb12528e739908cc",
+        "response_sha256": "cd49335847536d6d2fb7934d90c0aad01731d77e1d873679ce677a5636d2b886",
+        "elapsed_ms": 12903
+      }
+    ],
+    "rerun_direct_http": 403,
+    "no_production_change": true,
+    "new_ci": "PENDING_AFTER_FORK_PUSH"
   }
 }

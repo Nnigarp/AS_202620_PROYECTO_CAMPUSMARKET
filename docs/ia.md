@@ -812,3 +812,10 @@ Los resultados del CI base no se atribuyen a esta rama: sus checks nuevos se com
 
 
 **Cierre de publicación — 9/nov/2026:** correcciones en el fork `b0ab728a65fbc3b93537244cebf29d2d8727fedf`, sin escritura al master oficial. La integración GitHub rechazó la apertura del Draft con 403 `Resource not accessible by integration`; se conserva la limitación real. La API del commit devuelve cero runs/checks nuevos: CI queda pendiente de abrir el PR manualmente, sin atribuirle los verdes anteriores ni intentar modificar permisos.
+
+
+## 2026-11-09 — PR #93, diagnóstico y recuperación del bootstrap CI
+
+ChatGPT/Codex contrastó HEAD `f6948e4`, logs y artefactos originales de backend/Android/S10. Se aceptó fallback oficial al mismo asset Gitleaks con SHA fijado y precarga Gradle 8.14 con checksum, sin cambiar wrapper, driver ni aserciones. Se comprobó descarga Gitleaks/hash, caché Gradle consumido por wrapper oficial sin HTTPS y fallo ante checksum deliberadamente incorrecto. Se rechazó atribuir el 504 de descarga a una regresión Android, desactivar el scanner o interpretar health ok como catálogo operativo.
+
+S10 aprobó seis de nueve criterios: runtime/OpenAPI coinciden, pero catálogo válido devuelve 503. Se rechaza relajar estados, payload o snapshots, alterar contrato/baseline o simular éxito. Es una incidencia productiva que requiere diagnóstico autorizado separado; no se modifica Dokploy ni datos. CI de la corrección se comprobará en el PR; no se atribuye verde por estos ensayos de herramientas. [Logs, artefactos y límites](evidencias/auditoria-documental-s1-s14-2026-11-08.md#seguimiento-del-pr-93--9nov2026-descargas-ci-y-catálogo-público). S14 y ADR históricos intactos; pares pendientes, sin revisión humana inventada.

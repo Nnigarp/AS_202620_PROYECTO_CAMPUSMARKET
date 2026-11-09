@@ -70,9 +70,13 @@ jobs:
 
       - name: Auditar secretos del historial y checkout con Gitleaks
         run: |
+          set -euo pipefail
           cm_gitleaks_dir=$(mktemp -d "$RUNNER_TEMP/campusmarket-gitleaks.XXXXXX")
           trap 'rm -rf "$cm_gitleaks_dir"' EXIT
-          curl --fail --location --retry 3 --output "$cm_gitleaks_dir/gitleaks.tar.gz" "https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz"
+          if ! curl --fail --location --retry 3 --connect-timeout 15 --max-time 60 --retry-max-time 120 --output "$cm_gitleaks_dir/gitleaks.tar.gz" "https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz"; then
+            # Same immutable release asset via GitHub API; verify the pinned SHA before extraction.
+            curl --fail --location --retry 3 --connect-timeout 15 --max-time 60 --retry-max-time 120 --header "Accept: application/octet-stream" --output "$cm_gitleaks_dir/gitleaks.tar.gz" "https://api.github.com/repos/gitleaks/gitleaks/releases/assets/378332058"
+          fi
           printf '%s  %s\n' '551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb' "$cm_gitleaks_dir/gitleaks.tar.gz" | sha256sum --check -
           tar --extract --gzip --file "$cm_gitleaks_dir/gitleaks.tar.gz" --directory "$cm_gitleaks_dir" gitleaks
           "$cm_gitleaks_dir/gitleaks" git . --redact --config .gitleaks.toml --log-opts="bfe3222c1e29dddc404560cdd9d61095d4bdb3fe..HEAD" --report-format json --report-path "$RUNNER_TEMP/campusmarket-secretos-historial.json"
