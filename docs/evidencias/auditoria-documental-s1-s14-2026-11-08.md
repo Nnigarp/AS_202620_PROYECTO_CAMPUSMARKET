@@ -379,3 +379,9 @@ Se comparan por hash los 26 ADR y todas las evidencias preexistentes; también b
 ### Resultado local del cierre
 
 Comprobaciones iniciadas el 8/nov, completadas el 9/nov/2026 (UTC en el JSON): enlaces locales sin fallos; doce matrices/28 filas de ocho columnas; tres modelos C4 con sintaxis, XML SVG y renderizado inspeccionados; Ruff y `git diff --check` aprobados. Se contrastaron **372 archivos protegidos**, con la única diferencia documental esperada del README Flutter: **26 ADR y 55 archivos de evidencia histórica idénticos**. Los 139 enlaces a líneas de criterios oficiales resuelven en el kit fijado. El JSON conserva los recuentos exactos y los límites de cada control. La excepción Gitleaks es la única modificación de configuración de comprobación; no se alteran suites, workflows, permisos o resultados históricos.
+
+### Publicación en el fork y bloqueo de apertura del PR — 9/nov/2026
+
+Correcciones publicadas en `Nnigarp:docs/auditoria-s1-s14-20261108`, commit **`b0ab728a65fbc3b93537244cebf29d2d8727fedf`**, posterior a la matriz `4bf20ed…`. Se verificó que el árbol remoto coincide con el checkout validado. GitHub rechazó la creación del Draft hacia `ISCOUTB/master` con **HTTP 403, `Resource not accessible by integration`**. No existe un PR nuevo creado por esta ejecución; no se cambian permisos ni se utiliza otra vía de escritura al oficial.
+
+Consulta API del commit publicado: **cero workflow runs y cero check-runs**, coherente con los filtros de ramas de los workflows. CI nuevo **PENDIENTE**; no se heredan los verdes de `2d28489`. El siguiente paso es abrir manualmente la comparación de esta rama hacia el master oficial y elegir **Create draft pull request**. Revisar sus checks antes de solicitar fusión. Este registro posterior no cambia el corte inicial de la auditoría, los resultados S14 ni la producción.

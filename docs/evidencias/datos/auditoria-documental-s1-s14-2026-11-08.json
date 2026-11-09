@@ -2680,8 +2680,11 @@
   },
   "matrix_baseline_commit": "4bf20ed2cd2032c608c7a110d116ef477795a10e",
   "ci_of_documentation_branch": {
-    "state": "PENDING_PR",
-    "note": "Los checks de la base oficial no se atribuyen al commit documental; no se reejecutan mediciones sin cambios del experimento."
+    "state": "PENDING_PR_CREATION_PERMISSION",
+    "checked_commit": "b0ab728a65fbc3b93537244cebf29d2d8727fedf",
+    "workflow_runs": 0,
+    "check_runs": 0,
+    "note": "La integración no puede crear el PR oficial; la comparación está lista para apertura manual como Draft. No se hereda CI."
   },
   "validation_completed_utc": "2026-11-09T05:06:15.337041+00:00",
   "local_validation": {
@@ -2743,7 +2746,7 @@
       "version": "8.30.1",
       "checkout_findings": 0,
       "new_branch_history_findings": 0,
-      "history_checked_through": "4bf20ed2cd2032c608c7a110d116ef477795a10e",
+      "history_checked_through": "b0ab728a65fbc3b93537244cebf29d2d8727fedf",
       "entire_history_verified": false,
       "initial_false_positives": [
         {
@@ -2765,5 +2768,18 @@
       "allowlist_scope": "exact new audit JSON path AND generic-api-key AND three complete public SHA256 values only",
       "different_value_same_path_still_detected": true
     }
+  },
+  "correction_commit": "b0ab728a65fbc3b93537244cebf29d2d8727fedf",
+  "publication": {
+    "fork": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+    "branch": "docs/auditoria-s1-s14-20261108",
+    "correction_commit": "b0ab728a65fbc3b93537244cebf29d2d8727fedf",
+    "remote_tree_matches_validated_checkout": true,
+    "draft_pr_created": false,
+    "create_pr_http": 403,
+    "create_pr_reason": "Resource not accessible by integration",
+    "official_master_unchanged": "2d2848922db799389ffdcf0db4ef50437cd27ef2",
+    "new_commit_workflow_runs": 0,
+    "new_commit_check_runs": 0
   }
 }
