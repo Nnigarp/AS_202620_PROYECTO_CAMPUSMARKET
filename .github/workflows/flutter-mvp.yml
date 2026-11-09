@@ -53,6 +53,8 @@ jobs:
         run: git diff --check bfe3222c1e29dddc404560cdd9d61095d4bdb3fe HEAD
       - name: Compilar Web para verificación
         run: flutter build web --dart-define=CAMPUSMARKET_API_BASE_URL=http://127.0.0.1:8000
+      - name: Preparar distribución Gradle oficial con integridad
+        run: bash ../../scripts/preparar_gradle_ci.sh
       - name: Compilar Android para verificación
         run: flutter build apk --debug
       - name: Registrar versión y hash verificados

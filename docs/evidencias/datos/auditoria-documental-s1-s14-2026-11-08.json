@@ -2915,6 +2915,28 @@
     ],
     "rerun_direct_http": 403,
     "no_production_change": true,
-    "new_ci": "PENDING_AFTER_FORK_PUSH"
+    "new_ci": "PENDING_AFTER_FORK_PUSH",
+    "first_correction": {
+      "source_sha": "3bb9a0a2d63367994baee223764072929ec9ce86",
+      "backend_run": 42568434655,
+      "backend_job": 129000003061,
+      "gitleaks_download_and_audits": "success",
+      "flutter_run": 42568434574,
+      "flutter_job": 129000003002,
+      "flutter_failure": "HTTP 504 downloading Gradle in separate APK build",
+      "s10_run": 42568434652,
+      "s10_passed_criteria": 6,
+      "s10_failed_criteria": [
+        "phase_statuses",
+        "valid_catalog_payloads",
+        "catalog_snapshot_unchanged"
+      ],
+      "shared_bootstrap": "scripts/preparar_gradle_ci.sh",
+      "called_by": [
+        ".github/workflows/flutter-mvp.yml",
+        ".github/workflows/mvp-flujo-real.yml"
+      ],
+      "corrupt_zip_rejected_from_both_working_directories": true
+    }
   }
 }
