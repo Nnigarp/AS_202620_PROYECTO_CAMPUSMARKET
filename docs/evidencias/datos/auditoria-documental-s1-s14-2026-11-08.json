@@ -1,0 +1,2189 @@
+{
+  "base_sha": "2d2848922db799389ffdcf0db4ef50437cd27ef2",
+  "kit_sha": "7ca7a79f4db132941b3cc1dcab0148652fb18e69",
+  "audit_date_local": "2026-11-08",
+  "timezone": "America/Bogota",
+  "scope": "Auditoría documental; no es una nota ni operación productiva",
+  "criteria_count": 139,
+  "baseline_checks": [
+    {
+      "name": "SonarCloud Code Analysis",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/runs/127632261233"
+    },
+    {
+      "name": "s14-ec01",
+      "status": "completed",
+      "conclusion": "skipped",
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/42138355822/job/127632125737"
+    },
+    {
+      "name": "Flujo android",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/42138355883/job/127632124116"
+    },
+    {
+      "name": "Flujo web-mobile",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/42138355883/job/127632124010"
+    },
+    {
+      "name": "Flujo web-desktop",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/42138355883/job/127632123769"
+    },
+    {
+      "name": "frontend",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/42138355941/job/127632123733"
+    },
+    {
+      "name": "contrato-publico",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/42138355890/job/127632123533"
+    },
+    {
+      "name": "test",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/42138355897/job/127632123426"
+    },
+    {
+      "name": "compose",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/42138355822/job/127632123339"
+    }
+  ],
+  "linked_runs": [
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41616502184,
+      "head_sha": "494c4336920d3a9515e60e06d7e16a880a9868ed",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41360317202,
+      "head_sha": "0701cea233601a891fcc1915f5181c352ff14db4",
+      "conclusion": "failure",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 37141453184,
+      "head_sha": "d473b1f87457d67f11e8330911389296fd96782c",
+      "conclusion": "failure",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41024201484,
+      "head_sha": "2154e7880e5111537256206a29f4f4c29a8c86c4",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41025785578,
+      "head_sha": "2154e7880e5111537256206a29f4f4c29a8c86c4",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41026286264,
+      "head_sha": "2154e7880e5111537256206a29f4f4c29a8c86c4",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41362904998,
+      "head_sha": "1504bafcae2eafb50a65d486686e7f79e673d297",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41613284005,
+      "head_sha": "7cfb6b8b24ca27e96e20e313dab3020f52dbfdec",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41595618179,
+      "head_sha": "46ede525602161826b75273fbb12528e739908cc",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 37175935055,
+      "head_sha": "b5f10a2c93836cad539a9a195f6a0911d4b3ca91",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 37173110650,
+      "head_sha": "7856416795bb4accdf9d05e01adb470654875e56",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 37173110759,
+      "head_sha": "7856416795bb4accdf9d05e01adb470654875e56",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 35115585642,
+      "head_sha": "baeca7ea3cebe33818a68c1edc38e9aaf045424c",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 34934077733,
+      "head_sha": "043c7546a1ebe7a7077667b26c2092290689718e",
+      "conclusion": "failure",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41341824838,
+      "head_sha": "2af811617997bccc356373e09d33bfdfe44dee85",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41569297341,
+      "head_sha": "50d9352e5081f8c3e470bd9cda9220d21b14cc0a",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41576332272,
+      "head_sha": "b75e5a0023ab6abd850d400f8d6372b71b034699",
+      "conclusion": "failure",
+      "attempt": 2
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 37123324994,
+      "head_sha": "bfe3222c1e29dddc404560cdd9d61095d4bdb3fe",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 37141901670,
+      "head_sha": "fda38976882fd5abcca8486b4b114efd28ca2b1c",
+      "conclusion": "success",
+      "attempt": 2
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 37141901640,
+      "head_sha": "fda38976882fd5abcca8486b4b114efd28ca2b1c",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 37141901660,
+      "head_sha": "fda38976882fd5abcca8486b4b114efd28ca2b1c",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 37141901649,
+      "head_sha": "fda38976882fd5abcca8486b4b114efd28ca2b1c",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 37151076285,
+      "head_sha": "094eaaa97bd0984af012a219c6b2ccad1e23e1c2",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 37151076275,
+      "head_sha": "094eaaa97bd0984af012a219c6b2ccad1e23e1c2",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 37151076247,
+      "head_sha": "094eaaa97bd0984af012a219c6b2ccad1e23e1c2",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 37151076227,
+      "head_sha": "094eaaa97bd0984af012a219c6b2ccad1e23e1c2",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 37173110679,
+      "head_sha": "7856416795bb4accdf9d05e01adb470654875e56",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 37173110670,
+      "head_sha": "7856416795bb4accdf9d05e01adb470654875e56",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41597711177,
+      "head_sha": "0d98ff6a8f9c829aae8162cc732bb934a3b24524",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 38204357938,
+      "head_sha": "6eb4c9998b3776c81a8603d8ad8ef0bee32b7981",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 38204457643,
+      "head_sha": "6eb4c9998b3776c81a8603d8ad8ef0bee32b7981",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 38204457709,
+      "head_sha": "6eb4c9998b3776c81a8603d8ad8ef0bee32b7981",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 38204609585,
+      "head_sha": "039e921a1f7d1b7b9048da5e487dfbc747cde720",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 38204609506,
+      "head_sha": "039e921a1f7d1b7b9048da5e487dfbc747cde720",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 40251871620,
+      "head_sha": "14ab852610f75bd5cf0e6aefda6a592b559116ed",
+      "conclusion": "success",
+      "attempt": 2
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 40249803106,
+      "head_sha": "0d7e590f89143e58c634c6186c7803d104260fd7",
+      "conclusion": "failure",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41341503369,
+      "head_sha": "1b184445dcd7ca99bfd92f136861fd3c3b775b9d",
+      "conclusion": "failure",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 39194018992,
+      "head_sha": "7861c3788037e5319e1724a0e642349fba5f396c",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 39194018986,
+      "head_sha": "7861c3788037e5319e1724a0e642349fba5f396c",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 39194018989,
+      "head_sha": "7861c3788037e5319e1724a0e642349fba5f396c",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 39194019039,
+      "head_sha": "7861c3788037e5319e1724a0e642349fba5f396c",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 39194019015,
+      "head_sha": "7861c3788037e5319e1724a0e642349fba5f396c",
+      "conclusion": "failure",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 39196207584,
+      "head_sha": "67b1569d10681801f3ae82012c3042cc9429d8f4",
+      "conclusion": "failure",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41360317362,
+      "head_sha": "0701cea233601a891fcc1915f5181c352ff14db4",
+      "conclusion": "failure",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 42126089440,
+      "head_sha": "e4f5c1026206a86c2df7d07f7a16479c807dd34b",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 42122795679,
+      "head_sha": "a868c3adb2f7317fd69ca3b570c7e4a8c35285e3",
+      "conclusion": "failure",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 42123255045,
+      "head_sha": "76259feef3dfe86b496eb351a474c440eb5cb251",
+      "conclusion": "failure",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 42123727194,
+      "head_sha": "822d5ecc0e025798683bfb9246c0b19a28cc55bf",
+      "conclusion": "failure",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 42123984862,
+      "head_sha": "9ef99c4fd0d58948b77a9642c15f025d38384fe8",
+      "conclusion": "failure",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 42124780853,
+      "head_sha": "0fd523a7acd1b6f91d35b7947a75b85abb25715d",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 42125580080,
+      "head_sha": "33965f5ed84a5f3740014058b4674076e29a1abd",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41620519703,
+      "head_sha": "d5b8b500e309e5997a6063f20b6c7da6682ef785",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 42132522913,
+      "head_sha": "0d56980b465ab94b1a294b2a9070f4c600095cfd",
+      "conclusion": "failure",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 42134493732,
+      "head_sha": "8bd91b988a5f34d5297b4421fa13aaeca45b0acb",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 42132522892,
+      "head_sha": "0d56980b465ab94b1a294b2a9070f4c600095cfd",
+      "conclusion": "failure",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 42134493988,
+      "head_sha": "8bd91b988a5f34d5297b4421fa13aaeca45b0acb",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 42134485805,
+      "head_sha": "8bd91b988a5f34d5297b4421fa13aaeca45b0acb",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 37175935045,
+      "head_sha": "b5f10a2c93836cad539a9a195f6a0911d4b3ca91",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 37175935048,
+      "head_sha": "b5f10a2c93836cad539a9a195f6a0911d4b3ca91",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 37175935053,
+      "head_sha": "b5f10a2c93836cad539a9a195f6a0911d4b3ca91",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41583438336,
+      "head_sha": "62b984418c2d1be3f097564eef4f571bf5da1600",
+      "conclusion": "failure",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41583603859,
+      "head_sha": "32472bd2e21dac3890484dcb19c0ca0becd07172",
+      "conclusion": "failure",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41583438384,
+      "head_sha": "62b984418c2d1be3f097564eef4f571bf5da1600",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41583438341,
+      "head_sha": "62b984418c2d1be3f097564eef4f571bf5da1600",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41583754499,
+      "head_sha": "c701c9b794b0a9bae7793789f6b0a20f80eeb710",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41583754152,
+      "head_sha": "c701c9b794b0a9bae7793789f6b0a20f80eeb710",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41583754549,
+      "head_sha": "c701c9b794b0a9bae7793789f6b0a20f80eeb710",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41584776751,
+      "head_sha": "3b239804b215338f2ab2b6e9dfd85f96a0b22176",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41584776642,
+      "head_sha": "3b239804b215338f2ab2b6e9dfd85f96a0b22176",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41584776511,
+      "head_sha": "3b239804b215338f2ab2b6e9dfd85f96a0b22176",
+      "conclusion": "failure",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41584776574,
+      "head_sha": "3b239804b215338f2ab2b6e9dfd85f96a0b22176",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41585402540,
+      "head_sha": "871865de804ae00a86d11993946d9c26108f115c",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41585402733,
+      "head_sha": "871865de804ae00a86d11993946d9c26108f115c",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41586208778,
+      "head_sha": "a079fb5f11b21bdfd161c798e7a4425bf48114cc",
+      "conclusion": "failure",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41587498618,
+      "head_sha": "058f63f0882d388e40c85c347e406bb9777cb343",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41587498606,
+      "head_sha": "058f63f0882d388e40c85c347e406bb9777cb343",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41587498624,
+      "head_sha": "058f63f0882d388e40c85c347e406bb9777cb343",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41587498665,
+      "head_sha": "058f63f0882d388e40c85c347e406bb9777cb343",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41590254139,
+      "head_sha": "531405c2fbc4d56aa70d3603d67dba312182c7bb",
+      "conclusion": "failure",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41592547646,
+      "head_sha": "39cc948b74ff7a21f4b1dc40b4257ee82f85f727",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41595145649,
+      "head_sha": "ffdb59066bcc2f4562d779609938c0fced912afa",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 37127354328,
+      "head_sha": "d5eeec7aa770f7bab5a4557f87c296cc4c642c26",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 37139056153,
+      "head_sha": "30e109137c26634bb77add3ff07a71ab0ea08f50",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 37140687982,
+      "head_sha": "0eba3f423775a5fce716119bf336231441ba2729",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 37140687986,
+      "head_sha": "0eba3f423775a5fce716119bf336231441ba2729",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 37140687994,
+      "head_sha": "0eba3f423775a5fce716119bf336231441ba2729",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 40265066306,
+      "head_sha": "7babf7c73a4021fb86c90806d03d433bc1d1e837",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41051624793,
+      "head_sha": "669368894d583406c7610e8c735f686c02931de3",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41029797678,
+      "head_sha": "321548f0e1068e2bea7e59d77f09c8717db5f19a",
+      "conclusion": "success",
+      "attempt": 2
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41046842362,
+      "head_sha": "1068764ba84095b93fe0d643cf401503131473ec",
+      "conclusion": "failure",
+      "attempt": 2
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 40254634092,
+      "head_sha": "e26b39ea101ece1c7be3b405de383c877205b32d",
+      "conclusion": "failure",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 40260246299,
+      "head_sha": "b456a154839cce0da3182b6270cd100068faadef",
+      "conclusion": "failure",
+      "attempt": 1
+    },
+    {
+      "repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41270390431,
+      "head_sha": "65e4d468490bfb1a00cfa56ab48d049b66ad5dc9",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "repository": "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "run_id": 41057456301,
+      "head_sha": "40be256f52d74ad8c9148886f040845658a38855",
+      "conclusion": "success",
+      "attempt": 1
+    }
+  ],
+  "github_links": [
+    {
+      "url": "https://github.com/Dokploy/dokploy/blob/v0.30.10/packages/server/src/utils/builders/compose.ts",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/blob/669368894d583406c7610e8c735f686c02931de3/docs/evidencias/uso-ia-ensayo-ghcr-2026-10-30.md",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/blob/669368894d583406c7610e8c735f686c02931de3/docs/evidencias/uso-ia-ghcr-2026-10-30.md",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/blob/7856416795bb4accdf9d05e01adb470654875e56/backend/Dockerfile",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/blob/7856416795bb4accdf9d05e01adb470654875e56/deploy/compose.lab.yaml",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/blob/b5f10a2c93836cad539a9a195f6a0911d4b3ca91/docs/evidencias/evidencia-s7-2026-09-15.md#estado-transversal-pendiente-de-saneamiento",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/049dc30ceac1386b648bef5f6713c050762e2dbf",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/14ab852610f75bd5cf0e6aefda6a592b559116ed",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/1febc859a4466e73af706fd364d633bfa5276747",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/494c4336920d3a9515e60e06d7e16a880a9868ed",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/5ef0d6b139138d1260435b1b884240f093904749",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/7861c3788037e5319e1724a0e642349fba5f396c",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/9aad45e9c1b8889b5a9f3f241ad9ec4f359bb535",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/b75e5a0023ab6abd850d400f8d6372b71b034699",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/cfb93309ea159ee82ddc8faf54fb1561d25b6d57",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/f2e94972f0327cd11f2c956fd894f66d779cede6",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/fda38976882fd5abcca8486b4b114efd28ca2b1c",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/ff68cf255b90340634e0760f056870f9a19e9abd",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/compare/784d788...7856416795bb4accdf9d05e01adb470654875e56",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/compare/master...Nnigarp:AS_202620_PROYECTO_CAMPUSMARKET:fix/s10-base-oficial-20261103?expand=1",
+      "state": "NOT_VERIFIED",
+      "reason": "INVALID_ARGUMENT"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/compare/master...Nnigarp:S10-contrato-cliente?expand=1",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/compare/master...Nnigarp:ci/ensayo-ghcr-20261030-0971b2b?expand=1",
+      "state": "NOT_VERIFIED",
+      "reason": "INVALID_ARGUMENT"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/issues/33",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/28",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/52",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/55",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/56",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/57",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/58",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/61",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/64",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/73",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/74",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/77",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/77/checks",
+      "state": "NOT_VERIFIED",
+      "reason": "NOT_FOUND"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/78",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/79",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/81",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/82",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/83",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/85",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/86",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/87",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/88",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/89",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/90",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/rules/24001118",
+      "state": "NOT_VERIFIED",
+      "reason": "INVALID_ARGUMENT"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_feedback/blob/553c3f21c87c928f4b2f1e1a3352c1f72ac3b4b0/CONTRATO.md",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_feedback/blob/553c3f21c87c928f4b2f1e1a3352c1f72ac3b4b0/fichas/semana-14-evidencia-s14.md",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_feedback/blob/553c3f21c87c928f4b2f1e1a3352c1f72ac3b4b0/revisiones/2026-2/AS_202620_PROYECTO_CAMPUSMARKET/feedback.md",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_feedback/blob/553c3f21c87c928f4b2f1e1a3352c1f72ac3b4b0/revisiones/2026-2/AS_202620_PROYECTO_CAMPUSMARKET/planilla.md",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_feedback/blob/553c3f21c87c928f4b2f1e1a3352c1f72ac3b4b0/revisiones/2026-2/seguimiento-2026-11-05.md#campusmarket",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_feedback/blob/553c3f21c87c928f4b2f1e1a3352c1f72ac3b4b0/revisiones/2026-2/seguimiento-despliegues-2026-11-05.md",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_feedback/blob/553c3f21c87c928f4b2f1e1a3352c1f72ac3b4b0/revisiones/2026-2/seguimiento-issues-2026-11-05.md",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_feedback/blob/master/CONTRATO.md",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_feedback/blob/master/fichas/semana-10-corte2.md",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_feedback/blob/master/revisiones/2026-2/AS_202620_PROYECTO_CAMPUSMARKET/semana-09-evidencia-s9.md",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/AS_202620_feedback/blob/master/revisiones/2026-2/AS_202620_PROYECTO_CAMPUSMARKET/semana-10-corte2.md",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/iscoutb.dev/blob/0d121afd28a8472d75232b95ab6bb6b071a61e21/README.md",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/iscoutb.dev/blob/0d121afd28a8472d75232b95ab6bb6b071a61e21/docs/politicas-uso.md",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/iscoutb.dev/blob/main/README.md",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/iscoutb.dev/blob/main/README.md#5-evidencia-para-tus-entregas",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/iscoutb.dev/blob/main/docs/politicas-uso.md",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/ISCOUTB/iscoutb.dev/blob/main/plantillas/compose.lab.mysql.yaml",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/Kludex/python-multipart",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/blob/52762bd/docs/operacion/evidencia-ensayo-flutter-local-20261031.md",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/blob/e4f5c1026206a86c2df7d07f7a16479c807dd34b/scripts/medir_ec01_s14.py#L216",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/blob/e4f5c1026206a86c2df7d07f7a16479c807dd34b/scripts/medir_ec01_s14.py#L233",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/blob/e4f5c1026206a86c2df7d07f7a16479c807dd34b/scripts/medir_ec01_s14.py#L78",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/blob/e4f5c1026206a86c2df7d07f7a16479c807dd34b/scripts/medir_ec01_s14.py#L88",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/blob/e4f5c1026206a86c2df7d07f7a16479c807dd34b/scripts/test_medir_ec01_s14.py#L10",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/blob/ops/release-universidades-20261102/backend/Dockerfile.web-release",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/058f63f0882d388e40c85c347e406bb9777cb343",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/32472bd2e21dac3890484dcb19c0ca0becd07172",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/39cc948b74ff7a21f4b1dc40b4257ee82f85f727",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/3b239804b215338f2ab2b6e9dfd85f96a0b22176",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/52762bd",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/62b984418c2d1be3f097564eef4f571bf5da1600",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/871865de804ae00a86d11993946d9c26108f115c",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/a079fb5f11b21bdfd161c798e7a4425bf48114cc",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/a2b8af5b985b6f614649b88aa1aae8becd2a0484",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/c701c9b794b0a9bae7793789f6b0a20f80eeb710",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/dceb4ea20ca82017749064037889248abe6c88c8",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/tree/S10-contrato-cliente",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/docker-library/official-images/blob/master/library/python",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/flutter/flutter/blob/3.47.3/packages/integration_test/pubspec.yaml",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/flutter/flutter/issues/129231",
+      "state": "ACCESSIBLE"
+    },
+    {
+      "url": "https://github.com/python-pillow/Pillow",
+      "state": "ACCESSIBLE"
+    }
+  ],
+  "documentation_fixes_applied": false,
+  "production_changed": false,
+  "peer_review_received": false,
+  "s14_criteria_6_7": "PENDIENTE DE RECEPCIÓN",
+  "matrix_rows": [
+    {
+      "id": "S01-C01",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S01-C02",
+      "baseline_state": "NO VERIFICADO",
+      "gap_id": "X01"
+    },
+    {
+      "id": "S01-C03",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S01-C04",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S01-C05",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S01-C06",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S01-C07",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S01-C08",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S01-C09",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S02-C01",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S02-C02",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D02"
+    },
+    {
+      "id": "S02-C03",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S02-C04",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D01"
+    },
+    {
+      "id": "S02-C05",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S02-C06",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S02-C07",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S02-C08",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D03"
+    },
+    {
+      "id": "S02-C09",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S03-C01",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S03-C02",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S03-C03",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S03-C04",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S03-C05",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S03-C06",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D05"
+    },
+    {
+      "id": "S03-C07",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S03-C08",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S03-C09",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D02"
+    },
+    {
+      "id": "S04-C01",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D02"
+    },
+    {
+      "id": "S04-C02",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D08"
+    },
+    {
+      "id": "S04-C03",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S04-C04",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D01"
+    },
+    {
+      "id": "S04-C05",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D03"
+    },
+    {
+      "id": "S04-C06",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D03"
+    },
+    {
+      "id": "S04-C07",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S04-C08",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S04-C09",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S04-C10",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D05"
+    },
+    {
+      "id": "S05-C01",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S05-C02",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S05-C03",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D05"
+    },
+    {
+      "id": "S05-C04",
+      "baseline_state": "PARCIAL",
+      "gap_id": "X01"
+    },
+    {
+      "id": "S05-C05",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D02"
+    },
+    {
+      "id": "S05-C06",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D05"
+    },
+    {
+      "id": "S05-C07",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D03"
+    },
+    {
+      "id": "S05-C08",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S05-C09",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S05-C10",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D05"
+    },
+    {
+      "id": "S05-C11",
+      "baseline_state": "NO VERIFICADO",
+      "gap_id": "X02"
+    },
+    {
+      "id": "S05-C12",
+      "baseline_state": "NO VERIFICADO",
+      "gap_id": "X03"
+    },
+    {
+      "id": "S06-C01",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D02"
+    },
+    {
+      "id": "S06-C02",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D04"
+    },
+    {
+      "id": "S06-C03",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D04"
+    },
+    {
+      "id": "S06-C04",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D04"
+    },
+    {
+      "id": "S06-C05",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D04"
+    },
+    {
+      "id": "S06-C06",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D02"
+    },
+    {
+      "id": "S06-C07",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D03"
+    },
+    {
+      "id": "S06-C08",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S07-C01",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S07-C02",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S07-C03",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S07-C04",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S07-C05",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S07-C06",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S07-C07",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S07-C08",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S07-C09",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D10"
+    },
+    {
+      "id": "S07-C10",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D03"
+    },
+    {
+      "id": "S08-C01",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S08-C02",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S08-C03",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S08-C04",
+      "baseline_state": "PARCIAL",
+      "gap_id": "X04"
+    },
+    {
+      "id": "S08-C05",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S08-C06",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S08-C07",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S08-C08",
+      "baseline_state": "PARCIAL",
+      "gap_id": "X08"
+    },
+    {
+      "id": "S08-C09",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S08-C10",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D07"
+    },
+    {
+      "id": "S08-C11",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S08-C12",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D08"
+    },
+    {
+      "id": "S09-C01",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S09-C02",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D05"
+    },
+    {
+      "id": "S09-C03",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D08"
+    },
+    {
+      "id": "S09-C04",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S09-C05",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S09-C06",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D06"
+    },
+    {
+      "id": "S09-C07",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S09-C08",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S09-C09",
+      "baseline_state": "PARCIAL",
+      "gap_id": "X08"
+    },
+    {
+      "id": "S09-C10",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S10-C01",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S10-C02",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S10-C03",
+      "baseline_state": "NO VERIFICADO",
+      "gap_id": "X02"
+    },
+    {
+      "id": "S10-C04",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S10-C05",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S10-C06",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S10-C07",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S10-C08",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S10-C09",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S10-C10",
+      "baseline_state": "PARCIAL",
+      "gap_id": "X08"
+    },
+    {
+      "id": "S10-C11",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D09"
+    },
+    {
+      "id": "S10-C12",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S10-C13",
+      "baseline_state": "NO VERIFICADO",
+      "gap_id": "X03"
+    },
+    {
+      "id": "S11-C01",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S11-C02",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S11-C03",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S11-C04",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D10"
+    },
+    {
+      "id": "S11-C05",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D10"
+    },
+    {
+      "id": "S11-C06",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S11-C07",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S11-C08",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D10"
+    },
+    {
+      "id": "S11-C09",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D05"
+    },
+    {
+      "id": "S12-C01",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S12-C02",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S12-C03",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S12-C04",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S12-C05",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S12-C06",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S12-C07",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S12-C08",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D03"
+    },
+    {
+      "id": "S12-C09",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D02"
+    },
+    {
+      "id": "S13-C01",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S13-C02",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S13-C03",
+      "baseline_state": "PARCIAL",
+      "gap_id": "X07"
+    },
+    {
+      "id": "S13-C04",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S13-C05",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S13-C06",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S13-C07",
+      "baseline_state": "PARCIAL",
+      "gap_id": "X07"
+    },
+    {
+      "id": "S13-C08",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S13-C09",
+      "baseline_state": "PARCIAL",
+      "gap_id": "D02"
+    },
+    {
+      "id": "S13-C10",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S13-C11",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S14-C01",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S14-C02",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S14-C03",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S14-C04",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S14-C05",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    },
+    {
+      "id": "S14-C06",
+      "baseline_state": "PENDIENTE DE RECEPCIÓN",
+      "gap_id": "X06"
+    },
+    {
+      "id": "S14-C07",
+      "baseline_state": "PENDIENTE DE RECEPCIÓN",
+      "gap_id": "X06"
+    },
+    {
+      "id": "S14-C08",
+      "baseline_state": "VERIFICADO",
+      "gap_id": ""
+    }
+  ],
+  "local_links_baseline": {
+    "markdown_files": 97,
+    "internal_count": 1086,
+    "external_count": 348,
+    "failures": [
+      {
+        "source": "docs/arc42/07-vista-despliegue.md",
+        "line": 5,
+        "target": "#despliegue-web-institucional-vigente--2026-11-01",
+        "resolved": "docs/arc42/07-vista-despliegue.md",
+        "state": "MISSING_ANCHOR"
+      }
+    ]
+  },
+  "source_materials": [
+    {
+      "name": "S02-interesados-atributos-y-calidad-integrada.pdf",
+      "sha256": "7708478c60f5e1ca2ea2f54e1f05272b89cdefcd943a6c1c8761cd7b507d40c4",
+      "pages": 13,
+      "characters": 2960
+    },
+    {
+      "name": "S03-estilos-tacticas-y-adr-UTB.pdf",
+      "sha256": "ec1d3a265118c4c85a7f4d1cca9d6654d5df13da8fbec3b9793ea0877b367f94",
+      "pages": 22,
+      "characters": 14246
+    },
+    {
+      "name": "S04-documentacion-arquitectonica-UTB (1).pdf",
+      "sha256": "319fc8256313b3a157651463214849f217c4e199bac6e29c1ff201cc55cb4123",
+      "pages": 15,
+      "characters": 12900
+    },
+    {
+      "name": "S06-dominio-y-modularidad.pdf",
+      "sha256": "cd1733a6d9237240f9bb63974ab6b0953218228923387df95884b2f7c4e0cdd1",
+      "pages": 9,
+      "characters": 8063
+    },
+    {
+      "name": "S07-interfaces-y-contratos.pdf",
+      "sha256": "95b7241c95dc7ad10946ea8b308cd36169000cd4061453acf95442ec1110181a",
+      "pages": 9,
+      "characters": 8459
+    },
+    {
+      "name": "S08-despliegue-y-operacion.pdf",
+      "sha256": "25448744bee155f43487a1c6fb0936bb1b36326f94e4af40ece21b31dd82086a",
+      "pages": 9,
+      "characters": 8742
+    },
+    {
+      "name": "S09-ia-verificacion-y-erosion.pdf",
+      "sha256": "404ee16da4fc55fd7da822a34b4f78bd7ad81ecde453b34582a88d1b279516c1",
+      "pages": 9,
+      "characters": 9169
+    },
+    {
+      "name": "SA - Análisis y Evaluación.pdf",
+      "sha256": "69ecd484dbc403d8a2106593df02566c537e6283ddcd468277e192fc1701be54",
+      "pages": 10,
+      "characters": 3783
+    },
+    {
+      "name": "SEMANA 12 CLASE.pdf",
+      "sha256": "b02a56beb9f34460674f1800bccc74241e553548eb2e3a837c1ea8fae8e37e8b",
+      "pages": 32,
+      "characters": 32
+    },
+    {
+      "name": "SEMANA 14 ARQSOFT.pdf",
+      "sha256": "7cd438ec2e7ef32aa290dbb55a90072b8cee2630e4365500314affe5554e73b7",
+      "pages": 27,
+      "characters": 27
+    }
+  ],
+  "public_and_external_http": [
+    {
+      "url": "https://campusmarket.iscoutb.dev/app/",
+      "observed_utc": "2026-11-09T04:18:33.368243+00:00",
+      "method": "HEAD",
+      "status": 200,
+      "final_url": "https://campusmarket.iscoutb.dev/app/",
+      "state": "ACCESSIBLE",
+      "elapsed_ms": 4010.67
+    },
+    {
+      "url": "https://campusmarket.iscoutb.dev/docs",
+      "observed_utc": "2026-11-09T04:18:33.369629+00:00",
+      "method": "HEAD",
+      "status": 200,
+      "final_url": "https://campusmarket.iscoutb.dev/docs",
+      "state": "ACCESSIBLE",
+      "elapsed_ms": 3920.48
+    },
+    {
+      "url": "https://campusmarket.iscoutb.dev/health",
+      "observed_utc": "2026-11-09T04:22:36.992850+00:00",
+      "method": "GET",
+      "status": 200,
+      "state": "ACCESSIBLE",
+      "elapsed_ms": 4001.4,
+      "head_status": 405,
+      "revision": "46ede525602161826b75273fbb12528e739908cc",
+      "health": {
+        "status": "ok",
+        "service": "campusmarket-api"
+      }
+    },
+    {
+      "url": "https://campusmarket.iscoutb.dev/universidades",
+      "observed_utc": "2026-11-09T04:34:10.544970+00:00",
+      "method": "GET",
+      "status": 500,
+      "state": "HTTP_ERROR",
+      "elapsed_ms": 4005.24,
+      "head_status": 405,
+      "reason": "HTTP_500_GET",
+      "detail": "Internal Server Error"
+    },
+    {
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html",
+      "observed_utc": "2026-11-09T04:18:33.371759+00:00",
+      "method": "HEAD",
+      "status": 200,
+      "final_url": "https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html",
+      "state": "ACCESSIBLE",
+      "elapsed_ms": 3684.93
+    },
+    {
+      "url": "https://dev.mysql.com/doc/refman/8.4/en/locking-functions.html",
+      "observed_utc": "2026-11-09T04:18:37.056740+00:00",
+      "method": "HEAD",
+      "status": 200,
+      "final_url": "https://dev.mysql.com/doc/refman/8.4/en/locking-functions.html",
+      "state": "ACCESSIBLE",
+      "elapsed_ms": 6510.35
+    },
+    {
+      "url": "https://distribution.github.io/distribution/spec/api/",
+      "observed_utc": "2026-11-09T04:18:37.290149+00:00",
+      "method": "HEAD",
+      "status": 200,
+      "final_url": "https://distribution.github.io/distribution/spec/api/",
+      "state": "ACCESSIBLE",
+      "elapsed_ms": 3536.97
+    },
+    {
+      "url": "https://docs.flutter.dev/",
+      "observed_utc": "2026-11-09T04:18:37.371933+00:00",
+      "method": "HEAD",
+      "status": 200,
+      "final_url": "https://docs.flutter.dev/",
+      "state": "ACCESSIBLE",
+      "elapsed_ms": 3627.16
+    },
+    {
+      "url": "https://docs.flutter.dev/get-started/codelab",
+      "observed_utc": "2026-11-09T04:18:37.376448+00:00",
+      "method": "HEAD",
+      "status": 200,
+      "final_url": "https://docs.flutter.dev/learn/pathway",
+      "state": "ACCESSIBLE",
+      "elapsed_ms": 7492.65
+    },
+    {
+      "url": "https://docs.flutter.dev/get-started/learn-flutter",
+      "observed_utc": "2026-11-09T04:18:37.379074+00:00",
+      "method": "HEAD",
+      "status": 200,
+      "final_url": "https://docs.flutter.dev/learn",
+      "state": "ACCESSIBLE",
+      "elapsed_ms": 7407.24
+    },
+    {
+      "url": "https://docs.flutter.dev/reference/learning-resources",
+      "observed_utc": "2026-11-09T04:18:40.827152+00:00",
+      "method": "HEAD",
+      "status": 200,
+      "final_url": "https://docs.flutter.dev/reference/learning-resources",
+      "state": "ACCESSIBLE",
+      "elapsed_ms": 3970.8
+    },
+    {
+      "url": "https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow",
+      "observed_utc": "2026-11-09T04:18:40.999124+00:00",
+      "method": "HEAD",
+      "status": 200,
+      "final_url": "https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow",
+      "state": "ACCESSIBLE",
+      "elapsed_ms": 4920.06
+    },
+    {
+      "url": "https://docs.python.org/3.12/library/hashlib.html",
+      "observed_utc": "2026-11-09T04:18:43.567143+00:00",
+      "method": "HEAD",
+      "status": 200,
+      "final_url": "https://docs.python.org/3.12/library/hashlib.html",
+      "state": "ACCESSIBLE",
+      "elapsed_ms": 3284.77
+    },
+    {
+      "url": "https://pillow.readthedocs.io/en/stable/reference/Image.html",
+      "observed_utc": "2026-11-09T04:18:44.786348+00:00",
+      "method": "HEAD",
+      "status": 200,
+      "final_url": "https://pillow.readthedocs.io/en/stable/reference/Image.html",
+      "state": "ACCESSIBLE",
+      "elapsed_ms": 6035.19
+    },
+    {
+      "url": "https://pillow.readthedocs.io/en/stable/reference/Image.html#PIL.Image.Image.thumbnail",
+      "observed_utc": "2026-11-09T04:18:44.797980+00:00",
+      "method": "HEAD",
+      "status": 200,
+      "final_url": "https://pillow.readthedocs.io/en/stable/reference/Image.html#PIL.Image.Image.thumbnail",
+      "state": "ACCESSIBLE",
+      "elapsed_ms": 6023.64
+    },
+    {
+      "url": "https://pub.dev/api/packages/file_picker",
+      "observed_utc": "2026-11-09T04:18:44.869154+00:00",
+      "method": "HEAD",
+      "status": 200,
+      "final_url": "https://pub.dev/api/packages/file_picker",
+      "state": "ACCESSIBLE",
+      "elapsed_ms": 5260.98
+    },
+    {
+      "url": "https://pub.dev/packages/file_picker/versions/13.1.0",
+      "observed_utc": "2026-11-09T04:18:45.919231+00:00",
+      "method": "HEAD",
+      "status": 200,
+      "final_url": "https://pub.dev/packages/file_picker/versions/13.1.0",
+      "state": "ACCESSIBLE",
+      "elapsed_ms": 4324.05
+    },
+    {
+      "url": "https://pypi.org/pypi/Pillow/12.3.0/json",
+      "observed_utc": "2026-11-09T04:18:46.851958+00:00",
+      "method": "HEAD",
+      "status": 200,
+      "final_url": "https://pypi.org/pypi/Pillow/12.3.0/json",
+      "state": "ACCESSIBLE",
+      "elapsed_ms": 4308.22
+    },
+    {
+      "url": "https://pypi.org/pypi/python-multipart/0.0.20/json",
+      "observed_utc": "2026-11-09T04:18:50.130167+00:00",
+      "method": "HEAD",
+      "status": 200,
+      "final_url": "https://pypi.org/pypi/python-multipart/0.0.20/json",
+      "state": "ACCESSIBLE",
+      "elapsed_ms": 1105.07
+    },
+    {
+      "url": "https://sonarcloud.io/dashboard?id=ISCOUTB_AS_202620_PROYECTO_CAMPUSMARKET&branch=master",
+      "observed_utc": "2026-11-09T04:18:50.243321+00:00",
+      "method": "HEAD",
+      "status": 403,
+      "state": "RESTRICTED",
+      "elapsed_ms": 3747.84
+    }
+  ],
+  "sql_owners_observed": [
+    {
+      "table": "reportes_publicacion",
+      "owner": "administracion",
+      "repository": "backend/app/administracion/repository.py"
+    },
+    {
+      "table": "favoritos",
+      "owner": "favoritos",
+      "repository": "backend/app/favoritos/repository.py"
+    },
+    {
+      "table": "conversaciones",
+      "owner": "mensajeria",
+      "repository": "backend/app/mensajeria/repository.py"
+    },
+    {
+      "table": "mensajes",
+      "owner": "mensajeria",
+      "repository": "backend/app/mensajeria/repository.py"
+    },
+    {
+      "table": "publicaciones",
+      "owner": "publicaciones",
+      "repository": "backend/app/publicaciones/repository.py"
+    },
+    {
+      "table": "publicacion_imagenes",
+      "owner": "publicaciones",
+      "repository": "backend/app/publicaciones/repository.py"
+    },
+    {
+      "table": "solicitudes_idempotentes",
+      "owner": "publicaciones",
+      "repository": "backend/app/publicaciones/repository.py"
+    },
+    {
+      "table": "universidades",
+      "owner": "universidades",
+      "repository": "backend/app/universidades/repository.py"
+    },
+    {
+      "table": "usuarios",
+      "owner": "usuarios",
+      "repository": "backend/app/usuarios/repository.py"
+    },
+    {
+      "table": "sesiones_usuario",
+      "owner": "usuarios",
+      "repository": "backend/app/usuarios/repository.py"
+    },
+    {
+      "table": "intentos_autenticacion",
+      "owner": "usuarios",
+      "repository": "backend/app/usuarios/repository.py"
+    }
+  ],
+  "protected_git_trees": {
+    "backend": "93da4e40831cf36e5ab6c67d37d6efecba32625f",
+    "frontend": "f791477cbb3f004aa62ffdf7c53039295338ad4d",
+    "contracts": "4a80645928c7ac3958f119aa17de4458f559d37a",
+    "deploy": "6b93ab5e34fbe2790fb61ea82f3d7cace8096e05",
+    ".github": "7dd8cb9667785a9461e45f51e77f798df9bb12d6",
+    "scripts": "04ce66c103d9887b1eee6903ff4d742bb42e45c8",
+    "docs/adr": "9eb3dbbae4b5ad280c94298749739196205a26d3"
+  },
+  "historical_evidence_sha256": {
+    "docs/evidencias/mvp-bloque-05-flujo-real-2026-10-03.md": "536fba18807e6d3e91f64d2c0f59d1d3cd0f2146cc55e15e9bec19203e9a48d3",
+    "docs/evidencias/mvp-bloque-03-sesion-flutter-2026-10-03.md": "80bb0d6dee7176b9e9d551d7e5a5fc99f155ad82a5d5f41938602114a94ae52a",
+    "docs/evidencias/evidencia-s8-2026-09-27.md": "a346df6aec0b0e243401b6138d179d7584b28fb37e551ea94bcedaca3fd64664",
+    "docs/evidencias/evidencia-s10-corte2-2026-10-11.md": "08b608f94d8cc93d1d763e98957ec6a17854490961d404de77737294767cce18",
+    "docs/evidencias/linea-base-bloqueo-sqlite-2026-09-05.md": "4517e6abb75beed36cc64dca18307f7a3655afaf0288e2d249ffbf55f16254c1",
+    "docs/evidencias/auditoria-modularidad-s6-2026-09-12.md": "3326f1e224a2d7b34f080baad88dc77a7eed2b4e9c9350ac265f616732605121",
+    "docs/evidencias/arranque-un-comando-2026-09-04.md": "2ef51a88ab0a3779fea6077bcf41ae841b03056b785a1865e9859103e26f82d6",
+    "docs/evidencias/arranque-terminal-2026-09-04.png": "87c4e563272f57b9fdd8e7a1338b159a0972f8d4c5f60e58de85ff26e3320f5c",
+    "docs/evidencias/cierre-documental-s8-s9-mvp-2026-10-03.md": "ee9610fc2974adecf49c89d1d6639873fa68f9dae6ed4937d63c0b09b7a6fcf6",
+    "docs/evidencias/mvp-bloque-04-producto-galeria-reportes-2026-10-03.md": "4449ae03bfa8cc606fdc44b9b1ee15c339b21cd345898d4ead5cde46d001bb19",
+    "docs/evidencias/mvp-bloque-02-imagenes-moderacion-2026-10-03.md": "8443d150a0e7937eb8c5bcb521ec8e41212d3c971d5862d4b04d3f3689aa13a5",
+    "docs/evidencias/evidencia-s12-2026-10-25.md": "9234a44198d8df73345022e2021619f81763ee590acaa408dc68498e44a6fdf9",
+    "docs/evidencias/despliegue-publico-mvp-2026-10-04.md": "6d140e923aac49066fdda879f7863eb0d96d349ae915012513e609681f7680b4",
+    "docs/evidencias/medicion-bloqueo-sqlite-2026-09-06.md": "d455d5c6fcff0c03a84db4124fc7201f3a3e19afc7fada5afb95c85a1b8ae22f",
+    "docs/evidencias/auditoria-mvp-continuacion-2026-10-03.md": "08e22db523e989fbf63947214234f6bea0b29ae7aba95cdbea47d4fabe463e07",
+    "docs/evidencias/mvp-bloque-07-compose-2026-10-03.md": "cdb2945aa4606b2f9709ac3eac4aa345f8c51794c7e8045be81cde9c693d44f5",
+    "docs/evidencias/mvp-bloque-01-autenticacion-2026-10-03.md": "55e477d8c7a56f77010da0addce7a716f9d7a4c228e18ea69feceba10ed42b38",
+    "docs/evidencias/cierre-s12-2026-10-25.md": "41340c44b2380ed37f46c4e08e04e72c36ff77e864011f5f6531046e323b8fd6",
+    "docs/evidencias/evidencia-s7-2026-09-15.md": "afc5fb66b764ade9fa054651a75a9d846c5b3759c712eedb13a44fe685d40b90",
+    "docs/evidencias/arranque-frontend-2026-09-04.png": "0f1261bab461ece695ea8614d9661bf8175d459117c9a91fcdb873832d8d61cf",
+    "docs/evidencias/taller-mensajes-s12-2026-10-25.md": "8b8be7aa93724ca4f21d0e6daaa761a07baa9b5210b91706c0b7a0c9320d35b5",
+    "docs/evidencias/incremento-2-mensajeria-2026-11-03.md": "46555992d57032756c70e29cc79779fc2211cc0f0c86e752212f06417d6edd4e",
+    "docs/evidencias/fallo-contrato-s7-2026-09-15.md": "a50ee37c223f95060e3b881f0525e8498005806bda6e4e8e0d5c49d16663dfaf",
+    "docs/evidencias/arranque-health-2026-09-04.png": "3eb2cd68f5949a17a0db113cf4af90fe05eb9bcb0f9c0f11f925cea4b3290d5f",
+    "docs/evidencias/incremento-2-universidad-visible-2026-11-03.md": "91ca5cc238ad61393c325c694740b6ba0ea5111c4eb2cf3915ee1a21b39e985a",
+    "docs/evidencias/auditoria-inicial-mvp-2026-10-03.md": "1106c5f77a41f66aa01558fdaa74f76a15dc1d4b364e7f6e99c583fb66f93721",
+    "docs/evidencias/cierre-web-institucional-2026-11-01.md": "e357a72f325f43c25b986cbc6f04c7675487fa88e3705bdc872c6a8f85aafa94",
+    "docs/evidencias/cierre-universidades-cartagena-2026-11-02.md": "be324dc9f35c9710f01c1ec3fc1ae827e089330ceaeb45e8f536eb9e69712108",
+    "docs/evidencias/evidencia-ec01-catalogo-s9-2026-10-01.md": "fef0bd6c7eb787234744d323013b1804bc716039ed7a28ebe7a8f28477210a6e",
+    "docs/evidencias/incremento-2-favoritos-2026-11-03.md": "6045180c4923f2eaa4e4daa3e5dbed9225cf7bd3ad3820b3f65f441b170c55c5",
+    "docs/evidencias/mvp-bloque-06-recursos-y-migracion-2026-10-03.md": "04baacd3542655d6588463770c5ac7eb1e4e97f2e8afd6e9161e96adf1713e8f",
+    "docs/evidencias/evidencia-s14-ec01-2026-11-05.md": "caccc08fd78f463124e68a1e89b08c5fd64fc890d35b93fc4c030863b7736583",
+    "docs/evidencias/cierre-s10-corte2-2026-10-11.md": "83376abf95ac948f2abc597f48d2925f8c09b85864544b31ebb10ba3bacb5374",
+    "docs/evidencias/auditoria-s9-dependencias-secretos-2026-10-01.md": "1d4bae958ddec157286be1e18a160b0e5b462997dbae11ba529d45a75e4527ac",
+    "docs/evidencias/evidencia-s9-2026-10-01.md": "8465464fdc9a3db7433eaef5d19ed9f15964ebb1ca6c91d98d130b20ef02c03a",
+    "docs/evidencias/cierre-productivo-incremento2-2026-11-03.md": "ab349244bab5b46673b67f26108edcd65f12da41642b90ba14798aebc13f130b",
+    "docs/evidencias/evidencia-s13-amenazas-2026-11-01.md": "e261251e517c75cca62dd32359a4b5723874cb44017a29649e8650c9f4fe3a53",
+    "docs/evidencias/evidencia-s11-2026-10-18.md": "98a45a4ba766cb4cba4f14386ec8d10cd5ae10d77771322d228b4d6a64ba7af4",
+    "docs/evidencias/trazabilidad-ghcr-2026-10-30.md": "cd4813d1ffccfbad1be62ff207a0228ec9e076c98a2292b5c7a6b9faff28853d",
+    "docs/evidencias/s10/barrido-secretos-resumen.json": "33711d4d77e9fd718d08f6eadac639f057d2ee09df108c588120a2ce242969d6",
+    "docs/evidencias/s10/barrido-secretos-checkout.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "docs/evidencias/s10/barrido-secretos-historial-redactado.json": "93af0544e48ba59e5f7f2144dabb8c6d2d0861f6050458b83967bc1715229133",
+    "docs/evidencias/s10/verificacion-local.json": "ae53c53a61b05ecbca67a411a51111f796b5b12c55bcdbc780ecb7aa976ab5ee",
+    "docs/evidencias/s10/comprobaciones-publicas.json": "154b6fc10f3759893b54e233b3a8ad3dead076bbc686f30574d4a70fac067e27",
+    "docs/evidencias/datos/ec01-s14-intentos-2026-11-05.json": "443813066517f90c08689b634c375b00546b8ed0122a5a6d366df2310ba6c07a",
+    "docs/evidencias/datos/ec01-s14-validacion-pr92.json": "e978c95ec984f7a42e6d33b6d87fa8b085f0129ae70b37565b071ddc5a096a3c",
+    "docs/evidencias/datos/ec01-s14-2026-11-05.json": "595c6f5d9a96c8a23b523c24e799b889cbf2c8fc2195fea43cd8a7171ffed751",
+    "docs/evidencias/datos/imagen-incremento2-41595618179.json": "084f7d58bc99171961ce286e0c0a205e3cc8b2f57310240ba0fc0b6356ccc622",
+    "docs/evidencias/s10/ejecucion-20261012T0419Z/plan.json": "5609f18c9a76630c41588b2b0183b4f1fa8a8a1e02bf15dfbf4fbdb06e28a0a3",
+    "docs/evidencias/s10/ejecucion-20261012T0419Z/resumen.json": "df0c2dbe887a8eb6ef1009b5a7e8132f91bac0fab716a82c6a5782fd6a85e1a3",
+    "docs/evidencias/s10/ejecucion-20261012T0419Z/observaciones.jsonl": "5f0e448a66a6696bd258ece88cfd587752320610b928d0625a7614ea8849373f",
+    "docs/evidencias/s10/ejecucion-20261012T0419Z/script-ejecutado.py": "fe711c9b5e404ef07b71c6f7a0aa623d194f00d3eeab71608a76b12402c499ce",
+    "docs/evidencias/s10/ci-38204357938/resumen.json": "49dad1631ef2d10da3e36453f1b0f6f6cd12006c05608c78ee65680ce50968f8",
+    "docs/evidencias/s10/ci-38204357938/run.json": "ca49969ff269c646d263a43d675b7d1b93b0283d359a7937bcfbcb0905e7d35a",
+    "docs/evidencias/s10/ci-38204357938/observaciones.jsonl": "b08a87f3d89be86ae5f5c4a382960df96afe8da0edb8208ed92da6852d479c54"
+  },
+  "source_materials_reading": {
+    "S12": "32 páginas OCR; dos finales sin contenido extraíble; contraste visual de páginas críticas pendiente",
+    "S14": "OCR previo reutilizado tras verificar mismo SHA256; lectura pp. 14, 16–22",
+    "S2_S3_S4_S6_S7_S8_S9": "Texto extraído y consigna de entrega contrastada; no representa acceso autenticado a SAVIO"
+  },
+  "additional_findings": {
+    "data_tables": 11,
+    "contexts": 7,
+    "ownership_guard_omits": [
+      "solicitudes_idempotentes"
+    ],
+    "idempotency_introduced_in": "7705c2b3cad07c727b7fd4cbe2a623d9a19d967c",
+    "universidades_http_get": 500,
+    "universidades_cause": "NO VERIFICADA; no acceso a logs privados/DB"
+  }
+}
