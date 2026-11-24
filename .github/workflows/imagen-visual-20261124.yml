@@ -1,0 +1,90 @@
+name: Imagen CampusMarket visual verificada (sin despliegue)
+
+on:
+  push:
+    branches:
+      - release/imagen-visual-campusmarket-20261124
+    paths:
+      - .github/workflows/imagen-visual-20261124.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: campusmarket-visual-image-20261124
+  cancel-in-progress: false
+
+jobs:
+  build-and-publish:
+    if: github.repository == 'Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET' && github.ref == 'refs/heads/release/imagen-visual-campusmarket-20261124'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Checkout del origen exacto
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - name: Flutter fijado
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2
+        with:
+          flutter-version: "3.47.3"
+          channel: stable
+          cache: true
+      - name: Analizar, probar y compilar Web para /app/
+        working-directory: frontend/campusmarket
+        shell: bash
+        run: |
+          set -euo pipefail
+          flutter pub get
+          flutter analyze
+          flutter test
+          flutter build web --release --base-href /app/ --dart-define=CAMPUSMARKET_API_BASE_URL=https://campusmarket.iscoutb.dev
+          test -s build/web/index.html
+          test -s build/web/main.dart.js
+          test -s build/web/icons/campusmarket.svg
+          git diff --exit-code -- .
+      - name: Construir imagen Web + API sin intervenir producción
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker build \
+            --file backend/Dockerfile.web-release \
+            --build-arg CAMPUSMARKET_REVISION="$GITHUB_SHA" \
+            --tag "campusmarket-visual-local:$GITHUB_SHA" .
+          image="campusmarket-visual-local:$GITHUB_SHA"
+          test "$(docker image inspect "$image" --format '{{ index .Config.Labels "org.opencontainers.image.revision" }}')" = "$GITHUB_SHA"
+          test "$(docker run --rm --entrypoint cat "$image" /app/REVISION)" = "$GITHUB_SHA"
+          docker run --rm --entrypoint test "$image" -s /app/frontend_web/index.html
+          docker run --rm --entrypoint test "$image" -s /app/frontend_web/main.dart.js
+          docker run --rm --entrypoint test "$image" -s /app/frontend_web/icons/campusmarket.svg
+      - name: Publicar imagen inmutable en GHCR del fork
+        shell: bash
+        env:
+          GHCR_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          image="ghcr.io/nnigarp/campusmarket-web-universidades"
+          tag="$image:$GITHUB_SHA"
+          if docker manifest inspect "$tag" >/dev/null 2>&1; then
+            echo "El SHA ya tiene imagen publicada: no sobrescribir."
+            exit 1
+          fi
+          echo "$GHCR_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
+          docker tag "campusmarket-visual-local:$GITHUB_SHA" "$tag"
+          docker push "$tag" | tee "$RUNNER_TEMP/image-push.log"
+          digest="$(sed -nE 's/.*digest: (sha256:[0-9a-f]{64}).*/\1/p' "$RUNNER_TEMP/image-push.log" | tail -1)"
+          [[ "$digest" =~ ^sha256:[0-9a-f]{64}$ ]]
+          docker buildx imagetools inspect "$image@$digest" >/dev/null
+          docker pull "$image@$digest"
+          test "$(docker image inspect "$image@$digest" --format '{{ index .Config.Labels "org.opencontainers.image.revision" }}')" = "$GITHUB_SHA"
+          test "$(docker run --rm --entrypoint cat "$image@$digest" /app/REVISION)" = "$GITHUB_SHA"
+          {
+            echo "## Imagen visual CampusMarket — publicada sin despliegue"
+            echo "- Fuente: \$GITHUB_SHA"
+            echo "- Imagen: \$image@$digest"
+            echo "- Flutter analyze/test y compilación Web: OK"
+            echo "- Docker revision OCI y /app/REVISION: OK"
+            echo "- Producción: NO MODIFICADA"
+          } >> "$GITHUB_STEP_SUMMARY"
