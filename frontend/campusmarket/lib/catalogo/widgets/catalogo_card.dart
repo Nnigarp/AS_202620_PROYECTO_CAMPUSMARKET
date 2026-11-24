@@ -32,8 +32,10 @@ class CatalogoCard extends StatelessWidget {
 
         return Card(
           clipBehavior: Clip.antiAlias,
+          elevation: 0,
           child: InkWell(
             onTap: onTap,
+            hoverColor: colors.primary.withValues(alpha: 0.035),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

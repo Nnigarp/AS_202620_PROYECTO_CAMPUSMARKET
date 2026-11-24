@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="CampusMarket">
+  <rect width="64" height="64" rx="17" fill="#E8E2FF"/>
+  <path d="M9 24 32 13l23 11-23 11L9 24Z" fill="#5B4CF0"/>
+  <path d="M19 31v12c9 7 17 7 26 0V31L32 37 19 31Z" fill="#5B4CF0"/>
+  <path d="M55 25v17" fill="none" stroke="#4434B9" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="55" cy="45" r="3" fill="#4434B9"/>
+</svg>

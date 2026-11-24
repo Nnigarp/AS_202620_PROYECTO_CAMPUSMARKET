@@ -56,7 +56,7 @@ class _ChatPageState extends State<ChatPage> {
             onPressed: _controller.loading || !_controller.active ? null : _controller.load, icon: const Icon(Icons.refresh))],
         ),
         body: !_controller.active ? const Center(child: Text('La sesión cambió. Vuelve a abrir Mensajes.'))
-          : Center(child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 920), child: Column(children: [
+          : Center(child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 800), child: Column(children: [
             if (_controller.loading) const LinearProgressIndicator(),
             if (conversation != null) Padding(padding: const EdgeInsets.all(12), child: Text(
               conversation.publicacion == null ? 'Publicación no disponible. Se conserva tu historial privado.'
@@ -77,14 +77,22 @@ class _ChatPageState extends State<ChatPage> {
                   final own = message.remitenteId == _controller.api.session.usuario?.id;
                   return Align(alignment: own ? Alignment.centerRight : Alignment.centerLeft,
                     child: Container(
-                      constraints: const BoxConstraints(maxWidth: 600),
+                      constraints: const BoxConstraints(maxWidth: 460),
                       margin: EdgeInsets.fromLTRB(own ? 28 : 0, 4, own ? 0 : 28, 4),
                       padding: const EdgeInsets.all(14),
                       decoration: BoxDecoration(color: own ? Theme.of(context).colorScheme.primaryContainer
-                        : Theme.of(context).colorScheme.surfaceContainerHighest, borderRadius: BorderRadius.circular(16)),
+                        : Theme.of(context).colorScheme.surfaceContainerHighest, borderRadius: BorderRadius.only(
+                          topLeft: const Radius.circular(18),
+                          topRight: const Radius.circular(18),
+                          bottomLeft: Radius.circular(own ? 18 : 5),
+                          bottomRight: Radius.circular(own ? 5 : 18),
+                        )),
                       child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
-                        Text(own ? 'Tú' : 'Otro participante', style: Theme.of(context).textTheme.labelSmall),
+                        Text(own ? 'Tú' : 'Otro participante',
+                          style: Theme.of(context).textTheme.labelSmall?.copyWith(fontWeight: FontWeight.w700)),
+                        const SizedBox(height: 5),
                         Text(message.texto),
+                        const SizedBox(height: 5),
                         Text(MaterialLocalizations.of(context).formatTimeOfDay(TimeOfDay.fromDateTime(message.creadoEn.toLocal())),
                           style: Theme.of(context).textTheme.labelSmall),
                       ]),

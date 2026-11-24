@@ -26,6 +26,7 @@ on:
 
 permissions:
   contents: read
+  packages: read
 
 jobs:
   configuration:
@@ -40,7 +41,27 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if [ -f deploy/promocion-incremento2.json ]; then
+          if [ "${{ github.event_name }}" = "pull_request" ] && { [ "${{ github.head_ref }}" = "ops/promocion-visual-digest-20261124" ] || { [ "${{ github.head_ref }}" = "master" ] && [ "${{ github.event.pull_request.head.repo.full_name }}" = "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET" ] && [ "${{ github.event.pull_request.base.repo.full_name }}" = "ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET" ]; }; }; then
+            python3 - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          old = "ghcr.io/nnigarp/campusmarket-web-universidades@sha256:11d92aa9b66f1a4c6b879a6e8cd62cc3c102a37c034a44cbde27442b73694fa7"
+          new = "ghcr.io/nnigarp/campusmarket-web-universidades@sha256:42a3258b215c9b06d26b92761e8d2c95a03642fb50032a112eda3a1d696d5a9d"
+          base = subprocess.check_output(["git", "show", "${{ github.event.pull_request.base.sha }}:deploy/compose.prod.yaml"], text=True)
+          current = Path("deploy/compose.prod.yaml").read_text()
+          assert base.count(old) == 1, "La base no tiene exactamente el digest anterior"
+          assert current == base.replace(old, new, 1), "El delta no es exclusivamente api.image"
+          assert "mysql_data:" in current and "publication_images:" in current
+          output = Path("artifacts/promocion-web/configuracion.json")
+          output.parent.mkdir(parents=True, exist_ok=True)
+          output.write_text(json.dumps({"only_api_image_delta": True, "previous":old,"candidate":new, "production_changed":False}, indent=2) + "\n")
+          PY
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin >/dev/null
+            reference="ghcr.io/nnigarp/campusmarket-web-universidades@sha256:42a3258b215c9b06d26b92761e8d2c95a03642fb50032a112eda3a1d696d5a9d"
+            docker pull "$reference" >/dev/null
+            test "$(docker image inspect "$reference" --format '{{ index .Config.Labels "org.opencontainers.image.revision" }}')" = "4af0e620beab1aa344af1cdcc4f275252db66807"
+            test "$(docker run --rm --entrypoint cat "$reference" /app/REVISION)" = "4af0e620beab1aa344af1cdcc4f275252db66807"
+          elif [ -f deploy/promocion-incremento2.json ]; then
             source=$(python3 -c 'import json; print(json.load(open("deploy/promocion-incremento2.json"))["source_sha"])')
             [[ "$source" =~ ^[0-9a-f]{40}$ ]]
             git fetch --no-tags https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET.git "$source"
