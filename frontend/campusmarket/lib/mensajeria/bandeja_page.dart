@@ -71,30 +71,122 @@ class _BandejaPageState extends State<BandejaPage> {
     super.dispose();
   }
   @override
-  Widget build(BuildContext context) => Column(children: [
-    Padding(padding: const EdgeInsets.all(20), child: Row(children: [
-      Expanded(child: Text('Mis mensajes', style: Theme.of(context).textTheme.headlineSmall)),
-      IconButton(tooltip: 'Actualizar bandeja', onPressed: _loading ? null : _refresh, icon: const Icon(Icons.refresh)),
-    ])),
-    if (_loading) const LinearProgressIndicator(),
-    if (_error != null) Padding(padding: const EdgeInsets.all(16), child: Semantics(liveRegion: true, child: Text(_error!))),
-    Expanded(child: _items.isEmpty
-      ? const Center(child: Padding(padding: EdgeInsets.all(24), child: Text(
-          'Aún no tienes conversaciones. Contacta al vendedor desde una publicación.', textAlign: TextAlign.center,
-        )))
-      : ListView.separated(padding: const EdgeInsets.symmetric(horizontal: 16), itemCount: _items.length,
-          separatorBuilder: (_, _) => const Divider(), itemBuilder: (context, index) {
-            final item = _items.values.elementAt(index);
-            final buyer = item.compradorId == _api.session.usuario?.id;
-            return ListTile(
-              key: ValueKey('conversacion-${item.id}'),
-              leading: const Icon(Icons.chat_bubble_outline),
-              title: Text(item.publicacion?.titulo ?? 'Publicación no disponible', maxLines: 2, overflow: TextOverflow.ellipsis),
-              subtitle: Text('${buyer ? 'Vendedor' : 'Comprador'} · ${item.ultimoMensaje?.texto ?? 'Sin mensajes todavía'}',
-                maxLines: 2, overflow: TextOverflow.ellipsis),
-              trailing: const Icon(Icons.chevron_right), onTap: () => _open(item),
-            );
-          })),
-    if (_more) TextButton(onPressed: _loading ? null : () => _refresh(append: true), child: const Text('Cargar más conversaciones')),
-  ]);
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 1000),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 24, 20, 18),
+              child: Row(
+                children: [
+                  Container(
+                    height: 44, width: 44,
+                    decoration: BoxDecoration(
+                      color: colors.primaryContainer,
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                    child: Icon(Icons.chat_bubble_outline, color: colors.primary),
+                  ),
+                  const SizedBox(width: 14),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Mis mensajes',
+                          style: Theme.of(context).textTheme.headlineSmall),
+                        const SizedBox(height: 4),
+                        Text('Conversaciones sobre tus productos y hallazgos.',
+                          style: Theme.of(context).textTheme.bodySmall),
+                      ],
+                    ),
+                  ),
+                  IconButton(
+                    tooltip: 'Actualizar bandeja',
+                    onPressed: _loading ? null : _refresh,
+                    icon: const Icon(Icons.refresh),
+                  ),
+                ],
+              ),
+            ),
+            if (_loading) const LinearProgressIndicator(),
+            if (_error != null)
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Semantics(liveRegion: true, child: Text(_error!)),
+              ),
+            Expanded(
+              child: _items.isEmpty
+                  ? Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(24),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.forum_outlined, size: 48, color: colors.primary),
+                            const SizedBox(height: 12),
+                            Text('Aún no tienes conversaciones',
+                              style: Theme.of(context).textTheme.titleLarge,
+                              textAlign: TextAlign.center),
+                            const SizedBox(height: 8),
+                            const Text(
+                              'Contacta al vendedor desde una publicación.',
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  : ListView.separated(
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
+                      itemCount: _items.length,
+                      separatorBuilder: (_, _) => const SizedBox(height: 10),
+                      itemBuilder: (context, index) {
+                        final item = _items.values.elementAt(index);
+                        final buyer = item.compradorId == _api.session.usuario?.id;
+                        return Card(
+                          margin: EdgeInsets.zero,
+                          clipBehavior: Clip.antiAlias,
+                          child: ListTile(
+                            key: ValueKey('conversacion-${item.id}'),
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 10),
+                            leading: CircleAvatar(
+                              backgroundColor: colors.primaryContainer,
+                              foregroundColor: colors.primary,
+                              child: const Icon(Icons.inventory_2_outlined),
+                            ),
+                            title: Text(
+                              item.publicacion?.titulo ?? 'Publicación no disponible',
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(fontWeight: FontWeight.w700),
+                            ),
+                            subtitle: Padding(
+                              padding: const EdgeInsets.only(top: 6),
+                              child: Text(
+                                '${buyer ? 'Vendedor' : 'Comprador'} · ${item.ultimoMensaje?.texto ?? 'Sin mensajes todavía'}',
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            trailing: const Icon(Icons.chevron_right),
+                            onTap: () => _open(item),
+                          ),
+                        );
+                      },
+                    ),
+            ),
+            if (_more)
+              TextButton(
+                onPressed: _loading ? null : () => _refresh(append: true),
+                child: const Text('Cargar más conversaciones'),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
 }
