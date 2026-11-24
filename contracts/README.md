@@ -1,11 +1,6 @@
 # Contrato HTTP de CampusMarket
 
-`openapi-v1.json` es la fuente de verdad ejecutable de la API pública vigente.
-Describe las operaciones implementadas por FastAPI:
-
-- `GET /health`;
-- `GET /publicaciones`;
-- `POST /publicaciones`.
+El [contrato vigente v2](openapi-v2.json) describe la API de FastAPI, desde salud y catálogo público hasta operaciones autenticadas de publicaciones, usuarios, favoritos, mensajería y moderación. El [contrato v1](openapi-v1.json) conserva las tres operaciones del laboratorio S7. La [decisión de compatibilidad](../docs/adr/0020-preservar-contrato-v2-y-adaptar-consumidor-incompatible.md) explica cómo evolucionó el consumidor.
 
 ## Verificación
 
@@ -19,9 +14,9 @@ La prueba compara el documento versionado con el esquema expuesto por el
 proveedor. Si se elimina o renombra una ruta, operación, campo o respuesta sin
 evolucionar el contrato, la comparación falla.
 
-## Generación de cliente
+## Generación de cliente del laboratorio S7
 
-El contrato contiene `operationId` estables y se comprobó generando un cliente
+En S7 se comprobaron los `operationId` de v1 generando un cliente
 Dart con OpenAPI Generator 7.25.0:
 
 ```bash
@@ -34,8 +29,7 @@ npx --yes @openapitools/openapi-generator-cli@2.25.2 generate \
 
 El resultado se mantiene como artefacto reproducible del laboratorio y no se
 incorpora al producto mientras el frontend continúe utilizando su cliente
-manual mínimo `publicaciones_api.dart`; mantener ambos clientes productivos
-crearía duplicación sin beneficio en el corte actual.
+Dart mantenido por módulo. El comando reproduce la generación histórica sobre v1.
 
 ## Regla de evolución
 

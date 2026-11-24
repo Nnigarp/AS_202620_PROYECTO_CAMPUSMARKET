@@ -1,6 +1,18 @@
 ﻿# CampusMarket — despliegue GHCR y registro operativo
 
-## Lectura vigente — 8 de noviembre de 2026
+## Promoción del 24 de noviembre de 2026
+
+El [PR oficial #94](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/94) integró `2a2c47b8d67cde8acf3bc44a4e0180f2a9fd6ed4`. La [compilación en el fork](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/45340726731) usó la fuente `4af0e620beab1aa344af1cdcc4f275252db66807`. El [Compose institucional](../../deploy/compose.prod.yaml) fija la imagen Web/API en `ghcr.io/nnigarp/campusmarket-web-universidades@sha256:42a3258b215c9b06d26b92761e8d2c95a03642fb50032a112eda3a1d696d5a9d`.
+
+| Fuente | Observación |
+|---|---|
+| Operador, Dokploy y sesión autenticada | El operador comunicó un despliegue satisfactorio dirigido exclusivamente a `api` con `--no-deps --no-build --pull always api`. Vio `api` y `db` saludables y la misma identidad del contenedor MySQL. En el dominio institucional observó la identidad actualizada, cinco anuncios en el catálogo y tres productos en Favoritos de la cuenta utilizada. |
+| Verificación pública posterior, solo lectura | `GET /app/`, `/docs`, `/openapi.json`, `/catalogo` y `/health` respondieron 200 con la revisión `4af0e620…`. La salud devolvió `ok`, el catálogo contenía cinco anuncios y el esquema público coincidió con el [v2 versionado](../../contracts/openapi-v2.json). |
+| Experimento público con referencia fija | El [run oficial](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/45353575784) obtuvo 9/9 sobre `46ede525…`. Después, el [run del fork](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/45384460142) registró 58 solicitudes sobre `4af0e620…`. Hubo 15/15 respuestas 200 de base, 15/15 rechazos 422 al consumidor incompatible y 15/15 respuestas 200 tras la adaptación. El único criterio fallido fue la igualdad con la [revisión esperada](../../.github/s10-produccion.json), aún fijada en `46ede525…`. Resultado del run posterior: **fallido, 8/9**. |
+
+La continuidad de MySQL durante este cambio deja abiertas la recuperación conjunta de SQL y fotografías desde una copia independiente y el rollback en producción. La revisión del contrato y la aceptación visual tienen alcances distintos de una comprobación integral de todos los recorridos privados.
+
+## Registro del 8 de noviembre de 2026
 
 Los apartados siguientes son un registro **cronológico**: las condiciones de preparación de octubre no describen el resultado de noviembre. Para operar, partir del [cierre observado del 3/nov](../evidencias/cierre-productivo-incremento2-2026-11-03.md), [arc42 §7](../arc42/07-vista-despliegue.md) y la [auditoría S1–S14](../evidencias/auditoria-documental-s1-s14-2026-11-08.md), sin ejecutar un plan antiguo por su mera existencia.
 
