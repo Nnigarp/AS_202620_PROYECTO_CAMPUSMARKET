@@ -82,8 +82,8 @@ jobs:
           test "$(docker run --rm --entrypoint cat "$image@$digest" /app/REVISION)" = "$GITHUB_SHA"
           {
             echo "## Imagen visual CampusMarket — publicada sin despliegue"
-            echo "- Fuente: \$GITHUB_SHA"
-            echo "- Imagen: \$image@$digest"
+            echo "- Fuente: $GITHUB_SHA"
+            echo "- Imagen: $image@$digest"
             echo "- Flutter analyze/test y compilación Web: OK"
             echo "- Docker revision OCI y /app/REVISION: OK"
             echo "- Producción: NO MODIFICADA"
