@@ -50,12 +50,12 @@ Estados según la [ficha](https://github.com/ISCOUTB/AS_202620_feedback/blob/484
 | Criterio | Estado en el candidato | Ruta, evidencia, revisión y límite |
 |---|---|---|
 | 1. Trabajo posterior | Cumple | T y L posteriores a la base #95. La comparación distingue S16 de S17. |
-| 2. Matriz frente a lo recibido | No verificado | [Matriz](matriz-retroalimentacion.md), D. Faltan originales de jurado y pares. |
+| 2. Matriz frente a lo recibido | No verificado | [Matriz](matriz-retroalimentacion.md), D. Se recuperó una recomendación oral de la sustentación (RF-11); faltan originales de jurado y pares. |
 | 3. Clasificación | Cumple para fuentes disponibles | [Decisiones por fila](matriz-retroalimentacion.md), D. El conjunto completo depende del cotejo anterior. |
 | 4. Justificaciones | Cumple para fuentes disponibles | RF-06 y RF-07 identifican riesgo, dependencia y condición verificable de cierre, D. |
 | 5. Cambios enlazados | Cumple | [Referencia S10](../../.github/s10-produccion.json), [guarda](../../backend/tests/test_propiedad_datos.py), [CI](../../.github/workflows/backend-tests.yml) y [aspectos](../aspectos.md), T/L/D. |
 | 6. Pruebas modificadas | Cumple | T/L. La guarda discrimina propietario, los [tests del CLI](../../scripts/test_verificar_documentacion.py) fallan ante dos clases de defecto. |
-| 7. ADR | Cumple como propuesta documentada | [ADR-0027](../adr/0027-validar-trazabilidad-documental-en-ci.md), D. Pendiente ratificación nominal. |
+| 7. ADR | Cumple como propuesta documentada | [ADR-0027](../adr/0027-validar-trazabilidad-documental-en-ci.md), D. Implementación verificada en CI; pendiente ratificación nominal. |
 | 8. Diagramas y arc42 | Cumple | [C4 L2](../c4/02-contenedores.md), [C4 L3](../c4/03-componentes-backend.md) y [arc42](../arc42/ARC42.md), D. FastAPI sirve Flutter Web y Publicaciones conserva el único escritor. El cambio afecta CI, sin delta gráfico. |
 | 9. Pipeline posterior a los cambios técnicos | Cumple en a32e3ce; pendiente en el SHA documental posterior y en master | [Cinco runs por SHA](#verificación-independiente-del-candidato-a32e3ce). No trasladar automáticamente el resultado a otro SHA. |
 | 10. Lección por integrante | No verificado como testimonio | [Retrospectiva](retrospectiva.md), D. Tres propuestas individuales pendientes de validación. |
@@ -106,3 +106,18 @@ En backend aprobaron ambos jobs (test y documentacion), incluidos Ruff, Gitleaks
 ### Condiciones de cierre académico
 
 Pendientes: cotejo de los originales del jurado y pares (o confirmación explícita de su ausencia/exención por el docente), validación de las tres lecciones por sus autores, ratificación del ADR-0027 y verificación de CI y Sonar del SHA institucional. No se modifica el estado de esos criterios sin evidencia. La ficha S17 evalúa master al cierre, no el fork ni la etiqueta final. No se requiere otra sustentación ni un despliegue para este ajuste documental.
+
+
+## Segundo candidato y actualización de procedencia
+
+El 27/nov/2026 a las 18:05 Colombia se consultaron los cinco workflows completed/success para el SHA [`2b393a7136a3120b2df227ddd4fc322f2f5fa04c`](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/2b393a7136a3120b2df227ddd4fc322f2f5fa04c).
+
+| Workflow | Run exacto | Conclusión |
+|---|---|---|
+| Backend y documentación | [46079427723](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/46079427723) | success |
+| Flutter MVP | [46079427695](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/46079427695) | success |
+| Compose y persistencia | [46079427686](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/46079427686) | success |
+| Contrato público S10 | [46079427699](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/46079427699) | success |
+| Flujo real Web y Android | [46079427733](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/46079427733) | success |
+
+La revisión posterior recuperó el relato del integrante sobre la observación oral de contraste durante la sustentación, incorporado como RF-11. El build `4af0e620` es anterior a la observación, por lo que no se acredita como respuesta a ella. Se mantienen pendientes el cotejo con originales, la ratificación nominal y las lecciones personales. Los runs citados acreditan 2b393a7, no el nuevo SHA documental ni master. Verificar las ejecuciones posteriores sin modificar las pruebas para forzar resultados.

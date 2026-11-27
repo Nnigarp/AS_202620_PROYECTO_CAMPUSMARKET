@@ -1,6 +1,6 @@
 # ADR-0027 — Validar la trazabilidad documental en integración continua
 
-- **Estado:** Propuesto para aceptación del equipo
+- **Estado:** Implementado y verificado en CI; pendiente de ratificación formal del equipo
 - **Fecha:** 2026-11-27 (Colombia)
 - **Ámbito:** integración de cambios al monolito modular
 - **Relacionado:** [RF-02 y RF-03](../cierre-arquitectonico/matriz-retroalimentacion.md), [arc42 §9](../arc42/09-decisiones.md)
@@ -30,3 +30,7 @@ El control detecta errores estructurales. Una ruta válida puede apuntar a una p
 [Pruebas de sensibilidad](../../scripts/test_verificar_documentacion.py) · [Verificador](../../scripts/verificar_documentacion.py) · [Resultados S17](../cierre-arquitectonico/evidencias-cierre.md).
 
 El [commit de implementación](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/7f9253c9bc6a1c85bf9b98af976299f191dbd15f) incorpora el control que acompaña la revisión de [C4 L3](../c4/03-componentes-backend.md). El [primer run del fork](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/46075883867) permite comprobar que documentación terminó correctamente aun cuando el barrido de secretos detuvo el job de backend.
+
+## Verificación y ratificación
+
+El job documental y sus pruebas aprobaron en [el candidato técnico a32e3ce](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/46076400865) y en [el candidato documental 2b393a7](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/46079427723). Se acredita adopción técnica, no consentimiento nominal de los tres integrantes. La autorización del integrante solicitante para revisar y ajustar el cierre no equivale a una ratificación colectiva. La decisión conserva su alcance y no reemplaza ADR anteriores.

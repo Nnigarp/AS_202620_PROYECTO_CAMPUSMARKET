@@ -857,3 +857,8 @@ Se publicaron las revisiones en el fork. El equipo reservó para después de su 
 ### Revisión independiente posterior de S17 — 27/nov/2026
 
 ChatGPT consultó GitHub, contrastó el diff del candidato técnico `a32e3ce` y verificó cinco workflows exitosos para ese SHA. Se aceptó fijar los enlaces de los runs y del diff, conservando la distinción entre candidato y master. Se descartó declarar aceptación del ADR o lecciones personales sin ratificación, y certificar un SHA nuevo con runs de otro. No se ejecutaron pruebas propias ni se modificaron código, umbrales, secretos o producción. [Resultados y pendientes](cierre-arquitectonico/evidencias-cierre.md#verificación-independiente-del-candidato-a32e3ce).
+
+
+### Recuperación de procedencia y revisión de cierre — 27/nov/2026
+
+ChatGPT reabrió las evaluaciones del repositorio oficial y recuperó el relato de Nilver del 24/nov sobre la observación oral de colores/cuadros. Se incorporó RF-11, distinguiendo testimonio indirecto, evaluación técnica y formulario original ausente. Se descartó atribuir el build anterior a la recomendación posterior, declarar ratificación colectiva sin confirmaciones o convertir propuestas editoriales en testimonios de Joshua y Camilo. El ADR-0027 registra su aplicación técnica verificada y conserva pendiente la ratificación. Se documentaron los cinco runs de 2b393a7; no se ejecutó ni desplegó un cambio visual. [Matriz](cierre-arquitectonico/matriz-retroalimentacion.md) · [evidencia](cierre-arquitectonico/evidencias-cierre.md).
