@@ -57,7 +57,7 @@ Estados según la [ficha](https://github.com/ISCOUTB/AS_202620_feedback/blob/484
 | 6. Pruebas modificadas | Cumple | T/L. La guarda discrimina propietario, los [tests del CLI](../../scripts/test_verificar_documentacion.py) fallan ante dos clases de defecto. |
 | 7. ADR | Cumple como propuesta documentada | [ADR-0027](../adr/0027-validar-trazabilidad-documental-en-ci.md), D. Pendiente ratificación nominal. |
 | 8. Diagramas y arc42 | Cumple | [C4 L2](../c4/02-contenedores.md), [C4 L3](../c4/03-componentes-backend.md) y [arc42](../arc42/ARC42.md), D. FastAPI sirve Flutter Web y Publicaciones conserva el único escritor. El cambio afecta CI, sin delta gráfico. |
-| 9. Pipeline del último cambio | Verificar al terminar los runs de D | [Actions de la rama](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions?query=branch%3Afix%2Fcierre-arquitectonico). Exigir coincidencia de SHA y conclusión success. |
+| 9. Pipeline posterior a los cambios técnicos | Cumple en a32e3ce; pendiente en el SHA documental posterior y en master | [Cinco runs por SHA](#verificación-independiente-del-candidato-a32e3ce). No trasladar automáticamente el resultado a otro SHA. |
 | 10. Lección por integrante | No verificado como testimonio | [Retrospectiva](retrospectiva.md), D. Tres propuestas individuales pendientes de validación. |
 
 ## Matriz transversal del contrato
@@ -87,3 +87,22 @@ El barrido adicional de todos los ancestros de esta rama produjo cinco alertas h
 Los ocho enlaces a runs históricos en las catorce filas generales de aspectos respondieron a la API pública. Siete correspondían a ejecuciones exitosas y el ensayo incompatible a una ejecución fallida. La referencia externa a las normas del laboratorio también respondió HTTP 200.
 
 Para EC-01 el script S14 fija el build `46ede525` y comprueba que coinciden código, imagen y revisión. Cuatro archivos de la aplicación Flutter cambiaron entre aquel build y la base actual. La repetición histórica aislada no certificaría la interfaz del build `4af0e620`. Cerrar RF-06 exige validar el observador sobre la imagen vigente con los recursos y el fixture declarados.
+
+
+## Verificación independiente del candidato a32e3ce
+
+Consulta de GitHub Actions del 27/nov/2026 a las 17:46 Colombia. Los cinco workflows tienen estado completed y conclusión success para el mismo [SHA técnico completo](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/a32e3ce2f9a0ac57869652a41968c6bf9c77e6f2).
+
+| Workflow | Run exacto | Conclusión |
+|---|---|---|
+| Backend y documentación | [46076400865](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/46076400865) | success |
+| Flutter MVP | [46076400859](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/46076400859) | success |
+| Compose y persistencia | [46076400866](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/46076400866) | success |
+| Contrato público S10 | [46076400937](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/46076400937) | success |
+| Flujo real Web y Android | [46076400841](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/46076400841) | success |
+
+En backend aprobaron ambos jobs (test y documentacion), incluidos Ruff, Gitleaks, contrato OpenAPI, pruebas funcionales y arquitectónicas y sensibilidad mediante mutaciones. La excepción Gitleaks se limita a valores enumerados, regla y ruta; se revisó el diff, pero no se repitió independientemente el ensayo sintético ni la consulta de Sonar de cada valor. Los resultados son del candidato técnico, no certifican el SHA que agrega este registro ni el futuro merge institucional. Consultar [runs de la rama](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions?query=branch%3Afix%2Fcierre-arquitectonico) y [Actions institucionales](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions) por el SHA efectivamente integrado.
+
+### Condiciones de cierre académico
+
+Pendientes: cotejo de los originales del jurado y pares (o confirmación explícita de su ausencia/exención por el docente), validación de las tres lecciones por sus autores, ratificación del ADR-0027 y verificación de CI y Sonar del SHA institucional. No se modifica el estado de esos criterios sin evidencia. La ficha S17 evalúa master al cierre, no el fork ni la etiqueta final. No se requiere otra sustentación ni un despliegue para este ajuste documental.

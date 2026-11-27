@@ -852,3 +852,8 @@ Codex, sin subagentes, contrastó Git, GHCR, GitHub Actions, Sonar y las evaluac
 Se publicaron las revisiones en el fork. El equipo reservó para después de su revisión la apertura del PR. Se conserva el fallo local de imágenes y su corrección de identificación y aislamiento en el registro de pruebas.
 
 **Seguimiento de CI.** Codex cotejó las 26 coordenadas del informe redactado con el inventario público de Sonar, obtuvo el Gate por identificador de análisis y comprobó el escáner con un valor ajeno en la misma ruta. La excepción está restringida a valores públicos enumerados. Se conservaron las cinco coincidencias del historial completo ya clasificadas en S9/S10. [Evidencia y alcance](cierre-arquitectonico/evidencias-cierre.md).
+
+
+### Revisión independiente posterior de S17 — 27/nov/2026
+
+ChatGPT consultó GitHub, contrastó el diff del candidato técnico `a32e3ce` y verificó cinco workflows exitosos para ese SHA. Se aceptó fijar los enlaces de los runs y del diff, conservando la distinción entre candidato y master. Se descartó declarar aceptación del ADR o lecciones personales sin ratificación, y certificar un SHA nuevo con runs de otro. No se ejecutaron pruebas propias ni se modificaron código, umbrales, secretos o producción. [Resultados y pendientes](cierre-arquitectonico/evidencias-cierre.md#verificación-independiente-del-candidato-a32e3ce).
