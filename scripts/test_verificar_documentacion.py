@@ -21,7 +21,7 @@ class DocumentacionTest(unittest.TestCase):
 
     def verificar(self, esperado):
         script = Path(__file__).with_name("verificar_documentacion.py")
-        proceso = subprocess.run([sys.executable, script, self.root], capture_output=True)
+        proceso = subprocess.run([sys.executable, script, self.root], capture_output=True, check=False)
         self.assertEqual(proceso.returncode, esperado, proceso.stdout + proceso.stderr)
         return proceso.stdout
 
