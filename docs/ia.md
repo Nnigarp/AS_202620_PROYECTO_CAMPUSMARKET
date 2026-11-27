@@ -850,3 +850,5 @@ Codex, sin subagentes, contrastó Git, GHCR, GitHub Actions, Sonar y las evaluac
 | Aprobar el ADR o redactar lecciones en nombre de los integrantes | La aceptación y las tres lecciones requieren ratificación humana. Las propuestas se identifican como borrador. |
 
 Se publicaron las revisiones en el fork. El equipo reservó para después de su revisión la apertura del PR. Se conserva el fallo local de imágenes y su corrección de identificación y aislamiento en el registro de pruebas.
+
+**Seguimiento de CI.** Codex cotejó las 26 coordenadas del informe redactado con el inventario público de Sonar, obtuvo el Gate por identificador de análisis y comprobó el escáner con un valor ajeno en la misma ruta. La excepción está restringida a valores públicos enumerados. Se conservaron las cinco coincidencias del historial completo ya clasificadas en S9/S10. [Evidencia y alcance](cierre-arquitectonico/evidencias-cierre.md).

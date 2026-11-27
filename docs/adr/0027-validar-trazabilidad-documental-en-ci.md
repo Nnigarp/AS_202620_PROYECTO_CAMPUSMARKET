@@ -28,3 +28,5 @@ El control detecta errores estructurales. Una ruta válida puede apuntar a una p
 ## Evidencia
 
 [Pruebas de sensibilidad](../../scripts/test_verificar_documentacion.py) · [Verificador](../../scripts/verificar_documentacion.py) · [Resultados S17](../cierre-arquitectonico/evidencias-cierre.md).
+
+El [commit de implementación](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/commit/7f9253c9bc6a1c85bf9b98af976299f191dbd15f) incorpora el control que acompaña la revisión de [C4 L3](../c4/03-componentes-backend.md). El [primer run del fork](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/46075883867) permite comprobar que documentación terminó correctamente aun cuando el barrido de secretos detuvo el job de backend.

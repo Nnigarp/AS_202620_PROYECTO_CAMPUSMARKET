@@ -17,3 +17,38 @@ condition = "AND"
 regexTarget = "secret"
 paths = ['''(^|/)docs/evidencias/datos/auditoria-documental-s1-s14-2026-11-08\.json$''']
 regexes = ['''^(1d4bae958ddec157286be1e18a160b0e5b462997dbae11ba529d45a75e4527ac|33711d4d77e9fd718d08f6eadac639f057d2ee09df108c588120a2ce242969d6|37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570)$''']
+
+[[allowlists]]
+description = "Identificadores públicos del análisis, evento e incidencias Sonar de la base S17"
+targetRules = ["generic-api-key"]
+condition = "AND"
+regexTarget = "secret"
+paths = ['''(^|/)docs/evidencias/datos/s17-sonar-master\.json$''']
+regexes = [
+    '^9bb0a7d1-6d4b-48b5-8bbd-0300a3e9e138$',
+    '^AaCoxeHSH9A6RWBEzH67$',
+    '^AaD6-B5CXnO4Tmn1lOKu$',
+    '^AaEBsl-uDMRQps-2ki7i$',
+    '^AaEBsl_cDMRQps-2ki7j$',
+    '^AaEDl5IWM1Oq-5Se4fTD$',
+    '^AaEDl5IWM1Oq-5Se4fTE$',
+    '^AaEDl5IWM1Oq-5Se4fTF$',
+    '^AaEDl5IWM1Oq-5Se4fTG$',
+    '^AaEDl5JSM1Oq-5Se4fTH$',
+    '^AaEDl5JSM1Oq-5Se4fTI$',
+    '^AaEDl5JSM1Oq-5Se4fTJ$',
+    '^AaEDl5JSM1Oq-5Se4fTK$',
+    '^AaEDl5LCM1Oq-5Se4fTL$',
+    '^AaEDl5LCM1Oq-5Se4fTM$',
+    '^AaEDl5LCM1Oq-5Se4fTN$',
+    '^AaEDl5LCM1Oq-5Se4fTO$',
+    '^AaEDl5LRM1Oq-5Se4fTP$',
+    '^AaEDl5MKM1Oq-5Se4fTQ$',
+    '^AaF2Vf8qMR3EMC2WY9VQ$',
+    '^AaGKyLO1fXH_OCHShqck$',
+    '^AaGfQD5xYczfUBeGyq26$',
+    '^AaGfQD5xYczfUBeGyq27$',
+    '^AaGgJSJ164USYLOt8fz4$',
+    '^AaGgJSJ164USYLOt8fz5$',
+    '^AaINkebnCAQlX1TOTTZF$',
+]
