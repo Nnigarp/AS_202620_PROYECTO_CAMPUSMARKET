@@ -1,6 +1,6 @@
 {
-  "contract_commit": "46ede525602161826b75273fbb12528e739908cc",
-  "runtime_revision": "46ede525602161826b75273fbb12528e739908cc",
-  "image": "ghcr.io/nnigarp/campusmarket-web-universidades@sha256:11d92aa9b66f1a4c6b879a6e8cd62cc3c102a37c034a44cbde27442b73694fa7",
+  "contract_commit": "4af0e620beab1aa344af1cdcc4f275252db66807",
+  "runtime_revision": "4af0e620beab1aa344af1cdcc4f275252db66807",
+  "image": "ghcr.io/nnigarp/campusmarket-web-universidades@sha256:42a3258b215c9b06d26b92761e8d2c95a03642fb50032a112eda3a1d696d5a9d",
   "contract_repository": "Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET"
 }

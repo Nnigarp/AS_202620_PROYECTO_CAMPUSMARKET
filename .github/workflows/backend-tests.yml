@@ -18,6 +18,19 @@ on:
       - master
 
 jobs:
+  documentacion:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install markdown-it-py==3.0.0
+      - run: python -m unittest scripts.test_verificar_documentacion
+      - run: python scripts/verificar_documentacion.py
+
   test:
     runs-on: ubuntu-latest
 
