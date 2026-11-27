@@ -411,3 +411,7 @@ el conjunto completo debe volver a verde.
 
 La documentación conserva los resultados históricos sin confundirlos con la
 arquitectura vigente.
+
+## Revisión S17 de EC-01
+
+Se conserva el umbral de al menos 9 de 10 búsquedas visibles en dos segundos con 1.000 publicaciones. La última repetición aislada produjo cinco observaciones válidas en Chrome. Las [condiciones para repetir y cerrar RF-06](../cierre-arquitectonico/matriz-retroalimentacion.md) distinguen el pintado de la respuesta HTTP.

@@ -108,3 +108,7 @@ Router privado → servicio → repositorio de Mensajería, dueño exclusivo de 
 ## Incremento 2 — Universidad visible (2026-11-03)
 
 La capacidad de Universidades compone instituciones por IDs en lote para Catálogo, que enriquece sus DTOs sin SQL/repositorios ajenos. Usuarios valida por esa capacidad y usa su hook de inicialización antes de crear la FK existente; Universidades sigue siendo el único escritor del catálogo. Se conserva la institución del anuncio al publicar, incluso si el perfil cambia; NULL histórico no se inventa. Flutter muestra declaración, no matrícula verificada. [Código](../../backend/app/universidades/service.py) · [pruebas](../../backend/tests/test_identidad_universitaria_visible.py) · [evidencia](../evidencias/incremento-2-universidad-visible-2026-11-03.md).
+
+## Revisión de coherencia S17
+
+El componente repositorio de Publicaciones ya representa publicaciones, fotos e idempotencia en la [fuente PlantUML](03-componentes-backend.puml) y en el [diagrama renderizado](03-componentes-backend.svg). La [guarda de propiedad](../../backend/tests/test_propiedad_datos.py) comprueba ahora también la tabla de claves. El cambio S17 afecta los controles de integración. Las relaciones de ejecución y los contenedores representados siguen vigentes.

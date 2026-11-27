@@ -224,3 +224,7 @@ ASP-01→EC-01→C4→ADR-0009/0019→Catálogo→prueba/mutación→medición, 
 [IA](../ia.md#s9--criterio-y-verificacion-del-catalogo) y la matriz de la ficha.
 El despliegue se mantiene como operación adicional. La extensión de arc42 no
 sustituye la comprobación de enlaces, resultados por SHA y comprensión del equipo.
+
+## Cierre S17
+
+[Decisiones](09-decisiones.md) · [Escenarios](10-escenarios-de-calidad.md) · [Riesgos](11-riesgos-y-deuda-tecnica.md) · [Auditoría de la entrega](../cierre-arquitectonico/evidencias-cierre.md).

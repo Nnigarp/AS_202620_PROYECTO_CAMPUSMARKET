@@ -190,3 +190,7 @@ Texto privado es dato personal potencial; solo participantes pueden consultarlo,
 `publicaciones.universidad_id` conserva la declaración al publicar; la metadata se lee del catálogo institucional por ese ID, no desde el perfil actual ni inferida del correo. Una institución inactiva puede seguir identificando anuncios históricos; no se ofrece para nuevas declaraciones. Ausencia heredada permanece sin atribuir. Las etiquetas no certifican matrícula ni pertenencia institucional.
 
 La composición añade una consulta por lote de instituciones, no N+1; ningún widget consulta la universidad por tarjeta. Usuarios inicializa/valida el catálogo mediante capacidades públicas de Universidades, sin importar su repositorio. El contrato solo añade un campo nullable opcional. No se alteran tablas/datos heredados ni filtros existentes. [Evidencia](../evidencias/incremento-2-universidad-visible-2026-11-03.md).
+
+## S17 — Propiedad de las claves idempotentes
+
+Publicaciones registra la clave y vincula el identificador creado en su [repositorio](../../backend/app/publicaciones/repository.py). La [guarda de once tablas](../../backend/tests/test_propiedad_datos.py) inspecciona literales SQL en Python. Su prueba de sensibilidad coloca la misma actualización en Publicaciones y Catálogo y exige señalar solo la segunda. SQL dinámico y escritores externos quedan fuera del análisis.

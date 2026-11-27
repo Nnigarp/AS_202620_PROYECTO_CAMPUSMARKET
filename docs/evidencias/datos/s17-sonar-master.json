@@ -1,0 +1,373 @@
+{
+  "observado_utc": "2026-11-27T22:13:56.171726+00:00",
+  "proyecto": "ISCOUTB_AS_202620_PROYECTO_CAMPUSMARKET",
+  "rama": "master",
+  "analisis": {
+    "key": "9bb0a7d1-6d4b-48b5-8bbd-0300a3e9e138",
+    "date": "2026-11-24T12:39:37+0000",
+    "events": [
+      {
+        "key": "AaINkebnCAQlX1TOTTZF",
+        "category": "VERSION",
+        "name": "not provided"
+      }
+    ],
+    "projectVersion": "not provided",
+    "manualNewCodePeriodBaseline": false,
+    "revision": "5f8928c266e83175a18d99e56c7fd6fe61244c4d"
+  },
+  "gate": "OK",
+  "total_abiertas": 25,
+  "incidencias": [
+    {
+      "key": "AaGgJSJ164USYLOt8fz4",
+      "rule": "python:S8415",
+      "component": "ISCOUTB_AS_202620_PROYECTO_CAMPUSMARKET:backend/app/mensajeria/router.py",
+      "line": 74,
+      "type": "CODE_SMELL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "INFO"
+        }
+      ],
+      "status": "OPEN"
+    },
+    {
+      "key": "AaGgJSJ164USYLOt8fz5",
+      "rule": "python:S8415",
+      "component": "ISCOUTB_AS_202620_PROYECTO_CAMPUSMARKET:backend/app/mensajeria/router.py",
+      "line": 76,
+      "type": "CODE_SMELL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "INFO"
+        }
+      ],
+      "status": "OPEN"
+    },
+    {
+      "key": "AaGfQD5xYczfUBeGyq26",
+      "rule": "python:S8415",
+      "component": "ISCOUTB_AS_202620_PROYECTO_CAMPUSMARKET:backend/app/usuarios/router.py",
+      "line": 76,
+      "type": "CODE_SMELL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "INFO"
+        }
+      ],
+      "status": "OPEN"
+    },
+    {
+      "key": "AaGfQD5xYczfUBeGyq27",
+      "rule": "python:S8415",
+      "component": "ISCOUTB_AS_202620_PROYECTO_CAMPUSMARKET:backend/app/usuarios/router.py",
+      "line": 101,
+      "type": "CODE_SMELL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "INFO"
+        }
+      ],
+      "status": "OPEN"
+    },
+    {
+      "key": "AaGKyLOAfXH_OCHShqcj",
+      "rule": "python:S3776",
+      "component": "ISCOUTB_AS_202620_PROYECTO_CAMPUSMARKET:backend/app/publicaciones/repository.py",
+      "line": 174,
+      "type": "CODE_SMELL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "status": "OPEN"
+    },
+    {
+      "key": "AaGKyLO1fXH_OCHShqck",
+      "rule": "python:S8410",
+      "component": "ISCOUTB_AS_202620_PROYECTO_CAMPUSMARKET:backend/app/publicaciones/router.py",
+      "line": 127,
+      "type": "CODE_SMELL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "status": "OPEN"
+    },
+    {
+      "key": "AaF2Vf8qMR3EMC2WY9VQ",
+      "rule": "python:S5778",
+      "component": "ISCOUTB_AS_202620_PROYECTO_CAMPUSMARKET:backend/tests/test_taller_mensajes_s12.py",
+      "line": 43,
+      "type": "CODE_SMELL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "status": "OPEN"
+    },
+    {
+      "key": "AaEDl5JSM1Oq-5Se4fTH",
+      "rule": "python:S8415",
+      "component": "ISCOUTB_AS_202620_PROYECTO_CAMPUSMARKET:backend/app/administracion/router.py",
+      "line": 45,
+      "type": "CODE_SMELL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "INFO"
+        }
+      ],
+      "status": "OPEN"
+    },
+    {
+      "key": "AaEDl5JSM1Oq-5Se4fTI",
+      "rule": "python:S8415",
+      "component": "ISCOUTB_AS_202620_PROYECTO_CAMPUSMARKET:backend/app/administracion/router.py",
+      "line": 47,
+      "type": "CODE_SMELL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "INFO"
+        }
+      ],
+      "status": "OPEN"
+    },
+    {
+      "key": "AaEDl5JSM1Oq-5Se4fTJ",
+      "rule": "python:S8415",
+      "component": "ISCOUTB_AS_202620_PROYECTO_CAMPUSMARKET:backend/app/administracion/router.py",
+      "line": 49,
+      "type": "CODE_SMELL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "INFO"
+        }
+      ],
+      "status": "OPEN"
+    },
+    {
+      "key": "AaEDl5JSM1Oq-5Se4fTK",
+      "rule": "python:S8415",
+      "component": "ISCOUTB_AS_202620_PROYECTO_CAMPUSMARKET:backend/app/administracion/router.py",
+      "line": 51,
+      "type": "CODE_SMELL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "INFO"
+        }
+      ],
+      "status": "OPEN"
+    },
+    {
+      "key": "AaEDl5LRM1Oq-5Se4fTP",
+      "rule": "python:S5713",
+      "component": "ISCOUTB_AS_202620_PROYECTO_CAMPUSMARKET:backend/app/publicaciones/image_storage.py",
+      "line": 46,
+      "type": "CODE_SMELL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "status": "OPEN"
+    },
+    {
+      "key": "AaEDl5LCM1Oq-5Se4fTN",
+      "rule": "python:S8415",
+      "component": "ISCOUTB_AS_202620_PROYECTO_CAMPUSMARKET:backend/app/publicaciones/router.py",
+      "line": 311,
+      "type": "CODE_SMELL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "INFO"
+        }
+      ],
+      "status": "OPEN"
+    },
+    {
+      "key": "AaEDl5LCM1Oq-5Se4fTO",
+      "rule": "python:S8415",
+      "component": "ISCOUTB_AS_202620_PROYECTO_CAMPUSMARKET:backend/app/publicaciones/router.py",
+      "line": 321,
+      "type": "CODE_SMELL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "INFO"
+        }
+      ],
+      "status": "OPEN"
+    },
+    {
+      "key": "AaEDl5MKM1Oq-5Se4fTQ",
+      "rule": "python:S1192",
+      "component": "ISCOUTB_AS_202620_PROYECTO_CAMPUSMARKET:backend/app/publicaciones/service.py",
+      "line": 231,
+      "type": "CODE_SMELL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "status": "OPEN"
+    },
+    {
+      "key": "AaEDl5LCM1Oq-5Se4fTL",
+      "rule": "python:S8415",
+      "component": "ISCOUTB_AS_202620_PROYECTO_CAMPUSMARKET:backend/app/publicaciones/router.py",
+      "line": 296,
+      "type": "CODE_SMELL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "INFO"
+        }
+      ],
+      "status": "OPEN"
+    },
+    {
+      "key": "AaEDl5LCM1Oq-5Se4fTM",
+      "rule": "python:S8415",
+      "component": "ISCOUTB_AS_202620_PROYECTO_CAMPUSMARKET:backend/app/publicaciones/router.py",
+      "line": 298,
+      "type": "CODE_SMELL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "INFO"
+        }
+      ],
+      "status": "OPEN"
+    },
+    {
+      "key": "AaEDl5IWM1Oq-5Se4fTD",
+      "rule": "python:S8415",
+      "component": "ISCOUTB_AS_202620_PROYECTO_CAMPUSMARKET:backend/app/usuarios/router.py",
+      "line": 72,
+      "type": "CODE_SMELL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "INFO"
+        }
+      ],
+      "status": "OPEN"
+    },
+    {
+      "key": "AaEDl5IWM1Oq-5Se4fTE",
+      "rule": "python:S8415",
+      "component": "ISCOUTB_AS_202620_PROYECTO_CAMPUSMARKET:backend/app/usuarios/router.py",
+      "line": 74,
+      "type": "CODE_SMELL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "INFO"
+        }
+      ],
+      "status": "OPEN"
+    },
+    {
+      "key": "AaEDl5IWM1Oq-5Se4fTF",
+      "rule": "python:S8415",
+      "component": "ISCOUTB_AS_202620_PROYECTO_CAMPUSMARKET:backend/app/usuarios/router.py",
+      "line": 85,
+      "type": "CODE_SMELL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "INFO"
+        }
+      ],
+      "status": "OPEN"
+    },
+    {
+      "key": "AaEDl5IWM1Oq-5Se4fTG",
+      "rule": "python:S8415",
+      "component": "ISCOUTB_AS_202620_PROYECTO_CAMPUSMARKET:backend/app/usuarios/router.py",
+      "line": 87,
+      "type": "CODE_SMELL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "INFO"
+        }
+      ],
+      "status": "OPEN"
+    },
+    {
+      "key": "AaEBsl-uDMRQps-2ki7i",
+      "rule": "python:S1172",
+      "component": "ISCOUTB_AS_202620_PROYECTO_CAMPUSMARKET:backend/app/publicaciones/router.py",
+      "line": 97,
+      "type": "CODE_SMELL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "status": "OPEN"
+    },
+    {
+      "key": "AaEBsl_cDMRQps-2ki7j",
+      "rule": "python:S1192",
+      "component": "ISCOUTB_AS_202620_PROYECTO_CAMPUSMARKET:backend/app/publicaciones/service.py",
+      "line": 121,
+      "type": "CODE_SMELL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "status": "OPEN"
+    },
+    {
+      "key": "AaD6-B5CXnO4Tmn1lOKu",
+      "rule": "python:S3776",
+      "component": "ISCOUTB_AS_202620_PROYECTO_CAMPUSMARKET:backend/app/catalogo/service.py",
+      "line": 25,
+      "type": "CODE_SMELL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "status": "OPEN"
+    },
+    {
+      "key": "AaCoxeHSH9A6RWBEzH67",
+      "rule": "python:S1192",
+      "component": "ISCOUTB_AS_202620_PROYECTO_CAMPUSMARKET:backend/app/publicaciones/repository.py",
+      "line": 151,
+      "type": "CODE_SMELL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "status": "OPEN"
+    }
+  ]
+}

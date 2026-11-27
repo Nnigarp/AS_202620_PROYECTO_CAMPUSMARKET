@@ -107,3 +107,7 @@ Base `2d2848922db799389ffdcf0db4ef50437cd27ef2`. [Matriz S1–S14 y evidencia de
 ### Incidencia pública observada por CI — 9/nov/2026
 
 [S10 del PR #93](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/42566371250) mantiene runtime `46ede525…` y contrato independientes correctos, pero devuelve **503 en las 30 consultas válidas** del catálogo; nueve healthchecks son 200. Solo seis de los nueve criterios aprueban. El health verifica una dependencia básica y no garantiza inicialización/lectura de todas las tablas. Una lectura externa adicional confirma el 503; no se identifica causa SQL, bloqueo, permisos o memoria sin evidencia del servidor. Mantener la incidencia abierta y S10 sin relajar; diagnóstico productivo separado, sin Deploy, reinicio ni cambios de datos en esta tarea. [Seguimiento verificable](../evidencias/auditoria-documental-s1-s14-2026-11-08.md#seguimiento-del-pr-93--9nov2026-descargas-ci-y-catálogo-público).
+
+## Seguimiento S17 del 27 de noviembre
+
+La guarda de único escritor cubre ahora las once tablas declaradas y tiene un control de sensibilidad sobre idempotencia. S10 vuelve a contrastar el contrato con la imagen del 24 de noviembre. El [registro de cierre](../cierre-arquitectonico/matriz-retroalimentacion.md) conserva las condiciones de restauración, rollback, privacidad y medición visible. Los resultados anteriores de esta sección corresponden a sus fechas.

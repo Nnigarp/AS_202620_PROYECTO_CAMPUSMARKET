@@ -1,0 +1,24 @@
+{
+  "scenario_id": "S10-CT-01",
+  "declared_at": "2026-11-27T22:09:58.187489+00:00",
+  "base_url": "https://campusmarket.iscoutb.dev",
+  "source_revision": "e69f28487923185a76429f673c5ca6bb102f45a1",
+  "expected_runtime_revision": "4af0e620beab1aa344af1cdcc4f275252db66807",
+  "script_sha256": "1195fb4657304f5a9cf6dba7c082497ecbd994b2cb9631cc9462fbb69043b2d0",
+  "repeats": 3,
+  "samples_per_phase_per_repeat": 5,
+  "independent_variable": "modalidad: venta -> sale -> venta por adaptador del consumidor",
+  "thresholds": {
+    "matching_status_ratio": 1.0,
+    "correlation_ratio": 1.0,
+    "p95_ms_per_phase": 10000,
+    "health_status": "ok"
+  },
+  "load": "Un consumidor, peticiones seriales, sin reintentos ni esperas artificiales",
+  "expected_statuses": {
+    "baseline": 200,
+    "incompatible": 422,
+    "adapted": 200
+  },
+  "scope": "HTTP público observado; sin medición de CPU, memoria, SQL o navegador"
+}

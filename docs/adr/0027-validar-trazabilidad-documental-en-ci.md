@@ -1,0 +1,30 @@
+# ADR-0027 — Validar la trazabilidad documental en integración continua
+
+- **Estado:** Propuesto para aceptación del equipo
+- **Fecha:** 2026-11-27 (Colombia)
+- **Ámbito:** integración de cambios al monolito modular
+- **Relacionado:** [RF-02 y RF-03](../cierre-arquitectonico/matriz-retroalimentacion.md), [arc42 §9](../arc42/09-decisiones.md)
+
+## Contexto y problema
+
+En S16 se recorrieron tres aspectos. El equipo ya disponía de un verificador de enlaces, anclas y matrices, pero un PR podía romper un destino sin ejecutar ese control. La evidencia de una decisión pierde valor si el lector no puede llegar al ensayo que la respalda.
+
+## Alternativas
+
+| Alternativa | Coste y consecuencia |
+|---|---|
+| Ejecutar el script a mano antes del cierre | Bajo coste de CI. El resultado depende de que alguien recuerde ejecutarlo. |
+| Ejecutarlo dentro del job MySQL | Reutiliza Python. Una indisponibilidad de la base oculta el resultado documental. |
+| Job independiente en el workflow de backend | Un checkout adicional. Permite ver si fallaron la documentación o la aplicación y ejecuta ambos controles en paralelo. |
+
+## Decisión
+
+Incorporar el job [documentacion](../../.github/workflows/backend-tests.yml) a las ejecuciones existentes. Instala el parser fijado por el verificador y comprueba su código de salida con tres repositorios sintéticos antes de analizar el checkout completo. Una referencia rota o una celda ausente hacen fallar el job. Los enlaces externos requieren cotejo con la fuente.
+
+## Consecuencias y reconsideración
+
+El control detecta errores estructurales. Una ruta válida puede apuntar a una prueba que ejercita otro comportamiento. Cada cambio de aspecto exige una lectura semántica por el revisor. Para exigir el job como condición de merge se requiere configurar la protección institucional. Revisar el coste si crece el corpus o cambia el parser.
+
+## Evidencia
+
+[Pruebas de sensibilidad](../../scripts/test_verificar_documentacion.py) · [Verificador](../../scripts/verificar_documentacion.py) · [Resultados S17](../cierre-arquitectonico/evidencias-cierre.md).

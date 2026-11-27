@@ -1,0 +1,19 @@
+{
+  "mode": "produccion",
+  "official_remote": "https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET.git",
+  "official_master_sha": "5f8928c266e83175a18d99e56c7fd6fe61244c4d",
+  "orchestration_sha": "7f9253c9bc6a1c85bf9b98af976299f191dbd15f",
+  "candidate_sha": "7f9253c9bc6a1c85bf9b98af976299f191dbd15f",
+  "image_source_remote": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET.git",
+  "production_contract_remote": "https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET.git",
+  "production_contract_sha": "4af0e620beab1aa344af1cdcc4f275252db66807",
+  "reference_contract_sha": "4af0e620beab1aa344af1cdcc4f275252db66807",
+  "expected_runtime_revision": "4af0e620beab1aa344af1cdcc4f275252db66807",
+  "previous_image": "ghcr.io/nnigarp/campusmarket-web-universidades@sha256:42a3258b215c9b06d26b92761e8d2c95a03642fb50032a112eda3a1d696d5a9d",
+  "contract_sha256": {
+    "base": "585d197f684f6b0b38b8182f2cf4c4c0a9d1b8fc73f7416f5e3f2b24901a0e92",
+    "candidate": "585d197f684f6b0b38b8182f2cf4c4c0a9d1b8fc73f7416f5e3f2b24901a0e92",
+    "production": "585d197f684f6b0b38b8182f2cf4c4c0a9d1b8fc73f7416f5e3f2b24901a0e92",
+    "reference": "585d197f684f6b0b38b8182f2cf4c4c0a9d1b8fc73f7416f5e3f2b24901a0e92"
+  }
+}

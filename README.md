@@ -1,5 +1,7 @@
 # CampusMarket
 
+**Entrega S17 · 27 de noviembre.** [Matriz de retroalimentación](docs/cierre-arquitectonico/matriz-retroalimentacion.md) · [Evidencias y auditoría](docs/cierre-arquitectonico/evidencias-cierre.md) · [Retrospectiva](docs/cierre-arquitectonico/retrospectiva.md).
+
 CampusMarket reúne las ofertas de venta y alquiler de estudiantes de Cartagena en un catálogo universitario. Un libro anunciado en un grupo de chat puede perderse entre mensajes. Aquí se puede buscar por título, precio o universidad, ver fotografías y conversar con quien lo publicó. El vendedor conserva el control del anuncio y de su disponibilidad.
 
 **[Abrir CampusMarket](https://campusmarket.iscoutb.dev/app/)** · [Catálogo público en JSON](https://campusmarket.iscoutb.dev/catalogo) · [Explorar la API](https://campusmarket.iscoutb.dev/docs) · [OpenAPI en vivo](https://campusmarket.iscoutb.dev/openapi.json) · [Salud del servicio](https://campusmarket.iscoutb.dev/health)

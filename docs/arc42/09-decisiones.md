@@ -157,3 +157,7 @@ en la porción académica S9 ni acreditan el scanner Sonar pendiente.
 ## Decisión incremental S13 — seguridad de cadena de suministro
 
 - **[ADR-0026 — Auditoría de dependencias Python en CI](../adr/0026-incorporar-auditoria-de-dependencias-python-en-ci.md)** — *Propuesto para aceptación del equipo*. Documenta la decisión adoptada técnicamente de ejecutar `pip-audit` con salida JSON y fallo explícito en CI, vinculada con amenaza T13-03. [Primera auditoría](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41360317202) → actualización Python → [verificación de remediación](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/41362904998). El escáner no cubre Dart/OCI ni implica promoción del contenedor productivo. Este ADR no reemplaza ni reescribe decisiones anteriores.
+
+## S17 — Integración documental
+
+[ADR-0027](../adr/0027-validar-trazabilidad-documental-en-ci.md) incorpora un job independiente de MySQL y conserva la revisión humana del significado de las cadenas.
