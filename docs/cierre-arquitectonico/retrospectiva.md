@@ -21,7 +21,3 @@ Las tres entradas son propuestas editoriales. Cada integrante debe confirmar o s
 | Nilver García Pimentel | Una promoción puede cambiar la revisión servida aunque el esquema conserve su contenido. | Adjuntar al PR de promoción la relación entre fuente, digest, contrato y lectura posterior. |
 | Joshua Tenorio | Un observador que conserva el filtro anterior invalida la medición de experiencia visible. | Incluir un control previo que distinga la búsqueda nueva y registrar todos los intentos. |
 | Camilo Martínez | Una suite funcional puede aprobar mientras una tabla queda fuera de la guarda arquitectónica. | Revisar cada nueva tabla junto a su propietario y demostrar el fallo con un segundo escritor sintético. |
-
-## Episodio recuperado de la sustentación (24/nov)
-
-Nilver relató que el profesor recomendó mayor visibilidad de los colores y cuadros de la aplicación proyectada, pese a una valoración general favorable. El episodio es información aportada por el integrante; no constituye una lección ratificada en sus propias palabras. Como aprendizaje adicional propuesto para el equipo: verificar la legibilidad en las condiciones reales de demostración y no confundir una interfaz funcional en el portátil con una interfaz legible al proyectar. [RF-11](matriz-retroalimentacion.md#recomendación-oral-recuperada-de-la-sustentación). Las tres lecciones individuales anteriores conservan su condición de propuestas hasta confirmación de sus autores.

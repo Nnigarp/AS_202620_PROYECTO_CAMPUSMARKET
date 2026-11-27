@@ -50,7 +50,7 @@ Estados según la [ficha](https://github.com/ISCOUTB/AS_202620_feedback/blob/484
 | Criterio | Estado en el candidato | Ruta, evidencia, revisión y límite |
 |---|---|---|
 | 1. Trabajo posterior | Cumple | T y L posteriores a la base #95. La comparación distingue S16 de S17. |
-| 2. Matriz frente a lo recibido | No verificado | [Matriz](matriz-retroalimentacion.md), D. Se recuperó una recomendación oral de la sustentación (RF-11); faltan originales de jurado y pares. |
+| 2. Matriz frente a lo recibido | No verificado | [Matriz](matriz-retroalimentacion.md), D. Faltan originales de jurado y pares; el comentario oral sobre colores correspondía a la presentación HTML, no al software. |
 | 3. Clasificación | Cumple para fuentes disponibles | [Decisiones por fila](matriz-retroalimentacion.md), D. El conjunto completo depende del cotejo anterior. |
 | 4. Justificaciones | Cumple para fuentes disponibles | RF-06 y RF-07 identifican riesgo, dependencia y condición verificable de cierre, D. |
 | 5. Cambios enlazados | Cumple | [Referencia S10](../../.github/s10-produccion.json), [guarda](../../backend/tests/test_propiedad_datos.py), [CI](../../.github/workflows/backend-tests.yml) y [aspectos](../aspectos.md), T/L/D. |
@@ -120,4 +120,4 @@ El 27/nov/2026 a las 18:05 Colombia se consultaron los cinco workflows completed
 | Contrato público S10 | [46079427699](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/46079427699) | success |
 | Flujo real Web y Android | [46079427733](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/46079427733) | success |
 
-La revisión posterior recuperó el relato del integrante sobre la observación oral de contraste durante la sustentación, incorporado como RF-11. El build `4af0e620` es anterior a la observación, por lo que no se acredita como respuesta a ella. Se mantienen pendientes el cotejo con originales, la ratificación nominal y las lecciones personales. Los runs citados acreditan 2b393a7, no el nuevo SHA documental ni master. Verificar las ejecuciones posteriores sin modificar las pruebas para forzar resultados.
+El integrante aclaró el 27/nov que la observación oral sobre colores y cuadros se refería a la presentación HTML, no al producto. Se retiró RF-11 como fila técnica y se corrigió la atribución en la matriz y retrospectiva. No se requiere cambiar Flutter ni promover una imagen por esa observación. Se mantienen pendientes el cotejo con originales, la ratificación nominal y las lecciones personales. Los runs citados acreditan 2b393a7, no el nuevo SHA documental ni master. Verificar las ejecuciones posteriores sin modificar las pruebas para forzar resultados.
