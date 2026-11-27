@@ -38,7 +38,15 @@ def test_tres_imagenes_galeria_principal_eliminar_y_reponer(cuentas, payload_pub
     assert not list((UPLOAD_ROOT / str(publication["id"])).glob("*"))
 
 
-@pytest.mark.parametrize("content,name", [(b"texto con extension falsa", "foto.png"), (b"", "foto.png"), (b"fake", "foto.svg"), (b"x" * (5 * 1024 * 1024 + 1), "foto.jpg")])
+@pytest.mark.parametrize(
+    "content,name",
+    [
+        pytest.param(b"texto con extension falsa", "foto.png", id="contenido-invalido"),
+        pytest.param(b"", "foto.png", id="archivo-vacio"),
+        pytest.param(b"fake", "foto.svg", id="formato-svg"),
+        pytest.param(b"x" * (5 * 1024 * 1024 + 1), "foto.jpg", id="excede-cinco-mib"),
+    ],
+)
 def test_no_guarda_archivo_invalido(cuentas, payload_publicacion, content, name):
     a, _ = cuentas
     publication = a["client"].post("/publicaciones", json=payload_publicacion).json()

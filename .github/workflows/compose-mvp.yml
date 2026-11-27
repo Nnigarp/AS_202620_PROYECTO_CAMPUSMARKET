@@ -2,7 +2,7 @@ name: Compose y persistencia del MVP
 
 on:
   push:
-    branches: [master, mvp-autenticacion-producto, eval/s14-ec01-20261105]
+    branches: [fix/cierre-arquitectonico, master, mvp-autenticacion-producto, eval/s14-ec01-20261105]
   pull_request:
     branches: [master]
   workflow_dispatch:
