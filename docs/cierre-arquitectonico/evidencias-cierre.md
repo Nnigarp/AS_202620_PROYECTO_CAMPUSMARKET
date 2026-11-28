@@ -55,10 +55,10 @@ Estados según la [ficha](https://github.com/ISCOUTB/AS_202620_feedback/blob/484
 | 4. Justificaciones | Cumple para fuentes disponibles | RF-06 y RF-07 identifican riesgo, dependencia y condición verificable de cierre, D. |
 | 5. Cambios enlazados | Cumple | [Referencia S10](../../.github/s10-produccion.json), [guarda](../../backend/tests/test_propiedad_datos.py), [CI](../../.github/workflows/backend-tests.yml) y [aspectos](../aspectos.md), T/L/D. |
 | 6. Pruebas modificadas | Cumple | T/L. La guarda discrimina propietario, los [tests del CLI](../../scripts/test_verificar_documentacion.py) fallan ante dos clases de defecto. |
-| 7. ADR | Cumple como propuesta documentada | [ADR-0027](../adr/0027-validar-trazabilidad-documental-en-ci.md), D. Implementación verificada en CI; pendiente ratificación nominal. |
+| 7. ADR | Cumple en el candidato | [ADR-0027](../adr/0027-validar-trazabilidad-documental-en-ci.md), implementado y aceptado por el equipo; [conformidad](retrospectiva.md#conformidad-del-equipo). |
 | 8. Diagramas y arc42 | Cumple | [C4 L2](../c4/02-contenedores.md), [C4 L3](../c4/03-componentes-backend.md) y [arc42](../arc42/ARC42.md), D. FastAPI sirve Flutter Web y Publicaciones conserva el único escritor. El cambio afecta CI, sin delta gráfico. |
 | 9. Pipeline posterior a los cambios técnicos | Cumple en a32e3ce; pendiente en el SHA documental posterior y en master | [Cinco runs por SHA](#verificación-independiente-del-candidato-a32e3ce). No trasladar automáticamente el resultado a otro SHA. |
-| 10. Lección por integrante | No verificado como testimonio | [Retrospectiva](retrospectiva.md), D. Tres propuestas individuales pendientes de validación. |
+| 10. Lección por integrante | Cumple según declaración conjunta | [Retrospectiva](retrospectiva.md#lecciones-individuales-confirmadas): tres lecciones para tres integrantes, confirmadas conjuntamente en el chat. |
 
 ## Matriz transversal del contrato
 
@@ -69,7 +69,7 @@ Estados según la [ficha](https://github.com/ISCOUTB/AS_202620_feedback/blob/484
 | Estado calificable | No verificado | Base y fecha en la tabla de revisiones. El corte del domingo 29/nov a las 23:55 Colombia y la integración institucional son posteriores a esta revisión. |
 | Nombres de ADR | Cumple | D conserva la secuencia 0001–0026 y añade 0027 con nombre kebab-case. |
 | ADR aceptados inmutables | No cumple históricamente | ADR-0002 ya estaba aceptado en `77e1323` y su texto se modificó posteriormente en [04fe631](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/04fe631). ADR-0003 presenta también una [edición tras su aceptación](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/commit/df72b1c). S17 conserva esos archivos y añade 0027. |
-| Registro IA | Cumple en el candidato | [Entrada S17](../ia.md), D, con herramientas, decisiones descartadas y validación humana pendiente. |
+| Registro IA | Cumple en el candidato | [Entrada S17](../ia.md), D, con herramientas, decisiones descartadas y conformidad humana registrada. |
 | Pipeline, Sonar y Gate | No verificado en el futuro SHA institucional | Runs del fork por SHA y check Sonar de la base en este documento. Regla de rama y análisis tienen alcances distintos. |
 | Secretos | No verificado para todo el historial | [Procedimiento Gitleaks](../../.github/workflows/backend-tests.yml), con tramo Git explícito y checkout. La conclusión depende del alcance del scanner. |
 | Contribuciones | No verificado nominalmente | `git shortlog -sn` de la base mostró cinco firmas con 541, 38, 26, 19 y 10 commits. La correspondencia persona/cuenta requiere confirmación de los tres integrantes. |
@@ -105,7 +105,7 @@ En backend aprobaron ambos jobs (test y documentacion), incluidos Ruff, Gitleaks
 
 ### Condiciones de cierre académico
 
-Pendientes: cotejo de los originales del jurado y pares (o confirmación explícita de su ausencia/exención por el docente), validación de las tres lecciones por sus autores, ratificación del ADR-0027 y verificación de CI y Sonar del SHA institucional. No se modifica el estado de esos criterios sin evidencia. La ficha S17 evalúa master al cierre, no el fork ni la etiqueta final. No se requiere otra sustentación ni un despliegue para este ajuste documental.
+Pendientes: cotejo de los originales del jurado y pares (o confirmación explícita de su ausencia/exención por el docente), verificación de CI y Sonar del SHA institucional; la validación de las lecciones y la ratificación del ADR-0027 quedaron registradas el 27/nov. No se modifica el estado de esos criterios sin evidencia. La ficha S17 evalúa master al cierre, no el fork ni la etiqueta final. No se requiere otra sustentación ni un despliegue para este ajuste documental.
 
 
 ## Segundo candidato y actualización de procedencia
@@ -120,4 +120,13 @@ El 27/nov/2026 a las 18:05 Colombia se consultaron los cinco workflows completed
 | Contrato público S10 | [46079427699](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/46079427699) | success |
 | Flujo real Web y Android | [46079427733](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/46079427733) | success |
 
-El integrante aclaró el 27/nov que la observación oral sobre colores y cuadros se refería a la presentación HTML, no al producto. Se retiró RF-11 como fila técnica y se corrigió la atribución en la matriz y retrospectiva. No se requiere cambiar Flutter ni promover una imagen por esa observación. Se mantienen pendientes el cotejo con originales, la ratificación nominal y las lecciones personales. Los runs citados acreditan 2b393a7, no el nuevo SHA documental ni master. Verificar las ejecuciones posteriores sin modificar las pruebas para forzar resultados.
+El integrante aclaró el 27/nov que la observación oral sobre colores y cuadros se refería a la presentación HTML, no al producto. Se retiró RF-11 como fila técnica y se corrigió la atribución en la matriz y retrospectiva. No se requiere cambiar Flutter ni promover una imagen por esa observación. Se mantiene pendiente el cotejo con originales; la ratificación y las lecciones se confirmaron posteriormente. Los runs citados acreditan 2b393a7, no el nuevo SHA documental ni master. Verificar las ejecuciones posteriores sin modificar las pruebas para forzar resultados.
+
+
+## Conformidad y verificación del PR 96
+
+El 27/nov/2026 a las 19:04 (Colombia), los tres integrantes, Nilver García Pimentel, Joshua Tenorio y Camilo Martínez, comunicaron conjuntamente en el chat de cierre que confirmaban sus respectivas lecciones individuales, aprobaban el ADR-0027 y autorizaban registrar la conformidad en GitHub. Es una declaración conjunta del equipo recibida en el chat, no tres firmas digitales independientes.
+
+[Retrospectiva y conformidad](retrospectiva.md#conformidad-del-equipo) · [ADR-0027](../adr/0027-validar-trazabilidad-documental-en-ci.md) · [PR institucional #96](https://github.com/ISCOUTB/AS_202620_PROYECTO_CAMPUSMARKET/pull/96).
+
+El candidato `e354c1b` registró cinco workflows exitosos en el fork y, según la pantalla del PR #96 aportada por el equipo, diez checks exitosos, uno omitido (s14-ec01) y ningún conflicto. [Backend](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/46080840087) · [Flutter](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/46080840006) · [Compose](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/46080840040) · [S10](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/46080840038) · [Web/Android](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/46080840049). Los checks del nuevo commit de ratificación y del futuro master deben verificarse por separado. El check omitido no demuestra una nueva medición EC-01. Persiste la ausencia de originales del jurado y pares.

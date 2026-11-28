@@ -12,12 +12,20 @@ En EC-01 se contó el tiempo de red antes de tener un observador fiable del resu
 
 El registro de IA permitió reconstruir propuestas descartadas. También puso en evidencia el límite de la asistencia automática cuando faltan el formulario del jurado y las observaciones de pares. En futuras entregas guardaríamos los originales al recibirlos, con fecha, procedencia y acceso apropiado. [Registro de IA](../ia.md)
 
-## Lecciones individuales para validar
+## Lecciones individuales confirmadas
 
-Las tres entradas son propuestas editoriales. Cada integrante debe confirmar o sustituir la suya con un episodio que reconozca y una acción propia antes de presentar la retrospectiva como testimonio.
+Las tres lecciones, inicialmente propuestas con apoyo de IA, fueron confirmadas conjuntamente por los integrantes el 27 de noviembre de 2026.
 
-| Integrante | Lección propuesta | Acción observable en otro proyecto |
+| Integrante | Lección confirmada | Acción observable en otro proyecto |
 |---|---|---|
 | Nilver García Pimentel | Una promoción puede cambiar la revisión servida aunque el esquema conserve su contenido. | Adjuntar al PR de promoción la relación entre fuente, digest, contrato y lectura posterior. |
 | Joshua Tenorio | Un observador que conserva el filtro anterior invalida la medición de experiencia visible. | Incluir un control previo que distinga la búsqueda nueva y registrar todos los intentos. |
 | Camilo Martínez | Una suite funcional puede aprobar mientras una tabla queda fuera de la guarda arquitectónica. | Revisar cada nueva tabla junto a su propietario y demostrar el fallo con un segundo escritor sintético. |
+
+## Conformidad del equipo
+
+El 27/nov/2026 a las 19:04 (Colombia), los tres integrantes, Nilver García Pimentel, Joshua Tenorio y Camilo Martínez, comunicaron conjuntamente en el chat de cierre que confirmaban sus respectivas lecciones individuales, aprobaban el ADR-0027 y autorizaban registrar la conformidad en GitHub. Es una declaración conjunta del equipo recibida en el chat, no tres firmas digitales independientes.
+
+Texto comunicado: «Los tres integrantes, Nilver, Joshua y Camilo, confirmamos nuestras respectivas lecciones individuales y aprobamos el ADR-0027. Autorizamos registrar esta conformidad en nuestra rama de GitHub.»
+
+[ADR-0027 aceptado](../adr/0027-validar-trazabilidad-documental-en-ci.md). Esta conformidad no acredita la recepción de las recomendaciones originales del jurado ni de pares.

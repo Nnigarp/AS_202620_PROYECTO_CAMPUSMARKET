@@ -160,4 +160,4 @@ en la porción académica S9 ni acreditan el scanner Sonar pendiente.
 
 ## S17 — Integración documental
 
-[ADR-0027](../adr/0027-validar-trazabilidad-documental-en-ci.md) incorpora un job independiente de MySQL y conserva la revisión humana del significado de las cadenas.
+[ADR-0027](../adr/0027-validar-trazabilidad-documental-en-ci.md), aceptado por el equipo el 27/nov/2026 ([conformidad](../cierre-arquitectonico/retrospectiva.md#conformidad-del-equipo)), incorpora un job independiente de MySQL y conserva la revisión humana del significado de las cadenas.

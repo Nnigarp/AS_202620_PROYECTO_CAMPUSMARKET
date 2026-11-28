@@ -42,3 +42,6 @@ En la columna de revisión, **T** identifica la [implementación técnica](https
 ## Alcance de la observación oral de sustentación
 
 El integrante Nilver aclaró el 27/nov que la observación del profesor sobre colores y cuadros correspondía a la presentación HTML de sustentación, no a la aplicación CampusMarket. Por tanto, no se incorpora como recomendación de cambio arquitectónico o funcional del repositorio. Las 13 filas técnicas conservan su procedencia y clasificación. Esta aclaración no acredita la recepción del formulario del jurado ni de los originales de pares.
+
+
+**Conformidad del equipo (27/nov):** [ADR-0027 aceptado](../adr/0027-validar-trazabilidad-documental-en-ci.md) y [tres lecciones confirmadas](retrospectiva.md#conformidad-del-equipo). La aceptación no modifica las 13 filas técnicas ni acredita cobertura de los originales pendientes.

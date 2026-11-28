@@ -1,6 +1,6 @@
 # ADR-0027 — Validar la trazabilidad documental en integración continua
 
-- **Estado:** Implementado y verificado en CI; pendiente de ratificación formal del equipo
+- **Estado:** Aceptado por el equipo; implementado y verificado en CI
 - **Fecha:** 2026-11-27 (Colombia)
 - **Ámbito:** integración de cambios al monolito modular
 - **Relacionado:** [RF-02 y RF-03](../cierre-arquitectonico/matriz-retroalimentacion.md), [arc42 §9](../arc42/09-decisiones.md)
@@ -33,4 +33,4 @@ El [commit de implementación](https://github.com/Nnigarp/AS_202620_PROYECTO_CAM
 
 ## Verificación y ratificación
 
-El job documental y sus pruebas aprobaron en [el candidato técnico a32e3ce](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/46076400865) y en [el candidato documental 2b393a7](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/46079427723). Se acredita adopción técnica, no consentimiento nominal de los tres integrantes. La autorización del integrante solicitante para revisar y ajustar el cierre no equivale a una ratificación colectiva. La decisión conserva su alcance y no reemplaza ADR anteriores.
+El job documental y sus pruebas aprobaron en [el candidato técnico a32e3ce](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/46076400865) y en [el candidato documental 2b393a7](https://github.com/Nnigarp/AS_202620_PROYECTO_CAMPUSMARKET/actions/runs/46079427723). El 27/nov/2026 a las 19:04 (Colombia), los tres integrantes, Nilver García Pimentel, Joshua Tenorio y Camilo Martínez, comunicaron conjuntamente en el chat de cierre que confirmaban sus respectivas lecciones individuales, aprobaban el ADR-0027 y autorizaban registrar la conformidad en GitHub. Es una declaración conjunta del equipo recibida en el chat, no tres firmas digitales independientes. [Registro de conformidad](../cierre-arquitectonico/retrospectiva.md#conformidad-del-equipo). La decisión conserva su alcance y no reemplaza ADR anteriores.

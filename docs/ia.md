@@ -861,3 +861,10 @@ ChatGPT consultó GitHub, contrastó el diff del candidato técnico `a32e3ce` y 
 ### Corrección de procedencia y revisión de cierre — 27/nov/2026
 
 ChatGPT reabrió las evaluaciones del repositorio oficial e interpretó inicialmente de forma incorrecta el alcance de la observación oral de colores y cuadros. Nilver aclaró que correspondía a la presentación HTML, no a la aplicación. Se retiró RF-11 de la matriz técnica y se corrigieron las referencias en la retrospectiva y evidencias; se conserva el historial Git. Se descartó modificar Flutter por esa observación y declarar ratificación colectiva o lecciones personales sin confirmación. El ADR-0027 conserva su implementación técnica verificada y ratificación pendiente. Se documentaron los cinco runs de 2b393a7. [Matriz](cierre-arquitectonico/matriz-retroalimentacion.md) · [evidencia](cierre-arquitectonico/evidencias-cierre.md).
+
+
+### Ratificación humana — 27/nov/2026
+
+El 27/nov/2026 a las 19:04 (Colombia), los tres integrantes, Nilver García Pimentel, Joshua Tenorio y Camilo Martínez, comunicaron conjuntamente en el chat de cierre que confirmaban sus respectivas lecciones individuales, aprobaban el ADR-0027 y autorizaban registrar la conformidad en GitHub. Es una declaración conjunta del equipo recibida en el chat, no tres firmas digitales independientes.
+
+ChatGPT registró la conformidad en el ADR, arc42, retrospectiva, matriz y evidencias. Se descartó extender esta aprobación a recomendaciones originales no localizadas o a checks de un SHA todavía no ejecutados. No se modificó código, pruebas ni producción. [Conformidad](cierre-arquitectonico/retrospectiva.md#conformidad-del-equipo).
